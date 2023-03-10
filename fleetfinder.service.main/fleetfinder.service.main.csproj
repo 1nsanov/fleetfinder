@@ -10,4 +10,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\fleetfinder.service.main.application\fleetfinder.service.main.application.csproj" />
+    <ProjectReference Include="..\fleetfinder.service.main.domain\fleetfinder.service.main.domain.csproj" />
+    <ProjectReference Include="..\fleetfinder.service.main.infrastructure\fleetfinder.service.main.infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
