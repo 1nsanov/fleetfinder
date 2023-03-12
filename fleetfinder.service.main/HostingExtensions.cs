@@ -1,6 +1,9 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Reflection;
+using System.Text.Json.Serialization;
+using fleetfinder.service.main.application.Common;
 using fleetfinder.service.main.infrastructure.Common;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
+using Microsoft.OpenApi.Models;
 
 namespace fleetfinder.service.main;
 
@@ -13,6 +16,7 @@ public static class HostingExtensions
         {
             options.JsonSerializerOptions.DefaultIgnoreCondition =
                 JsonIgnoreCondition.WhenWritingNull;
+            options.JsonSerializerOptions.PropertyNamingPolicy = null;
             var enumConverter = new JsonStringEnumConverter();
             options.JsonSerializerOptions.Converters.Add(enumConverter);
         });
@@ -20,10 +24,16 @@ public static class HostingExtensions
         
         builder.Services.AddDateOnlyTimeOnlyStringConverters();
         builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
+        builder.Services.AddSwaggerGen(options =>
+        {
+            options.SupportNonNullableReferenceTypes();
+            options.CustomSchemaIds(type => type.FullName?.Replace("+", "_"));
+            options.SwaggerDoc("v1", new OpenApiInfo { Title = "fleetfinder.service.main", Version = "v1" });
+        });
         builder.Services.AddFluentValidationRulesToSwagger();
 
         builder.Services.RegisterInfrastructureLayer(builder.Configuration, builder.Environment);
+        builder.Services.RegisterApplicationLayer();
 
         return builder.Build();
     }

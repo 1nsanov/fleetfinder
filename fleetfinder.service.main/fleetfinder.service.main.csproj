@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\fleetfinder.service.main.application\fleetfinder.service.main.application.csproj" />
     <ProjectReference Include="..\fleetfinder.service.main.infrastructure\fleetfinder.service.main.infrastructure.csproj" />
   </ItemGroup>
 

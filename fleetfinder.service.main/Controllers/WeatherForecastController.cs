@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
-
 namespace fleetfinder.service.main.Controllers
 {
     [ApiController]
