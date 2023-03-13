@@ -11,8 +11,7 @@ public static partial class UserGet
         public MappingProfile()
         {
             CreateMap<User, ResponseDto>()
-                .ForMember(dest => dest.Username, 
-                    opt => opt.MapFrom(src => src.Login));
+                .MapRecordMember(dest => dest.Username, src => src.Login);
         }
     }
 
