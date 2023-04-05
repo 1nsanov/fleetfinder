@@ -6,10 +6,4 @@ public static partial class UserGet
         long Id,
         string Username
     );
-    
-    // public class ResponseDto
-    // {
-    //     public long Id { get; init; }
-    //     public string Username { get; init; }
-    // }
 }
