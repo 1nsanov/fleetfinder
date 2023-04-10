@@ -21,6 +21,7 @@ public abstract class BaseDbContext : DbContext
     {
         EntityBase_Builder(modelBuilder);
         Enums_Builder(modelBuilder);
+        User_Builder(modelBuilder);
         base.OnModelCreating(modelBuilder);
     }
 
@@ -33,14 +34,14 @@ public abstract class BaseDbContext : DbContext
         NpgsqlConnection.GlobalTypeMapper.MapEnum<State>();
     }
     
-    private void Enums_Builder(ModelBuilder modelBuilder)
+    private static void Enums_Builder(ModelBuilder modelBuilder)
     {
         modelBuilder.HasPostgresEnum<State>();
     }
 
     #endregion
 
-    private void EntityBase_Builder(ModelBuilder modelBuilder)
+    private static void EntityBase_Builder(ModelBuilder modelBuilder)
     {
         var types = modelBuilder.Model.GetEntityTypes()
             .Where(t => t.ClrType.IsAssignableTo(typeof(EntityBase)));
@@ -59,5 +60,13 @@ public abstract class BaseDbContext : DbContext
 
             et.FindProperty("State")?.SetDefaultValueSql("'actual'::state");
         }
+    }
+    
+    private static void User_Builder(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<User>(etp =>
+        {
+            etp.HasIndex(u => u.Login);
+        });
     }
 }
