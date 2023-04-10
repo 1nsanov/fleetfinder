@@ -1,10 +1,14 @@
-﻿namespace fleetfinder.service.main.infrastructure.Common.DbContexts;
+﻿using Z.EntityFramework.Plus;
+
+namespace fleetfinder.service.main.infrastructure.Common.DbContexts;
 
 public abstract class BaseDbContext : DbContext
 {
     protected BaseDbContext(DbContextOptions options)
         : base(options)
     {
+        this.Filter<EntityBase>(
+            q => q.Where(eb => eb.State == State.Actual));
     }
 
     #region DbSets
@@ -38,19 +42,22 @@ public abstract class BaseDbContext : DbContext
 
     private void EntityBase_Builder(ModelBuilder modelBuilder)
     {
-        foreach (var et in modelBuilder.Model.GetEntityTypes())
-        {
-            if (et.ClrType.IsSubclassOf(typeof(EntityBase)))
-            {
-                var property = et.FindProperty("CreateDate") ?? throw new NullReferenceException();
-                property.SetDefaultValueSql("timezone('utc', current_timestamp)");
-                property.ValueGenerated = Microsoft.EntityFrameworkCore.Metadata.ValueGenerated.OnAdd;
+        var types = modelBuilder.Model.GetEntityTypes()
+            .Where(t => t.ClrType.IsAssignableTo(typeof(EntityBase)));
 
-                property = et.FindProperty("UpdateDate") ?? throw new NullReferenceException();
-                property.SetDefaultValueSql("timezone('utc', current_timestamp)");
-                property.ValueGenerated = Microsoft.EntityFrameworkCore.Metadata.ValueGenerated.OnAddOrUpdate;
-                et.FindProperty("State")?.SetDefaultValue(State.Actual);
-            }
+        // configuration for all derived entities
+        foreach (var et in types)
+        {
+            //default value
+            var property = et.FindProperty("CreateDate") ?? throw new NullReferenceException();
+            property.SetDefaultValueSql("timezone('utc', current_timestamp)");
+            property.ValueGenerated = Microsoft.EntityFrameworkCore.Metadata.ValueGenerated.OnAdd;
+
+            property = et.FindProperty("UpdateDate") ?? throw new NullReferenceException();
+            property.SetDefaultValueSql("timezone('utc', current_timestamp)");
+            property.ValueGenerated = Microsoft.EntityFrameworkCore.Metadata.ValueGenerated.OnAddOrUpdate;
+
+            et.FindProperty("State")?.SetDefaultValueSql("'actual'::state");
         }
     }
 }

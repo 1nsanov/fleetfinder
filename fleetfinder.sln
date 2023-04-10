@@ -5,15 +5,15 @@ VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{1356BEFE-EBF7-4B9C-8660-FA64EC41A7A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fleetfinder.service.main", "fleetfinder.service.main\fleetfinder.service.main.csproj", "{625B92AD-EDD5-41DA-AD4B-361B7483A072}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "fleetfinder.service.main", "fleetfinder.service.main\fleetfinder.service.main.csproj", "{625B92AD-EDD5-41DA-AD4B-361B7483A072}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fleetfinder.service.main.domain", "fleetfinder.service.main.domain\fleetfinder.service.main.domain.csproj", "{0E290278-3A56-4501-8BFD-B48AC1DE1BBC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "fleetfinder.service.main.domain", "fleetfinder.service.main.domain\fleetfinder.service.main.domain.csproj", "{0E290278-3A56-4501-8BFD-B48AC1DE1BBC}"
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "fleetfinder.web.spa", "fleetfinder.web.spa\fleetfinder.web.spa.esproj", "{F22E4F51-7EA0-4986-8F1B-A78BF1245C0B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fleetfinder.service.main.application", "fleetfinder.service.main.application\fleetfinder.service.main.application.csproj", "{C3F37CBD-F5FD-48E9-BF15-A0ED941AD68F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "fleetfinder.service.main.application", "fleetfinder.service.main.application\fleetfinder.service.main.application.csproj", "{C3F37CBD-F5FD-48E9-BF15-A0ED941AD68F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fleetfinder.service.main.infrastructure", "fleetfinder.service.main.infrastructure\fleetfinder.service.main.infrastructure.csproj", "{428CA67D-B2E4-4FEA-B098-9A5C0D3F70D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "fleetfinder.service.main.infrastructure", "fleetfinder.service.main.infrastructure\fleetfinder.service.main.infrastructure.csproj", "{428CA67D-B2E4-4FEA-B098-9A5C0D3F70D5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,7 +31,6 @@ Global
 		{0E290278-3A56-4501-8BFD-B48AC1DE1BBC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F22E4F51-7EA0-4986-8F1B-A78BF1245C0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F22E4F51-7EA0-4986-8F1B-A78BF1245C0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F22E4F51-7EA0-4986-8F1B-A78BF1245C0B}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{F22E4F51-7EA0-4986-8F1B-A78BF1245C0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F22E4F51-7EA0-4986-8F1B-A78BF1245C0B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F22E4F51-7EA0-4986-8F1B-A78BF1245C0B}.Release|Any CPU.Deploy.0 = Release|Any CPU
