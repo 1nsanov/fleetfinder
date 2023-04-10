@@ -42,8 +42,8 @@ public class UserService : IUserService
         var refreshToken = GenerateRefreshToken();
         return new TokenDto
         {
-            AccessToken = accessToken,
-            RefreshToken = refreshToken,
+            Access = accessToken,
+            Refresh = refreshToken,
             Expiration = token.ValidTo
         };
     }
@@ -64,7 +64,7 @@ public class UserService : IUserService
         return new JwtSecurityToken(_config["Jwt:Issuer"],
             _config["Jwt:Audience"],
             claims,
-            expires: DateTime.Now.AddDays(1),
+            expires: DateTime.Now.AddMinutes(15),
             signingCredentials: credentials);
     }
     

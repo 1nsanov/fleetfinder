@@ -13,6 +13,7 @@ public static class AutoMapperExtensions
         string memberName = memberInfo.Name;
         return mappingExpression
             .ForMember(destinationMember, opt => opt.MapFrom(sourceMember))
-            .ForCtorParam(memberName, opt => opt.MapFrom(sourceMember));
+            .DisableCtorValidation();
+        // .ForCtorParam(memberName, opt => opt.MapFrom(sourceMember));
     }
 }

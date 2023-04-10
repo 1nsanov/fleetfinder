@@ -21,14 +21,24 @@ namespace fleetfinder.service.main.infrastructure.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Login = table.Column<string>(type: "text", nullable: false),
+                    Password = table.Column<string>(type: "text", nullable: false),
+                    Email = table.Column<string>(type: "text", nullable: false),
+                    FullName = table.Column<string>(type: "text", nullable: false),
+                    RefreshToken_Value = table.Column<string>(type: "text", nullable: true),
+                    RefreshToken_ExpiryTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     CreateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "timezone('utc', current_timestamp)"),
                     UpdateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "timezone('utc', current_timestamp)"),
-                    State = table.Column<State>(type: "state", nullable: false, defaultValue: State.Actual)
+                    State = table.Column<State>(type: "state", nullable: false, defaultValueSql: "'actual'::state")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Login",
+                table: "Users",
+                column: "Login");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

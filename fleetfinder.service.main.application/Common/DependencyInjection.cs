@@ -1,11 +1,15 @@
-﻿using fleetfinder.service.main.application.Services;
+﻿using System.Text;
+using fleetfinder.service.main.application.Services;
 using fleetfinder.service.main.application.Services.UserService;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 
 namespace fleetfinder.service.main.application.Common;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection RegisterApplicationLayer(this IServiceCollection services)
+    public static IServiceCollection RegisterApplicationLayer(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddMediatR(conf => conf.RegisterServicesFromAssemblyContaining(typeof(DependencyInjection)));
 
@@ -18,6 +22,26 @@ public static class DependencyInjection
 
         services.AddScoped<IUserService, UserService>();
 
+        #endregion
+
+        #region JWT
+
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(option =>
+            {
+                option.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = configuration["Jwt:Issuer"],
+                    ValidAudience = configuration["Jwt:Audience"],
+                    ClockSkew = TimeSpan.Zero,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
+                        configuration["Jwt:Key"]))
+                };
+            });
         #endregion
         
         return services;

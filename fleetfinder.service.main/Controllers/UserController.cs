@@ -1,5 +1,5 @@
-using fleetfinder.service.main.application.Features.UserFeatures.Command.User_Post;
-using fleetfinder.service.main.application.Features.UserFeatures.Query.User_Get;
+using fleetfinder.service.main.application.Features.UserFeatures.Command.User_SignUp;
+using Microsoft.AspNetCore.Authorization;
 
 namespace fleetfinder.service.main.Controllers
 {
@@ -14,16 +14,22 @@ namespace fleetfinder.service.main.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("base")]
-        public async Task<UserGet.ResponseDto> GetBase([FromQuery] long id, CancellationToken cancellationToken)
+        [AllowAnonymous]
+        [HttpPost("SignUp")]
+        public async Task<UserSignUp.ResponseDto> UserSignUp(UserSignUp.RequestDto request, CancellationToken cancellationToken)
         {
-            return await _mediator.Send(new UserGet.Query(id), cancellationToken);
+            return await _mediator.Send(new UserSignUp.Command(request), cancellationToken);
         }
         
-        [HttpPost("base")]
-        public async Task<UserPost.ResponseDto> PostBase([FromBody] UserPost.RequestDto request, CancellationToken cancellationToken)
+        #region Test
+
+        [Authorize]
+        [HttpGet("Test")]
+        public IActionResult Test()
         {
-            return await _mediator.Send(new UserPost.Command(request), cancellationToken);
+            return Ok("You is login!");
         }
+
+        #endregion
     }
 }

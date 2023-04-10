@@ -1,8 +1,8 @@
 ﻿using fleetfinder.service.main.domain.Users;
 
-namespace fleetfinder.service.main.application.Features.UserFeatures.Command.User_Post;
+namespace fleetfinder.service.main.application.Features.UserFeatures.Command.User_SignUp;
 
-public static partial class UserPost
+public static partial class UserSignUp
 {
     public record Command(RequestDto RequestDto) : ICommandRequest<ResponseDto>;
     
@@ -10,23 +10,29 @@ public static partial class UserPost
     {
         private readonly CommandDbContext _commandDbContext;
         private readonly IMapper _mapper;
+        private readonly IUserService _userService;
 
-        public Handler(CommandDbContext commandDbContext, IMapper mapper)
+        public Handler(CommandDbContext commandDbContext, IMapper mapper, IUserService userService)
         {
             _commandDbContext = commandDbContext;
             _mapper = mapper;
+            _userService = userService;
         }
 
         public async Task<ResponseDto> Handle(Command request, CancellationToken cancellationToken)
         {
-            var req = request.RequestDto;
+            var requestDto = request.RequestDto;
 
-            var entity = _mapper.Map<User>(req);
+            var entity = _mapper.Map<User>(requestDto); 
+
+            var token = _userService.GenerateTokenUser(entity);
+            entity.RefreshToken.Value = token.Refresh;
+            entity.RefreshToken.ExpiryTime = token.Expiration;
 
             await _commandDbContext.Users.AddAsync(entity, cancellationToken);
             await _commandDbContext.SaveChangesAsync(cancellationToken);
             
-            return new ResponseDto(entity.Id);
+            return new ResponseDto(token);
         }
     }
 }

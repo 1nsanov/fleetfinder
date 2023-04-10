@@ -20,20 +20,43 @@ public static class HostingExtensions
             var enumConverter = new JsonStringEnumConverter();
             options.JsonSerializerOptions.Converters.Add(enumConverter);
         });
-        
-        
+
         builder.Services.AddDateOnlyTimeOnlyStringConverters();
         builder.Services.AddEndpointsApiExplorer();
+
+        #region Swagger
+
         builder.Services.AddSwaggerGen(options =>
         {
             options.SupportNonNullableReferenceTypes();
             options.CustomSchemaIds(type => type.FullName?.Replace("+", "_"));
             options.SwaggerDoc("v1", new OpenApiInfo { Title = "fleetfinder.service.main", Version = "v1" });
+            options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+            {
+                Type = SecuritySchemeType.Http,
+                Scheme = "Bearer",
+                BearerFormat = "JWT",
+                In = ParameterLocation.Header,
+            });
+            options.AddSecurityRequirement(new OpenApiSecurityRequirement {
+                {
+                    new OpenApiSecurityScheme {
+                        Reference = new OpenApiReference {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                        }
+                    },
+                    new string[] {}
+                }
+            });
         });
+
+        #endregion
+        
         builder.Services.AddFluentValidationRulesToSwagger();
 
         builder.Services.RegisterInfrastructureLayer(builder.Configuration, builder.Environment);
-        builder.Services.RegisterApplicationLayer();
+        builder.Services.RegisterApplicationLayer(builder.Configuration);
 
         return builder.Build();
     }

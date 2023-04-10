@@ -2,7 +2,7 @@
 
 public class TokenDto
 {
-    public string AccessToken { get; set; } = null!;
-    public string RefreshToken { get; set; } = null!;
+    public string Access { get; set; } = null!;
+    public string Refresh { get; set; } = null!;
     public DateTime Expiration { get; set; }
 }

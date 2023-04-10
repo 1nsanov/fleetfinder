@@ -13,7 +13,7 @@ using fleetfinder.service.main.infrastructure.Common.DbContexts;
 namespace fleetfinder.service.main.infrastructure.Migrations
 {
     [DbContext(typeof(MigrationDbContext))]
-    [Migration("20230311151422_init")]
+    [Migration("20230410201437_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,14 +39,26 @@ namespace fleetfinder.service.main.infrastructure.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasDefaultValueSql("timezone('utc', current_timestamp)");
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Login")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<State>("State")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("state")
-                        .HasDefaultValue(State.Actual);
+                        .HasDefaultValueSql("'actual'::state");
 
                     b.Property<DateTime>("UpdateDate")
                         .ValueGeneratedOnAddOrUpdate()
@@ -55,7 +67,34 @@ namespace fleetfinder.service.main.infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Login");
+
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("fleetfinder.service.main.domain.Users.User", b =>
+                {
+                    b.OwnsOne("fleetfinder.service.main.domain.Users.RefreshToken", "RefreshToken", b1 =>
+                        {
+                            b1.Property<long>("UserId")
+                                .HasColumnType("bigint");
+
+                            b1.Property<DateTime?>("ExpiryTime")
+                                .HasColumnType("timestamp with time zone");
+
+                            b1.Property<string>("Value")
+                                .HasColumnType("text");
+
+                            b1.HasKey("UserId");
+
+                            b1.ToTable("Users");
+
+                            b1.WithOwner()
+                                .HasForeignKey("UserId");
+                        });
+
+                    b.Navigation("RefreshToken")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

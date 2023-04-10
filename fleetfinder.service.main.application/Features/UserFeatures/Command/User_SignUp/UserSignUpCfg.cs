@@ -1,8 +1,8 @@
 ﻿using fleetfinder.service.main.domain.Users;
 
-namespace fleetfinder.service.main.application.Features.UserFeatures.Command.User_Post;
+namespace fleetfinder.service.main.application.Features.UserFeatures.Command.User_SignUp;
 
-public static partial class UserPost
+public static partial class UserSignUp
 {
     #region Validator
 
@@ -22,7 +22,8 @@ public static partial class UserPost
     {
         public MappingProfile()
         {
-            CreateMap<RequestDto, User>();
+            CreateMap<RequestDto, User>()
+                .MapRecordMember(dest => dest.FullName, src => $"{src.Name.First} {src.Name.Last} {src.Name.Middle}");
         }
     }
 
