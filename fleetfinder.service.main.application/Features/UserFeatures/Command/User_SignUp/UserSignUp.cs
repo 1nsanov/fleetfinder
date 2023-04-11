@@ -27,7 +27,7 @@ public static partial class UserSignUp
             var entity = _mapper.Map<User>(requestDto); 
 
             var token = _identifyService.GenerateTokenUser(entity);
-
+            
             await _commandDbContext.Users.AddAsync(entity, cancellationToken);
             await _commandDbContext.SaveChangesAsync(cancellationToken);
             

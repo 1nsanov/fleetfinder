@@ -1,4 +1,5 @@
 ﻿using fleetfinder.service.main.application.Common.Interfaces.Services;
+using Z.EntityFramework.Plus;
 
 namespace fleetfinder.service.main.application.Features.UserFeatures.Command.User_SignIn;
 
@@ -25,6 +26,7 @@ public static partial class UserSignIn
 
             var token = _identifyService.GenerateTokenUser(entity);
 
+            _commandDbContext.Users.Update(entity);
             await _commandDbContext.SaveChangesAsync(cancellationToken);
 
             return new ResponseDto(token);

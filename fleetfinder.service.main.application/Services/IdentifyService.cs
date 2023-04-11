@@ -50,7 +50,6 @@ public class IdentifyService : IIdentifyService
         {
             Access = accessToken,
             Refresh = refreshToken,
-            Expiration = token.ValidTo
         };
     }
     
@@ -92,7 +91,7 @@ public class IdentifyService : IIdentifyService
         return new JwtSecurityToken(_config["Jwt:Issuer"],
             _config["Jwt:Audience"],
             claims,
-            expires: DateTime.Now.AddMinutes(15),
+            expires: DateTime.UtcNow.AddSeconds(20),
             signingCredentials: credentials);
     }
 

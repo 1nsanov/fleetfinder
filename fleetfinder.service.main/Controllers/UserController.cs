@@ -1,4 +1,6 @@
+using System.ComponentModel.DataAnnotations;
 using fleetfinder.service.main.application.Features.UserFeatures.Command.User_Logout;
+using fleetfinder.service.main.application.Features.UserFeatures.Command.User_RefreshToken;
 using fleetfinder.service.main.application.Features.UserFeatures.Command.User_SignIn;
 using fleetfinder.service.main.application.Features.UserFeatures.Command.User_SignUp;
 using Microsoft.AspNetCore.Authorization;
@@ -30,6 +32,15 @@ namespace fleetfinder.service.main.Controllers
             return await _mediator.Send(new UserSignIn.Command(request), cancellationToken);
         }
 
+        [AllowAnonymous]
+        [HttpPost("refreshToken")]
+        public async Task<UserRefreshToken.ResponseDto> UserRefreshToken([FromHeader][Required] string refreshToken,
+            CancellationToken cancellationToken)
+        {
+            return await _mediator.Send(
+                new UserRefreshToken.Command(HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last(), refreshToken), cancellationToken);
+        }
+ 
         [Authorize]
         [HttpPost("logout")]
         public async Task<bool> UserLogout(CancellationToken cancellationToken)

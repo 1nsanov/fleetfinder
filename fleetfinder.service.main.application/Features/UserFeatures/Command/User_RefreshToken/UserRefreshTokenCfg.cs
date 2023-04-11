@@ -1,6 +1,6 @@
-﻿namespace fleetfinder.service.main.application.Features.UserFeatures.Command.User_Logout;
+namespace fleetfinder.service.main.application.Features.UserFeatures.Command.User_RefreshToken;
 
-public static partial class UserLogout
+public static partial class UserRefreshToken
 {
     #region Mapper
 
