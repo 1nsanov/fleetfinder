@@ -1,5 +1,6 @@
-using fleetfinder.service.main.application.Features.UserFeatures.Command.User_PostSignIn;
-using fleetfinder.service.main.application.Features.UserFeatures.Command.User_PostSignUp;
+using fleetfinder.service.main.application.Features.UserFeatures.Command.User_Logout;
+using fleetfinder.service.main.application.Features.UserFeatures.Command.User_SignIn;
+using fleetfinder.service.main.application.Features.UserFeatures.Command.User_SignUp;
 using Microsoft.AspNetCore.Authorization;
 
 namespace fleetfinder.service.main.Controllers
@@ -17,18 +18,26 @@ namespace fleetfinder.service.main.Controllers
 
         [AllowAnonymous]
         [HttpPost("signUp")]
-        public async Task<UserPostSignUp.ResponseDto> UserSignUp(UserPostSignUp.RequestDto request, CancellationToken cancellationToken)
+        public async Task<UserSignUp.ResponseDto> UserSignUp(UserSignUp.RequestDto request, CancellationToken cancellationToken)
         {
-            return await _mediator.Send(new UserPostSignUp.Command(request), cancellationToken);
+            return await _mediator.Send(new UserSignUp.Command(request), cancellationToken);
         }
 
         [AllowAnonymous]
         [HttpPost("signIn")]
-        public async Task<UserPostSignIn.ResponseDto> UserGetSignIn(UserPostSignIn.RequestDto request, CancellationToken cancellationToken)
+        public async Task<UserSignIn.ResponseDto> UserGetSignIn(UserSignIn.RequestDto request, CancellationToken cancellationToken)
         {
-            return await _mediator.Send(new UserPostSignIn.Query(request), cancellationToken);
+            return await _mediator.Send(new UserSignIn.Command(request), cancellationToken);
         }
-        
+
+        [Authorize]
+        [HttpPost("logout")]
+        public async Task<bool> UserLogout(CancellationToken cancellationToken)
+        {
+            return await _mediator.Send(
+                new UserLogout.Command(HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last()), cancellationToken);
+        }
+
         #region Test
 
         [Authorize]

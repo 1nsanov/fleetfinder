@@ -1,8 +1,8 @@
 ﻿using fleetfinder.service.main.domain.Users;
 
-namespace fleetfinder.service.main.application.Features.UserFeatures.Command.User_PostSignUp;
+namespace fleetfinder.service.main.application.Features.UserFeatures.Command.User_SignUp;
 
-public static partial class UserPostSignUp
+public static partial class UserSignUp
 {
     #region Validator
 

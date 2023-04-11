@@ -20,9 +20,10 @@ public static class DependencyInjection
 
         #region Services
 
+        services.AddSingleton<TokenService>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IIdentifyService, IdentifyService>();
-
+        
         #endregion
 
         #region JWT

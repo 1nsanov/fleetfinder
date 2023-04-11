@@ -1,8 +1,8 @@
 ﻿using fleetfinder.service.main.application.Services.Models;
 
-namespace fleetfinder.service.main.application.Features.UserFeatures.Command.User_PostSignUp;
+namespace fleetfinder.service.main.application.Features.UserFeatures.Command.User_SignUp;
 
-public static partial class UserPostSignUp
+public static partial class UserSignUp
 {
     public record RequestDto(
         string Login,

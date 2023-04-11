@@ -1,9 +1,9 @@
 ﻿using fleetfinder.service.main.application.Common.Interfaces.Services;
 using fleetfinder.service.main.domain.Users;
 
-namespace fleetfinder.service.main.application.Features.UserFeatures.Command.User_PostSignUp;
+namespace fleetfinder.service.main.application.Features.UserFeatures.Command.User_SignUp;
 
-public static partial class UserPostSignUp
+public static partial class UserSignUp
 {
     public record Command(RequestDto RequestDto) : ICommandRequest<ResponseDto>;
     

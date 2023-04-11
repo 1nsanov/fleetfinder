@@ -1,6 +1,8 @@
 ﻿using System.Reflection;
 using System.Text.Json.Serialization;
 using fleetfinder.service.main.application.Common;
+using fleetfinder.service.main.application.Common.Middlewares;
+using fleetfinder.service.main.application.Services;
 using fleetfinder.service.main.infrastructure.Common;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.OpenApi.Models;
@@ -80,6 +82,8 @@ public static class HostingExtensions
 
         app.UseAuthentication();
 
+        app.UseMiddleware<TokenServiceMiddleware>();
+        
         app.UseAuthorization();
 
         app.UseEndpoints(endp =>

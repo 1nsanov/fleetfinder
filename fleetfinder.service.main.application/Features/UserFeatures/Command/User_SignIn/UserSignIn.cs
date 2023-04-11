@@ -1,12 +1,12 @@
 ﻿using fleetfinder.service.main.application.Common.Interfaces.Services;
 
-namespace fleetfinder.service.main.application.Features.UserFeatures.Command.User_PostSignIn;
+namespace fleetfinder.service.main.application.Features.UserFeatures.Command.User_SignIn;
 
-public static partial class UserPostSignIn
+public static partial class UserSignIn
 {
-    public record Query(UserPostSignIn.RequestDto RequestDto) : IQueryRequest<UserPostSignIn.ResponseDto>;
+    public record Command(RequestDto RequestDto) : ICommandRequest<ResponseDto>;
     
-    internal class Handler : IRequestHandler<Query, UserPostSignIn.ResponseDto>
+    internal class Handler : IRequestHandler<Command, ResponseDto>
     {
         private readonly IIdentifyService _identifyService;
         private readonly IUserService _userService;
@@ -19,7 +19,7 @@ public static partial class UserPostSignIn
             _commandDbContext = commandDbContext;
         }
 
-        public async Task<UserPostSignIn.ResponseDto> Handle(Query request, CancellationToken cancellationToken)
+        public async Task<ResponseDto> Handle(Command request, CancellationToken cancellationToken)
         {
             var entity = await _userService.GetUserByLoginPassword(request.RequestDto.Login, request.RequestDto.Password, cancellationToken);
 
@@ -27,7 +27,7 @@ public static partial class UserPostSignIn
 
             await _commandDbContext.SaveChangesAsync(cancellationToken);
 
-            return new UserPostSignIn.ResponseDto(token);
+            return new ResponseDto(token);
         }
     }
 }

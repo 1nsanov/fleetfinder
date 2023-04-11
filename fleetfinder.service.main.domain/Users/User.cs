@@ -8,7 +8,7 @@ public class User : EntityBase
     public string Password { get; set; } = null!;
     public string Email { get; set; } = null!;
     public string FullName { get; set; } = null!;
-    public RefreshToken RefreshToken { get; set; } = new();
+    public RefreshToken? RefreshToken { get; set; } = new();
 }
 
 [Owned]

@@ -15,19 +15,17 @@ namespace fleetfinder.service.main.application.Services;
 public class IdentifyService : IIdentifyService
 {
     private readonly QueryDbContext _queryDbContext;
-    private readonly CommandDbContext _commandDbContext;
     private readonly IConfiguration _config;
 
-    public IdentifyService(QueryDbContext queryDbContext, IConfiguration config, CommandDbContext commandDbContext)
+    public IdentifyService(QueryDbContext queryDbContext, IConfiguration config)
     {
         _queryDbContext = queryDbContext;
         _config = config;
-        _commandDbContext = commandDbContext;
     }
 
     public async Task<User> GetUserByAccessToken(string accessToken, CancellationToken cancellationToken)
     {
-        var principal = GetPrincipalFromExpiredToken(accessToken) ?? throw new Exception("Invalid access token or refresh token");
+        var principal = GetPrincipalExpireFromToken(accessToken) ?? throw new Exception("Invalid access token or refresh token");
 
         var claim = principal.Claims.FirstOrDefault(claim => claim.Type.Contains("nameidentifier"));
         var login = claim?.Value;
@@ -42,8 +40,11 @@ public class IdentifyService : IIdentifyService
         var accessToken = new JwtSecurityTokenHandler().WriteToken(token);
         var refreshToken = GenerateRefreshToken();
         
-        user.RefreshToken.Value = refreshToken;
-        user.RefreshToken.ExpiryTime = token.ValidTo;
+        user.RefreshToken = new RefreshToken
+        {
+            Value = refreshToken,
+            ExpiryTime = token.ValidTo
+        };
         
         return new TokenDto
         {
@@ -52,31 +53,11 @@ public class IdentifyService : IIdentifyService
             Expiration = token.ValidTo
         };
     }
-
-   
+    
+    
     #region Private
 
-    private JwtSecurityToken GenerateJwtSecurityToken(User user)
-    {
-        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
-        var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-
-        var claims = new[]
-        {
-            new Claim(ClaimTypes.NameIdentifier, user.Login),
-            new Claim(ClaimTypes.Email, user.Email),
-            new Claim(ClaimTypes.GivenName, user.FullName),
-            // new Claim(ClaimTypes.Role, role.Code)
-        };
-
-        return new JwtSecurityToken(_config["Jwt:Issuer"],
-            _config["Jwt:Audience"],
-            claims,
-            expires: DateTime.Now.AddMinutes(15),
-            signingCredentials: credentials);
-    }
-    
-    private ClaimsPrincipal GetPrincipalFromExpiredToken(string? token)
+    private ClaimsPrincipal GetPrincipalExpireFromToken(string token)
     {
         var tokenValidationParameters = new TokenValidationParameters
         {
@@ -94,7 +75,27 @@ public class IdentifyService : IIdentifyService
 
         return principal;
     }
-    
+   
+    private JwtSecurityToken GenerateJwtSecurityToken(User user)
+    {
+        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+        var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+
+        var claims = new[]
+        {
+            new Claim(ClaimTypes.NameIdentifier, user.Login),
+            new Claim(ClaimTypes.Email, user.Email),
+            new Claim(ClaimTypes.GivenName, user.FullName),
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+        };
+
+        return new JwtSecurityToken(_config["Jwt:Issuer"],
+            _config["Jwt:Audience"],
+            claims,
+            expires: DateTime.Now.AddMinutes(15),
+            signingCredentials: credentials);
+    }
+
     private string GenerateRefreshToken()
     {
         var randomNumber = new byte[64];
