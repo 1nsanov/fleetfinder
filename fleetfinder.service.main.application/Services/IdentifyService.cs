@@ -3,25 +3,25 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using fleetfinder.service.main.application.Common.Exceptions;
-using fleetfinder.service.main.application.Services.UserService.Models;
+using fleetfinder.service.main.application.Services.Models;
 using fleetfinder.service.main.domain.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
-namespace fleetfinder.service.main.application.Services.UserService;
+namespace fleetfinder.service.main.application.Services;
 
-public class UserService : IUserService
+public class IdentifyService : IIdentifyService
 {
     private readonly QueryDbContext _queryDbContext;
     private readonly IConfiguration _config;
-    
-    public UserService(QueryDbContext queryDbContext, IConfiguration config)
+
+    public IdentifyService(QueryDbContext queryDbContext, IConfiguration config)
     {
         _queryDbContext = queryDbContext;
         _config = config;
     }
-    
+
     public async Task<User> GetUserByAccessToken(string accessToken, CancellationToken cancellationToken)
     {
         var principal = GetPrincipalFromExpiredToken(accessToken);
@@ -31,13 +31,12 @@ public class UserService : IUserService
         var login = claim?.Value;
 
         return await _queryDbContext.Users.FirstOrDefaultAsync(u => u.Login == login, cancellationToken)
-            ?? throw new EntityNotFoundException($"User by access token not found");
+            ?? throw new EntityNotFoundException("User by access token not found");
     }
     
     public TokenDto GenerateTokenUser(User user)
     {
         var token = GenerateToken(user);
-
         var accessToken = new JwtSecurityTokenHandler().WriteToken(token);
         var refreshToken = GenerateRefreshToken();
         return new TokenDto

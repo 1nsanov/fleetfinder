@@ -1,4 +1,4 @@
-﻿namespace fleetfinder.service.main.application.Services.UserService.Models;
+﻿namespace fleetfinder.service.main.application.Services.Models;
 
 public class TokenDto
 {

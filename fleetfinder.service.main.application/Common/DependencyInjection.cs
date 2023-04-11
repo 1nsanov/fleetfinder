@@ -1,6 +1,5 @@
 ﻿using System.Text;
 using fleetfinder.service.main.application.Services;
-using fleetfinder.service.main.application.Services.UserService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -21,6 +20,7 @@ public static class DependencyInjection
         #region Services
 
         services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IIdentifyService, IdentifyService>();
 
         #endregion
 
