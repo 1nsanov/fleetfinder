@@ -3,14 +3,10 @@ using System.Security.Claims;
 using fleetfinder.service.main.application.Services.Models;
 using fleetfinder.service.main.domain.Users;
 
-namespace fleetfinder.service.main.application.Common.Interfaces;
+namespace fleetfinder.service.main.application.Common.Interfaces.Services;
 
 public interface IIdentifyService
 {
     public Task<User> GetUserByAccessToken(string accessToken, CancellationToken cancellationToken);
     public TokenDto GenerateTokenUser(User user);
-    public JwtSecurityToken GenerateToken(User user);
-    public Task<User> Authenticate(string login, string password, CancellationToken cancellationToken);
-    public string GenerateRefreshToken();
-    public ClaimsPrincipal GetPrincipalFromExpiredToken(string? token);
 }

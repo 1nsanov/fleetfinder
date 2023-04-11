@@ -1,4 +1,5 @@
-﻿using fleetfinder.service.main.domain.Users;
+﻿using fleetfinder.service.main.application.Common.Interfaces.Services;
+using fleetfinder.service.main.domain.Users;
 
 namespace fleetfinder.service.main.application.Features.UserFeatures.Command.User_PostSignUp;
 
@@ -26,8 +27,6 @@ public static partial class UserPostSignUp
             var entity = _mapper.Map<User>(requestDto); 
 
             var token = _identifyService.GenerateTokenUser(entity);
-            entity.RefreshToken.Value = token.Refresh;
-            entity.RefreshToken.ExpiryTime = token.Expiration;
 
             await _commandDbContext.Users.AddAsync(entity, cancellationToken);
             await _commandDbContext.SaveChangesAsync(cancellationToken);

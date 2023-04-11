@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using fleetfinder.service.main.application.Common.Interfaces.Services;
 using fleetfinder.service.main.application.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;

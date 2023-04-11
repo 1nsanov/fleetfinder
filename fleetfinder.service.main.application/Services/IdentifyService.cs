@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using fleetfinder.service.main.application.Common.Exceptions;
+using fleetfinder.service.main.application.Common.Interfaces.Services;
 using fleetfinder.service.main.application.Services.Models;
 using fleetfinder.service.main.domain.Users;
 using Microsoft.EntityFrameworkCore;
@@ -14,18 +15,19 @@ namespace fleetfinder.service.main.application.Services;
 public class IdentifyService : IIdentifyService
 {
     private readonly QueryDbContext _queryDbContext;
+    private readonly CommandDbContext _commandDbContext;
     private readonly IConfiguration _config;
 
-    public IdentifyService(QueryDbContext queryDbContext, IConfiguration config)
+    public IdentifyService(QueryDbContext queryDbContext, IConfiguration config, CommandDbContext commandDbContext)
     {
         _queryDbContext = queryDbContext;
         _config = config;
+        _commandDbContext = commandDbContext;
     }
 
     public async Task<User> GetUserByAccessToken(string accessToken, CancellationToken cancellationToken)
     {
-        var principal = GetPrincipalFromExpiredToken(accessToken);
-        if (principal is null) throw new Exception("Invalid access token or refresh token");
+        var principal = GetPrincipalFromExpiredToken(accessToken) ?? throw new Exception("Invalid access token or refresh token");
 
         var claim = principal.Claims.FirstOrDefault(claim => claim.Type.Contains("nameidentifier"));
         var login = claim?.Value;
@@ -36,9 +38,13 @@ public class IdentifyService : IIdentifyService
     
     public TokenDto GenerateTokenUser(User user)
     {
-        var token = GenerateToken(user);
+        var token = GenerateJwtSecurityToken(user);
         var accessToken = new JwtSecurityTokenHandler().WriteToken(token);
         var refreshToken = GenerateRefreshToken();
+        
+        user.RefreshToken.Value = refreshToken;
+        user.RefreshToken.ExpiryTime = token.ValidTo;
+        
         return new TokenDto
         {
             Access = accessToken,
@@ -46,8 +52,11 @@ public class IdentifyService : IIdentifyService
             Expiration = token.ValidTo
         };
     }
-    
-    public JwtSecurityToken GenerateToken(User user)
+
+   
+    #region Private
+
+    private JwtSecurityToken GenerateJwtSecurityToken(User user)
     {
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
@@ -67,21 +76,7 @@ public class IdentifyService : IIdentifyService
             signingCredentials: credentials);
     }
     
-    public async Task<User> Authenticate(string login, string password, CancellationToken cancellationToken)
-    {
-        return await _queryDbContext.Users.FirstOrDefaultAsync(u => u.Login == login && u.Password == password, cancellationToken: cancellationToken)
-                          ?? throw new EntityNotFoundException($"User with login '{login}' and password '{password}' not found");
-    }
-    
-    public string GenerateRefreshToken()
-    {
-        var randomNumber = new byte[64];
-        using var rng = RandomNumberGenerator.Create();
-        rng.GetBytes(randomNumber);
-        return Convert.ToBase64String(randomNumber);
-    }
-    
-    public ClaimsPrincipal GetPrincipalFromExpiredToken(string? token)
+    private ClaimsPrincipal GetPrincipalFromExpiredToken(string? token)
     {
         var tokenValidationParameters = new TokenValidationParameters
         {
@@ -99,4 +94,14 @@ public class IdentifyService : IIdentifyService
 
         return principal;
     }
+    
+    private string GenerateRefreshToken()
+    {
+        var randomNumber = new byte[64];
+        using var rng = RandomNumberGenerator.Create();
+        rng.GetBytes(randomNumber);
+        return Convert.ToBase64String(randomNumber);
+    }
+
+    #endregion
 }
