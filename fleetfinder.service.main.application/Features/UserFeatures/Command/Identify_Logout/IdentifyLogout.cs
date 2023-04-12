@@ -2,9 +2,9 @@
 using fleetfinder.service.main.application.Common.Interfaces.Services;
 using fleetfinder.service.main.application.Services;
 
-namespace fleetfinder.service.main.application.Features.UserFeatures.Command.User_Logout;
+namespace fleetfinder.service.main.application.Features.UserFeatures.Command.Identify_Logout;
 
-public static partial class UserLogout
+public static partial class IdentifyLogout
 {
     public record Command(string? AccessToken) : ICommandRequest<bool>;
     

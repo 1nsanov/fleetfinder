@@ -1,13 +1,9 @@
-﻿using System.Security.Authentication;
-using fleetfinder.service.main.application.Common.Interfaces.Services;
-using fleetfinder.service.main.application.Services;
-using fleetfinder.service.main.application.Services.Models;
-using fleetfinder.service.main.domain.Users;
+﻿using fleetfinder.service.main.application.Common.Interfaces.Services;
 using Microsoft.IdentityModel.Tokens;
 
-namespace fleetfinder.service.main.application.Features.UserFeatures.Command.User_RefreshToken;
+namespace fleetfinder.service.main.application.Features.UserFeatures.Command.Identify_RefreshToken;
 
-public static partial class UserRefreshToken
+public static partial class IdentifyRefreshToken
 {
     public record Command(string? AccessToken, string RefreshToken) : ICommandRequest<ResponseDto>;
     
