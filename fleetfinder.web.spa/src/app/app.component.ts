@@ -7,20 +7,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  public forecasts?: WeatherForecast[];
-
-  constructor(http: HttpClient) {
-    http.get<WeatherForecast[]>('/weatherforecast').subscribe(result => {
-      this.forecasts = result;
-    }, error => console.error(error));
-  }
-
+  // public forecasts?: WeatherForecast[];
+  //
+  // constructor(http: HttpClient) {
+  //   http.get<WeatherForecast[]>('/weatherforecast').subscribe(result => {
+  //     this.forecasts = result;
+  //   }, error => console.error(error));
+  // }
+  //
   title = 'fleetfinder.web.spa';
-}
-
-interface WeatherForecast {
-  date: string;
-  temperatureC: number;
-  temperatureF: number;
-  summary: string;
 }

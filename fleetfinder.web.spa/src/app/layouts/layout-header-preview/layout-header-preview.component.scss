@@ -1,0 +1,47 @@
+.header-preview{
+  height: 236px;
+  background: var(--yellow);
+  align-items: center;
+  .wrapper-content{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    .content{
+      display: flex;
+      align-self: center;
+      align-items: center;
+      justify-content: center;
+      height: 175px;
+      color: var(--blue);
+      cursor: pointer;
+      user-select: none;
+      .content_logo{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        height: 100%;
+        .content_logo_img{
+          max-width: 145px;
+        }
+        .content_logo_text{
+          font-family: "Ostrich Sans", sans-serif;
+          font-size: 48px;
+          text-align: center;
+        }
+      }
+      .content_line{
+        width: 3px;
+        height: 100%;
+        margin: 0 20px;
+        background: var(--blue);
+      }
+      .content_text{
+        font-family: 'Comfortaa';
+        font-weight: 700;
+        font-size: 39px;
+        line-height: 43px;
+      }
+    }
+  }
+}

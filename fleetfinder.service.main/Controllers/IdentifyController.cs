@@ -48,16 +48,5 @@ namespace fleetfinder.service.main.Controllers
             return await _mediator.Send(
                 new IdentifyLogout.Command(HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last()), cancellationToken);
         }
-
-        #region Test
-
-        [Authorize]
-        [HttpGet("Test")]
-        public IActionResult Test()
-        {
-            return Ok("You is login!");
-        }
-
-        #endregion
     }
 }

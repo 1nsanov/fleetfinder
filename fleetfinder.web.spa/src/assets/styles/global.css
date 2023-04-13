@@ -4,4 +4,16 @@
   font-family: "Montserrat Alternates";
   font-weight: 500;
   font-size: 14px;
+  line-height: 1;
+}
+
+body{
+  background: url("/assets/images/reapet-image.svg") repeat fixed;
+}
+
+._container{
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 0 15px;
+  height: 100%;
 }
