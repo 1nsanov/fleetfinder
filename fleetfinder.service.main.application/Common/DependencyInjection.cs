@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using fleetfinder.service.main.application.Common.Interfaces.Services;
+using fleetfinder.service.main.application.Common.Validation;
 using fleetfinder.service.main.application.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
@@ -17,6 +18,7 @@ public static class DependencyInjection
 
         services.AddValidatorsFromAssemblyContaining(typeof(DependencyInjection), includeInternalTypes: true);
         services.AddFluentValidationAutoValidation();
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
 
         #region Services
 
