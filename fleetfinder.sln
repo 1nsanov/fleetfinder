@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "fleetfinder.service.main.ap
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "fleetfinder.service.main.infrastructure", "fleetfinder.service.main.infrastructure\fleetfinder.service.main.infrastructure.csproj", "{428CA67D-B2E4-4FEA-B098-9A5C0D3F70D5}"
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{E9572811-6171-4D5C-BBBA-36E59BBCF511}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,6 +44,10 @@ Global
 		{428CA67D-B2E4-4FEA-B098-9A5C0D3F70D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{428CA67D-B2E4-4FEA-B098-9A5C0D3F70D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{428CA67D-B2E4-4FEA-B098-9A5C0D3F70D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9572811-6171-4D5C-BBBA-36E59BBCF511}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9572811-6171-4D5C-BBBA-36E59BBCF511}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9572811-6171-4D5C-BBBA-36E59BBCF511}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9572811-6171-4D5C-BBBA-36E59BBCF511}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
