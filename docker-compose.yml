@@ -1,0 +1,10 @@
+version: '3.4'
+
+services:
+  fleetfinder.service.main:
+    image: ${DOCKER_REGISTRY-}fleetfinderservicemain
+    build:
+      context: .
+      dockerfile: fleetfinder.service.main/Dockerfile
+
+    
