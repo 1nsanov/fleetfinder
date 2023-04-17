@@ -5,4 +5,4 @@ services:
     image: ${DOCKER_REGISTRY-}fleetfinderservicemain
     build:
       context: .
-      dockerfile: fleetfinder.service.main/Dockerfile
+      dockerfile: ./Dockerfile
