@@ -4,9 +4,6 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <UserSecretsId>b2d60800-985c-4b4f-b375-ee33fa33bd8c</UserSecretsId>
-    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,12 +20,6 @@
   <ItemGroup>
     <ProjectReference Include="..\fleetfinder.service.main.application\fleetfinder.service.main.application.csproj" />
     <ProjectReference Include="..\fleetfinder.service.main.infrastructure\fleetfinder.service.main.infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="..\.dockerignore">
-      <Link>.dockerignore</Link>
-    </Content>
   </ItemGroup>
 
 </Project>
