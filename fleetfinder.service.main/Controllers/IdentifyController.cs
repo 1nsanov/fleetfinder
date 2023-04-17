@@ -20,33 +20,39 @@ namespace fleetfinder.service.main.Controllers
 
         [AllowAnonymous]
         [HttpPost("signUp")]
-        public async Task<IdentifySignUp.ResponseDto> IdentifySignUp(IdentifySignUp.RequestDto request, CancellationToken cancellationToken)
+        public async Task<IdentifySignUp.ResponseDto> IdentifySignUp(IdentifySignUp.RequestDto request,
+            CancellationToken cancellationToken)
         {
             return await _mediator.Send(new IdentifySignUp.Command(request), cancellationToken);
         }
 
         [AllowAnonymous]
         [HttpPost("signIn")]
-        public async Task<IdentifySignIn.ResponseDto> IdentifySignIn(IdentifySignIn.RequestDto request, CancellationToken cancellationToken)
+        public async Task<IdentifySignIn.ResponseDto> IdentifySignIn(IdentifySignIn.RequestDto request,
+            CancellationToken cancellationToken)
         {
             return await _mediator.Send(new IdentifySignIn.Command(request), cancellationToken);
         }
 
         [AllowAnonymous]
         [HttpPost("refreshToken")]
-        public async Task<IdentifyRefreshToken.ResponseDto> IdentifyRefreshToken([FromHeader][Required] string refreshToken,
+        public async Task<IdentifyRefreshToken.ResponseDto> IdentifyRefreshToken(
+            [FromHeader] [Required] string refreshToken,
             CancellationToken cancellationToken)
         {
             return await _mediator.Send(
-                new IdentifyRefreshToken.Command(HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last(), refreshToken), cancellationToken);
+                new IdentifyRefreshToken.Command(
+                    HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last(), refreshToken),
+                cancellationToken);
         }
- 
+
         [Authorize]
         [HttpPost("logout")]
         public async Task<bool> IdentifyLogout(CancellationToken cancellationToken)
         {
             return await _mediator.Send(
-                new IdentifyLogout.Command(HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last()), cancellationToken);
+                new IdentifyLogout.Command(HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ")
+                    .Last()), cancellationToken);
         }
 
         #region Test
@@ -55,7 +61,7 @@ namespace fleetfinder.service.main.Controllers
         [HttpGet("test/auth")]
         public async Task<string> Test(CancellationToken cancellationToken)
         {
-            return "You is sign in!";
+            return "You is sign ";
         }
 
         #endregion
