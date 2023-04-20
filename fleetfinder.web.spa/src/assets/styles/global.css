@@ -5,6 +5,8 @@
   font-weight: 500;
   font-size: 14px;
   line-height: 1;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
 }
 
 body{
@@ -16,4 +18,17 @@ body{
   margin: 0 auto;
   padding: 0 15px;
   height: 100%;
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

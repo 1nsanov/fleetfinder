@@ -6,12 +6,14 @@ import { AppComponent } from './app.component';
 import {AppRoutingModule} from "./app-routing.module";
 import { LayoutBaseComponent } from './layouts/layout-base/layout-base.component';
 import { LayoutHeaderPreviewComponent } from './layouts/layout-header-preview/layout-header-preview.component';
+import { LayoutHeaderNavComponent } from './layouts/layout-header-nav/layout-header-nav.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LayoutBaseComponent,
-    LayoutHeaderPreviewComponent
+    LayoutHeaderPreviewComponent,
+    LayoutHeaderNavComponent
   ],
   imports: [
     BrowserModule, HttpClientModule, AppRoutingModule

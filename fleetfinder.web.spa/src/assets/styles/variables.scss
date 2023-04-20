@@ -1,4 +1,15 @@
 :root{
   --yellow: #F8E79A;
+  --green: #9FE15E;
+  --red: #EC676B;
+  --blue-light: #B6E5EE;
   --blue: #242B50;
+  --blue-saturated: #3F68CF;
+  --white: #F9F9F9;
+  --grey: #8C8C8C;
+  --black: #1E1E1E;
+  --black-75: #565656;
+  --black-50: #8F8F8F;
+  --gr-w-w-w: linear-gradient(90deg, var(--white) 0%, #FFFFFF 50%, var(--white) 100%);
+  --shadow-1: drop-shadow(0px 0px 20px rgba(0, 0, 0, 0.1));
 }
