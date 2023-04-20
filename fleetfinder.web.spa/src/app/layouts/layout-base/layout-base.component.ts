@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./layout-base.component.scss']
 })
 export class LayoutBaseComponent {
-
+  isShowContainer: boolean = true;
 }

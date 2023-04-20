@@ -16,8 +16,10 @@ body{
 ._container{
   max-width: 1024px;
   margin: 0 auto;
-  padding: 0 15px;
   height: 100%;
+  @media (max-width: 1054px) {
+    padding: 0 15px;
+  }
 }
 
 .fade-in {
