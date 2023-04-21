@@ -10,6 +10,9 @@
   --black: #1E1E1E;
   --black-75: #565656;
   --black-50: #8F8F8F;
+
   --gr-w-w-w: linear-gradient(90deg, var(--white) 0%, #FFFFFF 50%, var(--white) 100%);
   --shadow-1: drop-shadow(0px 0px 20px rgba(0, 0, 0, 0.1));
+
+  --transition-03-eio: all 0.3s ease-in-out;
 }

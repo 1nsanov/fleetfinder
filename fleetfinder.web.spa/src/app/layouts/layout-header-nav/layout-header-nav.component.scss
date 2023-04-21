@@ -13,9 +13,45 @@
     }
     .logo{
       max-width: 40px;
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: var(--transition-03-eio);
+      &:hover{
+        transform: scale(1.1);
+      }
     }
     .nav{
-
+      display: flex;
+      height: 100%;
+      align-items: center;
+      .item{
+        text-align: center;
+        flex: 1 1 33.333%;
+        display: flex;
+        height: 100%;
+        cursor: pointer;
+        transition: var(--transition-03-eio);
+        span {
+          width: 100%;
+          align-self: center;
+          font-size: 24px;
+          font-weight: 700;
+          transition: var(--transition-03-eio);
+        }
+        &.active{
+          border-bottom: 5px solid var(--green);
+          span{
+            color: var(--green);
+            padding-top: 5px;
+          }
+        }
+        &:hover{
+          color: var(--green);
+          span{
+            transform: scale(1.1);
+          }
+        }
+      }
     }
     .user{
       max-width: 40px;

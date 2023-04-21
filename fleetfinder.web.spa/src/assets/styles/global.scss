@@ -6,7 +6,6 @@
   font-size: 14px;
   line-height: 1;
   box-sizing: border-box;
-  transition: all 0.3s ease;
 }
 
 body{
@@ -23,7 +22,7 @@ body{
 }
 
 .fade-in {
-  animation: fadeIn 0.5s ease-in;
+  animation: fadeIn 1s ease-in;
 }
 
 @keyframes fadeIn {

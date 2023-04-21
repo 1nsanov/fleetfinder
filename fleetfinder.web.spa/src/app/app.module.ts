@@ -7,13 +7,21 @@ import {AppRoutingModule} from "./app-routing.module";
 import { LayoutBaseComponent } from './layouts/layout-base/layout-base.component';
 import { LayoutHeaderPreviewComponent } from './layouts/layout-header-preview/layout-header-preview.component';
 import { LayoutHeaderNavComponent } from './layouts/layout-header-nav/layout-header-nav.component';
+import { TransportsPageComponent } from './pages/transports-page/transports-page.component';
+import { LandingPageComponent } from './pages/landing-page/landing-page.component';
+import { OrdersPageComponent } from './pages/orders-page/orders-page.component';
+import { AboutPageComponent } from './pages/about-page/about-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LayoutBaseComponent,
     LayoutHeaderPreviewComponent,
-    LayoutHeaderNavComponent
+    LayoutHeaderNavComponent,
+    TransportsPageComponent,
+    LandingPageComponent,
+    OrdersPageComponent,
+    AboutPageComponent
   ],
   imports: [
     BrowserModule, HttpClientModule, AppRoutingModule

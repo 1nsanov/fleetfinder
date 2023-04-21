@@ -1,10 +1,27 @@
 <header id="header-nav" class="header-nav">
   <div class="_container wrapper">
-    <div class="logo">
+    <div class="logo" (click)="changeNavTab(navTab.home)">
       <img src="../../../assets/images/logo-black-1024.png" alt="">
     </div>
     <nav class="nav">
-      nav bar
+      <div class="item"
+           [ngClass]="{'active': currentNavTab == navTab.transports}"
+           (click)="changeNavTab(navTab.transports)"
+      >
+        <span>Транспорт</span>
+      </div>
+      <div class="item"
+           [ngClass]="{'active': currentNavTab == navTab.orders}"
+           (click)="changeNavTab(navTab.orders)"
+      >
+        <span>Заказы</span>
+      </div>
+      <div class="item"
+           [ngClass]="{'active': currentNavTab == navTab.about}"
+           (click)="changeNavTab(navTab.about)"
+      >
+        <span>О нас</span>
+      </div>
     </nav>
     <div class="user">
       <div class="avatar unsignin">
