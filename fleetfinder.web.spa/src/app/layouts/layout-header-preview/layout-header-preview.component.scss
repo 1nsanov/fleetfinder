@@ -2,7 +2,7 @@
   height: 236px;
   background: var(--yellow);
   align-items: center;
-  transition: var(--transition-03-eio);
+  transition: var(--transition-base);
   .wrapper-content{
     height: 100%;
     display: flex;
@@ -16,7 +16,7 @@
       color: var(--blue);
       cursor: pointer;
       user-select: none;
-      transition: var(--transition-03-eio);
+      transition: var(--transition-base);
       .content_logo{
         display: flex;
         flex-direction: column;

@@ -12,6 +12,8 @@ body{
   background: url("/assets/images/reapet-image.svg") repeat fixed;
 }
 
+button,
+button:focus,
 input,
 input:focus{
   outline: none;

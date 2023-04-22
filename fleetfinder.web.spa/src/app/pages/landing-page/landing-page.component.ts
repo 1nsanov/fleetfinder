@@ -8,4 +8,7 @@ import { Component } from '@angular/core';
 export class LandingPageComponent {
   valueTest: string = ""
   valueTest2: string = ""
+  clickButton(){
+    console.log("Click!")
+  }
 }

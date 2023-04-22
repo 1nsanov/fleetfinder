@@ -1,5 +1,5 @@
 
-<div class="flex gap-2">
+<div class="flex gap-2 flex-wrap">
   <app-input
     [(value)]="valueTest"
     [label]="'Логин'"
@@ -11,6 +11,34 @@
     [label]="'Пароль'"
     [type]="'password'"
   />
+
+  <app-button (click)="clickButton()">
+    Кнопка
+  </app-button>
+  <div class="flex-grow">
+    <app-button (click)="clickButton()" [disabled]="true">
+      Кнопка
+    </app-button>
+  </div>
+
+  <app-button theme="yellow" (click)="clickButton()">
+    Кнопка
+  </app-button>
+  <app-button theme="light-blue" (click)="clickButton()">
+    Кнопка
+  </app-button>
+  <app-button theme="black" (click)="clickButton()">
+    Кнопка
+  </app-button>
+  <app-button theme="white" (click)="clickButton()">
+    Кнопка
+  </app-button>
+  <app-button theme="green" (click)="clickButton()">
+    Кнопка
+  </app-button>
+  <app-button theme="red" (click)="clickButton()">
+    Кнопка
+  </app-button>
 </div>
 
 <div style="font-size: 16px; line-height: 1.5;">

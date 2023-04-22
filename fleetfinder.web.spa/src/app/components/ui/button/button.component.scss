@@ -1,0 +1,67 @@
+.btn-base{
+  min-width: 160px;
+  width: 100%;
+  height: 40px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 18px;
+  transition: var(--transition-base);
+  &.blue{
+    background: var(--blue);
+    color: var(--white);
+    &:hover:not(.disabled){
+      filter: brightness(1.2);
+    }
+  }
+  &.yellow {
+    background: var(--yellow);
+    color: var(--black);
+    &:hover:not(.disabled){
+      filter: brightness(1.03);
+    }
+  }
+  &.light-blue {
+    background: var(--blue-light);
+    color: var(--black);
+    &:hover:not(.disabled){
+      filter: brightness(1.03);
+    }
+  }
+  &.black {
+    background: var(--black);
+    color: var(--white);
+    &:hover:not(.disabled){
+      filter: brightness(1.4);
+    }
+  }
+  &.white {
+    background: var(--white);
+    color: var(--black);
+    &:hover:not(.disabled){
+      filter: brightness(0.925);
+    }
+  }
+  &.green {
+    background: var(--green);
+    color: var(--white);
+    &:hover:not(.disabled){
+      filter: brightness(1.07);
+    }
+  }
+  &.red {
+    background: var(--red);
+    color: var(--white);
+    &:hover:not(.disabled){
+      filter: brightness(1.1);
+    }
+  }
+
+  &:is(:hover:not(.disabled), focus:not(.disabled)){
+    transform: scale(1.05);
+  }
+
+  &.disabled{
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}

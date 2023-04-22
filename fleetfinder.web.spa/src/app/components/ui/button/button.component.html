@@ -1,0 +1,14 @@
+<button class="btn-base"
+        [ngClass]="{
+          'disabled' : disabled,
+          'blue' : BtnTheme.Blue == theme,
+          'yellow' : BtnTheme.Yellow == theme,
+          'light-blue' : BtnTheme.BlueLight == theme,
+          'black' : BtnTheme.Black == theme,
+          'white' : BtnTheme.White == theme,
+          'green' : BtnTheme.Green == theme,
+          'red' : BtnTheme.Red == theme
+        }"
+        (click)="onClick($event)">
+  <ng-content></ng-content>
+</button>

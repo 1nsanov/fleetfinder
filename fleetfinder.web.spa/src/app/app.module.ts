@@ -12,6 +12,7 @@ import { LandingPageComponent } from './pages/landing-page/landing-page.componen
 import { OrdersPageComponent } from './pages/orders-page/orders-page.component';
 import { AboutPageComponent } from './pages/about-page/about-page.component';
 import { InputComponent } from './components/ui/input/input.component';
+import { ButtonComponent } from './components/ui/button/button.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { InputComponent } from './components/ui/input/input.component';
     LandingPageComponent,
     OrdersPageComponent,
     AboutPageComponent,
-    InputComponent
+    InputComponent,
+    ButtonComponent
   ],
   imports: [
     BrowserModule, HttpClientModule, AppRoutingModule
