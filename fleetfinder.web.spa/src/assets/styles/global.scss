@@ -1,4 +1,4 @@
-*{
+* {
   margin: 0;
   padding: 0;
   font-family: "Montserrat Alternates";
@@ -12,6 +12,11 @@ body{
   background: url("/assets/images/reapet-image.svg") repeat fixed;
 }
 
+input,
+input:focus{
+  outline: none;
+}
+
 ._container{
   max-width: 1024px;
   margin: 0 auto;
@@ -21,6 +26,9 @@ body{
   }
 }
 
+
+
+//---ANIMATION---
 .fade-in {
   animation: fadeIn 1s ease-in;
 }

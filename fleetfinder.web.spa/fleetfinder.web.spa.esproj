@@ -11,10 +11,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="src\app\api" />
-    <Folder Include="src\app\components" />
+    <Folder Include="src\app\components\ui" />
     <Folder Include="src\app\layouts" />
     <Folder Include="src\app\pages" />
     <Folder Include="src\app\pipes" />
-    <Folder Include="src\app\services" />
+  </ItemGroup>
+  <ItemGroup>
+    <Script Include="tsconfig.json" />
   </ItemGroup>
 </Project>

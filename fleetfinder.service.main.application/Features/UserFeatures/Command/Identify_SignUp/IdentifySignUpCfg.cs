@@ -17,9 +17,9 @@ public static partial class IdentifySignUp
         {
             public RequestValidator()
             {
-                RuleFor(dto => dto.Login).NotEmpty().MinimumLength(4).MaximumLength(16);
-                RuleFor(dto => dto.Password).NotEmpty().MinimumLength(8).MaximumLength(100);
-                RuleFor(dto => dto.Email).NotEmpty().EmailAddress();
+                RuleFor(dto => dto.Login).NotEmpty().MinimumLength(4).MaximumLength(16).WithName("Логин");
+                RuleFor(dto => dto.Password).NotEmpty().MinimumLength(8).MaximumLength(100).WithName("Пароль");
+                RuleFor(dto => dto.Email).NotEmpty().EmailAddress().WithName("Эл. почта");
                 RuleFor(dto => dto.Name).SetValidator(new NameValidator());
             }
         }

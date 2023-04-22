@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./landing-page.component.css']
 })
 export class LandingPageComponent {
-
+  valueTest: string = ""
+  valueTest2: string = ""
 }

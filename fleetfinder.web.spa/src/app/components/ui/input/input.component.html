@@ -1,0 +1,28 @@
+<div class="input_wrapper">
+  <div class="input-label"
+       [ngClass]="{
+         'input-label-focus' : service.isTransform$.value,
+         'focus-label' : service.isFocus$.value,
+         'label-is-value' : !service.isFocus$.value && value
+       }"
+  >
+    {{label}}
+  </div>
+  <div [id]="service.id" [innerHTML]="service.svg" class="input-icon">
+  </div>
+  <input
+    class="input-base"
+    [type]="type"
+    [style]="{'padding-left': service.svg ? '45px' : '20px'}"
+    [ngClass]="{
+      'placeholder' : service.isTransform$.value,
+      'input-is-value' : !service.isFocus$.value && value
+    }"
+    [value]="value"
+    (input)="onInput($event)"
+    [placeholder]="placeholder"
+    (focus)="service.onFocusEvent()"
+    (blur)="service.onBlurEvent(!!value)"
+  >
+</div>
+
