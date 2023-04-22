@@ -22,6 +22,8 @@ export class LayoutHeaderNavComponent implements OnInit, OnDestroy{
   LayoutBaseEl : HTMLElement | null = null;
   HeaderPreviewEl: HTMLElement | null = null;
 
+  isDisabledOnScroll: boolean = false;
+
   ngOnInit(): void {
     this.routerSubscription = this.router.events.subscribe( (event) => {
       if (event instanceof NavigationEnd) {
@@ -45,23 +47,49 @@ export class LayoutHeaderNavComponent implements OnInit, OnDestroy{
 
   changeNavTab(navTab: NavTab) {
     if (this.currentNavTab === navTab) return;
-    window.scrollTo(0,0);
-    this.swapNavTab(navTab)
+    this.swapNavTab(navTab);
+    this.scrollToTop();
     this.router.navigate([this.currentNavTab])
+  }
+
+  scrollToTop() {
+    // Define the animation duration and easing function
+    const duration = 300;
+    const easing = (t: number) => t * t;
+
+    // Define the starting and ending positions
+    const start = window.scrollY || document.documentElement.scrollTop;
+    const end = 0;
+
+    // Define the animation function
+    const animate = (time: number) => {
+      const elapsed = time - start_time;
+      const progress = Math.min(elapsed / duration, 1);
+      const value = start + easing(progress) * (end - start);
+      window.scrollTo(0, value);
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      }
+    };
+
+    // Start the animation
+    this.isDisabledOnScroll = this.currentNavTab !== NavTab.Home
+    const start_time = performance.now();
+    requestAnimationFrame(animate);
+    setTimeout(() => this.isDisabledOnScroll = false, duration)
   }
 
   swapNavTab(navTab: NavTab){
     this.currentNavTab = navTab;
     setTimeout(() => {
       if (this.isHomeRoute){
-        this.removeFixNavHeader();
         this.HeaderPreviewEl?.classList.remove('hidden-header-preview')
+        this.removeFixNavHeader()
       }
       else{
-        // this.setFixNavHeader();
         this.HeaderPreviewEl?.classList.add('hidden-header-preview')
       }
-    },10)
+    },20)
   }
 
   getNavTabByRoute(){
@@ -82,6 +110,7 @@ export class LayoutHeaderNavComponent implements OnInit, OnDestroy{
   fixedHeaderByScroll(){
     const self = this;
     window.onscroll = function() {
+      if (self.isDisabledOnScroll) return;
       if (self.isHomeRoute){
         if (window.pageYOffset > 236)
           self.setFixNavHeader()
