@@ -12,6 +12,10 @@ body{
   background: url("/assets/images/reapet-image.svg") repeat fixed;
 }
 
+body, html {
+  height: 100%;
+}
+
 button,
 button:focus,
 input,
@@ -28,7 +32,12 @@ input:focus{
   }
 }
 
-
+label{
+  display: block;
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 15px;
+}
 
 //---ANIMATION---
 .fade-in {

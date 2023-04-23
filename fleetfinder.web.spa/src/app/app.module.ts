@@ -14,6 +14,7 @@ import { AboutPageComponent } from './pages/about-page/about-page.component';
 import { InputComponent } from './components/ui/input/input.component';
 import { ButtonComponent } from './components/ui/button/button.component';
 import { ModalWindowComponent } from './components/ui/modal-window/modal-window.component';
+import { SignUpPageComponent } from './pages/sign-up-page/sign-up-page.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { ModalWindowComponent } from './components/ui/modal-window/modal-window.
     InputComponent,
     ButtonComponent,
     ModalWindowComponent,
+    SignUpPageComponent,
   ],
   imports: [
     BrowserModule, HttpClientModule, AppRoutingModule

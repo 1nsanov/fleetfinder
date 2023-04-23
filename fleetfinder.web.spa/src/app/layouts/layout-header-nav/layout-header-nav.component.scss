@@ -65,6 +65,7 @@
         justify-content: center;
         align-items: center;
         cursor: pointer;
+        transition: var(--transition-base);
         &.unsignin{
           border: 2px solid var(--red);
           filter: drop-shadow(0px 4px 30px rgba(159, 225, 94, 0.35));
@@ -73,6 +74,10 @@
         &.signin{
           border: 2px solid var(--green);
           box-shadow: 0 0 30px 1px rgba(159, 225, 94, 0.35);
+        }
+
+        &:hover {
+          scale: 1.1;
         }
       }
     }

@@ -23,7 +23,10 @@ export class InputComponent implements OnInit{
   ngOnInit(): void {
     this.service = new InputService(this.sanitizer, this.icon);
     if (!this.value) this.value = "";
-    if (!this.label) this.service.blockState();
+    if (!this.label)
+      this.service.blockState();
+    else if (this.value)
+      this.service.switchState(true);
   }
 
   onInput(e: Event){

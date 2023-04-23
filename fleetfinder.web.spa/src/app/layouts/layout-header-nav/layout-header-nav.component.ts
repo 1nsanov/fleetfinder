@@ -3,6 +3,7 @@ import {navTab, NavTab} from "../../models/enums/nav-tab.enum";
 import {NavigationEnd, Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {namesRoute} from "../../models/namesRoute";
+import {ModalService} from "../../services/modal.service";
 
 @Component({
   selector: 'app-layout-header-nav',
@@ -10,7 +11,7 @@ import {namesRoute} from "../../models/namesRoute";
   styleUrls: ['./layout-header-nav.component.scss']
 })
 export class LayoutHeaderNavComponent implements OnInit, OnDestroy{
-  constructor(private router: Router) {
+  constructor(private router: Router, public modalService: ModalService) {
   }
 
   currentNavTab: NavTab | null = null;
@@ -40,10 +41,12 @@ export class LayoutHeaderNavComponent implements OnInit, OnDestroy{
       this.LayoutBaseEl = document.getElementById("layout-base");
       this.HeaderPreviewEl = document.getElementById("header-preview")
 
-      if (!this.isHomeRoute) this.setFixNavHeader();
+      if (!this.isShowHeaderPreview) this.setFixNavHeader();
       this.fixedHeaderByScroll()
     }, 10)
   }
+
+  //---Nav---
 
   changeNavTab(navTab: NavTab) {
     if (this.currentNavTab === navTab) return;
@@ -82,7 +85,7 @@ export class LayoutHeaderNavComponent implements OnInit, OnDestroy{
   swapNavTab(navTab: NavTab){
     this.currentNavTab = navTab;
     setTimeout(() => {
-      if (this.isHomeRoute){
+      if (this.isShowHeaderPreview){
         this.HeaderPreviewEl?.classList.remove('hidden-header-preview')
         this.removeFixNavHeader()
       }
@@ -111,7 +114,7 @@ export class LayoutHeaderNavComponent implements OnInit, OnDestroy{
     const self = this;
     window.onscroll = function() {
       if (self.isDisabledOnScroll) return;
-      if (self.isHomeRoute){
+      if (self.isShowHeaderPreview){
         if (window.pageYOffset > 236)
           self.setFixNavHeader()
         else
@@ -132,8 +135,24 @@ export class LayoutHeaderNavComponent implements OnInit, OnDestroy{
     this.BackgroundContentEl?.classList.remove("margin-top-content")
   }
 
-  get isHomeRoute(){
+  get isShowHeaderPreview(){
     return this.currentRoute === NavTab.Home;
+  }
+
+  get isSign(){
+    return this.currentRoute === `/${namesRoute.signUp}` || this.currentRoute === `/${namesRoute.signIn}`
+  }
+
+  //---Route---
+
+  routePageSignUp() {
+    this.modalService.close();
+    this.swapNavTab(NavTab.None)
+    this.router.navigate([`/${namesRoute.signUp}`]);
+  }
+
+  routePageSignIn () {
+
   }
 
   ngOnDestroy() {

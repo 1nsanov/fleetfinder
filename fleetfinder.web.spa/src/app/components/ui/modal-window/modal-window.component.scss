@@ -18,7 +18,7 @@
   overflow: auto;
   padding: 20px;
   background-color: var(--white);
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-1);
   border-radius: 12px;
   z-index: 1001;
 
@@ -54,7 +54,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
     position: relative;
     .modal-title {
       font-size: 2rem;

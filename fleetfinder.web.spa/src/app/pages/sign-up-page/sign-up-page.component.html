@@ -1,0 +1,42 @@
+<div class="flex justify-center items-center flex-col" style="height: calc(100vh - 70px);">
+  <div *ngIf="step === 1" class="content">
+    <h2 class="title">
+      Регистрация
+    </h2>
+    <main class="flex flex-col" style="gap: 25px">
+      <div>
+        <label>ФИО</label>
+        <div class="flex flex-col" style="gap: 15px">
+          <app-input label="Имя" [(value)]="user.Name.First" />
+          <app-input label="Фамилия" [(value)]="user.Name.Second"/>
+          <app-input label="Отчетство" [(value)]="user.Name.Surname"/>
+        </div>
+      </div>
+      <app-input label="Организация" />
+      <app-button theme="green" (click)="nextStep()">
+        Далее
+      </app-button>
+    </main>
+  </div>
+
+  <div *ngIf="step === 2" class="content">
+    <h2 class="title">
+      Регистрация
+    </h2>
+    <main class="flex flex-col" style="gap: 25px">
+      <app-input label="Логин" [(value)]="user.Login"/>
+      <app-input label="Эл. почта" [(value)]="user.Email"/>
+      <app-input label="Пароль" type="password" [(value)]="user.Password"/>
+      <app-input label="Повторите пароль" type="password" [(value)]="user.RepeatPassword"/>
+      <div class="flex flex-col" style="gap: 12px">
+        <app-button theme="green" (click)="signUp()">
+          Создать аккаунт
+        </app-button>
+        <app-button theme="blue" (click)="previousStep()">
+          Назад
+        </app-button>
+      </div>
+    </main>
+  </div>
+</div>
+

@@ -5,6 +5,7 @@ import {TransportsPageComponent} from "./pages/transports-page/transports-page.c
 import {OrdersPageComponent} from "./pages/orders-page/orders-page.component";
 import {AboutPageComponent} from "./pages/about-page/about-page.component";
 import {namesRoute} from "./models/namesRoute";
+import {SignUpPageComponent} from "./pages/sign-up-page/sign-up-page.component";
 
 
 
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: namesRoute.transports, component: TransportsPageComponent },
   { path: namesRoute.orders, component: OrdersPageComponent },
   { path: namesRoute.about, component: AboutPageComponent },
+  { path: namesRoute.signUp, component: SignUpPageComponent}
 ]
 
 @NgModule({

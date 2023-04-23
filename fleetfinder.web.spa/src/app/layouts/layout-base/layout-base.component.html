@@ -1,9 +1,9 @@
-<div id="layout-base" class="fade-in">
+<div id="layout-base">
   <app-layout-header-preview/>
   <app-layout-header-nav/>
 
   <div id="background-content" class="_container" >
-    <div [ngClass]="{'background-content' : isShowContainer}">
+    <div class="flex flex-col h-full" [ngClass]="{'background-content' : isShowContainer}">
       <ng-content></ng-content>
     </div>
   </div>

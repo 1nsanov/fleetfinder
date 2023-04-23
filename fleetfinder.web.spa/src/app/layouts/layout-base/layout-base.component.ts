@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-layout-base',
@@ -6,5 +7,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./layout-base.component.scss']
 })
 export class LayoutBaseComponent {
-  isShowContainer: boolean = true;
+  constructor(private router: Router) {
+
+  }
+
+  get isShowContainer () {
+    return this.router.url !== '/sign-up'
+  }
 }

@@ -1,5 +1,5 @@
 <header id="header-nav" class="header-nav">
-  <div class="_container wrapper">
+  <div *ngIf="!isSign" class="_container wrapper">
     <div class="logo" (click)="changeNavTab(navTab.home)">
       <img src="../../../assets/images/logo-black-1024.png" alt="">
     </div>
@@ -24,9 +24,33 @@
       </div>
     </nav>
     <div class="user">
-      <div class="avatar unsignin">
+      <div class="avatar unsignin" (click)="modalService.open()">
         <img src="../../../assets/icons/icon-avatar.svg" alt="">
       </div>
     </div>
   </div>
+  <div *ngIf="isSign" class="_container wrapper">
+    <nav class="nav">
+      <div class="item"
+           (click)="changeNavTab(navTab.home)"
+      >
+        <span>Вернуться на главную</span>
+      </div>
+    </nav>
+  </div>
 </header>
+
+<app-modal-window title="Аккаунт" *ngIf="modalService.isVisible$ | async">
+  <div class="flex flex-col" style="gap: 20px">
+    <div class="flex-grow">
+      <app-button theme="yellow" (click)="routePageSignUp()">
+        Регистрация
+      </app-button>
+    </div>
+    <div class="flex-grow">
+      <app-button theme="green" (click)="routePageSignIn()">
+        Войти
+      </app-button>
+    </div>
+  </div>
+</app-modal-window>

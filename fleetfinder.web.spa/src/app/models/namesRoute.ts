@@ -2,5 +2,7 @@
   home : "",
   transports : "transports",
   orders: "orders",
-  about: "about"
+  about: "about",
+  signUp: "sign-up",
+  signIn: "sign-in"
 }
