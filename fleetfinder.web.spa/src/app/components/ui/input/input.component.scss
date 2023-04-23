@@ -5,7 +5,8 @@
     border: 2px solid var(--black);
     border-radius: 12px;
     height: 40px;
-    width: 240px;
+    min-width: 160px;
+    width: 100%;
     font-size: 14px;
     padding-right: 20px;
     font-weight: 500;

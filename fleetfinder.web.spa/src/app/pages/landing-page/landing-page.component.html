@@ -6,40 +6,33 @@
     [icon]="'icon-person'"
   />
 
+  <div class="flex-grow">
+    <app-input
+      [(value)]="valueTest2"
+      [label]="'Пароль'"
+      [type]="'password'"
+    />
+  </div>
   <app-input
     [(value)]="valueTest2"
     [label]="'Пароль'"
     [type]="'password'"
   />
 
-  <app-button (click)="clickButton()">
-    Кнопка
-  </app-button>
-  <div class="flex-grow">
-    <app-button (click)="clickButton()" [disabled]="true">
-      Кнопка
-    </app-button>
-  </div>
-
-  <app-button theme="yellow" (click)="clickButton()">
-    Кнопка
-  </app-button>
-  <app-button theme="light-blue" (click)="clickButton()">
-    Кнопка
-  </app-button>
-  <app-button theme="black" (click)="clickButton()">
-    Кнопка
-  </app-button>
-  <app-button theme="white" (click)="clickButton()">
-    Кнопка
-  </app-button>
-  <app-button theme="green" (click)="clickButton()">
-    Кнопка
-  </app-button>
-  <app-button theme="red" (click)="clickButton()">
-    Кнопка
+  <app-button (click)="modalService.open()">
+    Модалка
   </app-button>
 </div>
+
+<app-modal-window *ngIf="modalService.isVisible$.value" title="Модалка">
+  <div class="flex">
+    <div class="flex-grow">
+      <app-button theme="green">
+        Личный кабинет
+      </app-button>
+    </div>
+  </div>
+</app-modal-window>
 
 <div style="font-size: 16px; line-height: 1.5;">
   Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.

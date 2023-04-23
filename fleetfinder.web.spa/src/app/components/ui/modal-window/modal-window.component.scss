@@ -1,0 +1,79 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.modal-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow: auto;
+  padding: 20px;
+  background-color: var(--white);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  z-index: 1001;
+
+  @screen sm {
+    max-width: 60vw;
+  }
+
+  @screen md {
+    max-width: 50vw;
+  }
+
+  @screen lg {
+    max-width: 45vw;
+  }
+
+  @screen xl {
+    max-width: 40vw;
+  }
+
+  @screen 2xl {
+    max-width: 30vw;
+  }
+
+  &.fade-in {
+    animation: fade-in 0.3s ease-in-out;
+  }
+
+  &.fade-out {
+    animation: fade-out 0.3s ease-in-out;
+  }
+
+  .modal-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    position: relative;
+    .modal-title {
+      font-size: 2rem;
+      font-weight: 600;
+    }
+    .modal-close {
+      position: absolute;
+      right: 0;
+      appearance: none;
+      border: none;
+      background-color: transparent;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: var(--transition-base);
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+  }
+}
+
+

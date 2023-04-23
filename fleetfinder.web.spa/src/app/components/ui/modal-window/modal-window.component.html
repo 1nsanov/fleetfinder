@@ -1,0 +1,18 @@
+<div class="modal-overlay" (click)="closeModal()"></div>
+<div class="modal-container fade-in"
+     [ngStyle]="{width: width}"
+     [ngClass]="{'fade-out' : !isVisible}"
+>
+  <div class="modal-header">
+    <h2 class="modal-title">{{ title | titlecase }}</h2>
+    <button class="modal-close" (click)="closeModal()">
+      <img src="../../../../assets/icons/icon-close.svg" alt="">
+    </button>
+  </div>
+  <div class="modal-body">
+    <ng-content></ng-content>
+  </div>
+</div>
+
+
+
