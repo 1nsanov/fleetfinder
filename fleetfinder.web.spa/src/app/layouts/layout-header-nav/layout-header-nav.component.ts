@@ -4,6 +4,7 @@ import {NavigationEnd, Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {namesRoute} from "../../models/names-route";
 import {ModalService} from "../../services/modal.service";
+import {IdentifyApiService} from "../../api/Identify/identify.api.service";
 
 @Component({
   selector: 'app-layout-header-nav',
@@ -11,7 +12,9 @@ import {ModalService} from "../../services/modal.service";
   styleUrls: ['./layout-header-nav.component.scss']
 })
 export class LayoutHeaderNavComponent implements OnInit, OnDestroy{
-  constructor(private router: Router, public modalService: ModalService) {
+  constructor(private router: Router,
+              public modalService: ModalService,
+              public identifyService: IdentifyApiService) {
   }
 
   currentNavTab: NavTab | null = null;
@@ -159,6 +162,10 @@ export class LayoutHeaderNavComponent implements OnInit, OnDestroy{
     this.modalService.close();
     this.swapNavTab(NavTab.None)
     this.router.navigate([`/${namesRoute.signIn}`]);
+  }
+
+  logout() {
+    this.identifyService.logout().subscribe(() => window.location.reload());
   }
 
   ngOnDestroy() {

@@ -30,10 +30,13 @@ export class IdentifyApiService {
 
   refreshToken(){
     const refreshToken = this.getRefreshToken();
-    const headers = new HttpHeaders().set('refresh-token', refreshToken);
+    const headers = new HttpHeaders()
+      .set('Authorization', `Bearer ${this.getAccessToken()}`)
+      .set('refreshToken', refreshToken);
     return this.http.post<ITokenResponse>(this.url + "refreshToken", {}, { headers })
       .pipe(
         tap((result) => {
+          console.log(result.Token)
           this.writeToken(result.Token)
         })
       );
@@ -62,7 +65,7 @@ export class IdentifyApiService {
   }
 
   getTokenExpiration() {
-    const expiryTime = this.cookieService.get('expiry-time');
+    const expiryTime = this.cookieService.get('expiry_time');
     return expiryTime ? Date.parse(expiryTime) : null
   }
 
@@ -73,6 +76,7 @@ export class IdentifyApiService {
       this.cookieService.set('expiry_time', '');
     }
     else{
+      console.log(token.Access)
       this.cookieService.set('access_token', token.Access);
       this.cookieService.set('refresh_token', token.Refresh);
       this.cookieService.set('expiry_time', token.ExpiryTime.toString())

@@ -1,5 +1,5 @@
 ﻿export class TokenModel {
-  Access: string;
-  Refresh: string;
+  Access: string = "";
+  Refresh: string = "";
   ExpiryTime : Date;
 }

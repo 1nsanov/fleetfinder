@@ -41,7 +41,7 @@
 </header>
 
 <app-modal-window title="Аккаунт" *ngIf="modalService.isVisible$ | async">
-  <div class="flex flex-col" style="gap: 20px">
+  <div *ngIf="!identifyService.isAuthenticated()" class="flex flex-col" style="gap: 20px">
     <div class="flex-grow">
       <app-button theme="yellow" (click)="routePageSignUp()">
         Регистрация
@@ -52,5 +52,8 @@
         Войти
       </app-button>
     </div>
+  </div>
+  <div *ngIf="identifyService.isAuthenticated()" class="flex flex-col" style="gap: 20px">
+    <app-button theme="red" (click)="logout()">Выход</app-button>
   </div>
 </app-modal-window>
