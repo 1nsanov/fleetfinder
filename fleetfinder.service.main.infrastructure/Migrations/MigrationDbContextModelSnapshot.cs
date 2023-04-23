@@ -41,12 +41,11 @@ namespace fleetfinder.service.main.infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("FullName")
+                    b.Property<string>("Login")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Login")
-                        .IsRequired()
+                    b.Property<string>("Organization")
                         .HasColumnType("text");
 
                     b.Property<string>("Password")
@@ -72,6 +71,30 @@ namespace fleetfinder.service.main.infrastructure.Migrations
 
             modelBuilder.Entity("fleetfinder.service.main.domain.Users.User", b =>
                 {
+                    b.OwnsOne("fleetfinder.service.main.domain.Users.FullName", "FullName", b1 =>
+                        {
+                            b1.Property<long>("UserId")
+                                .HasColumnType("bigint");
+
+                            b1.Property<string>("First")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.Property<string>("Second")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.Property<string>("Surname")
+                                .HasColumnType("text");
+
+                            b1.HasKey("UserId");
+
+                            b1.ToTable("Users");
+
+                            b1.WithOwner()
+                                .HasForeignKey("UserId");
+                        });
+
                     b.OwnsOne("fleetfinder.service.main.domain.Users.RefreshToken", "RefreshToken", b1 =>
                         {
                             b1.Property<long>("UserId")
@@ -91,8 +114,10 @@ namespace fleetfinder.service.main.infrastructure.Migrations
                                 .HasForeignKey("UserId");
                         });
 
-                    b.Navigation("RefreshToken")
+                    b.Navigation("FullName")
                         .IsRequired();
+
+                    b.Navigation("RefreshToken");
                 });
 #pragma warning restore 612, 618
         }
