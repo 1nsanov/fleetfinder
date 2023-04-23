@@ -1,0 +1,14 @@
+<div class="flex justify-center items-center flex-col" style="height: calc(100vh - 70px);">
+  <div class="content">
+    <h2 class="title">
+      Авторизация
+    </h2>
+    <main class="flex flex-col" style="gap: 25px">
+      <app-input label="Логин" [(value)]="user.Login"/>
+      <app-input label="Пароль" type="password" [(value)]="user.Password"/>
+      <app-button theme="green" (click)="signIn()">
+        Войти
+      </app-button>
+    </main>
+  </div>
+</div>

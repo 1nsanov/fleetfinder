@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -15,6 +15,8 @@ import { InputComponent } from './components/ui/input/input.component';
 import { ButtonComponent } from './components/ui/button/button.component';
 import { ModalWindowComponent } from './components/ui/modal-window/modal-window.component';
 import { SignUpPageComponent } from './pages/sign-up-page/sign-up-page.component';
+import { SignInPageComponent } from './pages/sign-in-page/sign-in-page.component';
+import {TokenInterceptor} from "./services/token.interceptor";
 
 @NgModule({
   declarations: [
@@ -30,11 +32,14 @@ import { SignUpPageComponent } from './pages/sign-up-page/sign-up-page.component
     ButtonComponent,
     ModalWindowComponent,
     SignUpPageComponent,
+    SignInPageComponent,
   ],
   imports: [
-    BrowserModule, HttpClientModule, AppRoutingModule
+    BrowserModule, HttpClientModule, AppRoutingModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,4 +1,5 @@
 ﻿export class TokenModel {
-  Access: string | null = null;
-  Refresh: string | null = null;
+  Access: string;
+  Refresh: string;
+  ExpiryTime : Date;
 }

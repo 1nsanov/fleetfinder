@@ -50,6 +50,7 @@ public class IdentifyService : IIdentifyService
         {
             Access = accessToken,
             Refresh = refreshToken,
+            ExpiryTime = token.ValidTo 
         };
     }
     

@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {navTab, NavTab} from "../../models/enums/nav-tab.enum";
 import {NavigationEnd, Router} from "@angular/router";
 import {Subscription} from "rxjs";
-import {namesRoute} from "../../models/namesRoute";
+import {namesRoute} from "../../models/names-route";
 import {ModalService} from "../../services/modal.service";
 
 @Component({
@@ -29,6 +29,8 @@ export class LayoutHeaderNavComponent implements OnInit, OnDestroy{
     this.routerSubscription = this.router.events.subscribe( (event) => {
       if (event instanceof NavigationEnd) {
         this.currentRoute = event.url;
+        const navTab = this.getNavTabByRoute()
+        this.swapNavTab(navTab);
       }
     });
 
@@ -51,7 +53,7 @@ export class LayoutHeaderNavComponent implements OnInit, OnDestroy{
   changeNavTab(navTab: NavTab) {
     if (this.currentNavTab === navTab) return;
     this.swapNavTab(navTab);
-    this.scrollToTop();
+    // this.scrollToTop();
     this.router.navigate([this.currentNavTab])
   }
 
@@ -83,7 +85,9 @@ export class LayoutHeaderNavComponent implements OnInit, OnDestroy{
   }
 
   swapNavTab(navTab: NavTab){
+    if (this.currentNavTab === navTab) return;
     this.currentNavTab = navTab;
+    this.scrollToTop();
     setTimeout(() => {
       if (this.isShowHeaderPreview){
         this.HeaderPreviewEl?.classList.remove('hidden-header-preview')
@@ -152,7 +156,9 @@ export class LayoutHeaderNavComponent implements OnInit, OnDestroy{
   }
 
   routePageSignIn () {
-
+    this.modalService.close();
+    this.swapNavTab(NavTab.None)
+    this.router.navigate([`/${namesRoute.signIn}`]);
   }
 
   ngOnDestroy() {

@@ -1,0 +1,15 @@
+.content{
+  max-width: 420px;
+  width: 100%;
+  padding: 20px 25px;
+  background: var(--white);
+  border-radius: 20px;
+  box-shadow: var(--shadow-1);
+  .title{
+    font-weight: 700;
+    font-size: 24px;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+}

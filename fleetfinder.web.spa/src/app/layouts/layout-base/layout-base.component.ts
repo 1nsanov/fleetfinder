@@ -12,6 +12,6 @@ export class LayoutBaseComponent {
   }
 
   get isShowContainer () {
-    return this.router.url !== '/sign-up'
+    return this.router.url !== '/sign-up' && this.router.url !== '/sign-in'
   }
 }

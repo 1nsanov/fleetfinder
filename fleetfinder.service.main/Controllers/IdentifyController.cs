@@ -59,9 +59,9 @@ namespace fleetfinder.service.main.Controllers
 
         [Authorize]
         [HttpGet("test/auth")]
-        public async Task<string> Test(CancellationToken cancellationToken)
+        public void Test(CancellationToken cancellationToken)
         {
-            return "You is sign ";
+            Ok();
         }
 
         #endregion

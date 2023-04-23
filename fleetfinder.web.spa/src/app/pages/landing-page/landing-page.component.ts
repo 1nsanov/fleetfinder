@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {ModalService} from "../../services/modal.service";
+import {IdentifyApiService} from "../../api/Identify/identify.api.service";
 
 @Component({
   selector: 'app-landing-page',
@@ -7,11 +7,11 @@ import {ModalService} from "../../services/modal.service";
   styleUrls: ['./landing-page.component.css']
 })
 export class LandingPageComponent {
-  constructor(public modalService: ModalService) {
+  constructor(private identifyService: IdentifyApiService) {
   }
-  valueTest: string = ""
-  valueTest2: string = ""
-  clickButton(){
-    console.log("Click!")
+  checkAuth(){
+    this.identifyService.testAuth().subscribe(() => {
+      console.log("yes")
+    })
   }
 }
