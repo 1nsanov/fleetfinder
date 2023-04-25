@@ -1,7 +1,7 @@
 ﻿using fleetfinder.service.main.application.Common.Interfaces.Services;
 using Microsoft.IdentityModel.Tokens;
 
-namespace fleetfinder.service.main.application.Features.UserFeatures.Command.Identify_RefreshToken;
+namespace fleetfinder.service.main.application.Features.IdentifyFeatures.Command.Identify_RefreshToken;
 
 public static partial class IdentifyRefreshToken
 {

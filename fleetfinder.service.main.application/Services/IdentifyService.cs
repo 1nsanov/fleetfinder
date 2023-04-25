@@ -25,7 +25,7 @@ public class IdentifyService : IIdentifyService
 
     public async Task<User> GetUserByAccessToken(string accessToken, CancellationToken cancellationToken)
     {
-        var principal = GetPrincipalExpireFromToken(accessToken) ?? throw new Exception("Invalid access token or refresh token");
+        var principal = GetPrincipalFromToken(accessToken) ?? throw new Exception("Invalid access token or refresh token");
 
         var claim = principal.Claims.FirstOrDefault(claim => claim.Type.Contains("nameidentifier"));
         var login = claim?.Value;
@@ -53,11 +53,8 @@ public class IdentifyService : IIdentifyService
             ExpiryTime = token.ValidTo 
         };
     }
-    
-    
-    #region Private
 
-    private ClaimsPrincipal GetPrincipalExpireFromToken(string token)
+    public ClaimsPrincipal GetPrincipalFromToken(string token, bool validateLifetime = false)
     {
         var tokenValidationParameters = new TokenValidationParameters
         {
@@ -65,7 +62,7 @@ public class IdentifyService : IIdentifyService
             ValidateIssuer = false,
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:Key"])),
-            ValidateLifetime = false
+            ValidateLifetime = validateLifetime
         };
 
         var tokenHandler = new JwtSecurityTokenHandler();
@@ -76,6 +73,8 @@ public class IdentifyService : IIdentifyService
         return principal;
     }
    
+    #region Private
+
     private JwtSecurityToken GenerateJwtSecurityToken(User user)
     {
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
@@ -84,14 +83,15 @@ public class IdentifyService : IIdentifyService
         var claims = new[]
         {
             new Claim(ClaimTypes.NameIdentifier, user.Login),
-            new Claim(ClaimTypes.Email, user.Email),
+            new Claim(ClaimTypes.Sid, user.Id.ToString()),
+            new Claim(ClaimTypes.GivenName, $"{user.FullName.First} {user.FullName.Surname} {user.FullName.Surname}"),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
 
         return new JwtSecurityToken(_config["Jwt:Issuer"],
             _config["Jwt:Audience"],
             claims,
-            expires: DateTime.UtcNow.AddSeconds(30),
+            expires: DateTime.UtcNow.AddMinutes(5),
             signingCredentials: credentials);
     }
 

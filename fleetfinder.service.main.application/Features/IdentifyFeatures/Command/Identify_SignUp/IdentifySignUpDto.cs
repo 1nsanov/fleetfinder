@@ -1,6 +1,6 @@
 ﻿using fleetfinder.service.main.application.Services.Models;
 
-namespace fleetfinder.service.main.application.Features.UserFeatures.Command.Identify_SignUp;
+namespace fleetfinder.service.main.application.Features.IdentifyFeatures.Command.Identify_SignUp;
 
 public static partial class IdentifySignUp
 {

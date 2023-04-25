@@ -1,6 +1,6 @@
 ﻿using fleetfinder.service.main.domain.Users;
 
-namespace fleetfinder.service.main.application.Features.UserFeatures.Query.User_Get;
+namespace fleetfinder.service.main.application.Features.IdentifyFeatures.Query.User_Get;
 
 public static partial class UserGet
 {

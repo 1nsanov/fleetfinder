@@ -2,7 +2,7 @@
 using fleetfinder.service.main.application.Common.Interfaces.Services;
 using fleetfinder.service.main.application.Services;
 
-namespace fleetfinder.service.main.application.Features.UserFeatures.Command.Identify_Logout;
+namespace fleetfinder.service.main.application.Features.IdentifyFeatures.Command.Identify_Logout;
 
 public static partial class IdentifyLogout
 {

@@ -1,4 +1,4 @@
-﻿namespace fleetfinder.service.main.application.Features.UserFeatures.Query.User_Get;
+﻿namespace fleetfinder.service.main.application.Features.IdentifyFeatures.Query.User_Get;
 
 public static partial class UserGet
 {

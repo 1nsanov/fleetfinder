@@ -1,8 +1,9 @@
 using System.ComponentModel.DataAnnotations;
-using fleetfinder.service.main.application.Features.UserFeatures.Command.Identify_Logout;
-using fleetfinder.service.main.application.Features.UserFeatures.Command.Identify_RefreshToken;
-using fleetfinder.service.main.application.Features.UserFeatures.Command.Identify_SignIn;
-using fleetfinder.service.main.application.Features.UserFeatures.Command.Identify_SignUp;
+using fleetfinder.service.main.application.Features.IdentifyFeatures.Command.Identify_GetClaims;
+using fleetfinder.service.main.application.Features.IdentifyFeatures.Command.Identify_Logout;
+using fleetfinder.service.main.application.Features.IdentifyFeatures.Command.Identify_RefreshToken;
+using fleetfinder.service.main.application.Features.IdentifyFeatures.Command.Identify_SignIn;
+using fleetfinder.service.main.application.Features.IdentifyFeatures.Command.Identify_SignUp;
 using Microsoft.AspNetCore.Authorization;
 
 namespace fleetfinder.service.main.Controllers
@@ -54,12 +55,20 @@ namespace fleetfinder.service.main.Controllers
                 new IdentifyLogout.Command(HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ")
                     .Last()), cancellationToken);
         }
+        
+        [Authorize]
+        [HttpGet("claims")]
+        public async Task<IdentifyGetClaims.ResponseDto> IdentifyGetClaims(CancellationToken cancellationToken)
+        {
+            return await _mediator.Send(
+                new IdentifyGetClaims.Command(HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last()), cancellationToken);
+        }
 
         #region Test
 
         [Authorize]
         [HttpGet("test/auth")]
-        public void Test(CancellationToken cancellationToken)
+        public void Test()
         {
             Ok();
         }
