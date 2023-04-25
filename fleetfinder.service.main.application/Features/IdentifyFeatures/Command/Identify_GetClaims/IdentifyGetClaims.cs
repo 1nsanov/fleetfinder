@@ -9,14 +9,10 @@ public static partial class IdentifyGetClaims
     internal class Handler : IRequestHandler<Command, ResponseDto>
     {
         private readonly IIdentifyService _identifyService;
-        private readonly IUserService _userService;
-        private readonly CommandDbContext _commandDbContext; 
 
-        public Handler(IIdentifyService identifyService, IUserService userService, CommandDbContext commandDbContext)
+        public Handler(IIdentifyService identifyService)
         {
             _identifyService = identifyService;
-            _userService = userService;
-            _commandDbContext = commandDbContext;
         }
 
         public async Task<ResponseDto> Handle(Command request, CancellationToken cancellationToken)
