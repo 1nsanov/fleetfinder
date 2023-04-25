@@ -1,0 +1,34 @@
+.gl-l-wrapper{
+  background: var(--white);
+  z-index: 9999;
+  color: var(--blue);
+  .content{
+    max-width: 360px;
+    .logo{
+      img{
+        height: 160px;
+      }
+    }
+    .loading{
+      max-height: 100px;
+    }
+    .title{
+      font-size: 24px;
+      line-height: 1.5;
+      font-weight: 700;
+      text-align: center;
+    }
+  }
+}
+
+.fade-out{
+  animation: fadeOut 0.5s ease-in-out;
+}
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

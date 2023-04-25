@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from "@angular/router";
+import {GlobalLoaderService} from "../../services/global-loader.service";
 
 @Component({
   selector: 'app-layout-base',
@@ -7,8 +8,8 @@ import { Router } from "@angular/router";
   styleUrls: ['./layout-base.component.scss']
 })
 export class LayoutBaseComponent {
-  constructor(private router: Router) {
-
+  constructor(private router: Router,
+              public loaderService: GlobalLoaderService) {
   }
 
   get isShowContainer () {

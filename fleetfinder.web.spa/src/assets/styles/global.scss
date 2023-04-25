@@ -22,6 +22,11 @@ input,
 input:focus{
   outline: none;
 }
+p{
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+}
 
 ._container{
   max-width: 1024px;

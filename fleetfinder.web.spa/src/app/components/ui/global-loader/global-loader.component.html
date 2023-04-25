@@ -1,1 +1,16 @@
-<p>global-loader works!</p>
+<div *ngIf="loading"
+     class="gl-l-wrapper fixed top-0 left-0 h-full w-full flex justify-center items-center"
+     [ngClass]="{'fade-out': !(loaderService.loading$ | async)}"
+>
+  <div class="content flex flex-col justify-center items-center">
+    <div class="logo">
+      <img src="../../../../assets/images/logo-blue-1024.png" alt="">
+    </div>
+    <div class="loading">
+      <img src="../../../../assets/icons/dots-loader.svg" alt="">
+    </div>
+    <div class="title">
+      <p>Загрузка данных... Lore, Lorem Lorem Lorem</p>
+    </div>
+  </div>
+</div>
