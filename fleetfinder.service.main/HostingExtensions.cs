@@ -19,7 +19,7 @@ public static class HostingExtensions
             options.JsonSerializerOptions.DefaultIgnoreCondition =
                 JsonIgnoreCondition.WhenWritingNull;
             options.JsonSerializerOptions.PropertyNamingPolicy = null;
-            var enumConverter = new JsonStringEnumConverter();
+            var enumConverter = new JsonStringEnumConverter(allowIntegerValues: false);
             options.JsonSerializerOptions.Converters.Add(enumConverter);
         });
 

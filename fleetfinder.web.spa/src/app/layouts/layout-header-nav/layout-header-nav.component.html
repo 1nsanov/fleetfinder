@@ -24,7 +24,9 @@
       </div>
     </nav>
     <div class="user">
-      <div class="avatar unsignin" (click)="modalService.open()">
+      <div class="avatar"
+           [ngClass]="{'signin' : identifyService.isAuthenticated(), 'unsignin' : !identifyService.isAuthenticated()}"
+           (click)="modalService.open()">
         <img src="../../../assets/icons/icon-avatar.svg" alt="">
       </div>
     </div>

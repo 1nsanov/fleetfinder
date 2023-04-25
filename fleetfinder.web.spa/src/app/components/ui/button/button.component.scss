@@ -3,9 +3,16 @@
   width: 100%;
   height: 40px;
   border-radius: 12px;
-  font-weight: 600;
-  font-size: 18px;
   transition: var(--transition-base);
+  .content{
+    font-weight: 600;
+    font-size: 18px;
+    img{
+      height: 24px;
+      width: 24px;
+      margin: 0 auto;
+    }
+  }
   &.blue{
     background: var(--blue);
     color: var(--white);

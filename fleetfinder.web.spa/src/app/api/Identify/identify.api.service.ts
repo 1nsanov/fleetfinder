@@ -36,7 +36,6 @@ export class IdentifyApiService {
     return this.http.post<ITokenResponse>(this.url + "refreshToken", {}, { headers })
       .pipe(
         tap((result) => {
-          console.log(result.Token)
           this.writeToken(result.Token)
         })
       );
@@ -76,7 +75,6 @@ export class IdentifyApiService {
       this.cookieService.set('expiry_time', '');
     }
     else{
-      console.log(token.Access)
       this.cookieService.set('access_token', token.Access);
       this.cookieService.set('refresh_token', token.Refresh);
       this.cookieService.set('expiry_time', token.ExpiryTime.toString())

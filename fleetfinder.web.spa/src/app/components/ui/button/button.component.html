@@ -1,6 +1,6 @@
 <button class="btn-base"
         [ngClass]="{
-          'disabled' : disabled,
+          'disabled' : disabled || isLoad,
           'blue' : BtnTheme.Blue == theme,
           'yellow' : BtnTheme.Yellow == theme,
           'light-blue' : BtnTheme.BlueLight == theme,
@@ -10,5 +10,10 @@
           'red' : BtnTheme.Red == theme
         }"
         (click)="onClick($event)">
-  <ng-content></ng-content>
+  <div class="content" *ngIf="!isLoad">
+    <ng-content></ng-content>
+  </div>
+  <div class="content" *ngIf="isLoad">
+    <img [src]="'../../../../assets/icons/loading-loop-' + colorLoading + '.svg'" alt="">
+  </div>
 </button>

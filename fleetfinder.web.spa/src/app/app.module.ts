@@ -17,6 +17,7 @@ import { ModalWindowComponent } from './components/ui/modal-window/modal-window.
 import { SignUpPageComponent } from './pages/sign-up-page/sign-up-page.component';
 import { SignInPageComponent } from './pages/sign-in-page/sign-in-page.component';
 import {TokenInterceptor} from "./services/token.interceptor";
+import {NgOptimizedImage} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -34,9 +35,9 @@ import {TokenInterceptor} from "./services/token.interceptor";
     SignUpPageComponent,
     SignInPageComponent,
   ],
-  imports: [
-    BrowserModule, HttpClientModule, AppRoutingModule,
-  ],
+    imports: [
+        BrowserModule, HttpClientModule, AppRoutingModule, NgOptimizedImage,
+    ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
   ],
