@@ -6,7 +6,7 @@
     <main class="flex flex-col" style="gap: 25px">
       <app-input label="Логин" [(value)]="user.Login"/>
       <app-input label="Пароль" type="password" [(value)]="user.Password"/>
-      <app-button theme="green" (click)="signIn()">
+      <app-button theme="green" (click)="signIn()" [isLoad]="isLoad">
         Войти
       </app-button>
     </main>

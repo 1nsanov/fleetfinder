@@ -12,9 +12,14 @@ export class LandingPageComponent {
   }
   checkAuth(){
     this.isLoad = true;
-    this.identifyService.testAuth().subscribe(() => {
-      console.log("yes")
-      this.isLoad = false;
-    })
+    this.identifyService.testAuth().subscribe(
+      () => {
+        console.log("yes")
+        this.isLoad = false;
+      },
+      error => {
+        this.isLoad = false;
+      }
+    )
   }
 }

@@ -56,6 +56,6 @@
     </div>
   </div>
   <div *ngIf="identifyService.isAuthenticated()" class="flex flex-col" style="gap: 20px">
-    <app-button theme="red" (click)="logout()">Выход</app-button>
+    <app-button theme="red" (click)="logout()" [isLoad]="isLoadLogout">Выход</app-button>
   </div>
 </app-modal-window>

@@ -14,18 +14,14 @@ export class ButtonComponent implements OnInit{
   @Output() click = new EventEmitter<void>();
 
   BtnTheme = BtnTheme;
-  currentTheme : BtnTheme = BtnTheme.Blue;
-
+  colorLoading = "white";
   ngOnInit(): void {
-    this.currentTheme = this.theme as BtnTheme;
-    console.log(this.currentTheme === BtnTheme.Blue)
+    const currentTheme = this.theme as BtnTheme;
+    if (currentTheme === BtnTheme.BlueLight || currentTheme === BtnTheme.Yellow || currentTheme === BtnTheme.White)
+      this.colorLoading = "black";
   }
   onClick(e: Event) {
     e.stopPropagation();
     if (!this.disabled) this.click.emit();
-  }
-
-  get colorLoading (){
-    return "white";
   }
 }

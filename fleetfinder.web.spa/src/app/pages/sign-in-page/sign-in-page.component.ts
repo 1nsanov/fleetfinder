@@ -16,11 +16,13 @@ export class SignInPageComponent {
               private router: Router) {
   }
   user: SignInModel = new SignInModel();
+  isLoad = false;
   signIn(){
+    this.isLoad = true;
     const request = this.user as ISignInRequest;
-    this.identifyService.signIn(request).subscribe(res => {
-      console.log(res)
+    this.identifyService.signIn(request).subscribe(() => {
+      this.isLoad = false;
       this.router.navigate([`/${namesRoute.home}`])
-    });
+    }, error => { console.log(error); this.isLoad = false });
   }
 }

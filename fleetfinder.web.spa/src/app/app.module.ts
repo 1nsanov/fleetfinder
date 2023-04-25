@@ -18,6 +18,7 @@ import { SignUpPageComponent } from './pages/sign-up-page/sign-up-page.component
 import { SignInPageComponent } from './pages/sign-in-page/sign-in-page.component';
 import {TokenInterceptor} from "./services/token.interceptor";
 import {NgOptimizedImage} from "@angular/common";
+import { GlobalLoaderComponent } from './components/ui/global-loader/global-loader.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import {NgOptimizedImage} from "@angular/common";
     ModalWindowComponent,
     SignUpPageComponent,
     SignInPageComponent,
+    GlobalLoaderComponent,
   ],
     imports: [
         BrowserModule, HttpClientModule, AppRoutingModule, NgOptimizedImage,
