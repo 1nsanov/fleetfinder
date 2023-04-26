@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {IdentifyApiService} from "../../api/Identify/identify.api.service";
+import {NotificationService} from "../../services/notification.service";
 
 @Component({
   selector: 'app-landing-page',
@@ -8,17 +9,19 @@ import {IdentifyApiService} from "../../api/Identify/identify.api.service";
 })
 export class LandingPageComponent {
   isLoad = false;
-  constructor(private identifyService: IdentifyApiService) {
+  constructor(private identifyService: IdentifyApiService,
+              private notification: NotificationService) {
   }
   checkAuth(){
     this.isLoad = true;
     this.identifyService.testAuth().subscribe(
       () => {
-        console.log("yes")
         this.isLoad = false;
+        this.notification.notify("Вы авторизированы!")
       },
       error => {
         this.isLoad = false;
+        this.notification.notify("Вы не авторизовались!")
       }
     )
   }

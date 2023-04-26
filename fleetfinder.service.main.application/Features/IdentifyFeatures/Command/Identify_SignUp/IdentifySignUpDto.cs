@@ -8,11 +8,11 @@ public static partial class IdentifySignUp
         string Login,
         string Password,
         string Email,
-        FullName FullName,
+        FullNameDto FullName,
         string? Organization
     );
 
-    public record FullName(
+    public record FullNameDto(
         string First,
         string Second,
         string? Surname

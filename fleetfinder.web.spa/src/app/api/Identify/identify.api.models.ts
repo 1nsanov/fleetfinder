@@ -1,11 +1,11 @@
-﻿//SignUp
-import {TokenModel} from "../../models/token.model";
+﻿import {TokenModel} from "../../models/token.model";
 
+//SignUp
 export interface ISignUpRequest{
   Login: string;
   Password: string;
   Email: string;
-  Name: {
+  FullName: {
     First: string;
     Second: string;
     Surname: string;

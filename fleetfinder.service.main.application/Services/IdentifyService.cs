@@ -84,7 +84,7 @@ public class IdentifyService : IIdentifyService
         {
             new Claim(ClaimTypes.NameIdentifier, user.Login),
             new Claim(ClaimTypes.Sid, user.Id.ToString()),
-            new Claim(ClaimTypes.GivenName, $"{user.FullName.First} {user.FullName.Surname} {user.FullName.Surname}"),
+            new Claim(ClaimTypes.GivenName, $"{user.FullName.First} {user.FullName.Second} {user.FullName.Surname}"),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
 

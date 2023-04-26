@@ -3,10 +3,11 @@
   Password: string = "";
   RepeatPassword: string = "";
   Email: string = "";
-  Name: Name = new Name();
+  FullName: FullName = new FullName();
+  Organization: string | null = null;
 }
 
-class Name{
+class FullName{
   First: string = "";
   Second: string = "";
   Surname: string = "";

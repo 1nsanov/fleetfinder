@@ -24,7 +24,7 @@ public static partial class IdentifySignUp
             }
         }
         
-        internal class NameValidator : AbstractValidator<FullName>
+        internal class NameValidator : AbstractValidator<FullNameDto>
         {
             public NameValidator()
             {
@@ -45,7 +45,7 @@ public static partial class IdentifySignUp
         {
             CreateMap<RequestDto, User>()
                 .MapRecordMember(dest => dest.FullName,
-                    src => new domain.Users.FullName
+                    src => new FullName
                     {
                         First = src.FullName.First,
                         Second = src.FullName.Second,
