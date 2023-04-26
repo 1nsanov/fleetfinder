@@ -9,12 +9,15 @@ import {IdentifyApiService} from "./api/Identify/identify.api.service";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  baseUrl: string = environment.apiUrl;
   constructor(public loaderService: GlobalLoaderService,
               private identifyService: IdentifyApiService) {
     identifyService.getClaims().subscribe(() => {
-      setTimeout(() => loaderService.stop(), 200);
-    }, error => setTimeout(() => loaderService.stop(), 200))
+      const name = identifyService.claims?.FullName;
+      if (name)
+        loaderService.changeTitle(`Приветcтвуем вас, <br>${name}`);
+      else
+        setTimeout(() => loaderService.stop(), 250);
+    }, error => setTimeout(() => loaderService.stop(), 250))
   }
   title = 'FLEETFINDER';
 }

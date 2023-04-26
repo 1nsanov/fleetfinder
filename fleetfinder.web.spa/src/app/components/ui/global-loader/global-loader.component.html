@@ -1,5 +1,6 @@
 <div *ngIf="loading"
      class="gl-l-wrapper fixed top-0 left-0 h-full w-full flex justify-center items-center"
+     style="padding: 0 30px"
      [ngClass]="{'fade-out': !(loaderService.loading$ | async)}"
 >
   <div class="content flex flex-col justify-center items-center">
@@ -10,7 +11,7 @@
       <img src="../../../../assets/icons/dots-loader.svg" alt="">
     </div>
     <div class="title">
-      <p>Загрузка данных... Lore, Lorem Lorem Lorem</p>
+      <p [ngClass]="{'animation': isAnimationTitle }" [innerHTML]="loaderService.title$ | async"></p>
     </div>
   </div>
 </div>

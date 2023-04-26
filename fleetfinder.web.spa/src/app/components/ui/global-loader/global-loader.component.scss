@@ -3,7 +3,8 @@
   z-index: 9999;
   color: var(--blue);
   .content{
-    max-width: 360px;
+    max-width: 600px;
+    margin-top: -70px;
     .logo{
       img{
         height: 160px;
@@ -30,5 +31,17 @@
   }
   100% {
     opacity: 0;
+  }
+}
+
+.animation{
+  animation: anima 0.3s ease-in-out;
+}
+@keyframes anima {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }

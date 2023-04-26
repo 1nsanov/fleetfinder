@@ -8,8 +8,7 @@ import {GlobalLoaderService} from "../../services/global-loader.service";
   styleUrls: ['./layout-base.component.scss']
 })
 export class LayoutBaseComponent {
-  constructor(private router: Router,
-              public loaderService: GlobalLoaderService) {
+  constructor(private router: Router) {
   }
 
   get isShowContainer () {

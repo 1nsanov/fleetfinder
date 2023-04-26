@@ -22,6 +22,6 @@ export class ButtonComponent implements OnInit{
   }
   onClick(e: Event) {
     e.stopPropagation();
-    if (!this.disabled) this.click.emit();
+    if (!this.disabled && !this.isLoad) this.click.emit();
   }
 }

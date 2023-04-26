@@ -22,7 +22,7 @@ export class SignInPageComponent {
     const request = this.user as ISignInRequest;
     this.identifyService.signIn(request).subscribe(() => {
       this.isLoad = false;
-      this.router.navigate([`/${namesRoute.home}`])
+      this.router.navigate([`/${namesRoute.home}`]).then(() => window.location.reload())
     }, error => { console.log(error); this.isLoad = false });
   }
 }

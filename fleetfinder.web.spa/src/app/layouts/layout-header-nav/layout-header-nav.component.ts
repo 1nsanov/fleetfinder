@@ -167,7 +167,9 @@ export class LayoutHeaderNavComponent implements OnInit, OnDestroy{
 
   logout() {
     this.isLoadLogout = true;
-    this.identifyService.logout().subscribe(() => window.location.reload());
+    this.identifyService.logout().subscribe(() =>
+      this.router.navigate([`/${namesRoute.home}`]).then(() => window.location.reload())
+    );
   }
 
   ngOnDestroy() {
