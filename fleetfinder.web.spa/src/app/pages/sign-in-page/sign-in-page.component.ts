@@ -5,6 +5,7 @@ import {ISignInRequest} from "../../api/Identify/identify.api.models";
 import {Router} from "@angular/router";
 import {namesRoute} from "../../models/names-route";
 import {tap} from "rxjs";
+import {NotificationService} from "../../services/notification.service";
 
 @Component({
   selector: 'app-sign-in-page',
@@ -13,7 +14,8 @@ import {tap} from "rxjs";
 })
 export class SignInPageComponent {
   constructor(private identifyService: IdentifyApiService,
-              private router: Router) {
+              private router: Router,
+              private notification: NotificationService) {
   }
   user: SignInModel = new SignInModel();
   isLoad = false;
@@ -23,6 +25,9 @@ export class SignInPageComponent {
     this.identifyService.signIn(request).subscribe(() => {
       this.isLoad = false;
       this.router.navigate([`/${namesRoute.home}`]).then(() => window.location.reload())
-    }, error => { console.log(error); this.isLoad = false });
+    }, error => {
+      this.isLoad = false
+      this.notification.notify("Не верный логин и/или пароль.")
+    });
   }
 }
