@@ -15,16 +15,15 @@ export class TokenInterceptor implements HttpInterceptor {
   private refreshTokenInProgress = false;
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<any> {
     if (this.identifyService.isAuthenticated() && !this.refreshTokenInProgress) {
-      const tokenExpiration = this.identifyService.getTokenExpiration();
+      const tokenExpiration = this.identifyService.getTokenExpiration(); //TODO: Написать апи метод  
       const now = new Date().getTime();
       if (tokenExpiration && tokenExpiration < now) {
         if (!this.refreshTokenInProgress) {
           this.refreshTokenInProgress = true;
           return this.identifyService.refreshToken().pipe(
             catchError((error) => {
-              if (error instanceof HttpErrorResponse && error.status === 401) {
-                this.identifyService.logout();
-              }
+              if (error instanceof HttpErrorResponse && (error.status === 401 || error.status === 500))
+                this.identifyService.logout().subscribe();
 
               return throwError(error);
             }),

@@ -20,3 +20,9 @@ export interface ISignInRequest{
   Login: string;
   Password: string;
 }
+
+//Claims
+export interface IClaims{
+  Id: number,
+  FullName : string
+}

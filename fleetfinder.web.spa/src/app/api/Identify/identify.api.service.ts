@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import {ISignInRequest, ISignUpRequest, ITokenResponse} from "./identify.api.models";
+import {IClaims, ISignInRequest, ISignUpRequest, ITokenResponse} from "./identify.api.models";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {CookieService} from "ngx-cookie-service";
-import {tap} from "rxjs";
+import {catchError, tap, throwError} from "rxjs";
 import {TokenModel} from "../../models/token.model";
 
 @Injectable({
@@ -11,6 +11,7 @@ import {TokenModel} from "../../models/token.model";
 })
 export class IdentifyApiService {
   url : string = environment.apiUrl + "identify/"
+  claims: IClaims | null = null;
   constructor(private http: HttpClient, private cookieService: CookieService) { }
 
   signUp(request: ISignUpRequest) {
@@ -45,8 +46,20 @@ export class IdentifyApiService {
     return  this.http.post<boolean>(this.url + "logout", {}).pipe(
       tap((result) => {
         if (result) this.writeToken(null)
+      }),
+      catchError(error => {
+        this.writeToken(null)
+        return throwError(error)
       })
     );
+  }
+
+  getClaims() {
+    return this.http.get<IClaims>(this.url + "claims").pipe(
+      tap((result) => {
+        this.claims = result;
+      })
+    )
   }
 
   testAuth() {
