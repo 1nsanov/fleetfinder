@@ -16,6 +16,7 @@ import {catchError, throwError} from "rxjs";
 export class SignUpPageComponent {
   step: number = 1;
   user: SignUpModel = new SignUpModel();
+  isLoadSignUp = false;
 
   constructor(private identifyService: IdentifyApiService,
               private notification: NotificationService,
@@ -25,7 +26,7 @@ export class SignUpPageComponent {
     if (this.validationStepOne())
       this.step++;
     else
-      this.notification.notify("Заполните ФИО!")
+      this.notification.error("Заполните ФИО!")
   }
 
   previousStep() {
@@ -38,16 +39,18 @@ export class SignUpPageComponent {
 
   signUp(){
     if (this.user.Password !== this.user.RepeatPassword){
-      this.notification.notify("Пароли не совпадают!");
+      this.notification.error("Пароли не совпадают!");
       return;
     }
+    this.isLoadSignUp = true;
     const request = this.user as ISignUpRequest;
     this.identifyService.signUp(request).pipe(
       catchError((error: HttpErrorResponse) => {
         let errorMessages = error.error.errors;
         const errorArray = Object.values(errorMessages).flat();
-        const errorString = errorArray.join('\n');
-        this.notification.notify(errorString);
+        const errorString = errorArray.join('<br>');
+        this.notification.error(errorString);
+        this.isLoadSignUp = false;
         return throwError(error);
       })
     ).subscribe(() => {

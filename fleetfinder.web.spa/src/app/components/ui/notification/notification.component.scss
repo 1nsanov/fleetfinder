@@ -1,0 +1,101 @@
+.notification-bg{
+  position: fixed;
+  top: 50px;
+  background: var(--white);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.35);
+  border-radius: 12px;
+  padding: 20px 30px;
+  width: 90vw;
+  margin: 0 30px;
+  z-index: 9999;
+
+  @screen sm {
+    width: 60vw;
+  }
+
+  @screen md {
+    width: 50vw;
+  }
+
+  @screen lg {
+    width: 45vw;
+  }
+
+  @screen xl {
+    width: 40vw;
+  }
+
+  @screen 2xl {
+    width: 30vw;
+  }
+
+  header{
+    margin-bottom: 15px;
+  }
+
+  &.info{
+    header{
+      h2 {
+        color: var(--blue);
+      }
+    }
+    .gradient-info{
+      background: linear-gradient(90deg, #007ADF 0%, #00ECBC 100%);
+    }
+  }
+  &.error{
+    header{
+      h2 {
+        color: var(--red);
+      }
+    }
+    .gradient-info{
+      background: linear-gradient(90deg, #FF0844 0%, #FFB199 100%);
+    }
+  }
+
+  .gradient-info{
+    height: 3px;
+    border-radius: 8px;
+    position: absolute;
+    bottom: 0;
+    left: 10px;
+    animation: anim-line 5s ease-out;
+  }
+
+  @keyframes anim-line {
+    0% {
+      width: calc(100% - 20px);
+    }
+    100% {
+      width: calc(1% - 20px);
+    }
+  }
+
+  &.fade-out{
+    animation: fadeOut 0.3s ease-in-out;
+  }
+  &.fade-in{
+    animation: fadeIn 0.3s ease-in-out;
+  }
+
+  @keyframes fadeOut {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+}
+
+

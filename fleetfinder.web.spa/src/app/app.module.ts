@@ -20,6 +20,7 @@ import {TokenInterceptor} from "./interceptors/token.interceptor";
 import {RedirectInterceptor} from "./interceptors/redirect.interceptor";
 import {NgOptimizedImage} from "@angular/common";
 import { GlobalLoaderComponent } from './components/ui/global-loader/global-loader.component';
+import { NotificationComponent } from './components/ui/notification/notification.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { GlobalLoaderComponent } from './components/ui/global-loader/global-load
     SignUpPageComponent,
     SignInPageComponent,
     GlobalLoaderComponent,
+    NotificationComponent,
   ],
     imports: [
         BrowserModule, HttpClientModule, AppRoutingModule, NgOptimizedImage,

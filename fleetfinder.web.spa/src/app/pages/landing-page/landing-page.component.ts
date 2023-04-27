@@ -17,11 +17,11 @@ export class LandingPageComponent {
     this.identifyService.testAuth().subscribe(
       () => {
         this.isLoad = false;
-        this.notification.notify("Вы авторизированы!")
+        this.notification.notify("Вы авторизованы!")
       },
       error => {
         this.isLoad = false;
-        this.notification.notify("Вы не авторизовались!")
+        this.notification.error("Вы не авторизованы!")
       }
     )
   }

@@ -1,4 +1,4 @@
-<div class="flex justify-center items-center flex-col" style="height: calc(100vh - 70px);">
+<div class="flex justify-center items-center flex-col" style="height: calc(100vh - 100px);">
   <div *ngIf="step === 1" class="content">
     <h2 class="title">
       Регистрация
@@ -29,7 +29,7 @@
       <app-input label="Пароль" type="password" [(value)]="user.Password"/>
       <app-input label="Повторите пароль" type="password" [(value)]="user.RepeatPassword"/>
       <div class="flex flex-col" style="gap: 12px">
-        <app-button theme="green" (click)="signUp()">
+        <app-button theme="green" (click)="signUp()" [isLoad]="isLoadSignUp">
           Создать аккаунт
         </app-button>
         <app-button theme="blue" (click)="previousStep()">

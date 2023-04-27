@@ -1,0 +1,22 @@
+<div class="flex flex col justify-center w-full">
+  <div *ngIf="isShow && notify"
+       [ngClass]="{
+        'fade-in': !isAnimationFadeOut,
+        'fade-out': isAnimationFadeOut,
+        'info' : notify.theme == _theme.Info,
+        'error' : notify.theme == _theme.Error
+       }"
+       class="notification-bg">
+    <header class="flex gap-4">
+      <img [src]="'../../../../assets/icons/icon-' + notify.theme + '.svg'" alt="">
+      <h2 class="title font-bold" style="font-size: 24px">{{notify.title}}</h2>
+    </header>
+    <main>
+      <p style="font-size: 16px;line-height: 1.1" [innerHTML]="notify.text"></p>
+    </main>
+    <footer>
+      <div [ngClass]="{'gradient-info': isAnimationLine}"></div>
+    </footer>
+  </div>
+</div>
+

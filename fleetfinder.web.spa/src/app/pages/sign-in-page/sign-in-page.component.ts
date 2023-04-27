@@ -27,7 +27,7 @@ export class SignInPageComponent {
       this.router.navigate([`/${namesRoute.home}`]).then(() => window.location.reload())
     }, error => {
       this.isLoad = false
-      this.notification.notify("Не верный логин и/или пароль.")
+      this.notification.error("Не верный логин и/или пароль.")
     });
   }
 }
