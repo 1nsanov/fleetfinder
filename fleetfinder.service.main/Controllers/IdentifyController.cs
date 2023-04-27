@@ -18,27 +18,24 @@ namespace fleetfinder.service.main.Controllers
         {
             _mediator = mediator;
         }
-
-        [AllowAnonymous]
-        [HttpPost("signUp")]
+        
+        [HttpPost("sign-up")]
         public async Task<IdentifySignUp.ResponseDto> IdentifySignUp(IdentifySignUp.RequestDto request,
             CancellationToken cancellationToken)
         {
             return await _mediator.Send(new IdentifySignUp.Command(request), cancellationToken);
         }
-
-        [AllowAnonymous]
-        [HttpPost("signIn")]
+        
+        [HttpPost("sign-in")]
         public async Task<IdentifySignIn.ResponseDto> IdentifySignIn(IdentifySignIn.RequestDto request,
             CancellationToken cancellationToken)
         {
             return await _mediator.Send(new IdentifySignIn.Command(request), cancellationToken);
         }
-
-        [AllowAnonymous]
-        [HttpPost("refreshToken")]
+        
+        [HttpPost("refresh-token")]
         public async Task<IdentifyRefreshToken.ResponseDto> IdentifyRefreshToken(
-            [FromHeader] [Required] string refreshToken,
+            [FromHeader] string refreshToken,
             CancellationToken cancellationToken)
         {
             return await _mediator.Send(
@@ -47,8 +44,7 @@ namespace fleetfinder.service.main.Controllers
                 cancellationToken);
         }
 
-        [Authorize]
-        [HttpPost("logout")]
+        [HttpGet("logout")]
         public async Task<bool> IdentifyLogout(CancellationToken cancellationToken)
         {
             return await _mediator.Send(
@@ -56,7 +52,6 @@ namespace fleetfinder.service.main.Controllers
                     .Last()), cancellationToken);
         }
         
-        [Authorize]
         [HttpGet("claims")]
         public async Task<IdentifyGetClaims.ResponseDto> IdentifyGetClaims(CancellationToken cancellationToken)
         {

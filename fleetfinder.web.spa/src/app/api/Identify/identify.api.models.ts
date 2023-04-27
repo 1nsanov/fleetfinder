@@ -24,6 +24,6 @@ export interface ISignInRequest{
 
 //Claims
 export interface IClaims{
-  Id: number,
-  FullName : string
+  Id: number | null,
+  FullName : string | null
 }

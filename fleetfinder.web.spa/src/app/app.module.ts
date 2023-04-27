@@ -16,7 +16,8 @@ import { ButtonComponent } from './components/ui/button/button.component';
 import { ModalWindowComponent } from './components/ui/modal-window/modal-window.component';
 import { SignUpPageComponent } from './pages/sign-up-page/sign-up-page.component';
 import { SignInPageComponent } from './pages/sign-in-page/sign-in-page.component';
-import {TokenInterceptor} from "./services/token.interceptor";
+import {TokenInterceptor} from "./interceptors/token.interceptor";
+import {RedirectInterceptor} from "./interceptors/redirect.interceptor";
 import {NgOptimizedImage} from "@angular/common";
 import { GlobalLoaderComponent } from './components/ui/global-loader/global-loader.component';
 
@@ -41,7 +42,8 @@ import { GlobalLoaderComponent } from './components/ui/global-loader/global-load
         BrowserModule, HttpClientModule, AppRoutingModule, NgOptimizedImage,
     ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: RedirectInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

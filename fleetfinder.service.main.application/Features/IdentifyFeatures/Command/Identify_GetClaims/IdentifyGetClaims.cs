@@ -17,7 +17,8 @@ public static partial class IdentifyGetClaims
 
         public async Task<ResponseDto> Handle(Command request, CancellationToken cancellationToken)
         {
-            if (request.AccessToken is null) throw new ArgumentNullException(nameof(request.AccessToken));
+            if (request.AccessToken is null) 
+                return new ResponseDto(null, null);
             
             var principal = _identifyService.GetPrincipalFromToken(request.AccessToken, true);
             var claimSid = principal.Claims.FirstOrDefault(claim => claim.Type.Contains("sid"))?.Value;

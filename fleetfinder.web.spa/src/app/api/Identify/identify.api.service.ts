@@ -5,6 +5,8 @@ import {environment} from "../../../environments/environment";
 import {CookieService} from "ngx-cookie-service";
 import {catchError, tap, throwError} from "rxjs";
 import {TokenModel} from "../../models/token.model";
+import {namesRoute} from "../../models/names-route";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -12,17 +14,19 @@ import {TokenModel} from "../../models/token.model";
 export class IdentifyApiService {
   url : string = environment.apiUrl + "identify/"
   claims: IClaims | null = null;
-  constructor(private http: HttpClient, private cookieService: CookieService) { }
+  constructor(private http: HttpClient,
+              private cookieService: CookieService,
+              private router: Router) { }
 
   signUp(request: ISignUpRequest) {
-    return  this.http.post<ITokenResponse>(this.url + "signUp", request).pipe(
+    return  this.http.post<ITokenResponse>(this.url + "sign-up", request).pipe(
       tap((result) => {
         this.writeToken(result.Token)
       })
     );
   }
   signIn(request: ISignInRequest) {
-    return this.http.post<ITokenResponse>(this.url + "signIn", request).pipe(
+    return this.http.post<ITokenResponse>(this.url + "sign-in", request).pipe(
       tap((result) => {
         this.writeToken(result.Token)
       })
@@ -34,7 +38,7 @@ export class IdentifyApiService {
     const headers = new HttpHeaders()
       .set('Authorization', `Bearer ${this.getAccessToken()}`)
       .set('refreshToken', refreshToken);
-    return this.http.post<ITokenResponse>(this.url + "refreshToken", {}, { headers })
+    return this.http.post<ITokenResponse>(this.url + "refresh-token", {}, { headers })
       .pipe(
         tap((result) => {
           this.writeToken(result.Token)
@@ -43,12 +47,14 @@ export class IdentifyApiService {
   }
 
   logout() {
-    return  this.http.post<boolean>(this.url + "logout", {}).pipe(
-      tap((result) => {
-        if (result) this.writeToken(null)
+    return this.http.get<boolean>(this.url + "logout").pipe(
+      tap(() => {
+        this.writeToken(null)
+        this.router.navigate([`/${namesRoute.home}`]).then(() => window.location.reload())
       }),
       catchError(error => {
         this.writeToken(null)
+        this.router.navigate([`/${namesRoute.home}`]).then(() => window.location.reload())
         return throwError(error)
       })
     );
@@ -81,7 +87,7 @@ export class IdentifyApiService {
     return expiryTime ? Date.parse(expiryTime) : null
   }
 
-  private writeToken(token: TokenModel | null){
+  writeToken(token: TokenModel | null){
     if (!token) {
       this.cookieService.set('access_token', '');
       this.cookieService.set('refresh_token', '');

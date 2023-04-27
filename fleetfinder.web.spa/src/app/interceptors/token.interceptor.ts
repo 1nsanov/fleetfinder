@@ -20,7 +20,7 @@ export class TokenInterceptor implements HttpInterceptor {
         this.refreshTokenInProgress = true;
         return this.identifyService.refreshToken().pipe(
           catchError((error) => {
-            if (error instanceof HttpErrorResponse && (error.status === 401 || error.status === 500))
+            if (error instanceof HttpErrorResponse && (error.status === 500))
               this.identifyService.logout().subscribe();
 
             return throwError(error);

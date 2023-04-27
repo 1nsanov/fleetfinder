@@ -26,7 +26,7 @@ public static partial class IdentifyLogout
             if (request.AccessToken is null) throw new ArgumentNullException(nameof(request.AccessToken));
             
             var entity = await _identifyService.GetUserByAccessToken(request.AccessToken, cancellationToken)
-                    ?? throw new AuthenticationException("Invalid Access Token!");
+                    ?? throw new ArgumentNullException("Invalid Access Token!");
 
             _tokenService.RevokeToken(request.AccessToken);
             

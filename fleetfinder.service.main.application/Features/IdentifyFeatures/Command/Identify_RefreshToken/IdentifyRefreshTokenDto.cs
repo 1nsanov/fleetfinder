@@ -5,6 +5,6 @@ namespace fleetfinder.service.main.application.Features.IdentifyFeatures.Command
 public static partial class IdentifyRefreshToken
 {
     public record ResponseDto(
-        TokenDto Token
+        TokenDto? Token
     );
 }

@@ -5,7 +5,7 @@ namespace fleetfinder.service.main.application.Features.IdentifyFeatures.Command
 
 public static partial class IdentifyRefreshToken
 {
-    public record Command(string? AccessToken, string RefreshToken) : ICommandRequest<ResponseDto>;
+    public record Command(string? AccessToken, string? RefreshToken) : ICommandRequest<ResponseDto>;
     
     internal class Handler : IRequestHandler<Command, ResponseDto>
     {
@@ -20,7 +20,8 @@ public static partial class IdentifyRefreshToken
 
         public async Task<ResponseDto> Handle(Command request, CancellationToken cancellationToken)
         {
-            if (request.AccessToken is null) throw new ArgumentNullException(nameof(request.AccessToken));
+            if (request.AccessToken is null || request.RefreshToken is null)
+                return new ResponseDto(null);
             
             var entity = await _identifyService.GetUserByAccessToken(request.AccessToken, cancellationToken);
 
