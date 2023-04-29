@@ -25,15 +25,18 @@ export class NotificationComponent implements OnInit{
       if (this.isShow) this.hidden();
 
       this.notify = notify;
-      this.isShow = true;
-      setTimeout(() => this.isAnimationLine = true, 10);
-      this.setTimeoutIsAnimationFadeOut = setTimeout(() => this.isAnimationFadeOut = true, 4400)
-      this.setTimeoutHidden = setTimeout(() => {
-        this.hidden();
-      }, 4700)
+      this.show();
     })
   }
 
+  show(){
+    this.isShow = true;
+    setTimeout(() => this.isAnimationLine = true, 10);
+    this.setTimeoutIsAnimationFadeOut = setTimeout(() => this.isAnimationFadeOut = true, 4400)
+    this.setTimeoutHidden = setTimeout(() => {
+      this.hidden();
+    }, 4700)
+  }
   hidden(){
     this.isShow = false;
     this.isAnimationFadeOut = false;

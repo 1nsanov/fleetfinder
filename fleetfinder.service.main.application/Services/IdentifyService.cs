@@ -91,7 +91,7 @@ public class IdentifyService : IIdentifyService
         return new JwtSecurityToken(_config["Jwt:Issuer"],
             _config["Jwt:Audience"],
             claims,
-            expires: DateTime.UtcNow.AddSeconds(10),
+            expires: DateTime.UtcNow.AddMinutes(15),
             signingCredentials: credentials);
     }
 
