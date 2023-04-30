@@ -144,6 +144,7 @@
   .__1, .__2, .__3{
     h2{
       text-align: center !important;
+      font-size: 30px;
     }
     figure {
       flex-direction: column-reverse !important;
@@ -162,6 +163,12 @@
   .__4{
     h2{
       text-align: center ;
+      font-size: 30px;
+    }
+    figure {
+      h3 {
+        font-size: 28px !important;
+      }
     }
   }
 }

@@ -57,7 +57,6 @@ export class LayoutHeaderNavComponent implements OnInit, OnDestroy{
   changeNavTab(navTab: NavTab) {
     if (this.currentNavTab === navTab) return;
     this.swapNavTab(navTab);
-    // this.scrollToTop();
     this.router.navigate([this.currentNavTab])
   }
 
@@ -122,11 +121,9 @@ export class LayoutHeaderNavComponent implements OnInit, OnDestroy{
     const self = this;
     window.onscroll = function() {
       if (self.isDisabledOnScroll) return;
-      if (self.isShowHeaderPreview){
-        if (window.pageYOffset > 236)
-          self.setFixNavHeader()
-        else
-          self.removeFixNavHeader();
+      const pageYOffset = window.innerWidth >= 768 ? 235 : 175;
+      if (self.isShowHeaderPreview && window.pageYOffset <= pageYOffset){
+        self.removeFixNavHeader();
       }
       else
         self.setFixNavHeader()

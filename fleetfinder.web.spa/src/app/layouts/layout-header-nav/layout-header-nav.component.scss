@@ -9,6 +9,9 @@
     gap: 20px;
     height: 100%;
     align-items: center;
+    @media (max-width: 1054px) {
+      padding: 0 15px;
+    }
     .logo, .nav, .user{
       flex-grow: 1;
     }
@@ -32,7 +35,7 @@
         height: 100%;
         cursor: pointer;
         transition: var(--transition-base);
-        span {
+        span, p {
           width: 100%;
           align-self: center;
           font-size: 24px;

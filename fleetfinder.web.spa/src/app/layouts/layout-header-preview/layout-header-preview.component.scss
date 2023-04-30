@@ -1,5 +1,5 @@
 .header-preview{
-  height: 236px;
+  height: 235px;
   background: var(--yellow);
   align-items: center;
   transition: var(--transition-base);
@@ -46,6 +46,12 @@
         line-height: 43px;
       }
     }
+    @media (max-width: 768px) {
+      scale: 0.7;
+    }
+  }
+  @media (max-width: 768px) {
+    height: 175px;
   }
 }
 
