@@ -4,7 +4,7 @@ import {SignUpModel} from "../../models/user/sign-up.model";
 import {ISignUpRequest} from "../../api/Identify/identify.api.models";
 import {NotificationService} from "../../services/notification.service";
 import {Router} from "@angular/router";
-import {namesRoute} from "../../models/names-route";
+import {namesRoute} from "../../data/names-route";
 import {HttpErrorResponse} from "@angular/common/http";
 import {catchError, throwError} from "rxjs";
 

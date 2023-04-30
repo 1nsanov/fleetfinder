@@ -1,18 +1,31 @@
 .btn-base{
   min-width: 160px;
   width: 100%;
-  height: 40px;
   border-radius: 12px;
   transition: var(--transition-base);
   .content{
     font-weight: 600;
-    font-size: 18px;
     img{
       height: 24px;
       width: 24px;
       margin: 0 auto;
     }
   }
+
+  &.size-default{
+    height: 40px;
+    .content {
+      font-size: 18px;
+    }
+  }
+
+  &.size-big{
+    height: 60px;
+    .content {
+      font-size: 24px;
+    }
+  }
+
   &.blue{
     background: var(--blue);
     color: var(--white);

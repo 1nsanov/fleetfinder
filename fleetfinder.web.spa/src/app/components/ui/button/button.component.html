@@ -7,7 +7,9 @@
           'black' : BtnTheme.Black == theme,
           'white' : BtnTheme.White == theme,
           'green' : BtnTheme.Green == theme,
-          'red' : BtnTheme.Red == theme
+          'red' : BtnTheme.Red == theme,
+          'size-default' : size === 'default',
+          'size-big' : size === 'big'
         }"
         (click)="onClick($event)">
   <div class="content" *ngIf="!isLoad">

@@ -3,7 +3,7 @@ import {SignInModel} from "../../models/user/sign-in.model";
 import {IdentifyApiService} from "../../api/Identify/identify.api.service";
 import {ISignInRequest} from "../../api/Identify/identify.api.models";
 import {Router} from "@angular/router";
-import {namesRoute} from "../../models/names-route";
+import {namesRoute} from "../../data/names-route";
 import {tap} from "rxjs";
 import {NotificationService} from "../../services/notification.service";
 

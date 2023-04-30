@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {navTab, NavTab} from "../../models/enums/nav-tab.enum";
 import {NavigationEnd, Router} from "@angular/router";
 import {Subscription} from "rxjs";
-import {namesRoute} from "../../models/names-route";
+import {namesRoute} from "../../data/names-route";
 import {ModalService} from "../../services/modal.service";
 import {IdentifyApiService} from "../../api/Identify/identify.api.service";
 

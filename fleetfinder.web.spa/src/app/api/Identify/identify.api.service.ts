@@ -5,7 +5,7 @@ import {environment} from "../../../environments/environment";
 import {CookieService} from "ngx-cookie-service";
 import {catchError, tap, throwError} from "rxjs";
 import {TokenModel} from "../../models/token.model";
-import {namesRoute} from "../../models/names-route";
+import {namesRoute} from "../../data/names-route";
 import {Router} from "@angular/router";
 
 @Injectable({

@@ -10,6 +10,7 @@ export class ButtonComponent implements OnInit{
   @Input() theme: string = "blue"
   @Input() disabled : boolean = false;
   @Input() isLoad: boolean = false;
+  @Input() size: string = "default";
 
   @Output() click = new EventEmitter<void>();
 

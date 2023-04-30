@@ -4,7 +4,7 @@ import {LandingPageComponent} from "./pages/landing-page/landing-page.component"
 import {TransportsPageComponent} from "./pages/transports-page/transports-page.component";
 import {OrdersPageComponent} from "./pages/orders-page/orders-page.component";
 import {AboutPageComponent} from "./pages/about-page/about-page.component";
-import {namesRoute} from "./models/names-route";
+import {namesRoute} from "./data/names-route";
 import {SignUpPageComponent} from "./pages/sign-up-page/sign-up-page.component";
 import {SignInPageComponent} from "./pages/sign-in-page/sign-in-page.component";
 

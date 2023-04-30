@@ -7,7 +7,7 @@ import {
 } from '@angular/common/http';
 import {Observable, tap} from 'rxjs';
 import {Router} from "@angular/router";
-import {namesRoute} from "../models/names-route";
+import {namesRoute} from "../data/names-route";
 import {IdentifyApiService} from "../api/Identify/identify.api.service";
 
 @Injectable()

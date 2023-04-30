@@ -1,28 +1,17 @@
 import { Component } from '@angular/core';
 import {IdentifyApiService} from "../../api/Identify/identify.api.service";
 import {NotificationService} from "../../services/notification.service";
+import {cargoItems} from "../../data/transport/cargo-items";
+import {passengerItems} from "../../data/transport/passenger-items";
+import {specialItems} from "../../data/transport/special-items";
 
 @Component({
   selector: 'app-landing-page',
   templateUrl: './landing-page.component.html',
-  styleUrls: ['./landing-page.component.css']
+  styleUrls: ['./landing-page.component.scss']
 })
 export class LandingPageComponent {
-  isLoad = false;
-  constructor(private identifyService: IdentifyApiService,
-              private notification: NotificationService) {
-  }
-  checkAuth(){
-    this.isLoad = true;
-    this.identifyService.testAuth().subscribe(
-      () => {
-        this.isLoad = false;
-        this.notification.notify("Вы авторизованы!")
-      },
-      error => {
-        this.isLoad = false;
-        this.notification.error("Вы не авторизованы!")
-      }
-    )
-  }
+  cargo = cargoItems;
+  passenger = passengerItems;
+  special = specialItems;
 }
