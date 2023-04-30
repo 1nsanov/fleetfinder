@@ -169,6 +169,13 @@
       h3 {
         font-size: 28px !important;
       }
+      section{
+        gap: 5px !important;
+        justify-content: space-around;
+        .box-transport{
+          scale: 0.9;
+        }
+      }
     }
   }
 }
