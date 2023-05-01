@@ -16,7 +16,6 @@
       p{
         font-weight: 500;
         font-size: 24px;
-        text-align: right;
       }
     }
     .image{
@@ -33,21 +32,17 @@
     padding: 15px 0 30px 0;
     figure{
       .image{
-        background-image: url(https://images.unsplash.com/photo-1550693445-737398ed6775?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80);
+        background-image: url(../../../assets/images/image-car-map-p.jpg);
       }
     }
   }
   &.__2 {
     padding: 30px 0;
     background: var(--gr-w-w-w);
-    h2 {
-      align-self: flex-end;
-      text-align: right;
-    }
     figure{
       flex-direction: row-reverse;
       .image{
-        background-image: url(https://images.unsplash.com/photo-1656432898164-7634c508cf71?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80);
+        background-image: url(../../../assets/images/image-trucks-MDw0m3Ulot8-p.jpg);
       }
     }
   }
@@ -55,7 +50,7 @@
     padding: 30px 0;
     figure{
       .image{
-        background-image: url(https://images.unsplash.com/photo-1601656125693-aac12521664f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2038&q=80);
+        background-image: url(../../../assets/images/handiwork-nyc-_fA8Ppg3Yhs-unsplash-p.jpg);
       }
     }
   }
