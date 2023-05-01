@@ -7,6 +7,7 @@ import {Router} from "@angular/router";
 import {namesRoute} from "../../data/names-route";
 import {HttpErrorResponse} from "@angular/common/http";
 import {catchError, throwError} from "rxjs";
+import {TimeoutService} from "../../services/timeout.service";
 
 @Component({
   selector: 'app-sign-up-page',
@@ -17,24 +18,45 @@ export class SignUpPageComponent {
   step: number = 1;
   user: SignUpModel = new SignUpModel();
   isLoadSignUp = false;
+  errors = {
+    FirstName: "",
+    SecondName: "",
+    Surname: "",
+  }
 
   constructor(private identifyService: IdentifyApiService,
               private notification: NotificationService,
-              private router: Router) {
+              private router: Router,
+              private timeoutService: TimeoutService) {
   }
-  nextStep() {
-    if (this.validationStepOne())
-      this.step++;
-    else
+  async nextStep() {
+    await this.validationStepOne()
+    if (Object.values(this.errors).join("")) {
       this.notification.error("Заполните ФИО!")
+    } else {
+      this.step++;
+    }
   }
 
   previousStep() {
     this.step--;
   }
 
-  validationStepOne() : boolean {
-    return !!this.user.FullName.First && !!this.user.FullName.Second;
+  async validationStepOne() {
+    this.clearErrors()
+    await this.timeoutService.wait(100);
+    if (!this.user.FullName.First)
+      this.errors.FirstName = "Поле обязательно к заполнению";
+    if (!this.user.FullName.Second)
+      this.errors.SecondName = "Поле обязательно к заполнению";
+    if (!this.user.FullName.Surname)
+      this.errors.Surname = "Поле обязательно к заполнению";
+  }
+
+  clearErrors(){
+    this.errors.FirstName = ""
+    this.errors.SecondName = ""
+    this.errors.Surname = ""
   }
 
   signUp(){

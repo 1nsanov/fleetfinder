@@ -27,7 +27,7 @@
     [readonly]="vDropdown"
   >
 </div>
-<div *ngIf="error" class="error">
+<div [ngClass]="{'hidden-error': !error}" class="error">
   <div class="image">
     <img src="../../../../assets/icons/icon-nearby-error.svg" alt="">
   </div>

@@ -7,9 +7,15 @@
       <div>
         <label>ФИО</label>
         <div class="flex flex-col" style="gap: 15px">
-          <app-input label="Фамилия" [(value)]="user.FullName.First" />
-          <app-input label="Имя" [(value)]="user.FullName.Second"/>
-          <app-input label="Отчетство" [(value)]="user.FullName.Surname"/>
+          <app-input label="Фамилия"
+                     [(value)]="user.FullName.First"
+                     [error]="errors.FirstName"/>
+          <app-input label="Имя"
+                     [(value)]="user.FullName.Second"
+                     [error]="errors.SecondName"/>
+          <app-input label="Отчество"
+                     [(value)]="user.FullName.Surname"
+                     [error]="errors.Surname"/>
         </div>
       </div>
       <app-input label="Организация" />

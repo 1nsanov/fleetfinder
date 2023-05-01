@@ -82,6 +82,7 @@
   display: flex;
   align-items: center;
   margin: 5px 0 0 12px;
+  transition: var(--transition-base);
   .image {
     margin-right: 4px;
     height: 12px;
@@ -90,6 +91,15 @@
   p {
     font-size: 12px;
     color: var(--red);
+  }
+
+  &.hidden-error{
+    transform: translateX(33%) scaleY(0);
+    opacity: 0;
+    margin: 0;
+    .image {
+      height: 0;
+    }
   }
 }
 

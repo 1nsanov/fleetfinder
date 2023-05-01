@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, Output, OnInit} from '@angular/core';
 import {DomSanitizer} from "@angular/platform-browser";
 import {InputService} from "../../../services/input.service";
+import {TimeoutService} from "../../../services/timeout.service";
 
 @Component({
   selector: 'app-input',
@@ -21,7 +22,8 @@ export class InputComponent implements OnInit{
   @Output() focus = new EventEmitter<void>();
   @Output() blur = new EventEmitter<void>();
 
-  constructor(private sanitizer: DomSanitizer) {
+  constructor(private sanitizer: DomSanitizer,
+              private timeoutService: TimeoutService) {
   }
 
   service: InputService;
@@ -49,11 +51,10 @@ export class InputComponent implements OnInit{
     this.focus.emit();
   }
 
-  onBlur(){
-    setTimeout(() => {
-      this.service.onBlurEvent(!!this.value);
-      this.error = "";
-      this.blur.emit()
-    }, 100)
+  async onBlur(){
+    await this.timeoutService.wait(100);
+    this.service.onBlurEvent(!!this.value);
+    this.error = "";
+    this.blur.emit()
   }
 }
