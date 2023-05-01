@@ -48,17 +48,41 @@
       border-radius: 12px;
       background: var(--white);
       z-index: 12;
-      .item{
-        line-height: 25px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: var(--transition-base);
-        &:hover,
-        &.active{
-          color: var(--blue-saturated);
+      .scroll-wrapper{
+        max-height: 125px;
+        overflow: auto;
+        /* width */
+        &::-webkit-scrollbar {
+          width: 3px;
         }
-        &.active {
-          font-weight: 700;
+        /* Track */
+        &::-webkit-scrollbar-track {
+          background: #D2D2D2;
+          border-radius: 20px;
+        }
+        /* Handle */
+        &::-webkit-scrollbar-thumb {
+          background: var(--black-50);
+          transition: var(--transition-base);
+          border-radius: 20px;
+        }
+        /* Handle on hover */
+        &::-webkit-scrollbar-thumb:hover {
+          filter: brightness(1.2);
+        }
+
+        .item{
+          line-height: 25px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: var(--transition-base);
+          &:hover,
+          &.active{
+            color: var(--blue-saturated);
+          }
+          &.active {
+            font-weight: 700;
+          }
         }
       }
     }

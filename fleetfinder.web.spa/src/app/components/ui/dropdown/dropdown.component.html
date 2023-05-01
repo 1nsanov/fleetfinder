@@ -16,11 +16,13 @@
   <div class="values-container" [ngClass]="{'animation' : !isOpened}">
     <div class="triangle"></div>
     <div class="values">
-      <div *ngFor="let item of items"
-           [ngClass]="{'active': current != null && item.Value === current.Value}"
-           class="item"
-           (click)="selectItem(item)">
-        {{item.Preview}}
+      <div class="scroll-wrapper">
+        <div *ngFor="let item of items"
+             [ngClass]="{'active': current != null && item.Value === current.Value}"
+             class="item"
+             (click)="selectItem(item)">
+          {{item.Preview}}
+        </div>
       </div>
     </div>
   </div>
