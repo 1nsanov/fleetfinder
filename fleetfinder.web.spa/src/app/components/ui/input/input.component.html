@@ -1,4 +1,4 @@
-<div class="input_wrapper">
+<div class="input_wrapper" (click)="onClick($event)">
   <div class="input-label"
        [ngClass]="{
          'input-label-focus' : service.isTransform$.value,
@@ -16,13 +16,15 @@
     [style]="{'padding-left': service.svg ? '45px' : '20px'}"
     [ngClass]="{
       'placeholder' : service.isTransform$.value,
-      'input-is-value' : !service.isFocus$.value && value
+      'input-is-value' : !service.isFocus$.value && value,
+      'cursor-pointer': vDropdown
     }"
     [value]="value"
     (input)="onInput($event)"
     [placeholder]="placeholder"
-    (focus)="service.onFocusEvent()"
-    (blur)="service.onBlurEvent(!!value)"
+    (focus)="onFocus()"
+    (blur)="onBlur()"
+    [readonly]="vDropdown"
   >
 </div>
 

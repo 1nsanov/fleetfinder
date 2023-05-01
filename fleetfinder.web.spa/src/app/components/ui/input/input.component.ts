@@ -13,7 +13,12 @@ export class InputComponent implements OnInit{
   @Input() label: string;
   @Input() icon: string;
   @Input() type: string = "text";
+  @Input() vDropdown: boolean = false;
+
   @Output() valueChange = new EventEmitter<string>();
+  @Output() click = new EventEmitter<void>();
+  @Output() focus = new EventEmitter<void>();
+  @Output() blur = new EventEmitter<void>();
 
   constructor(private sanitizer: DomSanitizer) {
   }
@@ -32,5 +37,25 @@ export class InputComponent implements OnInit{
   onInput(e: Event){
     this.service.switchState(true);
     this.valueChange.emit((e.target as HTMLInputElement).value)
+  }
+  onClick(e: Event) {
+    e.stopPropagation();
+    if (this.vDropdown) this.click.emit();
+  }
+
+  onFocus(){
+    this.service.onFocusEvent()
+    this.focus.emit();
+  }
+
+  onBlur(){
+    setTimeout(() => {
+      this.service.onBlurEvent(!!this.value);
+      this.blur.emit()
+    }, 70)
+  }
+
+  get isDisabled(){
+    return this.vDropdown;
   }
 }

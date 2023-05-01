@@ -1,1 +1,5 @@
-<app-input label="Транспорт" [(value)]="transport"/>
+<app-dropdown label="Список"
+              placeholder="Выберите предмет"
+              [items]="items"
+              (select)="onSelect($event)"
+/>

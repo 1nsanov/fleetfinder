@@ -21,6 +21,7 @@ import {RedirectInterceptor} from "./interceptors/redirect.interceptor";
 import {NgOptimizedImage} from "@angular/common";
 import { GlobalLoaderComponent } from './components/ui/global-loader/global-loader.component';
 import { NotificationComponent } from './components/ui/notification/notification.component';
+import { DropdownComponent } from './components/ui/dropdown/dropdown.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { NotificationComponent } from './components/ui/notification/notification
     SignInPageComponent,
     GlobalLoaderComponent,
     NotificationComponent,
+    DropdownComponent,
   ],
     imports: [
         BrowserModule, HttpClientModule, AppRoutingModule, NgOptimizedImage,
