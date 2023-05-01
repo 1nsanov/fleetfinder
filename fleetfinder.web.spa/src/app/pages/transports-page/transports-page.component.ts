@@ -19,8 +19,8 @@ export class TransportsPageComponent {
     new DropdownItemModel(9, "item9", "Item 9"),
     new DropdownItemModel(10, "item10", "Item 10")
   ]
-
   onSelect(item : DropdownItemModel<string>){
     console.log(item);
   }
+
 }

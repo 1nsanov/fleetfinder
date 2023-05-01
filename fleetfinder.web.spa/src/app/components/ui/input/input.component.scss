@@ -1,5 +1,6 @@
 .input_wrapper{
   position: relative;
+
   .input-base{
     background: var(--white);
     border: 2px solid var(--black);
@@ -64,6 +65,31 @@
 
   .input-label-focus + .input-icon {
     opacity: 1;
+  }
+
+  &.input-error{
+    .input-base{
+      border-color: var(--red);
+      color: var(--red);
+    }
+    .input-label{
+      color: var(--red);
+    }
+  }
+}
+
+.error{
+  display: flex;
+  align-items: center;
+  margin: 5px 0 0 12px;
+  .image {
+    margin-right: 4px;
+    height: 12px;
+    width: 12px;
+  }
+  p {
+    font-size: 12px;
+    color: var(--red);
   }
 }
 

@@ -1,4 +1,4 @@
-<div class="input_wrapper" (click)="onClick($event)">
+<div class="input_wrapper" [ngClass]="{'input-error': error}" (click)="onClick($event)">
   <div class="input-label"
        [ngClass]="{
          'input-label-focus' : service.isTransform$.value,
@@ -26,5 +26,11 @@
     (blur)="onBlur()"
     [readonly]="vDropdown"
   >
+</div>
+<div *ngIf="error" class="error">
+  <div class="image">
+    <img src="../../../../assets/icons/icon-nearby-error.svg" alt="">
+  </div>
+  <p>{{error}}</p>
 </div>
 

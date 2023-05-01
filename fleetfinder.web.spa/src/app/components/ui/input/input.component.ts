@@ -13,6 +13,7 @@ export class InputComponent implements OnInit{
   @Input() label: string;
   @Input() icon: string;
   @Input() type: string = "text";
+  @Input() error: string = "";
   @Input() vDropdown: boolean = false;
 
   @Output() valueChange = new EventEmitter<string>();
@@ -51,6 +52,7 @@ export class InputComponent implements OnInit{
   onBlur(){
     setTimeout(() => {
       this.service.onBlurEvent(!!this.value);
+      this.error = "";
       this.blur.emit()
     }, 100)
   }
