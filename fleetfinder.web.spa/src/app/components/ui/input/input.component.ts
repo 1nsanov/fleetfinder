@@ -52,10 +52,6 @@ export class InputComponent implements OnInit{
     setTimeout(() => {
       this.service.onBlurEvent(!!this.value);
       this.blur.emit()
-    }, 70)
-  }
-
-  get isDisabled(){
-    return this.vDropdown;
+    }, 100)
   }
 }
