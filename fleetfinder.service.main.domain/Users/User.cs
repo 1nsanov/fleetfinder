@@ -1,5 +1,5 @@
-﻿using fleetfinder.service.main.domain.Cargo;
-using fleetfinder.service.main.domain.Contacts;
+﻿using fleetfinder.service.main.domain.Transport.Cargo;
+using fleetfinder.service.main.domain.Transport.Passenger;
 using Microsoft.EntityFrameworkCore;
 
 namespace fleetfinder.service.main.domain.Users;
@@ -17,6 +17,7 @@ public class User : EntityBase
     
     //Relations
     public List<CargoTransport> CargoTransports { get; set; } = new();
+    public List<PassengerTransport> PassengerTransports  { get; set; } = new();
 }
 
 [Owned]

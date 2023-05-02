@@ -28,7 +28,7 @@ public static partial class IdentifySignUp
 
             var token = _identifyService.GenerateTokenUser(entity);
             
-            await _commandDbContext.Users.AddAsync(entity, cancellationToken);
+            await _commandDbContext.User.AddAsync(entity, cancellationToken);
             await _commandDbContext.SaveChangesAsync(cancellationToken);
             
             return new ResponseDto(token);

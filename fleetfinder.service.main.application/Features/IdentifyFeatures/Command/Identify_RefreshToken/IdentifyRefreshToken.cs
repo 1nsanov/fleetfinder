@@ -31,7 +31,7 @@ public static partial class IdentifyRefreshToken
 
             var token = _identifyService.GenerateTokenUser(entity);
             
-            _commandDbContext.Users.Update(entity);
+            _commandDbContext.User.Update(entity);
             await _commandDbContext.SaveChangesAsync(cancellationToken);
 
             return new ResponseDto(token);

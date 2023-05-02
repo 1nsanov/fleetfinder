@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using fleetfinder.service.main.domain.Enums;
+using fleetfinder.service.main.domain.Enums.Common;
 
 #nullable disable
 

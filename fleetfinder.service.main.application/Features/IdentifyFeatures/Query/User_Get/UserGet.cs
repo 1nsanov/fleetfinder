@@ -17,7 +17,7 @@ public static partial class UserGet
 
         public async Task<ResponseDto> Handle(Query request, CancellationToken cancellationToken)
         {
-            var entity = _queryDbContext.Users.FirstOrDefault(u => u.Id == request.Id);
+            var entity = _queryDbContext.User.FirstOrDefault(u => u.Id == request.Id);
 
             if (entity is null) throw new ArgumentNullException(nameof(entity));
 

@@ -21,7 +21,7 @@ public class UserService : IUserService
     
     public async Task<User> GetUserByLoginPassword(string login, string password, CancellationToken cancellationToken)
     {
-        return await _queryDbContext.Users.FirstOrDefaultAsync(u => u.Login == login && u.Password == password, cancellationToken: cancellationToken)
+        return await _queryDbContext.User.FirstOrDefaultAsync(u => u.Login == login && u.Password == password, cancellationToken: cancellationToken)
                ?? throw new EntityNotFoundException($"User with login '{login}' and password '{password}'");
     }
 }

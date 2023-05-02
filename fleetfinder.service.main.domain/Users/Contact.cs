@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace fleetfinder.service.main.domain.Contacts;
+namespace fleetfinder.service.main.domain.Users;
 
 [Owned]
 public class Contact

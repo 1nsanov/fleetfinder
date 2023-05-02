@@ -1,4 +1,4 @@
-﻿namespace fleetfinder.service.main.domain.Enums.Transport;
+﻿namespace fleetfinder.service.main.domain.Enums.Transport.Cargo;
 
 public enum CargoBodyKind : byte
 {

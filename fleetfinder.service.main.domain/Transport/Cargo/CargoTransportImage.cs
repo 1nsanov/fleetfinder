@@ -1,4 +1,4 @@
-﻿namespace fleetfinder.service.main.domain.Cargo;
+﻿namespace fleetfinder.service.main.domain.Transport.Cargo;
 
 public class CargoTransportImage : ImageBase
 {

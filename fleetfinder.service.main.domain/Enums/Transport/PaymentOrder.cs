@@ -1,4 +1,4 @@
-﻿namespace fleetfinder.service.main.domain.Enums;
+﻿namespace fleetfinder.service.main.domain.Enums.Transport;
 
 public enum PaymentOrder : byte
 {

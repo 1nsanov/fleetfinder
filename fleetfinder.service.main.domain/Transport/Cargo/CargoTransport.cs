@@ -1,13 +1,15 @@
 ﻿using fleetfinder.service.main.domain.Enums.Transport;
+using fleetfinder.service.main.domain.Enums.Transport.Cargo;
 using Microsoft.EntityFrameworkCore;
 
-namespace fleetfinder.service.main.domain.Cargo;
+namespace fleetfinder.service.main.domain.Transport.Cargo;
 
 public class CargoTransport : TransportBase
 {
     public CargoType Type { get; set; }
     public Body Body { get; set; } = null!;
     public CargoTransportationKind? TransportationKind { get; set; }
+    
     
     public List<CargoTransportImage> Images { get; set; } = new();
 }

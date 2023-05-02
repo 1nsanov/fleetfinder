@@ -30,7 +30,7 @@ public class IdentifyService : IIdentifyService
         var claim = principal.Claims.FirstOrDefault(claim => claim.Type.Contains("nameidentifier"));
         var login = claim?.Value;
 
-        return await _queryDbContext.Users.FirstOrDefaultAsync(u => u.Login == login, cancellationToken)
+        return await _queryDbContext.User.FirstOrDefaultAsync(u => u.Login == login, cancellationToken)
             ?? throw new EntityNotFoundException("User by access token not found");
     }
     

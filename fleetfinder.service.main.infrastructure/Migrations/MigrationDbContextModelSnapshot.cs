@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using fleetfinder.service.main.domain.Enums;
+using fleetfinder.service.main.domain.Enums.Common;
 using fleetfinder.service.main.infrastructure.Common.DbContexts;
 
 #nullable disable

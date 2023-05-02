@@ -1,4 +1,5 @@
 ﻿using fleetfinder.service.main.domain.Enums;
+using fleetfinder.service.main.domain.Enums.Common;
 
 namespace fleetfinder.service.main.domain.Bases;
 
