@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using fleetfinder.service.main.domain.Cargo;
+using fleetfinder.service.main.domain.Contacts;
+using Microsoft.EntityFrameworkCore;
 
 namespace fleetfinder.service.main.domain.Users;
 
@@ -9,7 +11,12 @@ public class User : EntityBase
     public string Email { get; set; } = null!;
     public FullName FullName { get; set; } = new();
     public string? Organization { get; set; }
+    public string? ImageUrl { get; set; }
+    public Contact Contact { get; set; } = null!;
     public RefreshToken? RefreshToken { get; set; } = new();
+    
+    //Relations
+    public List<CargoTransport> CargoTransports { get; set; } = new();
 }
 
 [Owned]

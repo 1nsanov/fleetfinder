@@ -1,4 +1,6 @@
-﻿using Z.EntityFramework.Plus;
+﻿using fleetfinder.service.main.domain.Cargo;
+using fleetfinder.service.main.domain.Enums.Transport;
+using Z.EntityFramework.Plus;
 
 namespace fleetfinder.service.main.infrastructure.Common.DbContexts;
 
@@ -14,6 +16,8 @@ public abstract class BaseDbContext : DbContext
     #region DbSets
 
     public DbSet<User> Users { get; set; } = null!;
+    public DbSet<CargoTransport> CargoTransports { get; set; } = null!;
+    public DbSet<CargoTransportImage> CargoTransportImages { get; set; } = null!;
 
     #endregion
 
@@ -32,11 +36,25 @@ public abstract class BaseDbContext : DbContext
     static BaseDbContext()
     {
         NpgsqlConnection.GlobalTypeMapper.MapEnum<State>();
+        NpgsqlConnection.GlobalTypeMapper.MapEnum<Region>();
+        NpgsqlConnection.GlobalTypeMapper.MapEnum<ExperienceWork>();
+        NpgsqlConnection.GlobalTypeMapper.MapEnum<PaymentMethod>();
+        NpgsqlConnection.GlobalTypeMapper.MapEnum<PaymentOrder>();
+        NpgsqlConnection.GlobalTypeMapper.MapEnum<CargoType>();
+        NpgsqlConnection.GlobalTypeMapper.MapEnum<CargoBodyKind>();
+        NpgsqlConnection.GlobalTypeMapper.MapEnum<CargoTransportationKind>();
     }
     
     private static void Enums_Builder(ModelBuilder modelBuilder)
     {
         modelBuilder.HasPostgresEnum<State>();
+        modelBuilder.HasPostgresEnum<Region>();
+        modelBuilder.HasPostgresEnum<ExperienceWork>();
+        modelBuilder.HasPostgresEnum<PaymentMethod>();
+        modelBuilder.HasPostgresEnum<PaymentOrder>();
+        modelBuilder.HasPostgresEnum<CargoType>();
+        modelBuilder.HasPostgresEnum<CargoBodyKind>();
+        modelBuilder.HasPostgresEnum<CargoTransportationKind>();
     }
 
     #endregion
