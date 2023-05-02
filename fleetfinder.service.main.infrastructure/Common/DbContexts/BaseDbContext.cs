@@ -2,8 +2,10 @@
 using fleetfinder.service.main.domain.Enums.Transport;
 using fleetfinder.service.main.domain.Enums.Transport.Cargo;
 using fleetfinder.service.main.domain.Enums.Transport.Passenger;
+using fleetfinder.service.main.domain.Enums.Transport.Special;
 using fleetfinder.service.main.domain.Transport.Cargo;
 using fleetfinder.service.main.domain.Transport.Passenger;
+using fleetfinder.service.main.domain.Transport.Special;
 using Z.EntityFramework.Plus;
 
 namespace fleetfinder.service.main.infrastructure.Common.DbContexts;
@@ -24,6 +26,8 @@ public abstract class BaseDbContext : DbContext
     public DbSet<CargoTransportImage> CargoTransportImage { get; set; } = null!;
     public DbSet<PassengerTransport> PassengerTransport { get; set; } = null!;
     public DbSet<PassengerTransportImage> PassengerTransportImage { get; set; } = null!;
+    public DbSet<SpecialTransport> SpecialTransport { get; set; } = null!;
+    public DbSet<SpecialTransportImage> SpecialTransportImage { get; set; } = null!;
 
     #endregion
 
@@ -53,6 +57,7 @@ public abstract class BaseDbContext : DbContext
         NpgsqlConnection.GlobalTypeMapper.MapEnum<PassengerRentalDuration>();
         NpgsqlConnection.GlobalTypeMapper.MapEnum<PassengerFacilities>();
         NpgsqlConnection.GlobalTypeMapper.MapEnum<PassengerOption>();
+        NpgsqlConnection.GlobalTypeMapper.MapEnum<SpecialType>();
     }
     
     private static void Enums_Builder(ModelBuilder modelBuilder)
@@ -69,6 +74,7 @@ public abstract class BaseDbContext : DbContext
         modelBuilder.HasPostgresEnum<PassengerRentalDuration>();
         modelBuilder.HasPostgresEnum<PassengerFacilities>();
         modelBuilder.HasPostgresEnum<PassengerOption>();
+        modelBuilder.HasPostgresEnum<SpecialType>();
     }
 
     #endregion
