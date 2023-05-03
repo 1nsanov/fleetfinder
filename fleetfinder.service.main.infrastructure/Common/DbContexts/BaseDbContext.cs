@@ -57,6 +57,7 @@ public abstract class BaseDbContext : DbContext
         NpgsqlConnection.GlobalTypeMapper.MapEnum<PassengerRentalDuration>();
         NpgsqlConnection.GlobalTypeMapper.MapEnum<PassengerFacilities>();
         NpgsqlConnection.GlobalTypeMapper.MapEnum<PassengerOption>();
+        NpgsqlConnection.GlobalTypeMapper.MapEnum<PassengerTransportationKind>();
         NpgsqlConnection.GlobalTypeMapper.MapEnum<SpecialType>();
     }
     
@@ -74,6 +75,7 @@ public abstract class BaseDbContext : DbContext
         modelBuilder.HasPostgresEnum<PassengerRentalDuration>();
         modelBuilder.HasPostgresEnum<PassengerFacilities>();
         modelBuilder.HasPostgresEnum<PassengerOption>();
+        modelBuilder.HasPostgresEnum<PassengerTransportationKind>();
         modelBuilder.HasPostgresEnum<SpecialType>();
     }
 

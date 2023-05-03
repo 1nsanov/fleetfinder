@@ -11,9 +11,9 @@ public class PassengerTransport : TransportBase
     public int? CountSeats { get; set; }
     public Size Size { get; set; } = null!;
     public PassengerOption? Option { get; set; }
+    public PassengerTransportationKind? TransportationKind { get; set; }
     public string? Color { get; set; }
     public decimal? MinOrderTime { get; set; }
-    
     
     public List<PassengerTransportImage> Images { get; set; } = new();
 }
