@@ -8,7 +8,7 @@ public enum PassengerFacilities : byte
     Comfortable,
     
     /// <summary>
-    /// Эконом класса
+    /// Эконом класс
     /// </summary>
     Economy,
     

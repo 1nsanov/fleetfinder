@@ -8,15 +8,15 @@ namespace fleetfinder.service.main.domain.Bases;
 
 public abstract class TransportBase : EntityBase
 {
-    public Region Region { get; set; }
     public string Title { get; set; } = null!;
+    public Region Region { get; set; }
     public string? Brand { get; set; }
     public DateOnly? YearIssue { get; set; }
     public ExperienceWork? ExperienceWork { get; set; }
     public PaymentMethod?  PaymentMethod { get; set; }
     public PaymentOrder? PaymentOrder { get; set; }
     public Price Price { get; set; } = null!;
-    public string Description { get; set; } = null!;
+    public string? Description { get; set; }
 
     public User User { get; set; } = null!;
     public long UserId { get; set; }

@@ -1,8 +1,11 @@
 ﻿using fleetfinder.service.main.domain.Enums.Common;
+using fleetfinder.service.main.domain.Enums.Order.Cargo;
 using fleetfinder.service.main.domain.Enums.Transport;
 using fleetfinder.service.main.domain.Enums.Transport.Cargo;
 using fleetfinder.service.main.domain.Enums.Transport.Passenger;
 using fleetfinder.service.main.domain.Enums.Transport.Special;
+using fleetfinder.service.main.domain.Order.Cargo;
+using fleetfinder.service.main.domain.Order.Special;
 using fleetfinder.service.main.domain.Transport.Cargo;
 using fleetfinder.service.main.domain.Transport.Passenger;
 using fleetfinder.service.main.domain.Transport.Special;
@@ -28,6 +31,10 @@ public abstract class BaseDbContext : DbContext
     public DbSet<PassengerTransportImage> PassengerTransportImage { get; set; } = null!;
     public DbSet<SpecialTransport> SpecialTransport { get; set; } = null!;
     public DbSet<SpecialTransportImage> SpecialTransportImage { get; set; } = null!;
+    public DbSet<CargoOrder> CargoOrder { get; set; } = null!;
+    public DbSet<CargoOrderImage> CargoOrderImage { get; set; } = null!;
+    public DbSet<SpecialOrder> SpecialOrder { get; set; } = null!;
+    public DbSet<SpecialOrderImage> SpecialOrderImage { get; set; } = null!;
 
     #endregion
 
@@ -53,6 +60,9 @@ public abstract class BaseDbContext : DbContext
         NpgsqlConnection.GlobalTypeMapper.MapEnum<CargoType>();
         NpgsqlConnection.GlobalTypeMapper.MapEnum<CargoBodyKind>();
         NpgsqlConnection.GlobalTypeMapper.MapEnum<CargoTransportationKind>();
+        NpgsqlConnection.GlobalTypeMapper.MapEnum<CargoLoaders>();
+        NpgsqlConnection.GlobalTypeMapper.MapEnum<CargoLoadType>();
+        NpgsqlConnection.GlobalTypeMapper.MapEnum<CargoTransportationType>();
         NpgsqlConnection.GlobalTypeMapper.MapEnum<PassengerType>();
         NpgsqlConnection.GlobalTypeMapper.MapEnum<PassengerRentalDuration>();
         NpgsqlConnection.GlobalTypeMapper.MapEnum<PassengerFacilities>();
@@ -71,6 +81,9 @@ public abstract class BaseDbContext : DbContext
         modelBuilder.HasPostgresEnum<CargoType>();
         modelBuilder.HasPostgresEnum<CargoBodyKind>();
         modelBuilder.HasPostgresEnum<CargoTransportationKind>();
+        modelBuilder.HasPostgresEnum<CargoLoaders>();
+        modelBuilder.HasPostgresEnum<CargoLoadType>();
+        modelBuilder.HasPostgresEnum<CargoTransportationType>();
         modelBuilder.HasPostgresEnum<PassengerType>();
         modelBuilder.HasPostgresEnum<PassengerRentalDuration>();
         modelBuilder.HasPostgresEnum<PassengerFacilities>();

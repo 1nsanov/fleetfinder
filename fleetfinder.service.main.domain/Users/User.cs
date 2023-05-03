@@ -1,4 +1,7 @@
-﻿using fleetfinder.service.main.domain.Transport.Cargo;
+﻿using fleetfinder.service.main.domain.Order.Cargo;
+using fleetfinder.service.main.domain.Order.Passenger;
+using fleetfinder.service.main.domain.Order.Special;
+using fleetfinder.service.main.domain.Transport.Cargo;
 using fleetfinder.service.main.domain.Transport.Passenger;
 using fleetfinder.service.main.domain.Transport.Special;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +23,9 @@ public class User : EntityBase
     public List<CargoTransport> CargoTransports { get; set; } = new();
     public List<PassengerTransport> PassengerTransports  { get; set; } = new();
     public List<SpecialTransport> SpecialTransports { get; set; } = new();
+    public List<CargoOrder> CargoOrders { get; set; } = new();
+    public List<PassengerOrder> PassengerOrders { get; set; } = new();
+    public List<SpecialOrder> SpecialOrders { get; set; } = new();
 }
 
 [Owned]
