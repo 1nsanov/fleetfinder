@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace fleetfinder.service.main.domain.Bases;
 
-public abstract class TransportBase : EntityBase
+public class TransportBase : EntityBase
 {
     public string Title { get; set; } = null!;
     public Region Region { get; set; }
@@ -25,7 +25,7 @@ public abstract class TransportBase : EntityBase
 [Owned]
 public class Price
 {
-    public decimal? PricePerHour { get; set; }
-    public decimal? PricePerShift { get; set; }
-    public decimal? PricePerKm { get; set; }
+    public decimal? PerHour { get; set; }
+    public decimal? PerShift { get; set; }
+    public decimal? PerKm { get; set; }
 }

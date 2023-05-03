@@ -4,7 +4,7 @@ using fleetfinder.service.main.domain.Users;
 
 namespace fleetfinder.service.main.domain.Bases;
 
-public abstract class OrderBase : EntityBase
+public class OrderBase : EntityBase
 {
     public string Title { get; set; } = null!;
     public Region PickupRegion { get; set; }

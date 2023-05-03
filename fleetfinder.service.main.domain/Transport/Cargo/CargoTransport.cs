@@ -15,7 +15,7 @@ public class CargoTransport : TransportBase
 }
 
 [Owned]
-public abstract class Body
+public class Body
 {
     public decimal? LoadCapacity { get; set; }
     public decimal? Length { get; set; }
