@@ -1,5 +1,4 @@
-﻿using fleetfinder.service.main.domain.Enums.Transport;
-using fleetfinder.service.main.domain.Enums.Transport.Cargo;
+﻿using fleetfinder.service.main.domain.Enums.Transport.Cargo;
 using Microsoft.EntityFrameworkCore;
 
 namespace fleetfinder.service.main.domain.Transport.Cargo;

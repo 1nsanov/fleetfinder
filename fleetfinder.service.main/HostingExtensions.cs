@@ -31,6 +31,7 @@ public static class HostingExtensions
         builder.Services.AddSwaggerGen(options =>
         {
             options.SupportNonNullableReferenceTypes();
+            options.UseDateOnlyTimeOnlyStringConverters();
             options.CustomSchemaIds(type => type.FullName?.Replace("+", "_"));
             options.SwaggerDoc("v1", new OpenApiInfo { Title = "fleetfinder.service.main", Version = "v1" });
             options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()

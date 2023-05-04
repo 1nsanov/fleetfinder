@@ -1,5 +1,4 @@
-﻿using fleetfinder.service.main.domain.Enums;
-using fleetfinder.service.main.domain.Enums.Common;
+﻿using fleetfinder.service.main.domain.Enums.Common;
 using fleetfinder.service.main.domain.Enums.Transport;
 using fleetfinder.service.main.domain.Users;
 using Microsoft.EntityFrameworkCore;
