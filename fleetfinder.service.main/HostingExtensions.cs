@@ -1,8 +1,6 @@
-﻿using System.Reflection;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 using fleetfinder.service.main.application.Common;
 using fleetfinder.service.main.application.Common.Middlewares;
-using fleetfinder.service.main.application.Services;
 using fleetfinder.service.main.infrastructure.Common;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.OpenApi.Models;
@@ -16,8 +14,6 @@ public static class HostingExtensions
         builder.Services.AddControllers()
             .AddJsonOptions(options =>
         {
-            options.JsonSerializerOptions.DefaultIgnoreCondition =
-                JsonIgnoreCondition.WhenWritingNull;
             options.JsonSerializerOptions.PropertyNamingPolicy = null;
             var enumConverter = new JsonStringEnumConverter(allowIntegerValues: false);
             options.JsonSerializerOptions.Converters.Add(enumConverter);

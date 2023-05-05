@@ -14,15 +14,4 @@ public static partial class IdentifyRefreshToken
     }
 
     #endregion
-    
-    #region Mapper
-
-    public class MappingProfile : Profile
-    {
-        public MappingProfile()
-        {
-        }
-    }
-
-    #endregion
 }

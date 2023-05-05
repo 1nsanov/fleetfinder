@@ -2,7 +2,7 @@
 using fleetfinder.service.main.domain.Enums.Transport;
 using fleetfinder.service.main.domain.Enums.Transport.Cargo;
 
-namespace fleetfinder.service.main.application.Features.CargoTransportFeatures.Command.CommandTransport_Post;
+namespace fleetfinder.service.main.application.Features.CargoTransportFeatures.Command.CargoTransport_Post;
 
 public static partial class CargoTransportPost
 {

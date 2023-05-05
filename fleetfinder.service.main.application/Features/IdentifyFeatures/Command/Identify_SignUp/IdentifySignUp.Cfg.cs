@@ -1,4 +1,5 @@
 ﻿using fleetfinder.service.main.domain.Users;
+using Riok.Mapperly.Abstractions;
 
 namespace fleetfinder.service.main.application.Features.IdentifyFeatures.Command.Identify_SignUp;
 
@@ -17,9 +18,13 @@ public static partial class IdentifySignUp
         {
             public RequestValidator()
             {
-                RuleFor(dto => dto.Login).NotEmpty().MinimumLength(4).MaximumLength(16).WithName("Логин");
-                RuleFor(dto => dto.Password).NotEmpty().MinimumLength(8).MaximumLength(100).WithName("Пароль");
-                RuleFor(dto => dto.Email).NotEmpty().EmailAddress().WithName("Эл. почта");
+                RuleFor(dto => dto.Login).NotEmpty()
+                    .MinimumLength(4).WithName("Логин").WithMessage("Поле '{PropertyName}' не может быть меньше {MinLength} символов.")
+                    .MaximumLength(16).WithName("Логин").WithMessage("Поле '{PropertyName}' не может превышать {MaxLength} символов.");
+                RuleFor(dto => dto.Password).NotEmpty().MinimumLength(8).MaximumLength(100)
+                    .WithName("Пароль").WithMessage("Поле '{PropertyName}' не может быть меньше {MinLength} символов.");
+                RuleFor(dto => dto.Email).NotEmpty().EmailAddress()
+                    .WithName("Эл. почта").WithMessage("Поле {PropertyName} имеет не верный формат.");
                 RuleFor(dto => dto.FullName).SetValidator(new NameValidator());
             }
         }
@@ -28,31 +33,21 @@ public static partial class IdentifySignUp
         {
             public NameValidator()
             {
-                RuleFor(name => name.First).NotEmpty().MaximumLength(50).WithName("Имя");
-                RuleFor(name => name.Second).NotEmpty().MaximumLength(50).WithName("Фамилия");;
-                RuleFor(name => name.Surname).NotEmpty().MaximumLength(50).Unless(name => name.Surname is null).WithName("Отчество");
+                RuleFor(name => name.First).NotEmpty().MaximumLength(50)
+                    .WithName("Имя").WithMessage("Поле '{PropertyName}' не может превышать {MaxLength} символов.");
+                RuleFor(name => name.Second).NotEmpty().MaximumLength(50)
+                    .WithName("Фамилия").WithMessage("Поле '{PropertyName}' не может превышать {MaxLength} символов.");
+                RuleFor(name => name.Surname).NotEmpty().MaximumLength(50).Unless(name => name.Surname is null)
+                    .WithName("Отчество").WithMessage("Поле '{PropertyName}' не может превышать {MaxLength} символов.");
             }
         }
     }
 
     #endregion
 
-    #region Mapper
-
-    public class MappingProfile : Profile
+    [Mapper(PropertyNameMappingStrategy = PropertyNameMappingStrategy.CaseInsensitive)]
+    partial class Mapping : IMapCodeGen<RequestDto, User>
     {
-        public MappingProfile()
-        {
-            CreateMap<RequestDto, User>()
-                .MapRecordMember(dest => dest.FullName,
-                    src => new FullName
-                    {
-                        First = src.FullName.First,
-                        Second = src.FullName.Second,
-                        Surname = src.FullName.Surname
-                    });
-        }
+        public partial User Map(RequestDto source);
     }
-
-    #endregion
 }

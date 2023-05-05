@@ -1,7 +1,8 @@
 ﻿using fleetfinder.service.main.domain.Bases;
 using fleetfinder.service.main.domain.Transport.Cargo;
+using Riok.Mapperly.Abstractions;
 
-namespace fleetfinder.service.main.application.Features.CargoTransportFeatures.Command.CommandTransport_Post;
+namespace fleetfinder.service.main.application.Features.CargoTransportFeatures.Command.CargoTransport_Post;
 
 public static partial class CargoTransportPost
 {
@@ -116,19 +117,12 @@ public static partial class CargoTransportPost
 
     #endregion
 
-    #region Mapper
-
-    public class MappingProfile : Profile
+    [Mapper(PropertyNameMappingStrategy = PropertyNameMappingStrategy.CaseInsensitive)]
+    partial class Mapping : IMapCodeGen<RequestDto, CargoTransport>
     {
-        public MappingProfile()
-        {
-            CreateMap<RequestDto, CargoTransport>()
-                .MapRecordMember(dest => dest.Images,
-                    src => src.Images.ConvertAll(i => new CargoTransportImage{ Url = i }));
-            CreateMap<PriceDto, Price>();
-            CreateMap<BodyDto, Body>();
-        }
-    }
+        public partial CargoTransport Map(RequestDto source);
 
-    #endregion
+        private List<CargoTransportImage> Map(List<string> source)
+            => source.ConvertAll(img => new CargoTransportImage { Url = img });
+    }
 }

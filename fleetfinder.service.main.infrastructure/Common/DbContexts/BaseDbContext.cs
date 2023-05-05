@@ -119,7 +119,7 @@ public abstract class BaseDbContext : DbContext
     {
         modelBuilder.Entity<User>(etp =>
         {
-            etp.HasIndex(u => u.Login);
+            etp.HasIndex(u => u.Login).IsUnique();
         });
     }
 }

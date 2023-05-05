@@ -7,19 +7,23 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="AutoMapper" Version="12.0.1" />
-      <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
       <PackageReference Include="FluentValidation" Version="11.5.1" />
       <PackageReference Include="FluentValidation.AspNetCore" Version="11.2.2" />
       <PackageReference Include="MediatR" Version="12.0.1" />
       <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.15" />
       <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.28.1" />
+      <PackageReference Include="Riok.Mapperly" Version="2.8.0" />
+      <PackageReference Include="Scrutor" Version="4.2.2" />
       <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.28.1" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\fleetfinder.service.main.domain\fleetfinder.service.main.domain.csproj" />
       <ProjectReference Include="..\fleetfinder.service.main.infrastructure\fleetfinder.service.main.infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Features\IdentifyFeatures\Query" />
     </ItemGroup>
 
 </Project>

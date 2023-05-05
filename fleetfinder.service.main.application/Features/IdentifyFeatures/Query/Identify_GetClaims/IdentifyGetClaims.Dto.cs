@@ -1,4 +1,4 @@
-﻿namespace fleetfinder.service.main.application.Features.IdentifyFeatures.Command.Identify_GetClaims;
+﻿namespace fleetfinder.service.main.application.Features.IdentifyFeatures.Query.Identify_GetClaims;
 
 public static partial class IdentifyGetClaims
 {

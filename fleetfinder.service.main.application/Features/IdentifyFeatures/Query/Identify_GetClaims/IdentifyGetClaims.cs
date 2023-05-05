@@ -1,6 +1,6 @@
 ﻿using fleetfinder.service.main.application.Common.Interfaces.Services;
 
-namespace fleetfinder.service.main.application.Features.IdentifyFeatures.Command.Identify_GetClaims;
+namespace fleetfinder.service.main.application.Features.IdentifyFeatures.Query.Identify_GetClaims;
 
 public static partial class IdentifyGetClaims
 {
@@ -24,7 +24,7 @@ public static partial class IdentifyGetClaims
             var claimSid = principal.Claims.FirstOrDefault(claim => claim.Type.Contains("sid"))?.Value;
             var userId = long.Parse(claimSid);
             var claimGivenName = principal.Claims.FirstOrDefault(claim => claim.Type.Contains("givenname"))?.Value;
-
+            
             return new ResponseDto(userId, claimGivenName);
         }
     }

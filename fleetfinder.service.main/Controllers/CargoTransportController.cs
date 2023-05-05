@@ -1,4 +1,5 @@
-﻿using fleetfinder.service.main.application.Features.CargoTransportFeatures.Command.CommandTransport_Post;
+﻿using fleetfinder.service.main.application.Features.CargoTransportFeatures.Command.CargoTransport_Post;
+using fleetfinder.service.main.application.Features.CargoTransportFeatures.Query.CargoTransport_Get;
 
 namespace fleetfinder.service.main.Controllers;
 
@@ -13,15 +14,15 @@ public class CargoTransportController : HeadersController
         _mediator = mediator;
     }
 
-    /// <summary>
-    /// Добавить груз. транспорт
-    /// </summary>
-    /// <param name="request"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
     [HttpPost]
     public async Task<CargoTransportPost.ResponseDto> CargoTransportPost(CargoTransportPost.RequestDto request, CancellationToken cancellationToken)
     {
         return  await _mediator.Send(new CargoTransportPost.Command(UserId, request), cancellationToken);
+    }
+
+    [HttpGet]
+    public async Task<CargoTransportGet.ResponseDto> CargoTransportGet([FromQuery] long id, CancellationToken cancellationToken)
+    {
+        return await _mediator.Send(new CargoTransportGet.Query(UserId, id), cancellationToken);
     }
 }

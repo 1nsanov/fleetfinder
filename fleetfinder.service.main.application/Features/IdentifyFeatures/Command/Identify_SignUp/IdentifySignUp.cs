@@ -24,7 +24,7 @@ public static partial class IdentifySignUp
         {
             var requestDto = request.RequestDto;
 
-            var entity = _mapper.Map<User>(requestDto); 
+            var entity = _mapper.Map<RequestDto, User>(requestDto); 
 
             var token = _identifyService.GenerateTokenUser(entity);
             

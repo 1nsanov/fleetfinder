@@ -1,6 +1,6 @@
 ﻿using fleetfinder.service.main.domain.Transport.Cargo;
 
-namespace fleetfinder.service.main.application.Features.CargoTransportFeatures.Command.CommandTransport_Post;
+namespace fleetfinder.service.main.application.Features.CargoTransportFeatures.Command.CargoTransport_Post;
 
 public static partial class CargoTransportPost
 {
@@ -19,7 +19,7 @@ public static partial class CargoTransportPost
 
         public async Task<ResponseDto> Handle(Command request, CancellationToken cancellationToken)
         {
-            var entity = _mapper.Map<CargoTransport>(request.RequestDto);
+            var entity = _mapper.Map<RequestDto, CargoTransport>(request.RequestDto);
             entity.UserId = request.UserId;
             
             await _commandDbContext.CargoTransport.AddAsync(entity, cancellationToken);

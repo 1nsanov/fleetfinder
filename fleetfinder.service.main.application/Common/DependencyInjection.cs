@@ -14,7 +14,23 @@ public static class DependencyInjection
     {
         services.AddMediatR(conf => conf.RegisterServicesFromAssemblyContaining(typeof(DependencyInjection)));
 
-        services.AddAutoMapper(typeof(DependencyInjection));
+        #region Mapper
+        
+        services.AddScoped<IMapper, MapperService>();
+
+        services.Scan(scan => scan
+            .FromAssembliesOf(typeof(IMapCodeGen<,>))
+            .AddClasses(classes => classes.AssignableTo(typeof(IMapCodeGen<,>)))
+            .AsImplementedInterfaces()
+            .WithScopedLifetime());
+        
+        services.Scan(scan => scan
+            .FromAssembliesOf(typeof(IMapToExistCodeGen<,>))
+            .AddClasses(classes => classes.AssignableTo(typeof(IMapToExistCodeGen<,>)))
+            .AsImplementedInterfaces()
+            .WithScopedLifetime());
+        
+        #endregion
 
         services.AddValidatorsFromAssemblyContaining(typeof(DependencyInjection), includeInternalTypes: true);
         services.AddFluentValidationAutoValidation();

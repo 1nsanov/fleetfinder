@@ -1,9 +1,8 @@
-using System.ComponentModel.DataAnnotations;
-using fleetfinder.service.main.application.Features.IdentifyFeatures.Command.Identify_GetClaims;
 using fleetfinder.service.main.application.Features.IdentifyFeatures.Command.Identify_Logout;
 using fleetfinder.service.main.application.Features.IdentifyFeatures.Command.Identify_RefreshToken;
 using fleetfinder.service.main.application.Features.IdentifyFeatures.Command.Identify_SignIn;
 using fleetfinder.service.main.application.Features.IdentifyFeatures.Command.Identify_SignUp;
+using fleetfinder.service.main.application.Features.IdentifyFeatures.Query.Identify_GetClaims;
 using Microsoft.AspNetCore.Authorization;
 
 namespace fleetfinder.service.main.Controllers
