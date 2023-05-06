@@ -1,9 +1,9 @@
 <header id="header-nav" class="header-nav">
-  <div *ngIf="!isSign" class="_container wrapper">
+  <div *ngIf="!isSign" class="wrapper">
     <div class="logo" (click)="changeNavTab(navTab.home)">
       <img src="../../../assets/images/logo-black-1024.png" alt="">
     </div>
-    <nav class="nav">
+    <nav class="_container nav">
       <div class="item"
            [ngClass]="{'active': currentNavTab == navTab.transports}"
            (click)="changeNavTab(navTab.transports)"
@@ -46,12 +46,58 @@
         </div>
       </div>
     </nav>
-    <div class="user">
-      <div class="avatar"
-           [ngClass]="{'signin' : identifyService.isAuthenticated(), 'unsignin' : !identifyService.isAuthenticated()}"
-           (click)="modalService.open()">
-        <img src="../../../assets/icons/icon-avatar.svg" alt="">
+    <div class="user relative">
+      <div class="ignore-close-popup flex items-center" (click)="openPopup()">
+        <div class="avatar ignore-close-popup"
+             [ngClass]="{'signin' : identifyService.isAuthenticated(), 'unsignin' : !identifyService.isAuthenticated()}"
+        >
+          <img class="ignore-close-popup" src="../../../assets/icons/icon-avatar.svg" alt="">
+        </div>
+        <img class="ignore-close-popup cursor-pointer" [ngClass]="{'rotate': isOpenPopup}" src="../../../assets/icons/icon-arrow-dropdown-2.svg" alt="">
       </div>
+
+      <div [ngClass]="{'animation': !isOpenPopup}" class="popup-wrapper">
+        <div class="popup-triangle-bg">
+          <div class="popup-triangle"></div>
+        </div>
+        <div *ngIf="!identifyService.isAuthenticated()" class="popup-content">
+          <div class="__item-nav" (click)="routePageSignUp()">
+            <p>Регистрация</p>
+          </div>
+          <div class="__item-nav" (click)="routePageSignIn()">
+            <p>Войти</p>
+          </div>
+        </div>
+        <div *ngIf="identifyService.isAuthenticated()" class="popup-content">
+          <div class="header">
+            <p>Вы вошли как</p>
+            <p class="user-name">{{(!this.identifyService.claims ? "" : this.identifyService.claims.FullName) | abbreviationName}}</p>
+          </div>
+          <div class="separate"></div>
+          <div class="__item-nav">
+            <p>Ваш профиль</p>
+          </div>
+          <div class="__item-nav">
+            <p>Ваш транспорт</p>
+          </div>
+          <div class="__item-nav">
+            <p>Ваши заказы</p>
+          </div>
+          <div class="separate"></div>
+          <div class="__item-nav">
+            <p>Добавить транспорт</p>
+          </div>
+          <div class="__item-nav">
+            <p>Добавить заказ</p>
+          </div>
+          <div class="separate"></div>
+          <div class="__item-nav" (click)="logout()">
+            <p>Выход</p>
+          </div>
+        </div>
+      </div>
+
+
     </div>
   </div>
   <div *ngIf="isSign" class="_container wrapper">
@@ -64,21 +110,3 @@
     </nav>
   </div>
 </header>
-
-<app-modal-window title="Аккаунт" *ngIf="modalService.isVisible$ | async">
-  <div *ngIf="!identifyService.isAuthenticated()" class="flex flex-col" style="gap: 20px">
-    <div class="flex-grow">
-      <app-button theme="yellow" (click)="routePageSignUp()">
-        Регистрация
-      </app-button>
-    </div>
-    <div class="flex-grow">
-      <app-button theme="green" (click)="routePageSignIn()">
-        Войти
-      </app-button>
-    </div>
-  </div>
-  <div *ngIf="identifyService.isAuthenticated()" class="flex flex-col" style="gap: 20px">
-    <app-button theme="red" (click)="logout()" [isLoad]="isLoadLogout">Выход</app-button>
-  </div>
-</app-modal-window>

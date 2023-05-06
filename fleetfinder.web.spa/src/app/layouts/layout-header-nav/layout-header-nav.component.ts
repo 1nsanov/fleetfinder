@@ -1,10 +1,11 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {navTab, NavTab} from "../../models/enums/nav-tab.enum";
 import {NavigationEnd, Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {namesRoute} from "../../data/names-route";
 import {ModalService} from "../../services/modal.service";
 import {IdentifyApiService} from "../../api/Identify/identify.api.service";
+import {TimeoutService} from "../../services/timeout.service";
 
 @Component({
   selector: 'app-layout-header-nav',
@@ -13,7 +14,6 @@ import {IdentifyApiService} from "../../api/Identify/identify.api.service";
 })
 export class LayoutHeaderNavComponent implements OnInit, OnDestroy{
   constructor(private router: Router,
-              public modalService: ModalService,
               public identifyService: IdentifyApiService) {
   }
 
@@ -28,6 +28,7 @@ export class LayoutHeaderNavComponent implements OnInit, OnDestroy{
 
   isDisabledOnScroll: boolean = false;
   isLoadLogout = false;
+  isOpenPopup = false;
 
   ngOnInit(): void {
     this.routerSubscription = this.router.events.subscribe( (event) => {
@@ -150,14 +151,12 @@ export class LayoutHeaderNavComponent implements OnInit, OnDestroy{
 
   //---Route---
 
-  routePageSignUp() {
-    this.modalService.close();
+  async routePageSignUp() {
     this.swapNavTab(NavTab.None)
     this.router.navigate([`/${namesRoute.signUp}`]);
   }
 
   routePageSignIn () {
-    this.modalService.close();
     this.swapNavTab(NavTab.None)
     this.router.navigate([`/${namesRoute.signIn}`]);
   }
@@ -167,7 +166,26 @@ export class LayoutHeaderNavComponent implements OnInit, OnDestroy{
     this.identifyService.logout().subscribe();
   }
 
+
   ngOnDestroy() {
     this.routerSubscription.unsubscribe();
+  }
+
+  // Popup
+  openPopup() {
+    this.isOpenPopup = true;
+  }
+  closePopup() {
+    this.isOpenPopup = false;
+  }
+
+  @HostListener('document:click', ['$event.target'])
+  onClick(target: any) {
+    if (target.classList.contains('ignore-close-popup')) return;
+    const isInsidePopup = target.closest('.popup-container');
+    const isNavItem = target.classList.contains('__item-nav');
+    if (!isInsidePopup || isNavItem) {
+      this.closePopup();
+    }
   }
 }

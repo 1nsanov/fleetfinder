@@ -22,6 +22,7 @@ import {NgOptimizedImage} from "@angular/common";
 import { GlobalLoaderComponent } from './components/ui/global-loader/global-loader.component';
 import { NotificationComponent } from './components/ui/notification/notification.component';
 import { DropdownComponent } from './components/ui/dropdown/dropdown.component';
+import { AbbreviationNamePipe } from './pipes/abbreviation-name.pipe';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { DropdownComponent } from './components/ui/dropdown/dropdown.component';
     GlobalLoaderComponent,
     NotificationComponent,
     DropdownComponent,
+    AbbreviationNamePipe,
   ],
     imports: [
         BrowserModule, HttpClientModule, AppRoutingModule, NgOptimizedImage,

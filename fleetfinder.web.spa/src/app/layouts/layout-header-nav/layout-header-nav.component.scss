@@ -12,7 +12,7 @@
     @media (max-width: 1054px) {
       padding: 0 15px;
     }
-    .logo, .nav, .user{
+    .logo, .nav{
       flex-grow: 1;
     }
     .logo{
@@ -92,9 +92,10 @@
       }
     }
     .user{
-      max-width: 40px;
+      justify-self: flex-end;
+      transition: var(--transition-base);
       .avatar{
-        width: 40px;
+        min-width: 40px;
         height: 40px;
         background: var(--white);
         border-radius: 50%;
@@ -103,6 +104,7 @@
         align-items: center;
         cursor: pointer;
         transition: var(--transition-base);
+        margin-right: 5px;
         &.unsignin{
           border: 2px solid var(--red);
           filter: drop-shadow(0px 4px 30px rgba(159, 225, 94, 0.35));
@@ -115,6 +117,81 @@
 
         &:hover {
           scale: 1.1;
+        }
+      }
+
+      img{
+        transition: var(--transition-base);
+      }
+      .rotate{
+        rotate: -180deg;
+      }
+
+
+      .popup-wrapper{
+        position: absolute;
+        top: 53px;
+        right: 0;
+        z-index: 15;
+        transition: var(--transition-base);
+        &.animation{
+          transform: translateY(-55%) scaleY(0);
+          opacity: 0;
+        }
+        .popup-triangle-bg{
+          position: absolute;
+          padding: 1px;
+          background: var(--blue-light);
+          width: 15px;
+          height: 15px;
+          border-radius: 3px 0 100% 0;
+          rotate: 45deg;
+          top: -7.4px;
+          right: 29.5px;
+          z-index: 17;
+          .popup-triangle{
+            position: relative;
+            background: var(--blue);
+            width: 15px;
+            height: 15px;
+            border-radius: 2px 0 100% 0;
+          }
+        }
+        .popup-content{
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          padding: 8px 16px;
+          background: var(--blue);
+          border: 1px solid var(--blue-light);
+          border-radius: 12px;
+          box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+          z-index: 16;
+          width: max-content;
+          .header .user-name {
+            margin: 3px 0;
+            font-weight: 700;
+            font-size: 12px;
+          }
+          .__item-nav{
+            font-size: 12px;
+            line-height: 25px;
+            transition: all 0.5s ease-in-out;
+            margin: 0 -16px;
+            cursor: pointer;
+            p{
+              padding: 0 16px;
+            }
+            &:hover{
+              background: var(--blue-light);
+              color: var(--blue);
+            }
+          }
+          .separate{
+            height: 1px;
+            margin: 5px -16px;
+            background: var(--blue-light);
+          }
         }
       }
     }
