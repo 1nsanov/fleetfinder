@@ -8,11 +8,13 @@
           'white' : BtnTheme.White == theme,
           'green' : BtnTheme.Green == theme,
           'red' : BtnTheme.Red == theme,
+          'size-icon': iconPath,
           'size-default' : size === 'default',
           'size-big' : size === 'big'
         }"
         (click)="onClick($event)">
   <div class="content" *ngIf="!isLoad">
+    <img *ngIf="iconPath" [src]="iconPath" alt="">
     <ng-content></ng-content>
   </div>
   <div class="content" *ngIf="isLoad">

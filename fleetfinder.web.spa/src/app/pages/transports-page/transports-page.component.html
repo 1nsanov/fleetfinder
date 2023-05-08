@@ -1,9 +1,41 @@
-<div class="flex flex-col gap-8">
-  <app-dropdown label="Список"
-                placeholder="Выберите предмет"
-                [items]="items"
-                (select)="onSelect($event)"
-  />
+<h2>Поиск транспорта</h2>
+<div class="btn-tab-nav">
+  <div class="__item cargo" (click)="changeTab(tab.Cargo)" [ngClass]="{'active' : currentTab === tab.Cargo}">
+    <p>Грузовой</p>
+  </div>
+  <div class="__item passenger" (click)="changeTab(tab.Passenger)"  [ngClass]="{'active' : currentTab === tab.Passenger}">
+    <p>Пассажирский</p>
+  </div>
+  <div class="__item special" (click)="changeTab(tab.Special)"  [ngClass]="{'active' : currentTab === tab.Special}">
+    <p>Спецтехника</p>
+  </div>
+</div>
+
+<div class="search-block">
+  <div class="flex-grow">
+    <app-input label="Поиск"
+               placeholder="Чего желаете?"
+               [(value)]="searchTerm"
+               icon="icon-search"
+    />
+  </div>
+  <app-button theme="yellow">
+    Найти
+  </app-button>
+</div>
+
+<div class="filter-block">
+  <app-dropdown label="Сортировка" />
+  <app-button iconPath="../../../assets/icons/icon-filter.svg" />
+</div>
+
+<div class="items-block">
+  <div class="__transport">
+  </div>
+</div>
+
+<div class="footer-block">
+  <p>Найдено: 120</p>
 </div>
 
 

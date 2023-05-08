@@ -1,0 +1,91 @@
+h2{
+  font-weight: 800;
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+.btn-tab-nav {
+  margin-bottom: 20px;
+  display: flex;
+  gap: 20px;
+  .__item {
+    flex-grow: 1;
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    width: calc(100% / 3);
+    height: 50px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: var(--transition-base);
+
+    p{
+      width: 100%;
+      text-align: center;
+      font-weight: 700;
+      font-size: 20px;
+    }
+
+    &:hover{
+      scale: 1.05;
+    }
+    &.active{
+      width: 50%;
+    }
+
+    &.cargo{
+      background: var(--black);
+      color: var(--blue-light);
+      &.active{
+        border: 4px solid var(--blue-light);
+      }
+    }
+    &.passenger{
+      background: var(--blue);
+      color: var(--yellow);
+      &.active{
+        border: 4px solid var(--yellow);
+      }
+    }
+    &.special{
+      background: var(--blue-light);
+      color: var(--blue);
+      &.active{
+        border: 4px solid var(--blue);
+      }
+    }
+  }
+}
+
+.search-block{
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.filter-block {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.items-block{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+  .__transport{
+    border-radius: 12px;
+    padding: 24px;
+    background: var(--black);
+  }
+}
+
+.footer-block{
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}

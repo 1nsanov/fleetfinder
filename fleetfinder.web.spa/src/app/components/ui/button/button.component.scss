@@ -10,6 +10,9 @@
       width: 24px;
       margin: 0 auto;
     }
+    .icon{
+
+    }
   }
 
   &.size-default{
@@ -24,6 +27,11 @@
     .content {
       font-size: 24px;
     }
+  }
+
+  &.size-icon{
+    min-width: 40px;
+    height: 40px;
   }
 
   &.blue{

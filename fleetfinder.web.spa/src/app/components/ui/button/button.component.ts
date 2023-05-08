@@ -11,6 +11,7 @@ export class ButtonComponent implements OnInit{
   @Input() disabled : boolean = false;
   @Input() isLoad: boolean = false;
   @Input() size: string = "default";
+  @Input() iconPath: string = "";
 
   @Output() click = new EventEmitter<void>();
 
