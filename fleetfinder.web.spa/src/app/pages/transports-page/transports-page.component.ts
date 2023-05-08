@@ -3,7 +3,8 @@ import {TransportType} from "../../models/enums/transport/transport-type.enum";
 import {CargoTransportApiService} from "../../api/CargoTransport/cargo-transport.api.service";
 import {CargoTransportDto, CargoTransportGetListRequestDto} from "../../api/CargoTransport/cargo-transport.api.models";
 import {CargoTransportSortParameter} from "../../models/enums/transport/cargo/cargo-transport-sort-parameter.enum";
-import {Region} from "../../models/enums/common/region.enum";
+import {DropdownItemModel} from "../../models/dropdown-item.model";
+import {SortModel} from "../../models/sort.model";
 
 @Component({
   selector: 'app-transports-page',
@@ -15,6 +16,18 @@ export class TransportsPageComponent implements OnInit{
   tab = TransportType;
 
   searchTerm: string = "";
+  sortParameters: DropdownItemModel<SortModel<CargoTransportSortParameter>>[] = [
+    { Value: new SortModel(CargoTransportSortParameter.Default, false), Preview: "По дате создания (в)" },
+    { Value: new SortModel(CargoTransportSortParameter.Default, true), Preview: "По дате создания (у)" },
+    { Value: new SortModel(CargoTransportSortParameter.PricePerHour, false), Preview: "По цене за час (в)" },
+    { Value: new SortModel(CargoTransportSortParameter.PricePerHour, true), Preview: "По цене за час (у)" },
+    { Value: new SortModel(CargoTransportSortParameter.PricePerShift, false), Preview: "По цене за смену (в)" },
+    { Value: new SortModel(CargoTransportSortParameter.PricePerShift, true), Preview: "По цене за смену (у)" },
+    { Value: new SortModel(CargoTransportSortParameter.PricePerKm, false) , Preview: "По цене  за километр (в)" },
+    { Value: new SortModel(CargoTransportSortParameter.PricePerKm, true) , Preview: "По цене  за километр (у)" },
+  ]
+  sortParameter = this.sortParameters[0];
+
   items : CargoTransportDto[] | null = null;
   totalCount : number = 0;
 
@@ -28,8 +41,9 @@ export class TransportsPageComponent implements OnInit{
   getListRequest(){
     this.items = null;
     let request = new CargoTransportGetListRequestDto();
-    if (this.searchTerm)
-      request.filter.TitleFilter = this.searchTerm;
+    request.filter.TitleFilter = this.searchTerm;
+    request.sortParameter = this.sortParameter.Value.Parameter;
+    request.sortDesc = this.sortParameter.Value.ByDesc;
     this.cargoTransportApiService.getList(request)
       .subscribe(res => {
         this.items = res.Items;
@@ -39,5 +53,10 @@ export class TransportsPageComponent implements OnInit{
 
   changeTab(tab: TransportType) {
     this.currentTab = tab;
+  }
+
+  onSelect(item: DropdownItemModel<any>) {
+    this.sortParameter = item;
+    this.getListRequest();
   }
 }

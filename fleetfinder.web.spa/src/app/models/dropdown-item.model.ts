@@ -1,10 +1,8 @@
 ﻿export class DropdownItemModel<T> {
-  Id: number;
   Value: T;
   Preview: string;
 
-  constructor(id: number, value : T, preview: string) {
-    this.Id = id;
+  constructor(value : T, preview: string) {
     this.Value = value;
     this.Preview = preview;
   }
