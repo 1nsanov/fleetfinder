@@ -19,7 +19,7 @@
                icon="icon-search"
     />
   </div>
-  <app-button theme="yellow">
+  <app-button theme="yellow" (click)="getListRequest()">
     Найти
   </app-button>
 </div>
@@ -29,13 +29,14 @@
   <app-button iconPath="../../../assets/icons/icon-filter.svg" />
 </div>
 
-<div class="items-block">
-  <div class="__transport">
+<div *ngIf="items != null" class="items-block">
+  <div *ngFor="let item of items" class="__transport">
+    {{item.Id}}
   </div>
 </div>
 
 <div class="footer-block">
-  <p>Найдено: 120</p>
+  <p>Найдено: {{totalCount}}</p>
 </div>
 
 

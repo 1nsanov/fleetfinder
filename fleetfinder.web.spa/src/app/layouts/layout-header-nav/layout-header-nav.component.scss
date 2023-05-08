@@ -16,10 +16,13 @@
       flex-grow: 1;
     }
     .logo{
-      max-width: 40px;
+      max-width: 57px;
       flex-shrink: 0;
       cursor: pointer;
       transition: var(--transition-base);
+      img {
+        max-height: 40px;
+      }
       &:hover{
         transform: scale(1.1);
       }
