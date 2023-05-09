@@ -1,9 +1,9 @@
 ﻿ export enum Region {
-  Bender,
-  Tiraspol,
-  Grigoriopol,
-  Dubasari,
-  Camenka,
-  Ribnitsa,
-  Slobozia
+  Bender = 'Bender',
+  Tiraspol = 'Tiraspol',
+  Grigoriopol = 'Grigoriopol',
+  Dubasari = 'Dubasari',
+  Camenka = 'Camenka',
+  Ribnitsa = 'Ribnitsa',
+  Slobozia = 'Slobozia',
 }

@@ -1,0 +1,66 @@
+<h2 class="title-page">
+  Добавление транспорта
+</h2>
+
+<div class="main-block">
+  <div class="border-block flex gap-10 pb-5">
+    <div class="flex-grow">
+      <app-input label="Заголовок" />
+    </div>
+    <div class="flex-grow">
+      <app-dropdown label="Регион" [items]="RegionItems" />
+    </div>
+  </div>
+  <div class="border-block flex gap-10 pb-5 mt-10">
+    <div class="image-block relative">
+      <div class="__preview">
+      </div>
+      <div class="__type">
+        <img src="../../../assets/icons/icon-square-plus.svg">
+      </div>
+    </div>
+    <div class="input-block flex flex-col gap-5">
+      <app-input label="Марка"/>
+      <app-input type="date" label="Год выпуска"/>
+      <app-dropdown label="Вид перевозок" [items]="CargoTransportationKindItems"/>
+      <div>
+        <label>Кузов</label>
+        <div class="grid grid-cols-2 gap-5 mb-5">
+          <app-input label="Длина" placeholder="м."/>
+          <app-input label="Ширина" placeholder="м."/>
+          <app-input label="Высота" placeholder="м."/>
+          <app-input label="Объем" placeholder="м/куб."/>
+        </div>
+        <div class="grid grid-cols-1 gap-5">
+          <app-input label="Грузоподъемность" placeholder="т."/>
+          <app-dropdown label="Вид" [items]="CargoBodyKindItems"/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="flex gap-10 pb-5 pt-5">
+    <div class="flex flex-grow flex-col gap-5">
+      <app-input label="Цена за час" placeholder="Руб."/>
+      <app-input label="Цена за смену" placeholder="Руб."/>
+      <app-input label="Цена за км" placeholder="Руб."/>
+    </div>
+    <div class="flex flex-grow flex-col gap-5">
+      <app-dropdown label="Опыт работы" [items]="ExperienceWorkItems" />
+      <app-dropdown label="Способ оплаты" [items]="PaymentMethodItems"/>
+      <app-dropdown label="Порядок оплаты" [items]="PaymentOrderItems"/>
+    </div>
+  </div>
+</div>
+
+<div class="footer-block flex gap-10">
+  <div class="flex-grow">
+    <app-button theme="green">
+      Сохранить
+    </app-button>
+  </div>
+  <div class="flex-grow">
+    <app-button theme="red">
+      Отмена
+    </app-button>
+  </div>
+</div>

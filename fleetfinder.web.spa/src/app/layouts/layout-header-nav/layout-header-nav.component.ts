@@ -21,6 +21,7 @@ export class LayoutHeaderNavComponent implements OnInit, OnDestroy{
   currentRoute: string = "";
   private routerSubscription: Subscription = new Subscription();
   navTab = navTab;
+  namesRoute = namesRoute;
   HeaderNavEl : HTMLElement | null = null;
   BackgroundContentEl : HTMLElement | null = null;
   LayoutBaseEl : HTMLElement | null = null;
@@ -151,7 +152,7 @@ export class LayoutHeaderNavComponent implements OnInit, OnDestroy{
 
   //---Route---
 
-  async routePageSignUp() {
+  routePageSignUp() {
     this.swapNavTab(NavTab.None)
     this.router.navigate([`/${namesRoute.signUp}`]);
   }
@@ -159,6 +160,11 @@ export class LayoutHeaderNavComponent implements OnInit, OnDestroy{
   routePageSignIn () {
     this.swapNavTab(NavTab.None)
     this.router.navigate([`/${namesRoute.signIn}`]);
+  }
+
+  routeTo(path : string) {
+    this.swapNavTab(NavTab.None)
+    this.router.navigate([`/${path}`]);
   }
 
   logout() {

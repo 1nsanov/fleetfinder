@@ -4,5 +4,6 @@
   orders: "orders",
   about: "about",
   signUp: "sign-up",
-  signIn: "sign-in"
+  signIn: "sign-in",
+  addTransport: "add-transport",
 }

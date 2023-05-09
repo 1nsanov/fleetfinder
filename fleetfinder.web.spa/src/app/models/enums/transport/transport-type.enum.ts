@@ -1,5 +1,5 @@
 ﻿export enum TransportType {
-  Cargo,
-  Passenger,
-  Special,
+  Cargo = 'Cargo',
+  Passenger = 'Passenger',
+  Special = 'Special',
 }

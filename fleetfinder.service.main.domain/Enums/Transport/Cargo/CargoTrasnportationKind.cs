@@ -1,5 +1,8 @@
 ﻿namespace fleetfinder.service.main.domain.Enums.Transport.Cargo;
 
+/// <summary>
+/// Вид перевозок
+/// </summary>
 public enum CargoTransportationKind : byte
 {
     /// <summary>

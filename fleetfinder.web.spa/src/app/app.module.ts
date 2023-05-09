@@ -23,6 +23,7 @@ import { GlobalLoaderComponent } from './components/ui/global-loader/global-load
 import { NotificationComponent } from './components/ui/notification/notification.component';
 import { DropdownComponent } from './components/ui/dropdown/dropdown.component';
 import { AbbreviationNamePipe } from './pipes/abbreviation-name.pipe';
+import { AddTransportPageComponent } from './pages/add-transport-page/add-transport-page.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { AbbreviationNamePipe } from './pipes/abbreviation-name.pipe';
     NotificationComponent,
     DropdownComponent,
     AbbreviationNamePipe,
+    AddTransportPageComponent,
   ],
     imports: [
         BrowserModule, HttpClientModule, AppRoutingModule, NgOptimizedImage,

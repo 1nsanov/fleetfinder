@@ -7,6 +7,7 @@ import {AboutPageComponent} from "./pages/about-page/about-page.component";
 import {namesRoute} from "./data/names-route";
 import {SignUpPageComponent} from "./pages/sign-up-page/sign-up-page.component";
 import {SignInPageComponent} from "./pages/sign-in-page/sign-in-page.component";
+import {AddTransportPageComponent} from "./pages/add-transport-page/add-transport-page.component";
 
 
 
@@ -16,7 +17,8 @@ const routes: Routes = [
   { path: namesRoute.orders, component: OrdersPageComponent },
   { path: namesRoute.about, component: AboutPageComponent },
   { path: namesRoute.signUp, component: SignUpPageComponent },
-  { path: namesRoute.signIn, component: SignInPageComponent}
+  { path: namesRoute.signIn, component: SignInPageComponent },
+  { path: namesRoute.addTransport, component: AddTransportPageComponent }
 ]
 
 @NgModule({
