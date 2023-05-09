@@ -15,11 +15,11 @@
     <div class="image-block relative">
       <div class="__preview">
       </div>
-      <div class="__type">
+      <div class="__type" (click)="modalService.open()" >
         <img src="../../../assets/icons/icon-square-plus.svg">
       </div>
     </div>
-    <div class="input-block flex flex-col gap-5">
+    <div *ngIf="currentType === TransportType.Cargo" class="input-block flex flex-col gap-5">
       <app-input label="Марка"/>
       <app-input type="date" label="Год выпуска"/>
       <app-dropdown label="Вид перевозок" [items]="CargoTransportationKindItems"/>
@@ -64,3 +64,48 @@
     </app-button>
   </div>
 </div>
+
+<app-modal-window *ngIf="modalService.isVisible$ | async" title="Выбор типа">
+  <div class="flex flex-col">
+    <figure>
+      <h3>Грузовой транспорт</h3>
+      <section class="cargo">
+        <div *ngFor="let item of cargo"
+             class="box-transport"
+             (click)="onSelectTransportType(item, TransportType.Cargo)"
+        >
+          <div class="image">
+            <img [src]="'../../../assets/icons/transport/cargo/icon-cargo-' + item.Icon + '.svg'" alt="">
+          </div>
+          <p>{{item.Text}}</p>
+        </div>
+      </section>
+    </figure>
+<!--    <figure>-->
+<!--      <h3>Пассажирский транспорт</h3>-->
+<!--      <section class="passenger">-->
+<!--        <div *ngFor="let item of passenger"-->
+<!--             class="box-transport"-->
+<!--        >-->
+<!--          <div class="image">-->
+<!--            <img [src]="'../../../assets/icons/transport/passenger/icon-passenger-' + item.Icon + '.svg'" alt="">-->
+<!--          </div>-->
+<!--          <p>{{item.Text}}</p>-->
+<!--        </div>-->
+<!--      </section>-->
+<!--    </figure>-->
+<!--    <figure>-->
+<!--      <h3>Спецтехника</h3>-->
+<!--      <section class="special">-->
+<!--        <div *ngFor="let item of special"-->
+<!--             class="box-transport"-->
+<!--        >-->
+<!--          <div class="image">-->
+<!--            <img [src]="'../../../assets/icons/transport/special/icon-' + item.Icon + '.png'" alt="">-->
+<!--          </div>-->
+<!--          <p>{{item.Text}}</p>-->
+<!--        </div>-->
+<!--      </section>-->
+<!--    </figure>-->
+  </div>
+</app-modal-window>
