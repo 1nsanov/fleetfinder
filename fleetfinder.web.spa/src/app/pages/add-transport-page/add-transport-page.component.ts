@@ -35,18 +35,21 @@ export class AddTransportPageComponent {
   special = specialItems;
   TransportType = TransportType;
   currentType: TransportType | null = null;
-
+  currentTypeIcon : string = "../../../assets/icons/icon-square-plus.svg";
 
   onSelectTransportType(item: IInfoBoxTransport, type: TransportType){
     this.currentType = type;
     switch (type){
-        case TransportType.Cargo:
-            console.log(item.Value as CargoType)
-            break;
-        case TransportType.Passenger:
-            break;
-        case TransportType.Special:
-            break;
+      case TransportType.Cargo:
+        console.log(item.Value as CargoType)
+        this.currentTypeIcon = '../../../assets/icons/transport/cargo/icon-cargo-' + item.Icon + '.svg';
+        break;
+      case TransportType.Passenger:
+        this.currentTypeIcon = '../../../assets/icons/transport/passenger/icon-passenger-' + item.Icon + '.svg';
+        break;
+      case TransportType.Special:
+        this.currentTypeIcon = '../../../assets/icons/transport/special/icon-' + item.Icon + '.png';
+        break;
     }
     this.modalService.close();
   }

@@ -28,8 +28,18 @@
       align-items: center;
       justify-content: center;
       transition: var(--transition-base);
+      &.cargo{
+        background: var(--black);
+      }
+      &.passenger{
+        background: var(--blue);
+      }
+      &.special{
+        background: var(--light);
+      }
       img{
         rotate: -45deg;
+        max-width: 30px;
       }
       &:hover{
         scale: 1.05;

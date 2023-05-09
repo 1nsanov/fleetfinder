@@ -15,8 +15,14 @@
     <div class="image-block relative">
       <div class="__preview">
       </div>
-      <div class="__type" (click)="modalService.open()" >
-        <img src="../../../assets/icons/icon-square-plus.svg">
+      <div class="__type"
+           [ngClass]="{
+            'cargo' : currentType === TransportType.Cargo,
+            'passenger' : currentType === TransportType.Passenger,
+            'special' : currentType === TransportType.Special
+           }"
+           (click)="modalService.open()" >
+        <img [src]="currentTypeIcon">
       </div>
     </div>
     <div *ngIf="currentType === TransportType.Cargo" class="input-block flex flex-col gap-5">
