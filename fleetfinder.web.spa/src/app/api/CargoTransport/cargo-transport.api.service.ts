@@ -1,11 +1,9 @@
 import {Injectable, Query} from '@angular/core';
 import {environment} from "../../../environments/environment";
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {
-  CargoTransportGetListRequestDto,
-  CargoTransportGetListResponseDto,
-  CargoTransportPostRequestDto, ResponseIdDto
-} from "./cargo-transport.api.models";
+import {IResponseId} from "../Common/IResponseId";
+import {CargoTransportPostRequestDto} from "./post.models";
+import {CargoTransportGetListRequestDto, CargoTransportGetListResponseDto} from "./get-list.models";
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +15,7 @@ export class CargoTransportApiService {
   }
 
   post(request: CargoTransportPostRequestDto) {
-    return this.http.post<ResponseIdDto>(this.url, request);
+    return this.http.post<IResponseId>(this.url, request);
   }
 
   getList(request : CargoTransportGetListRequestDto) {

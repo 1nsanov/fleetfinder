@@ -28,14 +28,18 @@ export class TokenInterceptor implements HttpInterceptor {
           switchMap((result) => {
             this.refreshTokenInProgress = false;
             const authRequest = request.clone({
-              headers: request.headers.set('Authorization', `Bearer ${result.Token.Access}`)
+              headers: request.headers
+                .set('Authorization', `Bearer ${result.Token.Access}`)
+                .set('UserId', this.identifyService.claims?.Id?.toString() ?? '')
             });
             return next.handle(authRequest);
           })
         );
       } else {
         const authRequest = request.clone({
-          headers: request.headers.set('Authorization', `Bearer ${this.identifyService.getAccessToken()}`)
+          headers: request.headers
+            .set('Authorization', `Bearer ${this.identifyService.getAccessToken()}`)
+            .set('UserId', this.identifyService.claims?.Id?.toString() ?? '')
         });
         return next.handle(authRequest);
       }

@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {TransportType} from "../../models/enums/transport/transport-type.enum";
 import {CargoTransportApiService} from "../../api/CargoTransport/cargo-transport.api.service";
-import {CargoTransportDto, CargoTransportGetListRequestDto} from "../../api/CargoTransport/cargo-transport.api.models";
 import {CargoTransportSortParameter} from "../../models/enums/transport/cargo/cargo-transport-sort-parameter.enum";
 import {DropdownItemModel} from "../../models/dropdown-item.model";
 import {SortModel} from "../../models/sort.model";
+import {CargoTransportItem} from "../../api/Common/Transport/CargoTransportItem";
+import {CargoTransportGetListRequestDto} from "../../api/CargoTransport/get-list.models";
 
 @Component({
   selector: 'app-transports-page',
@@ -28,7 +29,7 @@ export class TransportsPageComponent implements OnInit{
   ]
   sortParameter = this.sortParameters[0];
 
-  items : CargoTransportDto[] | null = null;
+  items : CargoTransportItem[] | null = null;
   totalCount : number = 0;
 
   constructor(private cargoTransportApiService: CargoTransportApiService) {

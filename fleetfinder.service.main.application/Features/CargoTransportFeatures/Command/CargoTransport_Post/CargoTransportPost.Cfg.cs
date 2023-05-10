@@ -25,7 +25,7 @@ public static partial class CargoTransportPost
                     .WithMessage("Поле '{PropertyName}' не может превышать {MaxLength} символов.");
 
                 RuleFor(x => x.Region)
-                    .IsInEnum().WithName("Регион").WithMessage("Поле '{PropertyName}' не может быть пустым.");
+                    .NotNull().WithName("Регион").WithMessage("Поле '{PropertyName}' не может быть пустым.");
 
                 RuleFor(x => x.Brand)
                     .MaximumLength(50).WithName("Бренд")

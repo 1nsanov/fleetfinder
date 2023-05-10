@@ -23,7 +23,7 @@ public class CargoTransportController : HeadersController
     [HttpPost]
     public async Task<CargoTransportPost.ResponseDto> CargoTransportPost(CargoTransportPost.RequestDto request, CancellationToken cancellationToken)
     {
-        return  await _mediator.Send(new CargoTransportPost.Command(UserId, request), cancellationToken);
+        return await _mediator.Send(new CargoTransportPost.Command(UserId, request), cancellationToken);
     }
     
     [Authorize]
