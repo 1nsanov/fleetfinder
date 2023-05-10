@@ -12,12 +12,20 @@ export class CargoTransportGetListRequestDto {
     sortDesc: boolean = false;
     filter : TransportFilter<CargoType> = new TransportFilter<CargoType>();
 }
-
 export class CargoTransportGetListResponseDto {
     Items : CargoTransportDto[] = [];
     TotalCount : number = 0;
 }
 
+export class CargoTransportPostRequestDto {
+
+}
+
+export class ResponseIdDto {
+    Id : number;
+}
+
+//---Common---
 export class CargoTransportDto {
   Id: number;
   Title: string;
@@ -30,13 +38,11 @@ export class CargoTransportDto {
   Images: string[];
   Contact: ContactDto;
 }
-
 class PriceDto {
   PerHour?: number | null;
   PerShift?: number | null;
   PerKm?: number | null;
 }
-
 class ContactDto {
   Title: string;
   PhoneViber?: string | null;
