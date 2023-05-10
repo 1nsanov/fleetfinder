@@ -3,7 +3,7 @@ import {
   getCargoBodyKindItems, getCargoTransportationKindItems, getExperienceWorkItems,
   getPaymentMethodItems,
   getPaymentOrderItems,
-  getRegionItems
+  getRegionItems, getYearItems
 } from "../../data/dropdown-items.data";
 import {ModalService} from "../../services/modal.service";
 import {TransportType} from "../../models/enums/transport/transport-type.enum";
@@ -46,6 +46,7 @@ export class AddTransportPageComponent {
   PaymentOrderItems = getPaymentOrderItems();
   CargoBodyKindItems = getCargoBodyKindItems();
   CargoTransportationKindItems = getCargoTransportationKindItems();
+  YearsItems = getYearItems();
   cargo = cargoItems;
   passenger = passengerItems;
   special = specialItems;
@@ -93,6 +94,9 @@ export class AddTransportPageComponent {
 
   onSelectRegion(item: DropdownItemModel<Region>){
     this.cargoTransport.Region = item.Value;
+  }
+  onSelectYearsItems(item: DropdownItemModel<string>){
+    this.cargoTransport.YearIssue = item.Value;
   }
   onSelectTransportationKind(item: DropdownItemModel<CargoTransportationKind>){
     this.cargoTransport.TransportationKind = item.Value;

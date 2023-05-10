@@ -10,7 +10,7 @@ public static partial class CargoTransportPost
         string Title,
         Region Region,
         string? Brand,
-        DateOnly? YearIssue,
+        string? YearIssue,
         ExperienceWork? ExperienceWork,
         PaymentMethod?  PaymentMethod,
         PaymentOrder? PaymentOrder,

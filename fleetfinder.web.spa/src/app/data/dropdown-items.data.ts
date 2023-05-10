@@ -63,3 +63,12 @@ export function getCargoTypeItems() {
     new DropdownItemModel<CargoType>(x as CargoType, CargoTypeConst[x as CargoType])
   );
 }
+
+export function getYearItems(){
+  const years: DropdownItemModel<string>[] = []
+  years.push(new DropdownItemModel<string>('', 'Не выбрано'))
+  for (let i = 1930; i <= 2023; i++) {
+    years.push(new DropdownItemModel<string>(i.toString(), i.toString()))
+  }
+  return years;
+}

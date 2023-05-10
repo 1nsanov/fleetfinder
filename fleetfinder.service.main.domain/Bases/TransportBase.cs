@@ -10,7 +10,7 @@ public class TransportBase : EntityBase
     public string Title { get; set; } = null!;
     public Region Region { get; set; }
     public string? Brand { get; set; }
-    public DateOnly? YearIssue { get; set; }
+    public string? YearIssue { get; set; }
     public ExperienceWork? ExperienceWork { get; set; }
     public PaymentMethod?  PaymentMethod { get; set; }
     public PaymentOrder? PaymentOrder { get; set; }

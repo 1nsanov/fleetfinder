@@ -27,7 +27,7 @@
     </div>
     <div *ngIf="currentType === TransportType.Cargo" class="input-block flex flex-col gap-5">
       <app-input label="Марка" [(value)]="cargoTransport.Brand"/>
-      <app-input type="date" label="Год выпуска" [(value)]="cargoTransport.YearIssue"/>
+      <app-dropdown label="Год выпуска" placeholder="гггг." [items]="YearsItems" (select)="onSelectYearsItems($event)"/>
       <app-dropdown label="Вид перевозок" [items]="CargoTransportationKindItems" (select)="onSelectTransportationKind($event)"/>
       <div>
         <label>Кузов</label>
@@ -44,7 +44,7 @@
       </div>
     </div>
   </div>
-  <div class="flex gap-10 pb-5 pt-5">
+  <div class="border-block flex gap-10 pb-5 pt-5">
     <div class="flex flex-grow flex-col gap-5">
       <app-input type="number" label="Цена за час" placeholder="Руб." [(value)]="cargoTransport.Price.PerHour"/>
       <app-input type="number" label="Цена за смену" placeholder="Руб." [(value)]="cargoTransport.Price.PerShift"/>
@@ -56,11 +56,16 @@
       <app-dropdown label="Порядок оплаты" [items]="PaymentOrderItems" (select)="onSelectPaymentOrder($event)"/>
     </div>
   </div>
+  <div class="flex pb-5 pt-5">
+    <div class="flex-grow">
+      <app-input label="Описание" [(value)]="cargoTransport.Description"/>
+    </div>
+  </div>
 </div>
 
 <div class="footer-block flex gap-10">
   <div class="flex-grow">
-    <app-button theme="green" (click)="postTransport()">
+    <app-button theme="green" [isLoad]="isLoadPost" (click)="postTransport()">
       Сохранить
     </app-button>
   </div>

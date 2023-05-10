@@ -32,7 +32,7 @@ public static partial class CargoTransportPut
                     .Unless(x => string.IsNullOrEmpty(x.Brand));
 
                 RuleFor(x => x.YearIssue)
-                    .InclusiveBetween(new DateOnly(1900, 1, 1), DateOnly.FromDateTime(DateTime.Now))
+                    .NotEmpty()
                     .WithName("Год выпуска").WithMessage("Поле '{PropertyName}' должно быть между {From} и {To}.")
                     .Unless(x => x is null);
 

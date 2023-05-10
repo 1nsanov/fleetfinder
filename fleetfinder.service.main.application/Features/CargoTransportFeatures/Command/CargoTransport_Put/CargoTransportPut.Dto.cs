@@ -11,7 +11,7 @@ public static partial class CargoTransportPut
         string Title,
         Region Region,
         string? Brand,
-        DateOnly? YearIssue,
+        string? YearIssue,
         ExperienceWork? ExperienceWork,
         PaymentMethod?  PaymentMethod,
         PaymentOrder? PaymentOrder,
