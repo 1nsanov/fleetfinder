@@ -13,14 +13,14 @@ public static partial class CargoTransportGetList
         string Title,
         Region Region,
         string? Brand,
-        // DateOnly? YearIssue,
+        string? YearIssue,
         ExperienceWork? ExperienceWork,
         // PaymentMethod?  PaymentMethod,
         // PaymentOrder? PaymentOrder,
         PriceDto Price,
         string? Description,
         CargoType Type,
-        // CargoTransportationKind? TransportationKind,
+        CargoTransportationKind? TransportationKind,
         List<string> Images,
         ContactDto Contact
     );

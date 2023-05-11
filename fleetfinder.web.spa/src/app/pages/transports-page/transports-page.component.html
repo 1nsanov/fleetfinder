@@ -65,9 +65,61 @@
             </clipPath>
           </defs>
         </svg>
-        <p>{{item.Region}}</p>
+        <p>{{RegionConst[item.Region]}}</p>
       </div>
       <div class="header-separator"></div>
+      <div class="main-content">
+        <div class="left-side">
+          <div class="images">
+            <div class="preview flex items-center justify-center">
+              <img src="../../../assets/icons/icon-image.svg">
+            </div>
+            <div class="__type"
+                 [ngClass]="{
+                  'cargo' : currentType === TransportType.Cargo,
+                  'passenger' : currentType === TransportType.Passenger,
+                  'special' : currentType === TransportType.Special
+                 }">
+              <img [src]="currentTypeIcon(item.Type, TransportType.Cargo)">
+            </div>
+          </div>
+          <div class="prices">
+            <div *ngIf="item.Price.PerShift" class="banner">
+              <div class="__price">
+                За час:
+                <p>{{item.Price.PerShift}} RUP</p>
+              </div>
+            </div>
+            <div *ngIf="item.Price.PerHour" class="banner">
+              <div class="__price">
+                За час:
+                <p>{{item.Price.PerHour}} RUP</p>
+              </div>
+            </div>
+            <div *ngIf="item.Price.PerKm" class="banner">
+              <div class="__price">
+                За 1 км:
+                <p>{{item.Price.PerKm}} RUP</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="right-side">
+          <div class="base-info-block">
+            <div *ngIf="item.Brand" class="item">
+              <h4>Марка</h4>
+              <p>{{item.Brand}}</p>
+            </div>
+            <div *ngIf="item.ExperienceWork" class="item">
+              <h4>Опыт работы</h4>
+              <p>{{ExperienceWorkConst[item.ExperienceWork]}}</p>
+            </div>
+          </div>
+          <div class="contact-block">
+
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

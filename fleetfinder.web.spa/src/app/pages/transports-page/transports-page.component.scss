@@ -76,6 +76,11 @@
     padding: 24px;
     background: var(--black);
     color: var(--white);
+    transition: var(--transition-base);
+    cursor: pointer;
+    &:hover {
+      scale: 1.02;
+    }
     .header{
       display: flex;
       flex-direction: column;
@@ -118,6 +123,122 @@
       border-radius: 12px;
       height: 2px;
       background: var(--blue-light);
+    }
+    .main-content{
+      display: flex;
+      gap: 16px;
+      margin-top: 10px;
+      .left-side{
+        width: 40%;
+        min-width: 138px;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 20px;
+        .images{
+          position: relative;
+          .preview{
+            background: var(--white);
+            border-radius: 12px;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+          }
+          .__type {
+            top: -10px;
+            right: -10px;
+            position: absolute;
+            background: var(--blue-light);
+            border-radius: 8px;
+            rotate: 45deg;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-base);
+
+            &.cargo {
+              background: var(--blue-light);
+            }
+
+            &.passenger {
+              background: var(--blue);
+            }
+
+            &.special {
+              background: var(--light);
+            }
+
+            img {
+              rotate: -45deg;
+              max-width: 24px;
+              filter: brightness(0.15) saturate(0);
+            }
+          }
+        }
+        .prices{
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          align-self: center;
+          .banner{
+            width: 138px;
+            height: 36px;
+            background-image: url("../../../assets/icons/icon-price-banner.svg");
+            color: var(--black);
+            display: flex;
+            flex-direction: column;
+            align-self: center;
+            justify-content: center;
+            .__price{
+              font-weight: 700;
+              font-size: 12px;
+              text-align: center;
+              p{
+                font-weight: 500;
+              }
+            }
+          }
+        }
+      }
+      .right-side{
+        width: 60%;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        .base-info-block{
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          .item{
+            border-bottom: 1px solid var(--blue-light);
+            display: flex;
+            align-items: stretch;
+            justify-content: space-between;
+            padding-bottom: 10px;
+            gap: 10px;
+            h4{
+              font-weight: 600;
+              font-size: 14px;
+              width: 50%;
+              max-width: 120px;
+            }
+            p{
+              font-weight: 400;
+              font-size: 12px;
+              text-align: right;
+              width: 50%;
+            }
+          }
+        }
+        .contact-block {
+          background: var(--white);
+          border-radius: 8px;
+          padding: 8px 12px;
+        }
+      }
     }
   }
 }
