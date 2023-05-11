@@ -15,7 +15,7 @@ export class CargoTransportItem {
   Price: Price;
   Description?: string | null;
   Type: CargoType;
-  Images: string[];
-  CargoTransportationKind: CargoTransportationKind | null;
+  TransportationKind: CargoTransportationKind | null;
   Contact: Contact;
+  Images: string[];
 }

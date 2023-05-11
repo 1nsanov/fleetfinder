@@ -77,7 +77,6 @@
     background: var(--black);
     color: var(--white);
     transition: var(--transition-base);
-    cursor: pointer;
     &:hover {
       scale: 1.02;
     }
@@ -123,6 +122,7 @@
       border-radius: 12px;
       height: 2px;
       background: var(--blue-light);
+      margin: 10px 0 20px;
     }
     .main-content{
       display: flex;

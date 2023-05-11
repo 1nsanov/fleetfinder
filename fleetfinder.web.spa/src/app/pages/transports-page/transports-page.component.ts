@@ -6,7 +6,7 @@ import {DropdownItemModel} from "../../models/dropdown-item.model";
 import {SortModel} from "../../models/sort.model";
 import {CargoTransportItem} from "../../api/Common/Transport/CargoTransportItem";
 import {CargoTransportGetListRequestDto} from "../../api/CargoTransport/get-list.models";
-import {ExperienceWorkConst, RegionConst} from "../../data/enums.data";
+import {CargoTransportationKindConst, ExperienceWorkConst, RegionConst} from "../../data/enums.data";
 import {IInfoBoxTransport} from "../../models/interfaces/info-box-transport.interface";
 import {CargoType} from "../../models/enums/transport/cargo/cargo-type.enum";
 import {cargoItems} from "../../data/transport/cargo-items";
@@ -37,6 +37,7 @@ export class TransportsPageComponent implements OnInit{
   totalCount : number = 0;
   RegionConst = RegionConst;
   ExperienceWorkConst = ExperienceWorkConst;
+  CargoTransportationKindConst = CargoTransportationKindConst;
   TransportType = TransportType;
   currentType: TransportType | null = null;
 
