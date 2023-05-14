@@ -35,11 +35,13 @@
 </div>
 
 <app-preloader [load]="isLoad">
+  <app-plug-empty-items *ngIf="items != null && items.length === 0"/>
   <app-grid-items [items]="items" [type]="TransportType.Cargo"/>
 
   <div class="footer-block">
     <p>Найдено: {{totalCount}}</p>
     <app-pagination
+      *ngIf="items != null && items.length > 0"
       [value]="pagination"
       (pageChange)="onPageChange($event)"
     />

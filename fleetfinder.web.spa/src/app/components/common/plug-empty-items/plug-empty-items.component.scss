@@ -1,0 +1,10 @@
+.plug-empty{
+  border: 3px solid var(--black);
+  border-radius: 12px;
+  background: transparent;
+  padding: 75px;
+  color: var(--black);
+  img{
+    max-width: 110px;
+  }
+}

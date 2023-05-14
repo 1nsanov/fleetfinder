@@ -30,6 +30,7 @@ import { GridItemsComponent } from './components/common/grid-items/grid-items.co
 import { ContactCardComponent } from './components/common/contact-card/contact-card.component';
 import { PhonePipe } from './pipes/phone.pipe';
 import { PaginationComponent } from './components/ui/pagination/pagination.component';
+import { PlugEmptyItemsComponent } from './components/common/plug-empty-items/plug-empty-items.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { PaginationComponent } from './components/ui/pagination/pagination.compo
     ContactCardComponent,
     PhonePipe,
     PaginationComponent,
+    PlugEmptyItemsComponent,
   ],
     imports: [
         BrowserModule, HttpClientModule, AppRoutingModule, NgOptimizedImage,
