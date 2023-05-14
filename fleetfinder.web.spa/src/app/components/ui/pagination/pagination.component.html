@@ -1,0 +1,27 @@
+<div class="pagination">
+  <button [disabled]="value.page === 1" (click)="selectPage(1)">
+    <img class="rotate-180" src="../../../../assets/icons/icon-arrow-double-right.svg" alt="">
+  </button>
+  <button [disabled]="value.page === 1" (click)="selectPage(value.page - 1)">
+    <img class="rotate-180" src="../../../../assets/icons/icon-arrow-right.svg" alt="">
+  </button>
+  <button
+    *ngFor="let page of visiblePages"
+    [ngClass]="{'selected': value.page === page}"
+    (click)="selectPage(page)"
+  >
+    {{ page }}
+  </button>
+  <button
+    [disabled]="value.page === totalPages"
+    (click)="selectPage(value.page + 1)"
+  >
+    <img src="../../../../assets/icons/icon-arrow-right.svg" alt="">
+  </button>
+  <button
+    [disabled]="value.page === totalPages"
+    (click)="selectPage(totalPages)"
+  >
+    <img src="../../../../assets/icons/icon-arrow-double-right.svg" alt="">
+  </button>
+</div>

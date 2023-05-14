@@ -4,13 +4,10 @@ import {CargoTransportApiService} from "../../api/CargoTransport/cargo-transport
 import {CargoTransportSortParameter} from "../../models/enums/transport/cargo/cargo-transport-sort-parameter.enum";
 import {DropdownItemModel} from "../../models/dropdown-item.model";
 import {SortModel} from "../../models/sort.model";
-import {CargoTransportItem} from "../../api/Common/Transport/CargoTransportItem";
 import {CargoTransportGetListRequestDto} from "../../api/CargoTransport/get-list.models";
-import {CargoTransportationKindConst, ExperienceWorkConst, RegionConst} from "../../data/enums.data";
-import {IInfoBoxTransport} from "../../models/interfaces/info-box-transport.interface";
-import {CargoType} from "../../models/enums/transport/cargo/cargo-type.enum";
-import {cargoItems} from "../../data/transport/cargo-items";
 import {IGridItem} from "../../models/interfaces/grid-item.interface";
+import {FormControl} from "@angular/forms";
+import {PaginationValue} from "../../components/ui/pagination/pagination.component";
 
 @Component({
   selector: 'app-transports-page',
@@ -36,12 +33,10 @@ export class TransportsPageComponent implements OnInit{
 
   items : IGridItem[] | null = null;
   totalCount : number = 0;
-  RegionConst = RegionConst;
-  ExperienceWorkConst = ExperienceWorkConst;
-  CargoTransportationKindConst = CargoTransportationKindConst;
   TransportType = TransportType;
-  currentType: TransportType | null = null;
   isLoad = false;
+
+  public pagination = { page: 1, pageSize: 6, total: 0 };
 
   constructor(private cargoTransportApiService: CargoTransportApiService) {
   }
@@ -54,6 +49,7 @@ export class TransportsPageComponent implements OnInit{
     this.isLoad = true;
     this.items = null;
     let request = new CargoTransportGetListRequestDto();
+    request.skipCount = this.pagination.page * this.pagination.pageSize - this.pagination.pageSize;
     request.filter.TitleFilter = this.searchTerm;
     request.sortParameter = this.sortParameter.Value.Parameter;
     request.sortDesc = this.sortParameter.Value.ByDesc;
@@ -61,6 +57,7 @@ export class TransportsPageComponent implements OnInit{
       .subscribe(res => {
         this.items = res.Items;
         this.totalCount = res.TotalCount;
+        this.pagination = {...this.pagination, total: this.totalCount}
         this.isLoad = false;
       });
   }
@@ -71,18 +68,16 @@ export class TransportsPageComponent implements OnInit{
 
   onSelect(item: DropdownItemModel<any>) {
     this.sortParameter = item;
+    this.setDefaultPagination();
     this.getListRequest();
   }
 
-  currentTypeIcon(item: any, type: TransportType){
-    this.currentType = type;
-    switch (type){
-      case TransportType.Cargo:
-        return  '../../../assets/icons/transport/cargo/icon-cargo-' + cargoItems.find(x => x.Value as CargoType === item)?.Icon + '.svg';
-      case TransportType.Passenger:
-        return  '../../../assets/icons/transport/passenger/icon-passenger-' + item.Icon + '.svg';
-      case TransportType.Special:
-        return  '../../../assets/icons/transport/special/icon-' + item.Icon + '.png';
-    }
+  public onPageChange(pagination: PaginationValue): void {
+    this.pagination = pagination;
+    this.getListRequest();
+  }
+
+  setDefaultPagination(){
+    this.pagination = { page: 1, pageSize: 6, total: 0 };
   }
 }

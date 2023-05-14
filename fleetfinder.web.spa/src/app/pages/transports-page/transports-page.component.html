@@ -39,6 +39,10 @@
 
   <div class="footer-block">
     <p>Найдено: {{totalCount}}</p>
+    <app-pagination
+      [value]="pagination"
+      (pageChange)="onPageChange($event)"
+    />
   </div>
 </app-preloader>
 

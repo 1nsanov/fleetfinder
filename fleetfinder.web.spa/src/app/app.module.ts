@@ -29,6 +29,7 @@ import { GridItemComponent } from './components/common/grid-item/grid-item.compo
 import { GridItemsComponent } from './components/common/grid-items/grid-items.component';
 import { ContactCardComponent } from './components/common/contact-card/contact-card.component';
 import { PhonePipe } from './pipes/phone.pipe';
+import { PaginationComponent } from './components/ui/pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { PhonePipe } from './pipes/phone.pipe';
     GridItemsComponent,
     ContactCardComponent,
     PhonePipe,
+    PaginationComponent,
   ],
     imports: [
         BrowserModule, HttpClientModule, AppRoutingModule, NgOptimizedImage,

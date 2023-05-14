@@ -1,0 +1,41 @@
+.pagination {
+  display: flex;
+  button {
+    border: none;
+    border-radius: 8px;
+    background-color: transparent;
+    color: var(--black);
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition-base);
+    img{
+      transition: var(--transition-base);
+    }
+    &[disabled] {
+      opacity: 0.5;
+      cursor: auto;
+    }
+
+    &.selected {
+      background-color: var(--blue);
+      color: var(--white);
+    }
+    &:hover:not([disabled]):not(.selected){
+      background-color: var(--blue);
+      opacity: 0.5;
+      color: var(--white);
+      img{
+        filter: brightness(10);
+      }
+    }
+
+    &:not(:last-child) {
+      margin-right: 5px;
+    }
+  }
+}
