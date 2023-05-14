@@ -9,11 +9,11 @@ export class CargoTransportItem {
   Id: number;
   Title: string;
   Region: Region;
-  Brand?: string | null;
+  Brand: string | null;
   YearIssue: string | null;
-  ExperienceWork?: ExperienceWork | null;
+  ExperienceWork: ExperienceWork | null;
   Price: Price;
-  Description?: string | null;
+  Description: string | null;
   Type: CargoType;
   TransportationKind: CargoTransportationKind | null;
   Contact: Contact;

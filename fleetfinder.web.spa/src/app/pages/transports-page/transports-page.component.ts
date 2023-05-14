@@ -10,6 +10,7 @@ import {CargoTransportationKindConst, ExperienceWorkConst, RegionConst} from "..
 import {IInfoBoxTransport} from "../../models/interfaces/info-box-transport.interface";
 import {CargoType} from "../../models/enums/transport/cargo/cargo-type.enum";
 import {cargoItems} from "../../data/transport/cargo-items";
+import {IGridItem} from "../../models/interfaces/grid-item.interface";
 
 @Component({
   selector: 'app-transports-page',
@@ -33,7 +34,7 @@ export class TransportsPageComponent implements OnInit{
   ]
   sortParameter = this.sortParameters[0];
 
-  items : CargoTransportItem[] | null = null;
+  items : IGridItem[] | null = null;
   totalCount : number = 0;
   RegionConst = RegionConst;
   ExperienceWorkConst = ExperienceWorkConst;

@@ -25,6 +25,8 @@ import { DropdownComponent } from './components/ui/dropdown/dropdown.component';
 import { AbbreviationNamePipe } from './pipes/abbreviation-name.pipe';
 import { AddTransportPageComponent } from './pages/add-transport-page/add-transport-page.component';
 import { PreloaderComponent } from './components/ui/preloader/preloader.component';
+import { GridItemComponent } from './components/common/grid-item/grid-item.component';
+import { GridItemsComponent } from './components/common/grid-items/grid-items.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +49,8 @@ import { PreloaderComponent } from './components/ui/preloader/preloader.componen
     AbbreviationNamePipe,
     AddTransportPageComponent,
     PreloaderComponent,
+    GridItemComponent,
+    GridItemsComponent,
   ],
     imports: [
         BrowserModule, HttpClientModule, AppRoutingModule, NgOptimizedImage,

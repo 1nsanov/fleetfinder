@@ -10,6 +10,7 @@
     <BuildOutputFolder>$(MSBuildProjectDirectory)\dist\fleetfinder.web.spa</BuildOutputFolder>
   </PropertyGroup>
   <ItemGroup>
+    <Folder Include="src\app\components\common" />
     <Folder Include="src\app\components\ui" />
     <Folder Include="src\app\layouts" />
     <Folder Include="src\app\pages" />
