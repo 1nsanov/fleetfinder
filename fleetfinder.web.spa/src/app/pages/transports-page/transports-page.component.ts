@@ -40,6 +40,7 @@ export class TransportsPageComponent implements OnInit{
   CargoTransportationKindConst = CargoTransportationKindConst;
   TransportType = TransportType;
   currentType: TransportType | null = null;
+  isLoad = false;
 
   constructor(private cargoTransportApiService: CargoTransportApiService) {
   }
@@ -49,6 +50,7 @@ export class TransportsPageComponent implements OnInit{
   }
 
   getListRequest(){
+    this.isLoad = true;
     this.items = null;
     let request = new CargoTransportGetListRequestDto();
     request.filter.TitleFilter = this.searchTerm;
@@ -58,6 +60,7 @@ export class TransportsPageComponent implements OnInit{
       .subscribe(res => {
         this.items = res.Items;
         this.totalCount = res.TotalCount;
+        this.isLoad = false;
       });
   }
 
