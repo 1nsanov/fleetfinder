@@ -11,7 +11,7 @@
   .header{
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 8px;
     margin-bottom: 5px;
     .title{
       display: flex;
@@ -157,11 +157,6 @@
             width: 50%;
           }
         }
-      }
-      .contact-block {
-        background: var(--white);
-        border-radius: 8px;
-        padding: 8px 12px;
       }
     }
   }

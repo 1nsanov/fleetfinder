@@ -27,6 +27,8 @@ import { AddTransportPageComponent } from './pages/add-transport-page/add-transp
 import { PreloaderComponent } from './components/ui/preloader/preloader.component';
 import { GridItemComponent } from './components/common/grid-item/grid-item.component';
 import { GridItemsComponent } from './components/common/grid-items/grid-items.component';
+import { ContactCardComponent } from './components/common/contact-card/contact-card.component';
+import { PhonePipe } from './pipes/phone.pipe';
 
 @NgModule({
   declarations: [
@@ -51,6 +53,8 @@ import { GridItemsComponent } from './components/common/grid-items/grid-items.co
     PreloaderComponent,
     GridItemComponent,
     GridItemsComponent,
+    ContactCardComponent,
+    PhonePipe,
   ],
     imports: [
         BrowserModule, HttpClientModule, AppRoutingModule, NgOptimizedImage,

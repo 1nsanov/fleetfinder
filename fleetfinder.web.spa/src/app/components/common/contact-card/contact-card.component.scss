@@ -1,0 +1,42 @@
+.contact-card {
+  background: var(--white);
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: var(--black);
+  .header{
+    .image{
+      border-radius: 50%;
+      background: white;
+      box-shadow: var(--shadow-1);
+      width: 32px;
+      min-width: 32px;
+      height: 32px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      img{
+        height: 20px;
+      }
+    }
+  }
+  .phones{
+    .phone{
+      display: flex;
+      gap: 10px;
+      p{
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 16px;
+      }
+      &:first-child{
+        margin-top: 10px;
+      }
+    }
+    .separator{
+      height: 1px;
+      width: 100%;
+      border-radius: 12px;
+      background: var(--black-50);
+    }
+  }
+}

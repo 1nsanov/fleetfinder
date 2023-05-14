@@ -1,0 +1,27 @@
+<div class="contact-card">
+  <div class="header flex gap-3 items-center">
+    <div class="image">
+      <img *ngIf="!contact.ImageUrl" src="../../../../assets/icons/icon-image.svg" alt="">
+    </div>
+    <div class="font-bold">{{contact.Title}}</div>
+  </div>
+  <div class="phones flex flex-col gap-1">
+    <div *ngIf="contact.PhoneTelegram" class="phone">
+      <img src="../../../../assets/icons/icon-telegram.svg" alt="">
+      <p>{{contact.PhoneTelegram | phone}}</p>
+    </div>
+    <div *ngIf="contact.PhoneViber" class="phone">
+      <img src="../../../../assets/icons/icon-viber.svg" alt="">
+      <p>{{contact.PhoneViber | phone}}</p>
+    </div>
+    <div *ngIf="contact.PhoneWhatsapp" class="phone">
+      <img src="../../../../assets/icons/icon-whatsapp.svg" alt="">
+      <p>{{contact.PhoneWhatsapp | phone}}</p>
+    </div>
+    <div *ngIf="contact.WorkingMode" class="separator"></div>
+    <div *ngIf="contact.WorkingMode" class="phone">
+      <img src="../../../../assets/icons/icon-access-time.svg" alt="">
+      <p>{{contact.WorkingMode}}</p>
+    </div>
+  </div>
+</div>

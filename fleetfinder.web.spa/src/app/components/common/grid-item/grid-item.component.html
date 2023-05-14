@@ -73,7 +73,7 @@
       </div>
 
       <div class="flex gap-5">
-        <div class="left-side">
+        <div class="left-side justify-end">
           <div class="prices">
             <div *ngIf="item.Price.PerShift" class="banner">
               <div class="__price">
@@ -96,9 +96,7 @@
           </div>
         </div>
         <div class="right-side justify-end">
-          <div class="contact-block">
-
-          </div>
+          <app-contact-block [contact]="item.Contact" />
         </div>
       </div>
     </div>
