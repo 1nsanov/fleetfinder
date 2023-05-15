@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {IdentifyApiService} from "../../api/Identify/identify.api.service";
-import {SignUpModel} from "../../models/user/sign-up.model";
+import {SignUpModel} from "../../models/interfaces/user/sign-up.model";
 import {ISignUpRequest} from "../../api/Identify/identify.api.models";
 import {NotificationService} from "../../services/notification.service";
 import {Router} from "@angular/router";

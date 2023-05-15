@@ -4,8 +4,14 @@
       Авторизация
     </h2>
     <main class="flex flex-col" style="gap: 25px">
-      <app-input label="Логин" [(value)]="user.Login"/>
-      <app-input label="Пароль" type="password" [(value)]="user.Password"/>
+      <app-input label="Логин"
+                 [value]="form.get('Login')?.value ?? ''"
+                 (valueChange)="form.get('Login')?.setValue($event)"
+                 [error]="form.get('Login')?.invalid && form.get('Login')?.touched ? 'Поле обязательно к заполнению' : ''"/>
+      <app-input label="Пароль" type="password"
+                 [value]="form.get('Password')?.value ?? ''"
+                 (valueChange)="form.get('Password')?.setValue($event)"
+                 [error]="form.get('Password')?.invalid && form.get('Password')?.touched ? 'Поле обязательно к заполнению' : ''"/>
       <app-button theme="green" (click)="signIn()" [isLoad]="isLoad">
         Войти
       </app-button>

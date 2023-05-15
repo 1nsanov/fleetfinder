@@ -5,7 +5,7 @@ import {Router} from "@angular/router";
 import {namesRoute} from "../../data/names-route";
 import {NotificationService} from "../../services/notification.service";
 import {SignInModel} from "../../models/interfaces/user/sign-in.model";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-sign-in-page',
@@ -23,19 +23,34 @@ export class SignInPageComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.form = this.formBuilder.group<SignInModel>({
-    })
+    this.initFormBuilder();
   }
 
   signIn(){
-    this.isLoad = true;
-    const request = this.form.value as ISignInRequest;
-    this.identifyService.signIn(request).subscribe(() => {
-      this.isLoad = false;
-      this.router.navigate([`/${namesRoute.home}`]).then(() => window.location.reload())
-    }, error => {
-      this.isLoad = false
-      this.notification.error("Не верный логин и/или пароль.")
+    this.formMarkAsTouched();
+    if (this.form.valid){
+      this.isLoad = true;
+      const request = this.form.value as ISignInRequest;
+      this.identifyService.signIn(request).subscribe(() => {
+        this.isLoad = false;
+        this.router.navigate([`/${namesRoute.home}`]).then(() => window.location.reload())
+      }, error => {
+        this.isLoad = false
+        this.notification.error("Не верный логин и/или пароль.")
+      });
+    }
+  }
+
+  initFormBuilder(){
+    this.form = this.formBuilder.group<SignInModel>({
+      Login: new FormControl<string | null>('', Validators.required),
+      Password: new FormControl<string | null>('', Validators.required),
+    })
+  }
+
+  formMarkAsTouched() {
+    Object.values(this.form.controls).forEach(control => {
+      control.markAsTouched();
     });
   }
 }
