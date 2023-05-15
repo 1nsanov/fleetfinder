@@ -32,6 +32,7 @@ import { PhonePipe } from './pipes/phone.pipe';
 import { PaginationComponent } from './components/ui/pagination/pagination.component';
 import { PlugEmptyItemsComponent } from './components/common/plug-empty-items/plug-empty-items.component';
 import {ReactiveFormsModule} from "@angular/forms";
+import { TransportCargoViewPageComponent } from './pages/transport-cargo-view-page/transport-cargo-view-page.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import {ReactiveFormsModule} from "@angular/forms";
     PhonePipe,
     PaginationComponent,
     PlugEmptyItemsComponent,
+    TransportCargoViewPageComponent,
   ],
     imports: [
         BrowserModule, HttpClientModule, AppRoutingModule, NgOptimizedImage, ReactiveFormsModule,

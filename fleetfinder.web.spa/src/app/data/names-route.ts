@@ -6,4 +6,5 @@
   signUp: "sign-up",
   signIn: "sign-in",
   addTransport: "add-transport",
+  transportCargoView: "transport/cargo/view"
 }

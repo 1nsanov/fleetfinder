@@ -8,6 +8,7 @@ import {CargoTransportApiService} from "../../../api/CargoTransport/cargo-transp
 import {catchError, throwError} from "rxjs";
 import {HttpErrorResponse} from "@angular/common/http";
 import {namesRoute} from "../../../data/names-route";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-grid-item',
@@ -23,17 +24,12 @@ export class GridItemComponent {
   CargoTransportationKindConst = CargoTransportationKindConst;
   TransportType = TransportType;
 
-  constructor(private cargoTransportService: CargoTransportApiService) {
+  constructor(private cargoTransportService: CargoTransportApiService,
+              private router: Router) {
   }
 
   onClick() {
-    this.cargoTransportService.get(this.item.Id).pipe(
-      catchError((error: HttpErrorResponse) => {
-        return throwError(error);
-      })
-    ).subscribe((res) => {
-      console.log(res)
-    });
+    this.router.navigate([namesRoute.transportCargoView, this.item.Id]);
   }
 
   currentTypeIcon(item: any, type: TransportType){
