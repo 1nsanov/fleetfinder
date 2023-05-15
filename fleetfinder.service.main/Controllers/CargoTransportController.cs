@@ -36,7 +36,7 @@ public class CargoTransportController : HeadersController
     [HttpGet]
     public async Task<CargoTransportGet.ResponseDto> CargoTransportGet([FromQuery] long id, CancellationToken cancellationToken)
     {
-        return await _mediator.Send(new CargoTransportGet.Query(UserId, id), cancellationToken);
+        return await _mediator.Send(new CargoTransportGet.Query(id), cancellationToken);
     }
 
     [Authorize]

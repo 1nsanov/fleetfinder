@@ -89,7 +89,6 @@ export class SignUpPageComponent implements OnInit{
     Object.values(this.form.controls).forEach(control => {
       control.markAsTouched();
     });
-
   }
 
   fullNameGroup: FormGroup;

@@ -4,6 +4,10 @@ import { TransportType } from 'src/app/models/enums/transport/transport-type.enu
 import {cargoItems} from "../../../data/transport/cargo-items";
 import {CargoType} from "../../../models/enums/transport/cargo/cargo-type.enum";
 import {IGridItem} from "../../../models/interfaces/grid-item.interface";
+import {CargoTransportApiService} from "../../../api/CargoTransport/cargo-transport.api.service";
+import {catchError, throwError} from "rxjs";
+import {HttpErrorResponse} from "@angular/common/http";
+import {namesRoute} from "../../../data/names-route";
 
 @Component({
   selector: 'app-grid-item',
@@ -19,6 +23,19 @@ export class GridItemComponent {
   CargoTransportationKindConst = CargoTransportationKindConst;
   TransportType = TransportType;
 
+  constructor(private cargoTransportService: CargoTransportApiService) {
+  }
+
+  onClick() {
+    this.cargoTransportService.get(this.item.Id).pipe(
+      catchError((error: HttpErrorResponse) => {
+        return throwError(error);
+      })
+    ).subscribe((res) => {
+      console.log(res)
+    });
+  }
+
   currentTypeIcon(item: any, type: TransportType){
     this.type = type;
     switch (type){
@@ -30,4 +47,5 @@ export class GridItemComponent {
         return  '../../../../assets/icons/transport/special/icon-' + item.Icon + '.png';
     }
   }
+
 }

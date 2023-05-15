@@ -4,6 +4,7 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {IResponseId} from "../Common/IResponseId";
 import {CargoTransportPostRequestDto} from "./post.models";
 import {CargoTransportGetListRequestDto, CargoTransportGetListResponseDto} from "./get-list.models";
+import {CargoTransportGetResponse} from "./get.models";
 
 @Injectable({
   providedIn: 'root'
@@ -29,5 +30,11 @@ export class CargoTransportApiService {
       .set('RegionFilter', request.filter.RegionFilter ?? "")
       .set('TypeFilter', request.filter.TypeFilter ?? "");
     return this.http.get<CargoTransportGetListResponseDto>(this.url + "/list", {params: params});
+  }
+
+  get(id: number){
+    const params = new HttpParams()
+      .set('id', id.toString());
+    return this.http.get<CargoTransportGetResponse>(this.url, { params: params });
   }
 }

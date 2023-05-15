@@ -6,7 +6,7 @@ namespace fleetfinder.service.main.application.Features.CargoTransportFeatures.Q
 
 public static partial class CargoTransportGet
 {
-    public record Query(long UserId, long Id) : IQueryRequest<ResponseDto>;
+    public record Query(long Id) : IQueryRequest<ResponseDto>;
     
     internal class Handler : IRequestHandler<Query, ResponseDto>
     {
@@ -24,7 +24,7 @@ public static partial class CargoTransportGet
             var entity = await _queryDbContext.CargoTransport
                              .Include(ct => ct.User)
                              .Include(ct => ct.Images)
-                             .FirstOrDefaultAsync(x => x.Id == request.Id && x.UserId == request.UserId, cancellationToken: cancellationToken)
+                             .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken: cancellationToken)
                                 ?? throw new EntityNotFoundException(request.Id);
             
             return _mapper.Map<CargoTransport, ResponseDto>(entity);
