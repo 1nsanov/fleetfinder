@@ -1,1 +1,19 @@
-<p>orders-page works!</p>
+<div class="main-block">
+  <div class="border-block flex gap-10 pb-5">
+    <div class="flex-grow">
+      <app-input label="Заголовок"
+                 [value]="cargoTransportForm.get('Title')?.value ?? ''"
+                 (valueChange)="cargoTransportForm.get('Title')?.setValue($event)"
+                 [error]="cargoTransportForm.get('Title')?.invalid && cargoTransportForm.get('Title')?.touched ? 'Заголовок обязателен' : ''">
+      </app-input>
+    </div>
+    <div class="flex-grow">
+      <app-input label="Марка"
+                 [value]="cargoTransportForm.get('Brand')?.value ?? ''"
+                 (valueChange)="cargoTransportForm.get('Brand')?.setValue($event)"
+                 [error]="cargoTransportForm.get('Brand')?.invalid && cargoTransportForm.get('Brand')?.touched ? 'Марка обязательна' : ''">
+      </app-input>
+    </div>
+  </div>
+  <app-button (click)="onSubmit()">Да</app-button>
+</div>

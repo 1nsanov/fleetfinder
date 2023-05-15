@@ -31,6 +31,7 @@ import { ContactCardComponent } from './components/common/contact-card/contact-c
 import { PhonePipe } from './pipes/phone.pipe';
 import { PaginationComponent } from './components/ui/pagination/pagination.component';
 import { PlugEmptyItemsComponent } from './components/common/plug-empty-items/plug-empty-items.component';
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -61,7 +62,7 @@ import { PlugEmptyItemsComponent } from './components/common/plug-empty-items/pl
     PlugEmptyItemsComponent,
   ],
     imports: [
-        BrowserModule, HttpClientModule, AppRoutingModule, NgOptimizedImage,
+        BrowserModule, HttpClientModule, AppRoutingModule, NgOptimizedImage, ReactiveFormsModule,
     ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },

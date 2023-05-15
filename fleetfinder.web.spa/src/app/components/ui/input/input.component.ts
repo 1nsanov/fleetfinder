@@ -22,11 +22,11 @@ export class InputComponent implements OnInit{
   @Output() focus = new EventEmitter<void>();
   @Output() blur = new EventEmitter<void>();
 
+  service: InputService;
+
   constructor(private sanitizer: DomSanitizer,
               private timeoutService: TimeoutService) {
   }
-
-  service: InputService;
 
   ngOnInit(): void {
     this.service = new InputService(this.sanitizer, this.icon);
@@ -54,7 +54,6 @@ export class InputComponent implements OnInit{
   async onBlur(){
     await this.timeoutService.wait(100);
     this.service.onBlurEvent(!!this.value);
-    this.error = "";
     this.blur.emit()
   }
 }
