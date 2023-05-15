@@ -37,8 +37,9 @@ public static partial class IdentifySignUp
                     .WithName("Имя").WithMessage("Поле '{PropertyName}' не может превышать {MaxLength} символов.");
                 RuleFor(name => name.Second).NotEmpty().MaximumLength(50)
                     .WithName("Фамилия").WithMessage("Поле '{PropertyName}' не может превышать {MaxLength} символов.");
-                RuleFor(name => name.Surname).NotEmpty().MaximumLength(50).Unless(name => name.Surname is null)
-                    .WithName("Отчество").WithMessage("Поле '{PropertyName}' не может превышать {MaxLength} символов.");
+                RuleFor(name => name.Surname).NotEmpty().MaximumLength(50)
+                    .WithName("Отчество").WithMessage("Поле '{PropertyName}' не может превышать {MaxLength} символов.")
+                    .Unless(name => string.IsNullOrWhiteSpace(name.Surname));
             }
         }
     }

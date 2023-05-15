@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {IdentifyApiService} from "../../api/Identify/identify.api.service";
-import {SignUpModel} from "../../models/interfaces/user/sign-up.model";
+import {FullName, SignUpModel} from "../../models/interfaces/user/sign-up.model";
 import {ISignUpRequest} from "../../api/Identify/identify.api.models";
 import {NotificationService} from "../../services/notification.service";
 import {Router} from "@angular/router";
@@ -8,16 +8,17 @@ import {namesRoute} from "../../data/names-route";
 import {HttpErrorResponse} from "@angular/common/http";
 import {catchError, throwError} from "rxjs";
 import {TimeoutService} from "../../services/timeout.service";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-sign-up-page',
   templateUrl: './sign-up-page.component.html',
   styleUrls: ['./sign-up-page.component.scss']
 })
-export class SignUpPageComponent {
+export class SignUpPageComponent implements OnInit{
   step: number = 1;
-  user: SignUpModel = new SignUpModel();
-  isLoadSignUp = false;
+  form: FormGroup<SignUpModel>
+  isLoad = false;
   errors = {
     FirstName: "",
     SecondName: "",
@@ -27,56 +28,78 @@ export class SignUpPageComponent {
   constructor(private identifyService: IdentifyApiService,
               private notification: NotificationService,
               private router: Router,
-              private timeoutService: TimeoutService) {
+              private formBuilder: FormBuilder) {
   }
+
+  ngOnInit(): void {
+    this.initFormBuilder();
+  }
+
   async nextStep() {
-    await this.validationStepOne()
-    if (Object.values(this.errors).join("")) {
-      this.notification.error("Заполните ФИО!")
-    } else {
+    this.formFullNameMarkAsTouched();
+    if (this.fullNameGroup.valid)
       this.step++;
-    }
   }
 
   previousStep() {
     this.step--;
   }
 
-  async validationStepOne() {
-    this.clearErrors()
-    await this.timeoutService.wait(100);
-    if (!this.user.FullName.First)
-      this.errors.FirstName = "Поле обязательно к заполнению";
-    if (!this.user.FullName.Second)
-      this.errors.SecondName = "Поле обязательно к заполнению";
-    if (!this.user.FullName.Surname)
-      this.errors.Surname = "Поле обязательно к заполнению";
-  }
-
-  clearErrors(){
-    this.errors.FirstName = ""
-    this.errors.SecondName = ""
-    this.errors.Surname = ""
-  }
-
   signUp(){
-    if (this.user.Password !== this.user.RepeatPassword){
+    if (this.form.value.Password !== this.form.value.RepeatPassword){
       this.notification.error("Пароли не совпадают!");
       return;
     }
-    this.isLoadSignUp = true;
-    const request = this.user as ISignUpRequest;
-    this.identifyService.signUp(request).pipe(
-      catchError((error: HttpErrorResponse) => {
-        let errorMessages = error.error.errors;
-        const errorArray = Object.values(errorMessages).flat();
-        const errorString = errorArray.join('<br>');
-        this.notification.error(errorString);
-        this.isLoadSignUp = false;
-        return throwError(error);
-      })
-    ).subscribe(() => {
-      this.router.navigate([`/${namesRoute.home}`]).then(() => window.location.reload());
+
+    this.formMarkAsTouched()
+    if (this.form.valid){
+      this.isLoad = true;
+      const request = this.form.value as ISignUpRequest;
+      this.identifyService.signUp(request).pipe(
+        catchError((error: HttpErrorResponse) => {
+          this.isLoad = false;
+          let errorMessages = error.error.errors;
+          const errorArray = Object.values(errorMessages).flat();
+          const errorString = errorArray.join('<br>');
+          this.notification.error(errorString);
+          return throwError(error);
+        })
+      ).subscribe(() => {
+        this.router.navigate([`/${namesRoute.home}`]).then(() => window.location.reload());
+      });
+    }
+  }
+
+  initFormBuilder(){
+    this.form = this.formBuilder.group<SignUpModel>({
+      Login: new FormControl<string| null>('', Validators.required),
+      Password: new FormControl<string| null>('', Validators.required),
+      RepeatPassword: new FormControl<string| null>('', Validators.required),
+      Email: new FormControl<string| null>('', Validators.required),
+      Organization: new FormControl<string| null>(''),
+      FullName: this.formBuilder.group<FullName>({
+        First: new FormControl<string | null>('', Validators.required),
+        Second: new FormControl<string | null>('', Validators.required),
+        Surname: new FormControl<string | null>(''),
+      }),
     });
+  }
+
+  formMarkAsTouched(){
+    Object.values(this.form.controls).forEach(control => {
+      control.markAsTouched();
+    });
+
+  }
+
+  fullNameGroup: FormGroup;
+  formFullNameMarkAsTouched(){
+    this.fullNameGroup = this.form.get('FullName') as FormGroup;
+    if (this.fullNameGroup) {
+      const fullNameControls = this.fullNameGroup.controls;
+      Object.values(fullNameControls).forEach(control => {
+        control.markAsTouched();
+      });
+    }
   }
 }

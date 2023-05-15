@@ -8,14 +8,16 @@
         <label>ФИО</label>
         <div class="flex flex-col" style="gap: 15px">
           <app-input label="Фамилия"
-                     [(value)]="user.FullName.First"
-                     [error]="errors.FirstName"/>
+                     [value]="form.get('FullName.First')?.value ?? ''"
+                     (valueChange)="form.get('FullName.First')?.setValue($event)"
+                     [error]="form.get('FullName.First')?.invalid && form.get('FullName.First')?.touched ? 'Поле обязательно к заполнению' : ''"/>
           <app-input label="Имя"
-                     [(value)]="user.FullName.Second"
-                     [error]="errors.SecondName"/>
+                     [value]="form.get('FullName.Second')?.value ?? ''"
+                     (valueChange)="form.get('FullName.Second')?.setValue($event)"
+                     [error]="form.get('FullName.Second')?.invalid && form.get('FullName.Second')?.touched ? 'Поле обязательно к заполнению' : ''"/>
           <app-input label="Отчество"
-                     [(value)]="user.FullName.Surname"
-                     [error]="errors.Surname"/>
+                     [value]="form.get('FullName.Surname')?.value ?? ''"
+                     (valueChange)="form.get('FullName.Surname')?.setValue($event)"/>
         </div>
       </div>
       <app-input label="Организация" />
@@ -30,12 +32,24 @@
       Регистрация
     </h2>
     <main class="flex flex-col" style="gap: 25px">
-      <app-input label="Логин" [(value)]="user.Login"/>
-      <app-input label="Эл. почта" [(value)]="user.Email"/>
-      <app-input label="Пароль" type="password" [(value)]="user.Password"/>
-      <app-input label="Повторите пароль" type="password" [(value)]="user.RepeatPassword"/>
+      <app-input label="Логин"
+                 [value]="form.get('Login')?.value ?? ''"
+                 (valueChange)="form.get('Login')?.setValue($event)"
+                 [error]="form.get('Login')?.invalid && form.get('Login')?.touched ? 'Поле обязательно к заполнению' : ''"/>
+      <app-input label="Эл. почта"
+                 [value]="form.get('Email')?.value ?? ''"
+                 (valueChange)="form.get('Email')?.setValue($event)"
+                 [error]="form.get('Email')?.invalid && form.get('Email')?.touched ? 'Поле обязательно к заполнению' : ''"/>
+      <app-input label="Пароль" type="password"
+                 [value]="form.get('Password')?.value ?? ''"
+                 (valueChange)="form.get('Password')?.setValue($event)"
+                 [error]="form.get('Password')?.invalid && form.get('Password')?.touched ? 'Поле обязательно к заполнению' : ''"/>
+      <app-input label="Повторите пароль" type="password"
+                 [value]="form.get('RepeatPassword')?.value ?? ''"
+                 (valueChange)="form.get('RepeatPassword')?.setValue($event)"
+                 [error]="form.get('RepeatPassword')?.invalid && form.get('RepeatPassword')?.touched ? 'Поле обязательно к заполнению' : ''"/>
       <div class="flex flex-col" style="gap: 12px">
-        <app-button theme="green" (click)="signUp()" [isLoad]="isLoadSignUp">
+        <app-button theme="green" (click)="signUp()" [isLoad]="isLoad">
           Создать аккаунт
         </app-button>
         <app-button theme="blue" (click)="previousStep()">
