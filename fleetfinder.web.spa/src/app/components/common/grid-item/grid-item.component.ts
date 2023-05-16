@@ -9,6 +9,7 @@ import {catchError, throwError} from "rxjs";
 import {HttpErrorResponse} from "@angular/common/http";
 import {namesRoute} from "../../../data/names-route";
 import {Router} from "@angular/router";
+import {TransportService} from "../../../services/transport.service";
 
 @Component({
   selector: 'app-grid-item',
@@ -32,7 +33,7 @@ export class GridItemComponent {
     this.router.navigate([namesRoute.transportCargoView, this.item.Id]);
   }
 
-  currentTypeIcon(item: any, type: TransportType){
+  getTypeImg(item: any, type: TransportType){
     this.type = type;
     switch (type){
       case TransportType.Cargo:
@@ -43,5 +44,4 @@ export class GridItemComponent {
         return  '../../../../assets/icons/transport/special/icon-' + item.Icon + '.png';
     }
   }
-
 }

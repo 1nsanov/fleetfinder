@@ -24,4 +24,6 @@ export interface CargoTransportGetResponse {
   TransportationKind: CargoTransportationKind | null;
   Images: string[];
   Contact: Contact;
+  CreateDate: Date;
+  UserId: number;
 }

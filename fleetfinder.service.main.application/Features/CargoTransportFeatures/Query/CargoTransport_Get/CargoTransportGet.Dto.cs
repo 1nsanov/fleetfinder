@@ -21,7 +21,9 @@ public static partial class CargoTransportGet
         BodyDto Body,
         CargoTransportationKind? TransportationKind,
         List<string> Images,
-        ContactDto Contact
+        ContactDto Contact,
+        DateOnly CreateDate,
+        long UserId
     );
     
     public record PriceDto(

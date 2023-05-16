@@ -18,6 +18,64 @@
           <p>{{transport.Id}}</p>
         </div>
       </div>
+      <div class="flex justify-between items-center">
+        <div class="region flex items-center">
+          <svg width="20" height="20" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#clip0_179_5216)">
+              <path d="M16.5931 4.13199L14.6931 2.66799C14.564 2.5851 14.4236 2.52125 14.2763 2.47839C14.1296 2.4309 13.9769 2.4045 13.8227 2.39999H8.35391L8.99471 6.39999H13.8227C13.9539 6.39999 14.1179 6.37039 14.2755 6.32159C14.4331 6.27279 14.5851 6.20559 14.6923 6.13279L16.5923 4.66719C16.7003 4.59439 16.7539 4.49759 16.7539 4.39999C16.7539 4.30239 16.7003 4.20559 16.5931 4.13199ZM7.55391 0.799988H6.75391C6.64782 0.799988 6.54608 0.842131 6.47106 0.917145C6.39605 0.99216 6.35391 1.0939 6.35391 1.19999V3.99999H3.68511C3.55231 3.99999 3.38911 4.02959 3.23151 4.07919C3.07311 4.12719 2.92191 4.19359 2.81471 4.26799L0.914706 5.73199C0.806706 5.80479 0.753906 5.90239 0.753906 5.99999C0.753906 6.09679 0.806706 6.19359 0.914706 6.26799L2.81471 7.73359C2.92191 7.80639 3.07311 7.87359 3.23151 7.92159C3.38911 7.97039 3.55231 7.99999 3.68511 7.99999H6.35391V14.8C6.35391 14.9061 6.39605 15.0078 6.47106 15.0828C6.54608 15.1578 6.64782 15.2 6.75391 15.2H7.55391C7.65999 15.2 7.76173 15.1578 7.83675 15.0828C7.91176 15.0078 7.95391 14.9061 7.95391 14.8V1.19999C7.95391 1.0939 7.91176 0.99216 7.83675 0.917145C7.76173 0.842131 7.65999 0.799988 7.55391 0.799988Z" fill="#F9F9F9"/>
+            </g>
+            <defs>
+              <clipPath id="clip0_179_5216">
+                <rect width="20" height="20" fill="white" transform="translate(0.753906)"/>
+              </clipPath>
+            </defs>
+          </svg>
+          <p>{{RegionConst[transport.Region]}}</p>
+        </div>
+        <div class="date">
+          <p>{{transport.CreateDate | date:'dd.MM.YYYY'}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="main">
+      <div class="row">
+        <div class="images left-side relative">
+          <app-image-preview/>
+          <app-type-transport-sign [type]="TransportType.Cargo"
+                                   [image]="typeImg"/>
+        </div>
+        <div class="features right-side">
+          2
+        </div>
+      </div>
+      <div class="row">
+        <div class="prices left-side">
+          3
+        </div>
+        <div class="payment right-side">
+          4
+        </div>
+      </div>
+      <div class="row">
+        <div class="contact left-side">
+          5
+        </div>
+        <div class="decription right-side">
+          6
+        </div>
+      </div>
+    </div>
+    <div *ngIf="true" class="footer flex gap-8">
+      <div class="flex-grow">
+        <app-button theme="yellow">
+          Редактировать
+        </app-button>
+      </div>
+      <div class="flex-grow">
+        <app-button theme="red">
+          Удалить
+        </app-button>
+      </div>
     </div>
   </div>
 </app-preloader>

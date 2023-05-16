@@ -33,6 +33,8 @@ import { PaginationComponent } from './components/ui/pagination/pagination.compo
 import { PlugEmptyItemsComponent } from './components/common/plug-empty-items/plug-empty-items.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import { TransportCargoViewPageComponent } from './pages/transport-cargo-view-page/transport-cargo-view-page.component';
+import { ImagePreviewComponent } from './components/ui/image-preview/image-preview.component';
+import { TypeTransportSignComponent } from './components/ui/type-transport-sign/type-transport-sign.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +64,8 @@ import { TransportCargoViewPageComponent } from './pages/transport-cargo-view-pa
     PaginationComponent,
     PlugEmptyItemsComponent,
     TransportCargoViewPageComponent,
+    ImagePreviewComponent,
+    TypeTransportSignComponent,
   ],
     imports: [
         BrowserModule, HttpClientModule, AppRoutingModule, NgOptimizedImage, ReactiveFormsModule,

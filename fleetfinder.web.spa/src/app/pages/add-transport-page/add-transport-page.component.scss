@@ -4,47 +4,6 @@
   }
   .image-block{
     width: 50%;
-    .__preview{
-      width: 100%;
-      box-shadow: var(--shadow-1);
-      border-radius: 12px;
-      aspect-ratio: 16 / 9;
-      background: var(--white);
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-    }
-    .__type{
-      top: -10px;
-      right: -10px;
-      position: absolute;
-      background: var(--black-50);
-      border-radius: 8px;
-      rotate: 45deg;
-      width: 50px;
-      height: 50px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: var(--transition-base);
-      &.cargo{
-        background: var(--black);
-      }
-      &.passenger{
-        background: var(--blue);
-      }
-      &.special{
-        background: var(--light);
-      }
-      img{
-        rotate: -45deg;
-        max-width: 30px;
-      }
-      &:hover{
-        scale: 1.05;
-      }
-    }
   }
   .input-block {
     width: 50%;

@@ -1,0 +1,55 @@
+.type-transport-sign{
+  top: -10px;
+  right: -10px;
+  position: absolute;
+  background: var(--black-50);
+  border-radius: 8px;
+  rotate: 45deg;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-base);
+
+  &.cargo{
+    background: var(--black);
+  }
+  &.passenger{
+    background: var(--blue);
+  }
+  &.special{
+    background: var(--light);
+  }
+  img{
+    rotate: -45deg;
+    max-width: 30px;
+  }
+  &:hover{
+    scale: 1.05;
+  }
+
+
+  &.gridable{
+    width: 36px;
+    height: 36px;
+    &.cargo {
+      background: var(--blue-light);
+    }
+    &.passenger {
+      background: var(--blue);
+    }
+    &.special {
+      background: var(--light);
+    }
+    &:hover {
+      scale: 1;
+    }
+    img {
+      rotate: -45deg;
+      max-width: 24px;
+      filter: brightness(0.15) saturate(0);
+    }
+  }
+}

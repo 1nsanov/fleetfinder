@@ -4,6 +4,11 @@ import {CargoTransportApiService} from "../../api/CargoTransport/cargo-transport
 import {HttpErrorResponse} from "@angular/common/http";
 import {catchError, throwError} from "rxjs";
 import {CargoTransportGetResponse} from "../../api/CargoTransport/get.models";
+import {RegionConst} from "../../data/enums.data";
+import {TransportType} from "../../models/enums/transport/transport-type.enum";
+import {TransportService} from "../../services/transport.service";
+import {CargoType} from "../../models/enums/transport/cargo/cargo-type.enum";
+import {cargoItems} from "../../data/transport/cargo-items";
 
 @Component({
   selector: 'app-transport-cargo-view-page',
@@ -11,9 +16,13 @@ import {CargoTransportGetResponse} from "../../api/CargoTransport/get.models";
   styleUrls: ['./transport-cargo-view-page.component.scss']
 })
 export class TransportCargoViewPageComponent implements OnInit{
+  RegionConst = RegionConst;
+  TransportType = TransportType;
+  typeImg: string | null;
   transport: CargoTransportGetResponse | null;
   constructor(private route: ActivatedRoute,
-              private cargoTransportService: CargoTransportApiService) {
+              private cargoTransportService: CargoTransportApiService,
+              private transportService: TransportService ) {
   }
 
   ngOnInit(): void {
@@ -30,6 +39,13 @@ export class TransportCargoViewPageComponent implements OnInit{
       })
     ).subscribe((res) => {
       this.transport = res;
+      this.setTypeImg(this.transport.Type);
     });
+  }
+
+  setTypeImg(type: CargoType){
+    const itemBox = cargoItems.find(item => item.Value === type);
+    if (itemBox)
+      this.typeImg = this.transportService.getTypeImg(itemBox, TransportType.Cargo);
   }
 }

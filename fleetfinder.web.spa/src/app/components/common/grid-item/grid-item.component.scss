@@ -65,44 +65,6 @@
       gap: 20px;
       .images{
         position: relative;
-        .preview{
-          background: var(--white);
-          border-radius: 12px;
-          width: 100%;
-          aspect-ratio: 16 / 9;
-        }
-        .__type {
-          top: -10px;
-          right: -10px;
-          position: absolute;
-          background: var(--blue-light);
-          border-radius: 8px;
-          rotate: 45deg;
-          width: 36px;
-          height: 36px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          transition: var(--transition-base);
-
-          &.cargo {
-            background: var(--blue-light);
-          }
-
-          &.passenger {
-            background: var(--blue);
-          }
-
-          &.special {
-            background: var(--light);
-          }
-
-          img {
-            rotate: -45deg;
-            max-width: 24px;
-            filter: brightness(0.15) saturate(0);
-          }
-        }
       }
       .prices{
         display: flex;

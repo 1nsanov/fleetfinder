@@ -13,18 +13,10 @@
   </div>
   <div class="border-block flex gap-10 pb-5 mt-10">
     <div class="image-block relative">
-      <div class="__preview flex items-center justify-center">
-        <img src="../../../assets/icons/icon-add-photo.svg">
-      </div>
-      <div class="__type"
-           [ngClass]="{
-            'cargo' : currentType === TransportType.Cargo,
-            'passenger' : currentType === TransportType.Passenger,
-            'special' : currentType === TransportType.Special
-           }"
-           (click)="modalService.open()" >
-        <img [src]="currentTypeIcon">
-      </div>
+      <app-image-preview/>
+      <app-type-transport-sign (click)="modalService.open()"
+                               [type]="currentType"
+                               [image]="currentTypeImg"/>
     </div>
     <div *ngIf="currentType === TransportType.Cargo" class="input-block flex flex-col gap-5">
       <app-input label="Марка" [(value)]="cargoTransport.Brand"/>

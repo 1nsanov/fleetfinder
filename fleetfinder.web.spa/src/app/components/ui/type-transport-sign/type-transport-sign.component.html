@@ -1,0 +1,10 @@
+<div class="type-transport-sign"
+     [ngClass]="{
+            'gridable': theme === 'gridable',
+            'cargo' : type === TransportType.Cargo,
+            'passenger' : type === TransportType.Passenger,
+            'special' : type === TransportType.Special
+           }"
+     (click)="onClick()">
+  <img [src]="innerImage" alt="">
+</div>

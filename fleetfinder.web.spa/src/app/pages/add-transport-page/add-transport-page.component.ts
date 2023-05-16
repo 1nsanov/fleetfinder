@@ -27,6 +27,7 @@ import {CargoBodyKind} from "../../models/enums/transport/cargo/cargo-body-kind.
 import {ExperienceWork} from "../../models/enums/transport/experience-work.enum";
 import {PaymentMethod} from "../../models/enums/transport/payment-method.enum";
 import {PaymentOrder} from "../../models/enums/transport/payment-order.enum";
+import {TransportService} from "../../services/transport.service";
 
 @Component({
   selector: 'app-add-transport-page',
@@ -37,6 +38,7 @@ export class AddTransportPageComponent {
   constructor(public modalService: ModalService,
               public cargoTransportApiService: CargoTransportApiService,
               private notification: NotificationService,
+              private transportService: TransportService,
               private router: Router,
               private _location: Location) {
   }
@@ -52,23 +54,21 @@ export class AddTransportPageComponent {
   special = specialItems;
   TransportType = TransportType;
   currentType: TransportType | null = null;
-  currentTypeIcon : string = "../../../assets/icons/icon-square-plus.svg";
+  currentTypeImg : string | null = null;
 
   cargoTransport : CargoTransportPostRequestDto = new CargoTransportPostRequestDto();
   isLoadPost = false;
 
   onSelectTransportType(item: IInfoBoxTransport, type: TransportType){
     this.currentType = type;
+    this.currentTypeImg = this.transportService.getTypeImg(item, type);
     switch (type){
       case TransportType.Cargo:
         this.cargoTransport.Type = item.Value as CargoType
-        this.currentTypeIcon = '../../../assets/icons/transport/cargo/icon-cargo-' + item.Icon + '.svg';
         break;
       case TransportType.Passenger:
-        this.currentTypeIcon = '../../../assets/icons/transport/passenger/icon-passenger-' + item.Icon + '.svg';
         break;
       case TransportType.Special:
-        this.currentTypeIcon = '../../../assets/icons/transport/special/icon-' + item.Icon + '.png';
         break;
     }
     this.modalService.close();
