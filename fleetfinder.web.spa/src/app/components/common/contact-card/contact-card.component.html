@@ -5,7 +5,7 @@
     </div>
     <div class="font-bold">{{contact.Title}}</div>
   </div>
-  <div class="phones flex flex-col gap-1">
+  <div class="phones flex flex-col">
     <div *ngIf="contact.PhoneTelegram" class="phone">
       <img src="../../../../assets/icons/icon-telegram.svg" alt="">
       <p>{{contact.PhoneTelegram | phone}}</p>

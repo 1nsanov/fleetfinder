@@ -38,34 +38,45 @@
       </div>
     </div>
     <div class="main">
-      <div class="row">
+      <div class="row mb-5">
         <div class="images left-side relative">
           <app-image-preview/>
           <app-type-transport-sign [type]="TransportType.Cargo"
                                    [image]="typeImg"/>
         </div>
         <div class="features right-side">
-          2
+          <app-field-view-item title="Марка" [text]="transport.Brand"/>
+          <app-field-view-item title="Год выпуска" [text]="transport.YearIssue | measurement:'г.'"/>
+          <app-field-view-item title="Вид перевозок" [text]="transport.TransportationKind ? CargoTransportationKindConst[transport.TransportationKind] : null"/>
+          <app-field-view-item title="Длина/Ширина/Высота кузова" [text]="bodyLengthWidthHeight"/>
+          <app-field-view-item title="Объем кузова" [text]="transport.Body.Volume | measurement:'м/куб.'"/>
+          <app-field-view-item title="Грузоподъёмность" [text]="transport.Body.LoadCapacity | measurement:'т.'"/>
+          <app-field-view-item title="Вид кузова" [text]="transport.Body.Kind ? CargoBodyKindConst[transport.Body.Kind] : null"/>
         </div>
       </div>
-      <div class="row">
+      <div class="row mb-8">
         <div class="prices left-side">
-          3
+          <app-field-view-item title="Цена за час" [text]="transport.Price.PerHour  | currency: 'РУБ ': 'code':'1.2-2'"/>
+          <app-field-view-item title="Цена за смену" [text]="transport.Price.PerShift  | currency: 'РУБ ': 'code':'1.2-2'"/>
+          <app-field-view-item title="Цена за 1 км" [text]="transport.Price.PerKm  | currency: 'РУБ ': 'code':'1.2-2'"/>
         </div>
         <div class="payment right-side">
-          4
+          <app-field-view-item title="Опыт работы" [text]="transport.ExperienceWork ? ExperienceWorkConst[transport.ExperienceWork] : null"/>
+          <app-field-view-item title="Способ оплаты" [text]="transport.PaymentMethod ? PaymentMethodConst[transport.PaymentMethod] : null"/>
+          <app-field-view-item title="Порядок оплаты" [text]="transport.PaymentOrder ? PaymentOrderConst[transport.PaymentOrder] : null"/>
         </div>
       </div>
       <div class="row">
-        <div class="contact left-side">
-          5
+        <div class="contact left-side justify-center">
+          <app-contact-card [contact]="transport.Contact"/>
         </div>
-        <div class="decription right-side">
-          6
+        <div class="description right-side flex flex-col">
+          <label>Дополнительная информация</label>
+          <p>{{transport.Description ? transport.Description : '-'}}</p>
         </div>
       </div>
     </div>
-    <div *ngIf="true" class="footer flex gap-8">
+    <div *ngIf="isMyTransport" class="footer flex gap-10 mt-8">
       <div class="flex-grow">
         <app-button theme="yellow">
           Редактировать

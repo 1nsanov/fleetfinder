@@ -3,6 +3,9 @@
   border-radius: 8px;
   padding: 8px 12px;
   color: var(--black);
+  box-shadow: var(--shadow-1);
+  max-width: 320px;
+  margin: auto;
   .header{
     .image{
       border-radius: 50%;
@@ -20,6 +23,7 @@
     }
   }
   .phones{
+    gap: 6px;
     .phone{
       display: flex;
       gap: 10px;

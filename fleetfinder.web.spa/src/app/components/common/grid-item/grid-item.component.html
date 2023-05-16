@@ -51,7 +51,7 @@
             </div>
             <div *ngIf="item.YearIssue" class="item">
               <h4>Год выпуска</h4>
-              <p>{{item.YearIssue}}</p>
+              <p>{{item.YearIssue | measurement:'г.'}}</p>
             </div>
             <div *ngIf="item.TransportationKind" class="item">
               <h4>Вид перевозок</h4>
@@ -89,7 +89,7 @@
           </div>
         </div>
         <div class="right-side justify-end">
-          <app-contact-block [contact]="item.Contact" />
+          <app-contact-card [contact]="item.Contact" />
         </div>
       </div>
     </div>

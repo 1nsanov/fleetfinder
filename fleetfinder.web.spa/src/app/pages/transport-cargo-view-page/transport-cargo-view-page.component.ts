@@ -4,11 +4,13 @@ import {CargoTransportApiService} from "../../api/CargoTransport/cargo-transport
 import {HttpErrorResponse} from "@angular/common/http";
 import {catchError, throwError} from "rxjs";
 import {CargoTransportGetResponse} from "../../api/CargoTransport/get.models";
-import {RegionConst} from "../../data/enums.data";
+import {CargoBodyKindConst,
+  CargoTransportationKindConst, ExperienceWorkConst, PaymentMethodConst, PaymentOrderConst, RegionConst} from "../../data/enums.data";
 import {TransportType} from "../../models/enums/transport/transport-type.enum";
 import {TransportService} from "../../services/transport.service";
 import {CargoType} from "../../models/enums/transport/cargo/cargo-type.enum";
 import {cargoItems} from "../../data/transport/cargo-items";
+import {IdentifyApiService} from "../../api/Identify/identify.api.service";
 
 @Component({
   selector: 'app-transport-cargo-view-page',
@@ -17,12 +19,19 @@ import {cargoItems} from "../../data/transport/cargo-items";
 })
 export class TransportCargoViewPageComponent implements OnInit{
   RegionConst = RegionConst;
+  ExperienceWorkConst = ExperienceWorkConst;
+  PaymentMethodConst = PaymentMethodConst;
+  PaymentOrderConst = PaymentOrderConst;
+  CargoBodyKindConst = CargoBodyKindConst;
+  CargoTransportationKindConst = CargoTransportationKindConst;
   TransportType = TransportType;
   typeImg: string | null;
   transport: CargoTransportGetResponse | null;
+  bodyLengthWidthHeight: string = "";
   constructor(private route: ActivatedRoute,
               private cargoTransportService: CargoTransportApiService,
-              private transportService: TransportService ) {
+              private identifyService: IdentifyApiService,
+              private transportService: TransportService) {
   }
 
   ngOnInit(): void {
@@ -39,6 +48,9 @@ export class TransportCargoViewPageComponent implements OnInit{
       })
     ).subscribe((res) => {
       this.transport = res;
+      this.bodyLengthWidthHeight = `${res.Body.Length ? res.Body.Length : '-'}
+      / ${res.Body.Width ? res.Body.Width : '-'}
+      / ${res.Body.Height ? res.Body.Height : '-'} м.`;
       this.setTypeImg(this.transport.Type);
     });
   }
@@ -47,5 +59,9 @@ export class TransportCargoViewPageComponent implements OnInit{
     const itemBox = cargoItems.find(item => item.Value === type);
     if (itemBox)
       this.typeImg = this.transportService.getTypeImg(itemBox, TransportType.Cargo);
+  }
+
+  get isMyTransport() {
+    return this.transport?.UserId === this.identifyService.claims?.Id;
   }
 }

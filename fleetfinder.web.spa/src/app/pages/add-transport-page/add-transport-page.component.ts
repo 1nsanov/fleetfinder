@@ -85,10 +85,9 @@ export class AddTransportPageComponent {
         this.isLoadPost = false;
         return throwError(error);
       })
-    ).subscribe(() => {
-      // this.router.navigate([`/${namesRoute.home}`]).then(() => window.location.reload());
+    ).subscribe((res) => {
       this.notification.notify('Транспорт успешно добавлен')
-      this.router.navigate([`/${namesRoute.transports}`]);
+      this.router.navigate([namesRoute.transportCargoView, res.Id]);
     });
   }
 

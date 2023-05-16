@@ -35,6 +35,8 @@ import {ReactiveFormsModule} from "@angular/forms";
 import { TransportCargoViewPageComponent } from './pages/transport-cargo-view-page/transport-cargo-view-page.component';
 import { ImagePreviewComponent } from './components/ui/image-preview/image-preview.component';
 import { TypeTransportSignComponent } from './components/ui/type-transport-sign/type-transport-sign.component';
+import { FieldViewItemComponent } from './components/common/field-view-item/field-view-item.component';
+import { MeasurementPipe } from './pipes/measurement.pipe';
 
 @NgModule({
   declarations: [
@@ -66,6 +68,8 @@ import { TypeTransportSignComponent } from './components/ui/type-transport-sign/
     TransportCargoViewPageComponent,
     ImagePreviewComponent,
     TypeTransportSignComponent,
+    FieldViewItemComponent,
+    MeasurementPipe,
   ],
     imports: [
         BrowserModule, HttpClientModule, AppRoutingModule, NgOptimizedImage, ReactiveFormsModule,
