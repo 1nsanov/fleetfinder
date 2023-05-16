@@ -5,6 +5,7 @@
   color: var(--white);
   transition: var(--transition-base);
   height: 100%;
+  cursor: pointer;
   &:hover {
     scale: 1.02;
   }

@@ -1,0 +1,6 @@
+.content{
+  transition: var(--transition-base);
+}
+.show-content {
+  animation: fade-in 0.5s ease-in-out;
+}

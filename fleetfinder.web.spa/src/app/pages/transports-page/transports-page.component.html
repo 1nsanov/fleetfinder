@@ -34,7 +34,7 @@
   <app-button iconPath="../../../assets/icons/icon-filter.svg" />
 </div>
 
-<app-preloader [load]="isLoad">
+<app-preloader [load]="isLoad" height="calc(100vh - 398px)">
   <app-plug-empty-items *ngIf="items != null && items.length === 0"/>
   <app-grid-items [items]="items" [type]="TransportType.Cargo"/>
 

@@ -1,7 +1,7 @@
 ﻿<component name="ProjectRunConfigurationManager">
   <configuration default="false" name="MainRun" type="CompoundRunConfigurationType">
     <toRun name="fleetfinder.service.main" type="LaunchSettings" />
-    <toRun name="fleetfinder.web.spa: start" type="js.build_tools.npm" />
+    <toRun name="start" type="js.build_tools.npm" />
     <method v="2" />
   </configuration>
 </component>

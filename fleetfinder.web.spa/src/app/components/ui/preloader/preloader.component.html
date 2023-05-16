@@ -1,11 +1,11 @@
 <div *ngIf="load" class="flex justify-center items-center" [ngStyle]="{'height': height}">
-  <div class="flex flex-col" [ngStyle]="{'margin-top': text ? '-40px' : '0'}">
-    <img src="../../../../assets/icons/dots-loader.svg" alt="">
+  <div class="flex flex-col items-center" [ngStyle]="{'margin-top': text ? '-40px' : '0'}">
+    <img style="max-width: 110px" src="../../../../assets/icons/dots-loader.svg" alt="">
     <p class="font-bold text-center" style="font-size: 24px;">
       {{text}}
     </p>
   </div>
 </div>
-<div *ngIf="!load">
+<div *ngIf="!load" class="content" [ngClass]="{'show-content': !load}">
   <ng-content></ng-content>
 </div>

@@ -14,6 +14,7 @@ import {Router} from "@angular/router";
 export class IdentifyApiService {
   url : string = environment.apiUrl + "identify/"
   claims: IClaims | null = null;
+
   constructor(private http: HttpClient,
               private cookieService: CookieService,
               private router: Router) { }
@@ -66,12 +67,6 @@ export class IdentifyApiService {
         this.claims = result;
       })
     )
-  }
-
-  testAuth() {
-    const headers = new HttpHeaders()
-      .set('Content-Type', 'text/plain; charset=utf-8')
-    return this.http.get<string>(this.url + "test/auth", {headers});
   }
 
   getAccessToken() : string {
