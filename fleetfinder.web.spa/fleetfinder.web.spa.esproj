@@ -12,6 +12,7 @@
   <ItemGroup>
     <Folder Include="src\app\components\common" />
     <Folder Include="src\app\components\ui" />
+    <Folder Include="src\app\guards" />
     <Folder Include="src\app\layouts" />
     <Folder Include="src\app\pages" />
     <Folder Include="src\app\pipes" />
