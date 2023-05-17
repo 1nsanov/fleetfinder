@@ -2,15 +2,15 @@
 import {CargoTransportationKind} from "../enums/transport/cargo/cargo-transportation-kind";
 import { Region } from "../enums/common/region.enum";
 import { ExperienceWork } from "../enums/transport/experience-work.enum";
-import { Price } from "src/app/api/Common/Transport/Price";
 import { Contact } from "src/app/api/Common/Contact";
+import {PriceModel} from "../../api/Common/Transport/PriceModel";
 
 export interface IGridItem {
   Id: number;
   Title: string;
   Region: Region;
   Type: CargoType;
-  Price: Price;
+  Price: PriceModel;
   Contact: Contact;
   Images: string[];
 

@@ -23,7 +23,6 @@ import { GlobalLoaderComponent } from './components/ui/global-loader/global-load
 import { NotificationComponent } from './components/ui/notification/notification.component';
 import { DropdownComponent } from './components/ui/dropdown/dropdown.component';
 import { AbbreviationNamePipe } from './pipes/abbreviation-name.pipe';
-import { AddTransportPageComponent } from './pages/add-transport-page/add-transport-page.component';
 import { PreloaderComponent } from './components/ui/preloader/preloader.component';
 import { GridItemComponent } from './components/common/grid-item/grid-item.component';
 import { GridItemsComponent } from './components/common/grid-items/grid-items.component';
@@ -37,6 +36,7 @@ import { ImagePreviewComponent } from './components/ui/image-preview/image-previ
 import { TypeTransportSignComponent } from './components/ui/type-transport-sign/type-transport-sign.component';
 import { FieldViewItemComponent } from './components/common/field-view-item/field-view-item.component';
 import { MeasurementPipe } from './pipes/measurement.pipe';
+import {TransportFormPageComponent} from "./pages/transport-form-page/transport-form-page.component";
 
 @NgModule({
   declarations: [
@@ -57,7 +57,7 @@ import { MeasurementPipe } from './pipes/measurement.pipe';
     NotificationComponent,
     DropdownComponent,
     AbbreviationNamePipe,
-    AddTransportPageComponent,
+    TransportFormPageComponent,
     PreloaderComponent,
     GridItemComponent,
     GridItemsComponent,

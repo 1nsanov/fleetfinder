@@ -10,9 +10,9 @@ export class CargoTransportGetListRequestDto {
     sortDesc: boolean = false;
     filter : TransportFilter<CargoType> = new TransportFilter<CargoType>();
 }
-export class CargoTransportGetListResponseDto {
-    Items : CargoTransportItem[] = [];
-    TotalCount : number = 0;
+export interface CargoTransportGetListResponseDto {
+    Items : CargoTransportItem[];
+    TotalCount : number;
 }
 
 

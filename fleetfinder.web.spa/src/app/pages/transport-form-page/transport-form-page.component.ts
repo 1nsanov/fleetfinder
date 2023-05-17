@@ -35,11 +35,11 @@ import {PriceForm} from "../../models/interfaces/transport/price-form.model";
 import {BodyForm} from "../../models/interfaces/transport/body-form.model";
 
 @Component({
-  selector: 'app-add-transport-page',
-  templateUrl: './add-transport-page.component.html',
-  styleUrls: ['./add-transport-page.component.scss']
+  selector: 'app-transport-form-page',
+  templateUrl: './transport-form-page.component.html',
+  styleUrls: ['./transport-form-page.component.scss']
 })
-export class AddTransportPageComponent implements OnInit{
+export class TransportFormPageComponent implements OnInit{
   RegionItems = getRegionItems();
   ExperienceWorkItems = getExperienceWorkItems();
   PaymentMethodItems = getPaymentMethodItems();
@@ -54,7 +54,6 @@ export class AddTransportPageComponent implements OnInit{
   currentType: TransportType | null = null;
   currentTypeImg : string | null = null;
 
-  cargoTransport : CargoTransportPostRequestDto = new CargoTransportPostRequestDto();
   form: FormGroup<CargoTransportForm>;
   isLoadPost = false;
 
@@ -88,9 +87,10 @@ export class AddTransportPageComponent implements OnInit{
 
   postTransport(){
     this.formMarkAsTouched();
-    if (this.form.valid){
+    if (this.form.valid) {
       this.isLoadPost = true;
-      this.cargoTransportApiService.post(this.cargoTransport).pipe(
+      const request = this.form.value as CargoTransportPostRequestDto;
+      this.cargoTransportApiService.post(request).pipe(
         catchError((error: HttpErrorResponse) => {
           let errorMessages = error.error.errors;
           const errorArray = Object.values(errorMessages).flat();
@@ -136,20 +136,20 @@ export class AddTransportPageComponent implements OnInit{
 
   initFormBuilder(){
     this.form = this.formBuilder.group<CargoTransportForm>({
-      Title: new FormControl<string | null>('', Validators.required),
+      Title: new FormControl<string | null>(null, Validators.required),
       Region: new FormControl<Region | null>(null, Validators.required),
       Type: new FormControl<CargoType | null>(null, Validators.required),
-      Brand: new FormControl<string | null>(''),
-      YearIssue: new FormControl<string | null>(''),
-      ExperienceWork: new FormControl<ExperienceWork | null>(null, Validators.required),
+      Brand: new FormControl<string | null>(null),
+      YearIssue: new FormControl<string | null>(null),
+      ExperienceWork: new FormControl<ExperienceWork | null>(null),
       PaymentMethod: new FormControl<PaymentMethod | null>(null),
       PaymentOrder: new FormControl<PaymentOrder | null>(null),
-      Description: new FormControl<string | null>('', Validators.required),
-      TransportationKind: new FormControl<CargoTransportationKind | null>(null, Validators.required),
+      Description: new FormControl<string | null>(null),
+      TransportationKind: new FormControl<CargoTransportationKind | null>(null),
       Price: this.formBuilder.group<PriceForm>({
-        PerHour: new FormControl<string | null>(''),
-        PerShift: new FormControl<string | null>(''),
-        PerKm: new FormControl<string | null>('')
+        PerHour: new FormControl<string | null>(null),
+        PerShift: new FormControl<string | null>(null),
+        PerKm: new FormControl<string | null>(null)
       }),
       Body: this.formBuilder.group<BodyForm>({
         LoadCapacity: new FormControl<number | null>(null),

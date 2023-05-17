@@ -6,6 +6,6 @@ import {Component, Input} from '@angular/core';
   styleUrls: ['./field-view-item.component.scss']
 })
 export class FieldViewItemComponent {
-  @Input() title: string = ""
-  @Input() text: string | null;
+  @Input() title: string | null;
+  @Input() text: string | number | null = null;
 }

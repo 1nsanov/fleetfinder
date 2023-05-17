@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class MeasurementPipe implements PipeTransform {
 
-  transform(value: string|null, code: string): string|null {
+  transform(value: string | number |null, code: string): string|null {
     return value ? `${value} ${code}` : null;
   }
 }

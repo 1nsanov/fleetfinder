@@ -1,4 +1,4 @@
-﻿export class Contact {
+﻿export interface Contact {
   Title: string;
   PhoneViber: string | null;
   PhoneTelegram: string | null;

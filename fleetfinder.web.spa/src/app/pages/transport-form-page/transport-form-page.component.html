@@ -76,7 +76,7 @@
   </div>
   <div class="flex pb-5 pt-5">
     <div class="flex-grow">
-      <app-input label="Описание" [(value)]="cargoTransport.Description"
+      <app-input label="Описание"
                  [value]="form.get('Description')?.value ?? ''"
                  (valueChange)="form.get('Description')?.setValue($event)"
                  [error]="form.get('Description')?.invalid && form.get('Description')?.touched ? 'Поле обязательно к заполнению' : ''"/>

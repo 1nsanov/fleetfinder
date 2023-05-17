@@ -7,11 +7,9 @@ import {AboutPageComponent} from "./pages/about-page/about-page.component";
 import {namesRoute} from "./data/names-route";
 import {SignUpPageComponent} from "./pages/sign-up-page/sign-up-page.component";
 import {SignInPageComponent} from "./pages/sign-in-page/sign-in-page.component";
-import {AddTransportPageComponent} from "./pages/add-transport-page/add-transport-page.component";
 import {TransportCargoViewPageComponent} from "./pages/transport-cargo-view-page/transport-cargo-view-page.component";
 import {AuthGuard} from "./guards/auth.guard";
-
-
+import {TransportFormPageComponent} from "./pages/transport-form-page/transport-form-page.component";
 
 const routes: Routes = [
   { path: namesRoute.home, component:  LandingPageComponent},
@@ -20,7 +18,7 @@ const routes: Routes = [
   { path: namesRoute.about, component: AboutPageComponent },
   { path: namesRoute.signUp, component: SignUpPageComponent },
   { path: namesRoute.signIn, component: SignInPageComponent },
-  { path: namesRoute.addTransport, component: AddTransportPageComponent, canActivate: [AuthGuard] },
+  { path: namesRoute.transportAdd, component: TransportFormPageComponent, canActivate: [AuthGuard] },
   { path: `${namesRoute.transportCargoView}/:id`, component: TransportCargoViewPageComponent }
 ]
 

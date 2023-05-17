@@ -3,16 +3,16 @@ import { CargoTransportationKind } from "src/app/models/enums/transport/cargo/ca
 import { ExperienceWork } from "src/app/models/enums/transport/experience-work.enum";
 import {CargoType} from "../../../models/enums/transport/cargo/cargo-type.enum";
 import { Contact } from "../Contact";
-import { Price } from "./Price";
+import {PriceModel} from "./PriceModel";
 
-export class CargoTransportItem {
+export interface CargoTransportItem {
   Id: number;
   Title: string;
   Region: Region;
   Brand: string | null;
   YearIssue: string | null;
   ExperienceWork: ExperienceWork | null;
-  Price: Price;
+  Price: PriceModel;
   Description: string | null;
   Type: CargoType;
   TransportationKind: CargoTransportationKind | null;

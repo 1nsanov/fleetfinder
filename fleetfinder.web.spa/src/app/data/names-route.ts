@@ -5,6 +5,7 @@
   about: "about",
   signUp: "sign-up",
   signIn: "sign-in",
-  addTransport: "add-transport",
+  transportAdd: "transport/add",
+  transportEdit: "transport/edit",
   transportCargoView: "transport/cargo/view"
 }
