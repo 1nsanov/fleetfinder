@@ -9,7 +9,7 @@ import {TimeoutService} from "../../../services/timeout.service";
   styleUrls: ['./input.component.scss']
 })
 export class InputComponent implements OnInit{
-  @Input() value: string
+  @Input() value: string;
   @Input() placeholder: string = ""
   @Input() label: string;
   @Input() icon: string;

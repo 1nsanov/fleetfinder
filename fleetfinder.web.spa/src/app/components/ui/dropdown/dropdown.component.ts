@@ -11,6 +11,7 @@ export class DropdownComponent implements OnInit{
   @Input() placeholder: string = ""
   @Input() items: Array<DropdownItemModel<any>> = [];
   @Input() defaultValue: DropdownItemModel<any> | null = null;
+  @Input() error: string = "";
 
   @Output() select = new EventEmitter<DropdownItemModel<any>>();
   current: DropdownItemModel<any> | null = null;

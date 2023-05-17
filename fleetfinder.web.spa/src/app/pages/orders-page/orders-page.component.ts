@@ -14,6 +14,7 @@ interface ItemGroup {
 })
 export class OrdersPageComponent implements OnInit{
   cargoTransportForm: FormGroup<ItemGroup>;
+  nf: { [K in keyof any]: string };
   constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit() {
@@ -21,6 +22,7 @@ export class OrdersPageComponent implements OnInit{
       Title: new FormControl<string| null>('', Validators.required),
       Brand: new FormControl<string| null>('')
     });
+    this.nf = this.getPropertyNames(this.cargoTransportForm.value)
   }
 
   onSubmit(){
@@ -32,5 +34,13 @@ export class OrdersPageComponent implements OnInit{
       const test = this.cargoTransportForm.value as CargoTransportItem;
       console.log(test)
     }
+  }
+
+  getPropertyNames<T>(obj: T): { [K in keyof T]: string } {
+    const propertyNames: { [K in keyof T]: string } = {} as { [K in keyof T]: string };
+    for (const key in obj) {
+      propertyNames[key as keyof T] = key;
+    }
+    return propertyNames;
   }
 }

@@ -9,7 +9,7 @@ export interface SignUpModel {
   Organization:  AbstractControl<string | null>;
 }
 
- export interface FullName{
+export interface FullName{
   First: AbstractControl<string | null>;
   Second:  AbstractControl<string | null>;
   Surname:  AbstractControl<string | null>;

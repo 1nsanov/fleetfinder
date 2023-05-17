@@ -2,9 +2,9 @@
   <div class="border-block flex gap-10 pb-5">
     <div class="flex-grow">
       <app-input label="Заголовок"
-                 [value]="cargoTransportForm.get('Title')?.value ?? ''"
-                 (valueChange)="cargoTransportForm.get('Title')?.setValue($event)"
-                 [error]="cargoTransportForm.get('Title')?.invalid && cargoTransportForm.get('Title')?.touched ? 'Заголовок обязателен' : ''">
+                 [value]="cargoTransportForm.get(nf.Title)?.value ?? ''"
+                 (valueChange)="cargoTransportForm.get(nf.Title)?.setValue($event)"
+                 [error]="cargoTransportForm.get(nf.Title)?.invalid && cargoTransportForm.get(nf.Title)?.touched ? 'Заголовок обязателен' : ''">
       </app-input>
     </div>
     <div class="flex-grow">
