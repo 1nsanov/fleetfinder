@@ -7,6 +7,7 @@ import { PaymentMethod } from "../../enums/transport/payment-method.enum";
 import { PaymentOrder } from "../../enums/transport/payment-order.enum";
 
 export interface CargoTransportForm {
+  Id: AbstractControl<number | null>;
   Title: AbstractControl<string | null>;
   Region: AbstractControl<Region | null>;
   Brand: AbstractControl<string | null>;

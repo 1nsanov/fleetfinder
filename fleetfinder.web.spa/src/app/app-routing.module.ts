@@ -19,6 +19,7 @@ const routes: Routes = [
   { path: namesRoute.signUp, component: SignUpPageComponent },
   { path: namesRoute.signIn, component: SignInPageComponent },
   { path: namesRoute.transportAdd, component: TransportFormPageComponent, canActivate: [AuthGuard] },
+  { path: `${namesRoute.transportEdit}/:id`, component: TransportFormPageComponent, canActivate: [AuthGuard] },
   { path: `${namesRoute.transportCargoView}/:id`, component: TransportCargoViewPageComponent }
 ]
 

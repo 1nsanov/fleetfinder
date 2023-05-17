@@ -78,7 +78,7 @@
     </div>
     <div *ngIf="isMyTransport" class="footer flex gap-10 mt-8">
       <div class="flex-grow">
-        <app-button theme="yellow">
+        <app-button theme="yellow" (click)="routeEdit()">
           Редактировать
         </app-button>
       </div>

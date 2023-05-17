@@ -5,6 +5,7 @@ import {ResponseIdModel} from "../Common/ResponseIdModel";
 import {CargoTransportPostRequestDto} from "./post.models";
 import {CargoTransportGetListRequestDto, CargoTransportGetListResponseDto} from "./get-list.models";
 import {CargoTransportGetResponse} from "./get.models";
+import {CargoTransportPutRequestDto} from "./put.model";
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,10 @@ export class CargoTransportApiService {
   }
 
   post(request: CargoTransportPostRequestDto) {
+    return this.http.post<ResponseIdModel>(this.url, request);
+  }
+
+  put(request: CargoTransportPutRequestDto) {
     return this.http.post<ResponseIdModel>(this.url, request);
   }
 

@@ -1,7 +1,7 @@
 ﻿import {AbstractControl} from "@angular/forms";
 
 export interface PriceForm{
-  PerHour: AbstractControl<string | null>;
-  PerShift: AbstractControl<string | null>;
-  PerKm: AbstractControl<string | null>;
+  PerHour: AbstractControl<number | null>;
+  PerShift: AbstractControl<number | null>;
+  PerKm: AbstractControl<number | null>;
 }

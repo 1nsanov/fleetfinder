@@ -1,92 +1,95 @@
 <h2 class="title-page">
-  Добавление транспорта
+  {{mode == 'Add' ? 'Добавление транспорта' : 'Редактирование траноспорта'}}
 </h2>
 
-<div class="main-block">
-  <div class="border-block flex gap-10 pb-5">
-    <div class="flex-grow">
-      <app-input label="Заголовок"
-                 [value]="form.get('Title')?.value ?? ''"
-                 (valueChange)="form.get('Title')?.setValue($event)"
-                 [error]="form.get('Title')?.invalid && form.get('Title')?.touched ? 'Поле обязательно к заполнению' : ''"
-      />
+<app-preloader [load]="!form">
+  <div *ngIf="form" class="main-block">
+    <div class="border-block flex gap-10 pb-5">
+      <div class="flex-grow">
+        <app-input label="Заголовок"
+                   [value]="form.get('Title')?.value ?? ''"
+                   (valueChange)="form.get('Title')?.setValue($event)"
+                   [error]="form.get('Title')?.invalid && form.get('Title')?.touched ? 'Поле обязательно к заполнению' : ''"
+        />
+      </div>
+      <div class="flex-grow">
+        <app-dropdown label="Регион" [items]="RegionItems" (select)="onSelectRegion($event)"
+                      [defaultValue]="defaultRegion"
+                      [error]="form.get('Region')?.invalid && form.get('Region')?.touched ? 'Поле обязательно к заполнению' : ''"/>
+      </div>
     </div>
-    <div class="flex-grow">
-      <app-dropdown label="Регион" [items]="RegionItems" (select)="onSelectRegion($event)"
-                    [error]="form.get('Region')?.invalid && form.get('Region')?.touched ? 'Поле обязательно к заполнению' : ''"/>
-    </div>
-  </div>
-  <div class="border-block flex gap-10 pb-5 mt-10">
-    <div class="image-block relative">
-      <app-image-preview/>
-      <app-type-transport-sign (click)="modalService.open()"
-                               [type]="currentType"
-                               [image]="currentTypeImg"/>
-    </div>
-    <div *ngIf="currentType === TransportType.Cargo" class="input-block flex flex-col gap-5">
-      <app-input label="Марка"
-                 [value]="form.get('Brand')?.value ?? ''"
-                 (valueChange)="form.get('Brand')?.setValue($event)"/>
-      <app-dropdown label="Год выпуска" placeholder="гггг." [items]="YearsItems" (select)="onSelectYearsItems($event)"/>
-      <app-dropdown label="Вид перевозок" [items]="CargoTransportationKindItems" (select)="onSelectTransportationKind($event)"
-                    [error]="form.get('TransportationKind')?.invalid && form.get('TransportationKind')?.touched ? 'Поле обязательно к заполнению' : ''"/>
-      <div>
-        <label>Кузов</label>
-        <div class="grid grid-cols-2 gap-5 mb-5">
-          <app-input type="number" label="Длина" placeholder="м."
-                     [value]="form.get('Body.Length')?.value ?? ''"
-                     (valueChange)="form.get('Body.Length')?.setValue($event)"/>
-          <app-input type="number" label="Ширина" placeholder="м."
-                     [value]="form.get('Body.Width')?.value ?? ''"
-                     (valueChange)="form.get('Body.Width')?.setValue($event)"/>
-          <app-input type="number" label="Высота" placeholder="м."
-                     [value]="form.get('Body.Height')?.value ?? ''"
-                     (valueChange)="form.get('Body.Height')?.setValue($event)"/>
-          <app-input type="number" label="Объем" placeholder="м/куб."
-                     [value]="form.get('Body.Volume')?.value ?? ''"
-                     (valueChange)="form.get('Body.Volume')?.setValue($event)"/>
-        </div>
-        <div class="grid grid-cols-1 gap-5">
-          <app-input type="number" label="Грузоподъемность" placeholder="т."
-                     [value]="form.get('Body.LoadCapacity')?.value ?? ''"
-                     (valueChange)="form.get('Body.LoadCapacity')?.setValue($event)"/>
-          <app-dropdown label="Вид" [items]="CargoBodyKindItems" (select)="onSelectCargoBodyKind($event)"/>
+    <div class="border-block flex gap-10 pb-5 mt-10">
+      <div class="image-block relative">
+        <app-image-preview/>
+        <app-type-transport-sign (click)="modalService.open()"
+                                 [type]="currentType"
+                                 [image]="currentTypeImg"/>
+      </div>
+      <div *ngIf="currentType === TransportType.Cargo" class="input-block flex flex-col gap-5">
+        <app-input label="Марка"
+                   [value]="form.get('Brand')?.value ?? ''"
+                   (valueChange)="form.get('Brand')?.setValue($event)"/>
+        <app-dropdown label="Год выпуска" placeholder="гггг." [items]="YearsItems" (select)="onSelectYearsItems($event)" [defaultValue]="defaultYearIssue"/>
+        <app-dropdown label="Вид перевозок" [items]="CargoTransportationKindItems" (select)="onSelectTransportationKind($event)" [defaultValue]="defaultCargoTransportationKind"
+                      [error]="form.get('TransportationKind')?.invalid && form.get('TransportationKind')?.touched ? 'Поле обязательно к заполнению' : ''"/>
+        <div>
+          <label>Кузов</label>
+          <div class="grid grid-cols-2 gap-5 mb-5">
+            <app-input type="number" label="Длина" placeholder="м."
+                       [value]="form.get('Body.Length')?.value ?? ''"
+                       (valueChange)="form.get('Body.Length')?.setValue($event)"/>
+            <app-input type="number" label="Ширина" placeholder="м."
+                       [value]="form.get('Body.Width')?.value ?? ''"
+                       (valueChange)="form.get('Body.Width')?.setValue($event)"/>
+            <app-input type="number" label="Высота" placeholder="м."
+                       [value]="form.get('Body.Height')?.value ?? ''"
+                       (valueChange)="form.get('Body.Height')?.setValue($event)"/>
+            <app-input type="number" label="Объем" placeholder="м/куб."
+                       [value]="form.get('Body.Volume')?.value ?? ''"
+                       (valueChange)="form.get('Body.Volume')?.setValue($event)"/>
+          </div>
+          <div class="grid grid-cols-1 gap-5">
+            <app-input type="number" label="Грузоподъемность" placeholder="т."
+                       [value]="form.get('Body.LoadCapacity')?.value ?? ''"
+                       (valueChange)="form.get('Body.LoadCapacity')?.setValue($event)"/>
+            <app-dropdown label="Вид" [items]="CargoBodyKindItems" (select)="onSelectCargoBodyKind($event)" [defaultValue]="defaultCargoBodyKind"/>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="border-block flex gap-10 pb-5 pt-5">
-    <div class="flex flex-grow flex-col gap-5">
-      <app-input type="number" label="Цена за час" placeholder="Руб."
-                 [value]="form.get('Price.PerHour')?.value ?? ''"
-                 (valueChange)="form.get('Price.PerHour')?.setValue($event)"/>
-      <app-input type="number" label="Цена за смену" placeholder="Руб."
-                 [value]="form.get('Price.PerShift')?.value ?? ''"
-                 (valueChange)="form.get('Price.PerShift')?.setValue($event)"/>
-      <app-input type="number" label="Цена за км" placeholder="Руб."
-                 [value]="form.get('Price.PerKm')?.value ?? ''"
-                 (valueChange)="form.get('Price.PerKm')?.setValue($event)"/>
+    <div class="border-block flex gap-10 pb-5 pt-5">
+      <div class="flex flex-grow flex-col gap-5">
+        <app-input type="number" label="Цена за час" placeholder="Руб."
+                   [value]="form.get('Price.PerHour')?.value ?? ''"
+                   (valueChange)="form.get('Price.PerHour')?.setValue($event)"/>
+        <app-input type="number" label="Цена за смену" placeholder="Руб."
+                   [value]="form.get('Price.PerShift')?.value ?? ''"
+                   (valueChange)="form.get('Price.PerShift')?.setValue($event)"/>
+        <app-input type="number" label="Цена за км" placeholder="Руб."
+                   [value]="form.get('Price.PerKm')?.value ?? ''"
+                   (valueChange)="form.get('Price.PerKm')?.setValue($event)"/>
+      </div>
+      <div class="flex flex-grow flex-col gap-5">
+        <app-dropdown label="Опыт работы" [items]="ExperienceWorkItems" (select)="onSelectExperienceWork($event)" [defaultValue]="defaultExperienceWork"
+                      [error]="form.get('ExperienceWork')?.invalid && form.get('ExperienceWork')?.touched ? 'Поле обязательно к заполнению' : ''"/>
+        <app-dropdown label="Способ оплаты" [items]="PaymentMethodItems" (select)="onSelectPaymentMethod($event)" [defaultValue]="defaultPaymentMethod"/>
+        <app-dropdown label="Порядок оплаты" [items]="PaymentOrderItems" (select)="onSelectPaymentOrder($event)" [defaultValue]="defaultPaymentOrder"/>
+      </div>
     </div>
-    <div class="flex flex-grow flex-col gap-5">
-      <app-dropdown label="Опыт работы" [items]="ExperienceWorkItems" (select)="onSelectExperienceWork($event)"
-                    [error]="form.get('ExperienceWork')?.invalid && form.get('ExperienceWork')?.touched ? 'Поле обязательно к заполнению' : ''"/>
-      <app-dropdown label="Способ оплаты" [items]="PaymentMethodItems" (select)="onSelectPaymentMethod($event)"/>
-      <app-dropdown label="Порядок оплаты" [items]="PaymentOrderItems" (select)="onSelectPaymentOrder($event)"/>
+    <div class="flex pb-5 pt-5">
+      <div class="flex-grow">
+        <app-input label="Описание"
+                   [value]="form.get('Description')?.value ?? ''"
+                   (valueChange)="form.get('Description')?.setValue($event)"
+                   [error]="form.get('Description')?.invalid && form.get('Description')?.touched ? 'Поле обязательно к заполнению' : ''"/>
+      </div>
     </div>
   </div>
-  <div class="flex pb-5 pt-5">
-    <div class="flex-grow">
-      <app-input label="Описание"
-                 [value]="form.get('Description')?.value ?? ''"
-                 (valueChange)="form.get('Description')?.setValue($event)"
-                 [error]="form.get('Description')?.invalid && form.get('Description')?.touched ? 'Поле обязательно к заполнению' : ''"/>
-    </div>
-  </div>
-</div>
+</app-preloader>
 
 <div class="footer-block flex gap-10">
   <div class="flex-grow">
-    <app-button theme="green" [isLoad]="isLoadPost" (click)="postTransport()">
+    <app-button theme="green" [isLoad]="isLoad" (click)="postTransport()">
       Сохранить
     </app-button>
   </div>

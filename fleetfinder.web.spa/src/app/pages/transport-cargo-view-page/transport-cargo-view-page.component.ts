@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {CargoTransportApiService} from "../../api/CargoTransport/cargo-transport.api.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {catchError, throwError} from "rxjs";
@@ -11,6 +11,7 @@ import {TransportService} from "../../services/transport.service";
 import {CargoType} from "../../models/enums/transport/cargo/cargo-type.enum";
 import {cargoItems} from "../../data/transport/cargo-items";
 import {IdentifyApiService} from "../../api/Identify/identify.api.service";
+import {namesRoute} from "../../data/names-route";
 
 @Component({
   selector: 'app-transport-cargo-view-page',
@@ -29,6 +30,7 @@ export class TransportCargoViewPageComponent implements OnInit{
   transport: CargoTransportGetResponse | null;
   bodyLengthWidthHeight: string = "";
   constructor(private route: ActivatedRoute,
+              private router: Router,
               private cargoTransportService: CargoTransportApiService,
               private identifyService: IdentifyApiService,
               private transportService: TransportService) {
@@ -55,10 +57,14 @@ export class TransportCargoViewPageComponent implements OnInit{
     });
   }
 
-  setTypeImg(type: CargoType){
+  setTypeImg(type: CargoType) {
     const itemBox = cargoItems.find(item => item.Value === type);
     if (itemBox)
       this.typeImg = this.transportService.getTypeImg(itemBox, TransportType.Cargo);
+  }
+
+  routeEdit() {
+    this.router.navigate([namesRoute.transportEdit, this.transport?.Id]);
   }
 
   get isMyTransport() {
