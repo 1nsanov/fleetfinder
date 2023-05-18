@@ -21,7 +21,7 @@ export class CargoTransportApiService {
   }
 
   put(request: CargoTransportPutRequestDto) {
-    return this.http.post<ResponseIdModel>(this.url, request);
+    return this.http.put<ResponseIdModel>(this.url, request);
   }
 
   getList(request : CargoTransportGetListRequestDto) {

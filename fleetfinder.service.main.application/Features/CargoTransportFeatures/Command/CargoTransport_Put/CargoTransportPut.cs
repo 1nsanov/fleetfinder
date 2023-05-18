@@ -32,6 +32,7 @@ public static partial class CargoTransportPut
             entity.Images = updated.Images;
             _commandDbContext.Entry(entity).CurrentValues.SetValues(updated);
             _commandDbContext.Entry(entity).Property(ct => ct.UserId).IsModified = false;
+            _commandDbContext.Entry(entity).Property(ct => ct.CreateDate).IsModified = false;
             
             await _commandDbContext.SaveChangesAsync(cancellationToken);
 

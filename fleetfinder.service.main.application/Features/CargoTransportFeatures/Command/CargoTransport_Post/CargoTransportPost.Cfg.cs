@@ -32,11 +32,6 @@ public static partial class CargoTransportPost
                     .WithMessage("Поле '{PropertyName}' не может превышать {MaxLength} символов.")
                     .Unless(x => string.IsNullOrEmpty(x.Brand));
 
-                RuleFor(x => x.YearIssue)
-                    .NotEmpty()
-                    .WithName("Год выпуска").WithMessage("Поле '{PropertyName}' должно быть пустым.")
-                    .Unless(x => x is null);
-
                 RuleFor(x => x.Price)
                     .SetValidator(new PriceDtoValidator());
 
