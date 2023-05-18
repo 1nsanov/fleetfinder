@@ -1,4 +1,4 @@
-import {Component, HostListener} from '@angular/core';
+import {Component, HostListener, Input} from '@angular/core';
 
 @Component({
   selector: 'app-filter-wrapper',
@@ -6,8 +6,9 @@ import {Component, HostListener} from '@angular/core';
   styleUrls: ['./filter-wrapper.component.scss']
 })
 export class FilterWrapperComponent {
-  isOpenPopup = false;
+  @Input() count: number = 0;
 
+  isOpenPopup = false;
 
   openPopup() {
     this.isOpenPopup = !this.isOpenPopup;

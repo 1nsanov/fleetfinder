@@ -1,3 +1,20 @@
+.circle-count{
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  background: var(--red);
+  color: var(--white);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 9px;
+  font-weight: 600;
+  position: absolute;
+  right: -4px;
+  top: -4px;
+}
+
 .popup-wrapper{
   position: absolute;
   top: 53px;

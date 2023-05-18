@@ -1,5 +1,8 @@
 <div class="relative">
   <app-button iconPath="../../../../assets/icons/icon-filter.svg" (click)="openPopup()" />
+  <div *ngIf="count > 0" class="circle-count">
+    <p>{{count}}</p>
+  </div>
 
   <div [ngClass]="{'animation': !isOpenPopup}" class="popup-wrapper i-c-p">
     <div class="popup-triangle-bg">

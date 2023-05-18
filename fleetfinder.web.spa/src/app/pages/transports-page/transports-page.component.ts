@@ -47,8 +47,13 @@ export class TransportsPageComponent implements OnInit{
   totalCount : number = 0;
   isLoad = false;
   pagination = { page: 1, pageSize: 6, total: 0 };
-  valueDropdownTypeFilter = this.CargoTypeItems.find(x => x.Value == null) ?? null;
-  valueDropdownRegionFilter = this.RegionItems.find(x => x.Value == null) ?? null;
+
+  valueDropdowns = {
+    TypeFilter: this.CargoTypeItems.find(x => x.Value == null) ?? null,
+    RegionFilter: this.RegionItems.find(x => x.Value == null) ?? null,
+  }
+  // valueDropdownTypeFilter = this.CargoTypeItems.find(x => x.Value == null) ?? null;
+  // valueDropdownRegionFilter = this.RegionItems.find(x => x.Value == null) ?? null;
 
   constructor(private cargoTransportApiService: CargoTransportApiService,
               private identifyService: IdentifyApiService,
@@ -75,8 +80,8 @@ export class TransportsPageComponent implements OnInit{
       this.transportService.saveListRequest(this.router.url, request);
     }
     else {
-      this.valueDropdownTypeFilter = this.CargoTypeItems.find(x => x.Value == request?.filter.TypeFilter) ?? null;
-      this.valueDropdownRegionFilter = this.RegionItems.find(x => x.Value == request?.filter.RegionFilter) ?? null;
+      this.valueDropdowns.TypeFilter = this.CargoTypeItems.find(x => x.Value == request?.filter.TypeFilter) ?? null;
+      this.valueDropdowns.RegionFilter = this.RegionItems.find(x => x.Value == request?.filter.RegionFilter) ?? null;
       this.sortParameter = this.sortParameters.find(x => x.Value.Parameter == request?.sortParameter && x.Value.ByDesc == request?.sortDesc) ?? this.sortParameters[0];
       this.searchTerm = request.filter.TitleFilter ?? '';
     }
@@ -85,7 +90,8 @@ export class TransportsPageComponent implements OnInit{
         this.items = res.Items;
         this.totalCount = res.TotalCount;
         this.pagination = {...this.pagination, total: this.totalCount}
-        if (isPreloadRequest) this.pagination = {...this.pagination, page: Math.ceil(this.pagination.total / this.pagination.pageSize)}
+        if (isPreloadRequest && this.pagination.total > 0)
+          this.pagination = {...this.pagination, page: Math.ceil(this.pagination.total / this.pagination.pageSize)}
         this.isLoad = false;
       });
   }
@@ -110,19 +116,19 @@ export class TransportsPageComponent implements OnInit{
   }
   onSelectTypeFilter(item: DropdownItemModel<CargoType>){
     this.filterCargoForm.TypeFilter = item.Value;
-    this.valueDropdownTypeFilter = item;
+    this.valueDropdowns.TypeFilter = item;
     this.getListRequest();
   }
   onSelectRegionFilter(item: DropdownItemModel<Region>){
     this.filterCargoForm.RegionFilter = item.Value;
-    this.valueDropdownRegionFilter = item;
+    this.valueDropdowns.RegionFilter = item;
     this.getListRequest();
   }
 
   resetFilter() {
-    this.valueDropdownTypeFilter = this.CargoTypeItems.find(x => x.Value == null) ?? null;
+    this.valueDropdowns.TypeFilter = this.CargoTypeItems.find(x => x.Value == null) ?? null;
     this.filterCargoForm.TypeFilter = null;
-    this.valueDropdownRegionFilter = this.RegionItems.find(x => x.Value == null) ?? null;
+    this.valueDropdowns.RegionFilter = this.RegionItems.find(x => x.Value == null) ?? null;
     this.filterCargoForm.RegionFilter = null;
     this.getListRequest();
   }
@@ -132,5 +138,9 @@ export class TransportsPageComponent implements OnInit{
       this.filterCargoForm.UserFilter = this.identifyService.claims?.Id ?? null;
       this.titlePage = "Ваш транспорт";
     }
+  }
+
+  get countFilters() : number {
+    return Object.values(this.valueDropdowns).filter(x => x?.Value != null).length;
   }
 }
