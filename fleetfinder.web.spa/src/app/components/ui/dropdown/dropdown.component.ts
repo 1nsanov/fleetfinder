@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {DropdownItemModel} from "../../../models/dropdown-item.model";
 
 @Component({
@@ -6,7 +6,7 @@ import {DropdownItemModel} from "../../../models/dropdown-item.model";
   templateUrl: './dropdown.component.html',
   styleUrls: ['./dropdown.component.scss']
 })
-export class DropdownComponent implements OnInit{
+export class DropdownComponent implements OnInit, OnChanges{
   @Input() label: string;
   @Input() placeholder: string = ""
   @Input() items: Array<DropdownItemModel<any>> = [];
@@ -23,6 +23,10 @@ export class DropdownComponent implements OnInit{
       this.current = this.defaultValue;
       this.valuePreview = this.defaultValue.Preview;
     }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes)
   }
 
   onFocus(){

@@ -16,10 +16,14 @@ import {CargoBodyKind} from "../models/enums/transport/cargo/cargo-body-kind.enu
 import {CargoTransportationKind} from "../models/enums/transport/cargo/cargo-transportation-kind";
 import {CargoType} from "../models/enums/transport/cargo/cargo-type.enum";
 
-export function getRegionItems() {
-  return Object.values(Region).map(x =>
+export function getRegionItems(isFilter: boolean = false) {
+  const array : DropdownItemModel<Region | null>[] = [];
+  if (isFilter) array.push(new DropdownItemModel<Region | null>(null, "Любой"))
+  const values = Object.values(Region).map(x =>
     new DropdownItemModel<Region>(x as Region, RegionConst[x as Region])
   );
+  array.push(...values);
+  return array;
 }
 
 export function getExperienceWorkItems() {
@@ -58,10 +62,14 @@ export function getCargoTransportationKindItems() {
   );
 }
 
-export function getCargoTypeItems() {
-  return Object.values(CargoType).map(x =>
+export function getCargoTypeItems(isFilter: boolean = false) {
+  const array : DropdownItemModel<CargoType | null>[] = [];
+  if (isFilter) array.push(new DropdownItemModel<CargoType | null>(null, "Любой"))
+  const values = Object.values(CargoType).map(x =>
     new DropdownItemModel<CargoType>(x as CargoType, CargoTypeConst[x as CargoType])
   );
+  array.push(...values);
+  return array;
 }
 
 export function getYearItems(){

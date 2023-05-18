@@ -37,6 +37,7 @@ import { TypeTransportSignComponent } from './components/ui/type-transport-sign/
 import { FieldViewItemComponent } from './components/common/field-view-item/field-view-item.component';
 import { MeasurementPipe } from './pipes/measurement.pipe';
 import {TransportFormPageComponent} from "./pages/transport-form-page/transport-form-page.component";
+import { FilterWrapperComponent } from './components/common/filter-wrapper/filter-wrapper.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ import {TransportFormPageComponent} from "./pages/transport-form-page/transport-
     TypeTransportSignComponent,
     FieldViewItemComponent,
     MeasurementPipe,
+    FilterWrapperComponent,
   ],
     imports: [
         BrowserModule, HttpClientModule, AppRoutingModule, NgOptimizedImage, ReactiveFormsModule,

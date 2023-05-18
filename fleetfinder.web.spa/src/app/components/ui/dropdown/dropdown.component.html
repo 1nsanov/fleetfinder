@@ -1,4 +1,4 @@
-<div class="dropdown-wrapper">
+<div class="dropdown-wrapper i-c-p">
   <div class="relative w-full cursor-pointer">
     <app-input [label]="label"
                [placeholder]="placeholder"
@@ -20,7 +20,7 @@
       <div class="scroll-wrapper">
         <div *ngFor="let item of items"
              [ngClass]="{'active': current != null && item.Value === current.Value}"
-             class="item"
+             class="item i-c-p"
              (click)="selectItem(item)">
           {{item.Preview}}
         </div>

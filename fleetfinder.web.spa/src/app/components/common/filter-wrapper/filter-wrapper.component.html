@@ -1,0 +1,13 @@
+<div class="relative">
+  <app-button iconPath="../../../../assets/icons/icon-filter.svg" (click)="openPopup()" />
+
+  <div [ngClass]="{'animation': !isOpenPopup}" class="popup-wrapper i-c-p">
+    <div class="popup-triangle-bg">
+      <div class="popup-triangle"></div>
+    </div>
+    <div class="popup-content i-c-p">
+      <ng-content/>
+    </div>
+  </div>
+</div>
+

@@ -47,13 +47,13 @@
       </div>
     </nav>
     <div class="user relative">
-      <div class="ignore-close-popup flex items-center" (click)="openPopup()">
-        <div class="avatar ignore-close-popup"
+      <div class="i-c-p flex items-center" (click)="openPopup()">
+        <div class="avatar i-c-p"
              [ngClass]="{'signin' : identifyService.isAuthenticated(), 'unsignin' : !identifyService.isAuthenticated()}"
         >
-          <img class="ignore-close-popup" src="../../../assets/icons/icon-avatar.svg" alt="">
+          <img class="i-c-p" src="../../../assets/icons/icon-avatar.svg" alt="">
         </div>
-        <img class="ignore-close-popup cursor-pointer" [ngClass]="{'rotate': isOpenPopup}" src="../../../assets/icons/icon-arrow-dropdown-2.svg" alt="">
+        <img class="i-c-p cursor-pointer" [ngClass]="{'rotate': isOpenPopup}" src="../../../assets/icons/icon-arrow-dropdown-2.svg" alt="">
       </div>
 
       <div [ngClass]="{'animation': !isOpenPopup}" class="popup-wrapper">

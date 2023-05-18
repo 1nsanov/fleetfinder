@@ -8,6 +8,10 @@ import {CargoTransportGetListRequestDto} from "../../api/CargoTransport/get-list
 import {IGridItem} from "../../models/interfaces/grid-item.interface";
 import {FormControl} from "@angular/forms";
 import {PaginationValue} from "../../components/ui/pagination/pagination.component";
+import {getCargoTypeItems, getRegionItems} from "../../data/dropdown-items.data";
+import {CargoType} from "../../models/enums/transport/cargo/cargo-type.enum";
+import {TransportFilter} from "../../models/transport/transport-filter.model";
+import {Region} from "../../models/enums/common/region.enum";
 
 @Component({
   selector: 'app-transports-page',
@@ -30,6 +34,7 @@ export class TransportsPageComponent implements OnInit{
     { Value: new SortModel(CargoTransportSortParameter.PricePerKm, true) , Preview: "По цене  за километр (у)" },
   ]
   sortParameter = this.sortParameters[0];
+  filterCargoForm : TransportFilter<CargoType> = new TransportFilter()
 
   items : IGridItem[] | null = null;
   totalCount : number = 0;
@@ -37,6 +42,10 @@ export class TransportsPageComponent implements OnInit{
   isLoad = false;
 
   public pagination = { page: 1, pageSize: 6, total: 0 };
+
+
+  CargoTypeItems = getCargoTypeItems(true);
+  RegionItems = getRegionItems(true);
 
   constructor(private cargoTransportApiService: CargoTransportApiService) {
   }
@@ -50,6 +59,7 @@ export class TransportsPageComponent implements OnInit{
     this.items = null;
     let request = new CargoTransportGetListRequestDto();
     request.skipCount = this.pagination.page * this.pagination.pageSize - this.pagination.pageSize;
+    request.filter = this.filterCargoForm;
     request.filter.TitleFilter = this.searchTerm;
     request.sortParameter = this.sortParameter.Value.Parameter;
     request.sortDesc = this.sortParameter.Value.ByDesc;
@@ -79,5 +89,24 @@ export class TransportsPageComponent implements OnInit{
 
   setDefaultPagination(){
     this.pagination = { page: 1, pageSize: 6, total: 0 };
+  }
+
+  defaultTypeFilter = this.CargoTypeItems.find(x => x.Value == null) ?? null;
+  defaultRegionFilter = this.RegionItems.find(x => x.Value == null) ?? null;
+  onSelectTypeFilter(item: DropdownItemModel<CargoType>){
+    this.filterCargoForm.TypeFilter = item.Value;
+    this.getListRequest();
+  }
+  onSelectRegionFilter(item: DropdownItemModel<Region>){
+    this.filterCargoForm.RegionFilter = item.Value;
+    this.getListRequest();
+  }
+
+  resetFilter() {
+    this.defaultTypeFilter = this.CargoTypeItems.find(x => x.Value == null) ?? null;
+    this.filterCargoForm.TypeFilter = null;
+    this.defaultRegionFilter = this.RegionItems.find(x => x.Value == null) ?? null;
+    this.filterCargoForm.RegionFilter = null;
+    this.getListRequest();
   }
 }

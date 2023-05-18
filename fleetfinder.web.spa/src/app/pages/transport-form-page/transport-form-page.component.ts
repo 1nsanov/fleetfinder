@@ -223,7 +223,7 @@ export class TransportFormPageComponent implements OnInit{
     if (item) this.onloadExist(item);
   }
 
-  defaultRegion: DropdownItemModel<Region> | null;
+  defaultRegion: DropdownItemModel<any> | null;
   defaultExperienceWork: DropdownItemModel<ExperienceWork> | null;
   defaultPaymentMethod: DropdownItemModel<PaymentMethod> | null;
   defaultPaymentOrder: DropdownItemModel<PaymentOrder> | null;

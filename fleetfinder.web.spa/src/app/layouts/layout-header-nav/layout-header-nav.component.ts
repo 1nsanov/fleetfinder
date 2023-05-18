@@ -187,7 +187,7 @@ export class LayoutHeaderNavComponent implements OnInit, OnDestroy{
 
   @HostListener('document:click', ['$event.target'])
   onClick(target: any) {
-    if (target.classList.contains('ignore-close-popup')) return;
+    if (target.classList.contains('i-c-p')) return;
     const isInsidePopup = target.closest('.popup-container');
     const isNavItem = target.classList.contains('__item-nav');
     if (!isInsidePopup || isNavItem) {

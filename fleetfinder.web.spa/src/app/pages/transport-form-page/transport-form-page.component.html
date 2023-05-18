@@ -5,7 +5,7 @@
   </h2>
   <div class="btn-controls flex gap-4" style="margin-bottom: 20px;">
     <app-button theme="green" [iconPath]="mode == 'Add' ? '../../../assets/icons/icon-discket-add.svg' : '../../../assets/icons/icon-discket-edit.svg'" [isLoad]="isLoad" (click)="save()"/>
-    <app-button theme="yellow" iconPath="../../../assets/icons/icon-cancel-rounded.svg" (click)="cancel()" [disabled]="isLoad"/>
+    <app-button theme="light-blue" iconPath="../../../assets/icons/icon-cancel-rounded.svg" (click)="cancel()" [disabled]="isLoad"/>
     <app-button *ngIf="mode == 'Edit'" theme="red" iconPath="../../../assets/icons/icon-waste-basket.svg" [isLoad]="isLoad" (click)="delete()"/>
   </div>
 </div>
