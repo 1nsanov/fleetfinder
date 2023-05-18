@@ -1,4 +1,5 @@
 ﻿using fleetfinder.service.main.application.Common.Exceptions;
+using fleetfinder.service.main.domain.Enums.Common;
 using Microsoft.EntityFrameworkCore;
 
 namespace fleetfinder.service.main.application.Features.CargoTransportFeatures.Command.CargoTransport_Delete;
@@ -23,7 +24,7 @@ public static partial class CargoTransportDelete
                              .FirstOrDefaultAsync(ct => ct.Id == request.Id && ct.UserId == request.UserId, cancellationToken) 
                          ?? throw new EntityNotFoundException(request.Id);
 
-            _commandDbContext.CargoTransport.Remove(entity);
+            entity.State = State.Archived;
             await _commandDbContext.SaveChangesAsync(cancellationToken);
 
             return new ResponseDto(true);

@@ -87,7 +87,7 @@ export class TransportFormPageComponent implements OnInit{
     });
   }
 
-  saveTransport(){
+  save(){
     this.formMarkAsTouched();
     if (this.form.valid) {
       if(this.mode === ModeForm.Add)
@@ -97,6 +97,21 @@ export class TransportFormPageComponent implements OnInit{
     }
     else
       this.validType();
+  }
+
+  delete(){
+    if (this.form.value.Id){
+      this.isLoad = true;
+      this.cargoTransportApiService.delete(this.form.value.Id).subscribe(() => {
+        this.isLoad = false;
+        this.router.navigate([`/${namesRoute.transports}`])
+          .then(() => {
+            this.notification.notify('Транспорт успешно удален')
+          })
+      })
+    }
+    else
+      this.notification.error('Ошибка удаления!')
   }
 
   addTransport(){

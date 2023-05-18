@@ -6,6 +6,8 @@ import {CargoTransportPostRequestDto} from "./post.models";
 import {CargoTransportGetListRequestDto, CargoTransportGetListResponseDto} from "./get-list.models";
 import {CargoTransportGetResponse} from "./get.models";
 import {CargoTransportPutRequestDto} from "./put.model";
+import {Observable} from "rxjs";
+import {ResponseSuccessModel} from "../Common/ResponseSuccessModel";
 
 @Injectable({
   providedIn: 'root'
@@ -16,15 +18,21 @@ export class CargoTransportApiService {
   constructor(private http: HttpClient) {
   }
 
-  post(request: CargoTransportPostRequestDto) {
+  public post(request: CargoTransportPostRequestDto) : Observable<ResponseIdModel> {
     return this.http.post<ResponseIdModel>(this.url, request);
   }
 
-  put(request: CargoTransportPutRequestDto) {
+  public put(request: CargoTransportPutRequestDto) : Observable<ResponseIdModel>  {
     return this.http.put<ResponseIdModel>(this.url, request);
   }
 
-  getList(request : CargoTransportGetListRequestDto) {
+  public get(id: number)  : Observable<CargoTransportGetResponse> {
+    const params = new HttpParams()
+      .set('id', id.toString());
+    return this.http.get<CargoTransportGetResponse>(this.url, { params: params });
+  }
+
+  public getList(request : CargoTransportGetListRequestDto)  : Observable<CargoTransportGetListResponseDto>  {
     const params = new HttpParams()
       .set('pageSize', request.pageSize)
       .set('skipCount', request.skipCount)
@@ -37,9 +45,9 @@ export class CargoTransportApiService {
     return this.http.get<CargoTransportGetListResponseDto>(this.url + "/list", {params: params});
   }
 
-  get(id: number){
+  public delete(id : number) : Observable<ResponseSuccessModel> {
     const params = new HttpParams()
       .set('id', id.toString());
-    return this.http.get<CargoTransportGetResponse>(this.url, { params: params });
+    return this.http.delete<ResponseSuccessModel>(this.url, { params: params });
   }
 }
