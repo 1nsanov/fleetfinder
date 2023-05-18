@@ -91,21 +91,23 @@ export class TransportsPageComponent implements OnInit{
     this.pagination = { page: 1, pageSize: 6, total: 0 };
   }
 
-  defaultTypeFilter = this.CargoTypeItems.find(x => x.Value == null) ?? null;
-  defaultRegionFilter = this.RegionItems.find(x => x.Value == null) ?? null;
+  valueDropdownTypeFilter = this.CargoTypeItems.find(x => x.Value == null) ?? null;
+  valueDropdownRegionFilter = this.RegionItems.find(x => x.Value == null) ?? null;
   onSelectTypeFilter(item: DropdownItemModel<CargoType>){
     this.filterCargoForm.TypeFilter = item.Value;
+    this.valueDropdownTypeFilter = item;
     this.getListRequest();
   }
   onSelectRegionFilter(item: DropdownItemModel<Region>){
     this.filterCargoForm.RegionFilter = item.Value;
+    this.valueDropdownRegionFilter = item;
     this.getListRequest();
   }
 
   resetFilter() {
-    this.defaultTypeFilter = this.CargoTypeItems.find(x => x.Value == null) ?? null;
+    this.valueDropdownTypeFilter = this.CargoTypeItems.find(x => x.Value == null) ?? null;
     this.filterCargoForm.TypeFilter = null;
-    this.defaultRegionFilter = this.RegionItems.find(x => x.Value == null) ?? null;
+    this.valueDropdownRegionFilter = this.RegionItems.find(x => x.Value == null) ?? null;
     this.filterCargoForm.RegionFilter = null;
     this.getListRequest();
   }

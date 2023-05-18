@@ -10,19 +10,19 @@ export class DropdownComponent implements OnInit, OnChanges{
   @Input() label: string;
   @Input() placeholder: string = ""
   @Input() items: Array<DropdownItemModel<any>> = [];
-  @Input() defaultValue: DropdownItemModel<any> | null = null;
+  @Input() value: DropdownItemModel<any> | null = null;
   @Input() error: string = "";
 
   @Output() select = new EventEmitter<DropdownItemModel<any>>();
-  current: DropdownItemModel<any> | null = null;
-  valuePreview: string = "";
+  // current: DropdownItemModel<any> | null = null;
+  // valuePreview: string = "";
   isOpened: boolean = false;
 
   ngOnInit(): void {
-    if (this.defaultValue) {
-      this.current = this.defaultValue;
-      this.valuePreview = this.defaultValue.Preview;
-    }
+    // if (this.value) {
+    //   this.current = this.value;
+    //   this.valuePreview = this.value.Preview;
+    // }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -38,8 +38,8 @@ export class DropdownComponent implements OnInit, OnChanges{
   }
 
   selectItem(item : DropdownItemModel<any>){
-    this.current = item;
-    this.valuePreview = item.Preview;
-    this.select.emit(this.current)
+    this.value = item;
+    // this.valuePreview = item.Preview;
+    this.select.emit(this.value);
   }
 }

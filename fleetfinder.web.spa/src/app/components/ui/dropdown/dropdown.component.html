@@ -2,7 +2,7 @@
   <div class="relative w-full cursor-pointer">
     <app-input [label]="label"
                [placeholder]="placeholder"
-               [(value)]="valuePreview"
+               [value]="value ? value.Preview : ''"
                [vDropdown]="true"
                [error]="error"
                (focus)="onFocus()"
@@ -19,7 +19,7 @@
     <div class="values">
       <div class="scroll-wrapper">
         <div *ngFor="let item of items"
-             [ngClass]="{'active': current != null && item.Value === current.Value}"
+             [ngClass]="{'active': value != null && item.Value === value.Value}"
              class="item i-c-p"
              (click)="selectItem(item)">
           {{item.Preview}}

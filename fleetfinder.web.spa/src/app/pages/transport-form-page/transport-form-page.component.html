@@ -22,7 +22,7 @@
       </div>
       <div class="flex-grow">
         <app-dropdown label="Регион" [items]="RegionItems" (select)="onSelectRegion($event)"
-                      [defaultValue]="defaultRegion"
+                      [value]="defaultRegion"
                       [error]="form.get('Region')?.invalid && form.get('Region')?.touched ? 'Поле обязательно к заполнению' : ''"/>
       </div>
     </div>
@@ -37,8 +37,8 @@
         <app-input label="Марка"
                    [value]="form.get('Brand')?.value ?? ''"
                    (valueChange)="form.get('Brand')?.setValue($event)"/>
-        <app-dropdown label="Год выпуска" placeholder="гггг." [items]="YearsItems" (select)="onSelectYearsItems($event)" [defaultValue]="defaultYearIssue"/>
-        <app-dropdown label="Вид перевозок" [items]="CargoTransportationKindItems" (select)="onSelectTransportationKind($event)" [defaultValue]="defaultCargoTransportationKind"
+        <app-dropdown label="Год выпуска" placeholder="гггг." [items]="YearsItems" (select)="onSelectYearsItems($event)" [value]="defaultYearIssue"/>
+        <app-dropdown label="Вид перевозок" [items]="CargoTransportationKindItems" (select)="onSelectTransportationKind($event)" [value]="defaultCargoTransportationKind"
                       [error]="form.get('TransportationKind')?.invalid && form.get('TransportationKind')?.touched ? 'Поле обязательно к заполнению' : ''"/>
         <div>
           <label>Кузов</label>
@@ -60,7 +60,7 @@
             <app-input type="number" label="Грузоподъемность" placeholder="т."
                        [value]="form.get('Body.LoadCapacity')?.value ?? ''"
                        (valueChange)="form.get('Body.LoadCapacity')?.setValue($event)"/>
-            <app-dropdown label="Вид" [items]="CargoBodyKindItems" (select)="onSelectCargoBodyKind($event)" [defaultValue]="defaultCargoBodyKind"/>
+            <app-dropdown label="Вид" [items]="CargoBodyKindItems" (select)="onSelectCargoBodyKind($event)" [value]="defaultCargoBodyKind"/>
           </div>
         </div>
       </div>
@@ -78,10 +78,10 @@
                    (valueChange)="form.get('Price.PerKm')?.setValue($event)"/>
       </div>
       <div class="flex flex-grow flex-col gap-5">
-        <app-dropdown label="Опыт работы" [items]="ExperienceWorkItems" (select)="onSelectExperienceWork($event)" [defaultValue]="defaultExperienceWork"
+        <app-dropdown label="Опыт работы" [items]="ExperienceWorkItems" (select)="onSelectExperienceWork($event)" [value]="defaultExperienceWork"
                       [error]="form.get('ExperienceWork')?.invalid && form.get('ExperienceWork')?.touched ? 'Поле обязательно к заполнению' : ''"/>
-        <app-dropdown label="Способ оплаты" [items]="PaymentMethodItems" (select)="onSelectPaymentMethod($event)" [defaultValue]="defaultPaymentMethod"/>
-        <app-dropdown label="Порядок оплаты" [items]="PaymentOrderItems" (select)="onSelectPaymentOrder($event)" [defaultValue]="defaultPaymentOrder"/>
+        <app-dropdown label="Способ оплаты" [items]="PaymentMethodItems" (select)="onSelectPaymentMethod($event)" [value]="defaultPaymentMethod"/>
+        <app-dropdown label="Порядок оплаты" [items]="PaymentOrderItems" (select)="onSelectPaymentOrder($event)" [value]="defaultPaymentOrder"/>
       </div>
     </div>
     <div class="flex pt-5">

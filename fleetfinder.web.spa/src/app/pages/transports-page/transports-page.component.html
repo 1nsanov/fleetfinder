@@ -28,7 +28,7 @@
   <div class="flex-grow" style="max-width: 250px">
     <app-dropdown label="Сортировка"
                   [items]="sortParameters"
-                  [defaultValue]="sortParameter"
+                  [value]="sortParameter"
                   (select)="onSelect($event)"/>
   </div>
 
@@ -41,8 +41,8 @@
         </svg>
       </div>
       <div class="filters flex flex-col gap-4 i-c-p">
-        <app-dropdown label="Тип" [items]="CargoTypeItems" [defaultValue]="defaultTypeFilter" (select)="onSelectTypeFilter($event)"/>
-        <app-dropdown label="Регион" [items]="RegionItems" [defaultValue]="defaultRegionFilter" (select)="onSelectRegionFilter($event)"/>
+        <app-dropdown label="Тип" [items]="CargoTypeItems" [value]="valueDropdownTypeFilter" (select)="onSelectTypeFilter($event)"/>
+        <app-dropdown label="Регион" [items]="RegionItems" [value]="valueDropdownRegionFilter" (select)="onSelectRegionFilter($event)"/>
       </div>
     </div>
   </app-filter-wrapper>
