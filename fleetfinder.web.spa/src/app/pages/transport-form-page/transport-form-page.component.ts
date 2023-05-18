@@ -87,7 +87,7 @@ export class TransportFormPageComponent implements OnInit{
     });
   }
 
-  postTransport(){
+  saveTransport(){
     this.formMarkAsTouched();
     if (this.form.valid) {
       if(this.mode === ModeForm.Add)

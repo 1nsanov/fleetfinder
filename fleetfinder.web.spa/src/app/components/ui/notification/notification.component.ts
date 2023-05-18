@@ -45,4 +45,9 @@ export class NotificationComponent implements OnInit{
     clearTimeout(this.setTimeoutIsAnimationFadeOut);
     clearTimeout(this.setTimeoutHidden);
   }
+
+  onClose(){
+    this.isAnimationFadeOut = true;
+    setTimeout(() => this.hidden(), 300)
+  }
 }

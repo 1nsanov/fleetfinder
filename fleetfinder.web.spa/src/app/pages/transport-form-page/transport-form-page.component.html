@@ -1,6 +1,14 @@
-<h2 class="title-page">
-  {{mode == 'Add' ? 'Добавление транспорта' : 'Редактирование траноспорта'}}
-</h2>
+
+<div class="title-header flex justify-between w-full">
+  <h2 class="title-page">
+    {{mode == 'Add' ? 'Добавление транспорта' : 'Редактирование транспорта'}}
+  </h2>
+  <div class="btn-controls flex gap-4" style="margin-bottom: 20px;">
+    <app-button theme="green" [iconPath]="mode == 'Add' ? '../../../assets/icons/icon-discket-add.svg' : '../../../assets/icons/icon-discket-edit.svg'" [isLoad]="isLoad" (click)="saveTransport()"/>
+    <app-button theme="yellow" iconPath="../../../assets/icons/icon-cancel-rounded.svg" (click)="cancel()"/>
+    <app-button *ngIf="mode == 'Edit'" theme="red" iconPath="../../../assets/icons/icon-waste-basket.svg"/>
+  </div>
+</div>
 
 <app-preloader [load]="!form">
   <div *ngIf="form" class="main-block">
@@ -76,7 +84,7 @@
         <app-dropdown label="Порядок оплаты" [items]="PaymentOrderItems" (select)="onSelectPaymentOrder($event)" [defaultValue]="defaultPaymentOrder"/>
       </div>
     </div>
-    <div class="flex pb-5 pt-5">
+    <div class="flex pt-5">
       <div class="flex-grow">
         <app-input label="Описание"
                    [value]="form.get('Description')?.value ?? ''"
@@ -86,19 +94,6 @@
     </div>
   </div>
 </app-preloader>
-
-<div class="footer-block flex gap-10">
-  <div class="flex-grow">
-    <app-button theme="green" [isLoad]="isLoad" (click)="postTransport()">
-      Сохранить
-    </app-button>
-  </div>
-  <div class="flex-grow">
-    <app-button theme="red" (click)="cancel()">
-      Отмена
-    </app-button>
-  </div>
-</div>
 
 <app-modal-window *ngIf="modalService.isVisible$ | async" title="Выбор типа">
   <div class="flex flex-col">
