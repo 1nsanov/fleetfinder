@@ -23,7 +23,7 @@ export class RedirectInterceptor implements HttpInterceptor {
         error => {
           if (error.status === 401) {
             this.identifyService.writeToken(null);
-            this.router.navigate([`/${namesRoute.home}`]).then(() => window.location.reload());
+            this.router.navigate([`/${namesRoute.HOME}`]).then(() => window.location.reload());
           }
         }
       )

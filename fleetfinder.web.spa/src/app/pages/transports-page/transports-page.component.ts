@@ -12,6 +12,9 @@ import {getCargoTypeItems, getRegionItems} from "../../data/dropdown-items.data"
 import {CargoType} from "../../models/enums/transport/cargo/cargo-type.enum";
 import {TransportFilter} from "../../models/transport/transport-filter.model";
 import {Region} from "../../models/enums/common/region.enum";
+import {IdentifyApiService} from "../../api/Identify/identify.api.service";
+import {ActivatedRoute, Router} from "@angular/router";
+import {TransportService} from "../../services/transport.service";
 
 @Component({
   selector: 'app-transports-page',
@@ -19,10 +22,10 @@ import {Region} from "../../models/enums/common/region.enum";
   styleUrls: ['./transports-page.component.scss']
 })
 export class TransportsPageComponent implements OnInit{
+  //#region Consts
   currentTab: TransportType = TransportType.Cargo;
   tab = TransportType;
-
-  searchTerm: string = "";
+  TransportType = TransportType;
   sortParameters: DropdownItemModel<SortModel<CargoTransportSortParameter>>[] = [
     { Value: new SortModel(CargoTransportSortParameter.Default, false), Preview: "По дате создания (в)" },
     { Value: new SortModel(CargoTransportSortParameter.Default, true), Preview: "По дате создания (у)" },
@@ -33,41 +36,56 @@ export class TransportsPageComponent implements OnInit{
     { Value: new SortModel(CargoTransportSortParameter.PricePerKm, false) , Preview: "По цене  за километр (в)" },
     { Value: new SortModel(CargoTransportSortParameter.PricePerKm, true) , Preview: "По цене  за километр (у)" },
   ]
-  sortParameter = this.sortParameters[0];
-  filterCargoForm : TransportFilter<CargoType> = new TransportFilter()
-
-  items : IGridItem[] | null = null;
-  totalCount : number = 0;
-  TransportType = TransportType;
-  isLoad = false;
-
-  public pagination = { page: 1, pageSize: 6, total: 0 };
-
-
   CargoTypeItems = getCargoTypeItems(true);
   RegionItems = getRegionItems(true);
+  //#endregion
+  searchTerm: string = "";
+  titlePage = "Поиск транспорта";
+  sortParameter = this.sortParameters[0];
+  filterCargoForm : TransportFilter<CargoType> = new TransportFilter()
+  items : IGridItem[] | null = null;
+  totalCount : number = 0;
+  isLoad = false;
+  pagination = { page: 1, pageSize: 6, total: 0 };
+  valueDropdownTypeFilter = this.CargoTypeItems.find(x => x.Value == null) ?? null;
+  valueDropdownRegionFilter = this.RegionItems.find(x => x.Value == null) ?? null;
 
-  constructor(private cargoTransportApiService: CargoTransportApiService) {
+  constructor(private cargoTransportApiService: CargoTransportApiService,
+              private identifyService: IdentifyApiService,
+              private router: Router,
+              private transportService: TransportService) {
   }
 
   ngOnInit(): void {
-    this.getListRequest();
+    this.setUserFilter();
+    this.getListRequest(this.transportService.getListRequest(this.router.url));
   }
 
-  getListRequest(){
+  getListRequest(request : CargoTransportGetListRequestDto | null = null){
     this.isLoad = true;
     this.items = null;
-    let request = new CargoTransportGetListRequestDto();
-    request.skipCount = this.pagination.page * this.pagination.pageSize - this.pagination.pageSize;
-    request.filter = this.filterCargoForm;
-    request.filter.TitleFilter = this.searchTerm;
-    request.sortParameter = this.sortParameter.Value.Parameter;
-    request.sortDesc = this.sortParameter.Value.ByDesc;
+    const isPreloadRequest = request != null;
+    if (request == null){
+      request = new CargoTransportGetListRequestDto;
+      request.skipCount = this.pagination.page * this.pagination.pageSize - this.pagination.pageSize;
+      request.filter = this.filterCargoForm;
+      request.filter.TitleFilter = this.searchTerm;
+      request.sortParameter = this.sortParameter.Value.Parameter;
+      request.sortDesc = this.sortParameter.Value.ByDesc;
+      this.transportService.saveListRequest(this.router.url, request);
+    }
+    else {
+      this.valueDropdownTypeFilter = this.CargoTypeItems.find(x => x.Value == request?.filter.TypeFilter) ?? null;
+      this.valueDropdownRegionFilter = this.RegionItems.find(x => x.Value == request?.filter.RegionFilter) ?? null;
+      this.sortParameter = this.sortParameters.find(x => x.Value.Parameter == request?.sortParameter && x.Value.ByDesc == request?.sortDesc) ?? this.sortParameters[0];
+      this.searchTerm = request.filter.TitleFilter ?? '';
+    }
     this.cargoTransportApiService.getList(request)
       .subscribe(res => {
         this.items = res.Items;
         this.totalCount = res.TotalCount;
         this.pagination = {...this.pagination, total: this.totalCount}
+        if (isPreloadRequest) this.pagination = {...this.pagination, page: Math.ceil(this.pagination.total / this.pagination.pageSize)}
         this.isLoad = false;
       });
   }
@@ -90,9 +108,6 @@ export class TransportsPageComponent implements OnInit{
   setDefaultPagination(){
     this.pagination = { page: 1, pageSize: 6, total: 0 };
   }
-
-  valueDropdownTypeFilter = this.CargoTypeItems.find(x => x.Value == null) ?? null;
-  valueDropdownRegionFilter = this.RegionItems.find(x => x.Value == null) ?? null;
   onSelectTypeFilter(item: DropdownItemModel<CargoType>){
     this.filterCargoForm.TypeFilter = item.Value;
     this.valueDropdownTypeFilter = item;
@@ -110,5 +125,12 @@ export class TransportsPageComponent implements OnInit{
     this.valueDropdownRegionFilter = this.RegionItems.find(x => x.Value == null) ?? null;
     this.filterCargoForm.RegionFilter = null;
     this.getListRequest();
+  }
+
+  setUserFilter() {
+    if (this.router.url.includes('my')){
+      this.filterCargoForm.UserFilter = this.identifyService.claims?.Id ?? null;
+      this.titlePage = "Ваш транспорт";
+    }
   }
 }

@@ -33,7 +33,7 @@ export class SignInPageComponent implements OnInit{
       const request = this.form.value as ISignInRequest;
       this.identifyService.signIn(request).subscribe(() => {
         this.isLoad = false;
-        this.router.navigate([`/${namesRoute.home}`]).then(() => window.location.reload())
+        this.router.navigate([`/${namesRoute.HOME}`]).then(() => window.location.reload())
       }, error => {
         this.isLoad = false
         this.notification.error("Не верный логин и/или пароль.")

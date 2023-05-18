@@ -1,11 +1,12 @@
 ﻿export const namesRoute = {
-  home : "",
-  transports : "transports",
-  orders: "orders",
-  about: "about",
-  signUp: "sign-up",
-  signIn: "sign-in",
-  transportAdd: "transport/add",
-  transportEdit: "transport/edit",
-  transportCargoView: "transport/cargo/view"
+  HOME : "",
+  TRANSPORTS : "transports",
+  TRANSPORTS_MY : "transports/my",
+  ORDERS: "orders",
+  ABOUT: "about",
+  SIGN_UP: "sign-up",
+  SIGN_IN: "sign-in",
+  TRANSPORT_ADD: "transport/add",
+  TRANSPORT_EDIT: "transport/edit",
+  TRANSPORT_CARGO_VIEW: "transport/cargo/view"
 }

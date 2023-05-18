@@ -77,14 +77,14 @@
           <div class="__item-nav">
             <p>Ваш профиль</p>
           </div>
-          <div class="__item-nav">
+          <div class="__item-nav" (click)="routeTo(namesRoute.TRANSPORTS_MY)">
             <p>Ваш транспорт</p>
           </div>
           <div class="__item-nav">
             <p>Ваши заказы</p>
           </div>
           <div class="separate"></div>
-          <div class="__item-nav" (click)="routeTo(namesRoute.transportAdd)" >
+          <div class="__item-nav" (click)="routeTo(namesRoute.TRANSPORT_ADD)" >
             <p>Добавить транспорт</p>
           </div>
           <div class="__item-nav">

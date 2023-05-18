@@ -6,6 +6,7 @@ import {namesRoute} from "../../data/names-route";
 import {ModalService} from "../../services/modal.service";
 import {IdentifyApiService} from "../../api/Identify/identify.api.service";
 import {TimeoutService} from "../../services/timeout.service";
+import {TransportService} from "../../services/transport.service";
 
 @Component({
   selector: 'app-layout-header-nav',
@@ -106,13 +107,13 @@ export class LayoutHeaderNavComponent implements OnInit, OnDestroy{
 
   getNavTabByRoute(){
     switch (this.currentRoute){
-      case `/${namesRoute.home}`:
+      case `/${namesRoute.HOME}`:
         return NavTab.Home;
-      case `/${namesRoute.transports}`:
+      case `/${namesRoute.TRANSPORTS}`:
         return NavTab.Transports;
-      case `/${namesRoute.orders}`:
+      case `/${namesRoute.ORDERS}`:
         return NavTab.Orders
-      case `/${namesRoute.about}`:
+      case `/${namesRoute.ABOUT}`:
         return NavTab.About
       default:
         return NavTab.None
@@ -147,19 +148,19 @@ export class LayoutHeaderNavComponent implements OnInit, OnDestroy{
   }
 
   get isSign(){
-    return this.currentRoute === `/${namesRoute.signUp}` || this.currentRoute === `/${namesRoute.signIn}`
+    return this.currentRoute === `/${namesRoute.SIGN_UP}` || this.currentRoute === `/${namesRoute.SIGN_IN}`
   }
 
   //---Route---
 
   routePageSignUp() {
     this.swapNavTab(NavTab.None)
-    this.router.navigate([`/${namesRoute.signUp}`]);
+    this.router.navigate([`/${namesRoute.SIGN_UP}`]);
   }
 
   routePageSignIn () {
     this.swapNavTab(NavTab.None)
-    this.router.navigate([`/${namesRoute.signIn}`]);
+    this.router.navigate([`/${namesRoute.SIGN_IN}`]);
   }
 
   routeTo(path : string) {

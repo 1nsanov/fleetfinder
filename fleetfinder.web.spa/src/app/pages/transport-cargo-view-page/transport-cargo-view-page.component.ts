@@ -64,7 +64,7 @@ export class TransportCargoViewPageComponent implements OnInit{
   }
 
   routeEdit() {
-    this.router.navigate([namesRoute.transportEdit, this.transport?.Id]);
+    this.router.navigate([namesRoute.TRANSPORT_EDIT, this.transport?.Id]);
   }
 
   get isMyTransport() {

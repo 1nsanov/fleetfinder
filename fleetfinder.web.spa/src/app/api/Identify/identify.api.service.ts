@@ -51,11 +51,11 @@ export class IdentifyApiService {
     return this.http.get<boolean>(this.url + "logout").pipe(
       tap(() => {
         this.writeToken(null)
-        this.router.navigate([`/${namesRoute.home}`]).then(() => window.location.reload())
+        this.router.navigate([`/${namesRoute.HOME}`]).then(() => window.location.reload())
       }),
       catchError(error => {
         this.writeToken(null)
-        this.router.navigate([`/${namesRoute.home}`]).then(() => window.location.reload())
+        this.router.navigate([`/${namesRoute.HOME}`]).then(() => window.location.reload())
         return throwError(error)
       })
     );

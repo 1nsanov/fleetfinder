@@ -30,7 +30,7 @@ export class GridItemComponent {
   }
 
   onClick() {
-    this.router.navigate([namesRoute.transportCargoView, this.item.Id]);
+    this.router.navigate([namesRoute.TRANSPORT_CARGO_VIEW, this.item.Id]);
   }
 
   getTypeImg(item: any, type: TransportType){

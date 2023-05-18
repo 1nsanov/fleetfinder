@@ -65,7 +65,7 @@ export class SignUpPageComponent implements OnInit{
           return throwError(error);
         })
       ).subscribe(() => {
-        this.router.navigate([`/${namesRoute.home}`]).then(() => window.location.reload());
+        this.router.navigate([`/${namesRoute.HOME}`]).then(() => window.location.reload());
       });
     }
   }

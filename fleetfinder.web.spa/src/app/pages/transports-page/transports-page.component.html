@@ -1,4 +1,4 @@
-<h2 class="title-page">Поиск транспорта</h2>
+<h2 class="title-page">{{titlePage}}</h2>
 <div class="btn-tab-nav">
   <div class="__item cargo" (click)="changeTab(tab.Cargo)" [ngClass]="{'active' : currentTab === tab.Cargo}">
     <p>Грузовой</p>
@@ -20,7 +20,7 @@
     />
   </div>
   <app-button theme="yellow" (click)="getListRequest()">
-    Поиск
+    Найти
   </app-button>
 </div>
 

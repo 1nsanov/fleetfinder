@@ -12,15 +12,16 @@ import {AuthGuard} from "./guards/auth.guard";
 import {TransportFormPageComponent} from "./pages/transport-form-page/transport-form-page.component";
 
 const routes: Routes = [
-  { path: namesRoute.home, component:  LandingPageComponent},
-  { path: namesRoute.transports, component: TransportsPageComponent },
-  { path: namesRoute.orders, component: OrdersPageComponent },
-  { path: namesRoute.about, component: AboutPageComponent },
-  { path: namesRoute.signUp, component: SignUpPageComponent },
-  { path: namesRoute.signIn, component: SignInPageComponent },
-  { path: namesRoute.transportAdd, component: TransportFormPageComponent, canActivate: [AuthGuard] },
-  { path: `${namesRoute.transportEdit}/:id`, component: TransportFormPageComponent, canActivate: [AuthGuard] },
-  { path: `${namesRoute.transportCargoView}/:id`, component: TransportCargoViewPageComponent }
+  { path: namesRoute.HOME, component:  LandingPageComponent},
+  { path: namesRoute.TRANSPORTS, component: TransportsPageComponent },
+  { path: namesRoute.TRANSPORTS_MY, component: TransportsPageComponent, canActivate: [AuthGuard] },
+  { path: namesRoute.ORDERS, component: OrdersPageComponent },
+  { path: namesRoute.ABOUT, component: AboutPageComponent },
+  { path: namesRoute.SIGN_UP, component: SignUpPageComponent },
+  { path: namesRoute.SIGN_IN, component: SignInPageComponent },
+  { path: namesRoute.TRANSPORT_ADD, component: TransportFormPageComponent, canActivate: [AuthGuard] },
+  { path: `${namesRoute.TRANSPORT_EDIT}/:id`, component: TransportFormPageComponent, canActivate: [AuthGuard] },
+  { path: `${namesRoute.TRANSPORT_CARGO_VIEW}/:id`, component: TransportCargoViewPageComponent }
 ]
 
 @NgModule({

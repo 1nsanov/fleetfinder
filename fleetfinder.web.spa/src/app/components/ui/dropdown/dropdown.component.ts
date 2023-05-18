@@ -6,7 +6,7 @@ import {DropdownItemModel} from "../../../models/dropdown-item.model";
   templateUrl: './dropdown.component.html',
   styleUrls: ['./dropdown.component.scss']
 })
-export class DropdownComponent implements OnInit, OnChanges{
+export class DropdownComponent{
   @Input() label: string;
   @Input() placeholder: string = ""
   @Input() items: Array<DropdownItemModel<any>> = [];
@@ -14,20 +14,8 @@ export class DropdownComponent implements OnInit, OnChanges{
   @Input() error: string = "";
 
   @Output() select = new EventEmitter<DropdownItemModel<any>>();
-  // current: DropdownItemModel<any> | null = null;
-  // valuePreview: string = "";
+
   isOpened: boolean = false;
-
-  ngOnInit(): void {
-    // if (this.value) {
-    //   this.current = this.value;
-    //   this.valuePreview = this.value.Preview;
-    // }
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes)
-  }
 
   onFocus(){
     this.isOpened = true;
@@ -39,7 +27,6 @@ export class DropdownComponent implements OnInit, OnChanges{
 
   selectItem(item : DropdownItemModel<any>){
     this.value = item;
-    // this.valuePreview = item.Preview;
     this.select.emit(this.value);
   }
 }

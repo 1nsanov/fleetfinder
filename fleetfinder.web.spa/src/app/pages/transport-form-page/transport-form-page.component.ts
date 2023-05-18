@@ -38,6 +38,7 @@ import {BodyForm} from "../../models/interfaces/transport/body-form.model";
 import {ModeForm} from "../../models/enums/common/mode-form.enum";
 import {CargoTransportGetResponse} from "../../api/CargoTransport/get.models";
 import {CargoTransportPutRequestDto} from "../../api/CargoTransport/put.model";
+import {IdentifyApiService} from "../../api/Identify/identify.api.service";
 
 @Component({
   selector: 'app-transport-form-page',
@@ -45,7 +46,7 @@ import {CargoTransportPutRequestDto} from "../../api/CargoTransport/put.model";
   styleUrls: ['./transport-form-page.component.scss']
 })
 export class TransportFormPageComponent implements OnInit{
-  mode: ModeForm = ModeForm.Add;
+  //#region Consts/Items
   RegionItems = getRegionItems();
   ExperienceWorkItems = getExperienceWorkItems();
   PaymentMethodItems = getPaymentMethodItems();
@@ -57,14 +58,17 @@ export class TransportFormPageComponent implements OnInit{
   passenger = passengerItems;
   special = specialItems;
   TransportType = TransportType;
+  //#endregion
+
+  mode: ModeForm = ModeForm.Add;
   currentType: TransportType | null = null;
   currentTypeImg : string | null = null;
-
   form: FormGroup<CargoTransportForm>;
   isLoad = false;
 
   constructor(public modalService: ModalService,
               public cargoTransportApiService: CargoTransportApiService,
+              private identifyService: IdentifyApiService,
               private notification: NotificationService,
               private transportService: TransportService,
               private route: ActivatedRoute,
@@ -79,7 +83,12 @@ export class TransportFormPageComponent implements OnInit{
       this.mode = id ? ModeForm.Edit : ModeForm.Add;
       if (id) {
         this.cargoTransportApiService.get(parseInt(id)).subscribe((res) => {
-          this.initFormBuilder(res);
+          if (res.UserId === this.identifyService.claims?.Id)
+            this.initFormBuilder(res);
+          else
+            this.router.navigate([`/${namesRoute.TRANSPORTS}`]).then(() => {
+              this.notification.error('Ошибка в доступе. Вы не являетесь создателем данного транспорта')
+            });
         });
       }
       else
@@ -104,7 +113,7 @@ export class TransportFormPageComponent implements OnInit{
       this.isLoad = true;
       this.cargoTransportApiService.delete(this.form.value.Id).subscribe(() => {
         this.isLoad = false;
-        this.router.navigate([`/${namesRoute.transports}`])
+        this.router.navigate([`/${namesRoute.TRANSPORTS}`])
           .then(() => {
             this.notification.notify('Транспорт успешно удален')
           })
@@ -128,7 +137,7 @@ export class TransportFormPageComponent implements OnInit{
       })
     ).subscribe((res) => {
       this.notification.notify('Транспорт успешно добавлен')
-      this.router.navigate([namesRoute.transportCargoView, res.Id]);
+      this.router.navigate([namesRoute.TRANSPORT_CARGO_VIEW, res.Id]);
     });
   }
 
@@ -146,7 +155,7 @@ export class TransportFormPageComponent implements OnInit{
       })
     ).subscribe((res) => {
       this.notification.notify('Транспорт успешно обновлен')
-      this.router.navigate([namesRoute.transportCargoView, res.Id]);
+      this.router.navigate([namesRoute.TRANSPORT_CARGO_VIEW, res.Id]);
     });
   }
 
@@ -223,25 +232,28 @@ export class TransportFormPageComponent implements OnInit{
     if (item) this.onloadExist(item);
   }
 
-  defaultRegion: DropdownItemModel<any> | null;
-  defaultExperienceWork: DropdownItemModel<ExperienceWork> | null;
-  defaultPaymentMethod: DropdownItemModel<PaymentMethod> | null;
-  defaultPaymentOrder: DropdownItemModel<PaymentOrder> | null;
-  defaultCargoBodyKind: DropdownItemModel<CargoBodyKind> | null;
-  defaultCargoTransportationKind: DropdownItemModel<CargoTransportationKind> | null;
-  defaultYearIssue: DropdownItemModel<string> | null;
+  //#region valueDropdowns
+  valueDropdownRegion: DropdownItemModel<any> | null;
+  valueDropdownExperienceWork: DropdownItemModel<ExperienceWork> | null;
+  valueDropdownPaymentMethod: DropdownItemModel<PaymentMethod> | null;
+  valueDropdownPaymentOrder: DropdownItemModel<PaymentOrder> | null;
+  valueDropdownCargoBodyKind: DropdownItemModel<CargoBodyKind> | null;
+  valueDropdownCargoTransportationKind: DropdownItemModel<CargoTransportationKind> | null;
+  valueDropdownYearIssue: DropdownItemModel<string> | null;
   onloadExist(item: CargoTransportGetResponse){
     const infoBox = this.cargo.find(x => x.Value == item.Type);
     if (infoBox) this.onSelectTransportType(infoBox, TransportType.Cargo)
 
-    this.defaultRegion = this.RegionItems.find(x => x.Value === item.Region) ?? null;
-    this.defaultExperienceWork = this.ExperienceWorkItems.find(x => x.Value === item.ExperienceWork) ?? null;
-    this.defaultPaymentMethod = this.PaymentMethodItems.find(x => x.Value === item.PaymentMethod) ?? null;
-    this.defaultPaymentOrder = this.PaymentOrderItems.find(x => x.Value === item.PaymentOrder) ?? null;
-    this.defaultCargoBodyKind = this.CargoBodyKindItems.find(x => x.Value === item.Body.Kind) ?? null;
-    this.defaultCargoTransportationKind = this.CargoTransportationKindItems.find(x => x.Value === item.TransportationKind) ?? null;
-    this.defaultYearIssue = this.YearsItems.find(x => x.Value === item.YearIssue) ?? null;
+    this.valueDropdownRegion = this.RegionItems.find(x => x.Value === item.Region) ?? null;
+    this.valueDropdownExperienceWork = this.ExperienceWorkItems.find(x => x.Value === item.ExperienceWork) ?? null;
+    this.valueDropdownPaymentMethod = this.PaymentMethodItems.find(x => x.Value === item.PaymentMethod) ?? null;
+    this.valueDropdownPaymentOrder = this.PaymentOrderItems.find(x => x.Value === item.PaymentOrder) ?? null;
+    this.valueDropdownCargoBodyKind = this.CargoBodyKindItems.find(x => x.Value === item.Body.Kind) ?? null;
+    this.valueDropdownCargoTransportationKind = this.CargoTransportationKindItems.find(x => x.Value === item.TransportationKind) ?? null;
+    this.valueDropdownYearIssue = this.YearsItems.find(x => x.Value === item.YearIssue) ?? null;
   }
+
+  //#endregion
 
   formMarkAsTouched(){
     Object.values(this.form.controls).forEach(control => {

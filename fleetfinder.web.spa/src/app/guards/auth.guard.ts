@@ -16,7 +16,7 @@ export class AuthGuard implements CanActivate {
 
   canActivate(): boolean {
     if (!this.identifyService.isAuthenticated()){
-      this.router.navigate([`/${namesRoute.signIn}`])
+      this.router.navigate([`/${namesRoute.SIGN_IN}`])
         .then(() => this.notification.notify('Для доступа к этой странице необходимо выполнить вход в систему.'))
     }
 
