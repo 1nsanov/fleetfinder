@@ -128,11 +128,8 @@ export class TransportFormPageComponent implements OnInit{
     const request = this.form.value as CargoTransportPostRequestDto;
     this.cargoTransportApiService.post(request).pipe(
       catchError((error: HttpErrorResponse) => {
-        let errorMessages = error.error.errors;
-        const errorArray = Object.values(errorMessages).flat();
-        const errorString = errorArray.join('<br>');
-        this.notification.error(errorString);
         this.isLoad = false;
+        this.notification.errorFromHttp(error);
         return throwError(error);
       })
     ).subscribe((res) => {
@@ -146,11 +143,8 @@ export class TransportFormPageComponent implements OnInit{
     const request = this.form.value as CargoTransportPutRequestDto;
     this.cargoTransportApiService.put(request).pipe(
       catchError((error: HttpErrorResponse) => {
-        let errorMessages = error.error.errors;
-        const errorArray = Object.values(errorMessages).flat();
-        const errorString = errorArray.join('<br>');
-        this.notification.error(errorString);
         this.isLoad = false;
+        this.notification.errorFromHttp(error);
         return throwError(error);
       })
     ).subscribe((res) => {
