@@ -1,59 +1,67 @@
-.circle-count{
-  border-radius: 50%;
-  width: 15px;
-  height: 15px;
-  background: var(--red);
-  color: var(--white);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  font-size: 9px;
-  font-weight: 600;
-  position: absolute;
-  right: -4px;
-  top: -4px;
-}
-
-.popup-wrapper{
-  position: absolute;
-  top: 53px;
-  right: 0;
-  z-index: 15;
-  transition: var(--transition-base);
-  &.animation{
-    transform: translateY(-55%) scaleY(0);
-    opacity: 0;
+.filter-wrapper {
+  .button-filter:hover + .circle-count {
+    scale: 1.3;
   }
-  .popup-triangle-bg{
-    position: absolute;
-    padding: 1px;
-    background: var(--blue-light);
+  .circle-count{
+    border-radius: 50%;
     width: 15px;
     height: 15px;
-    border-radius: 3px 0 100% 0;
-    rotate: 45deg;
-    top: -7.4px;
-    right: 13px;
-    z-index: 17;
-    .popup-triangle{
-      position: relative;
-      background: var(--white);
+    background: var(--red);
+    color: var(--white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 9px;
+    font-weight: 600;
+    position: absolute;
+    right: -4px;
+    top: -4px;
+    transition: var(--transition-base);
+    cursor: pointer;
+  }
+
+  .popup-wrapper{
+    position: absolute;
+    top: 53px;
+    right: 0;
+    z-index: 15;
+    transition: var(--transition-base);
+    &.animation{
+      transform: translateY(-55%) scaleY(0);
+      opacity: 0;
+    }
+    .popup-triangle-bg{
+      position: absolute;
+      padding: 1px;
+      background: var(--blue-light);
       width: 15px;
       height: 15px;
-      border-radius: 2px 0 100% 0;
+      border-radius: 3px 0 100% 0;
+      rotate: 45deg;
+      top: -7.4px;
+      right: 13px;
+      z-index: 17;
+      .popup-triangle{
+        position: relative;
+        background: var(--white);
+        width: 15px;
+        height: 15px;
+        border-radius: 2px 0 100% 0;
+      }
+    }
+    .popup-content{
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      padding: 8px 16px;
+      background: var(--white);
+      border: 1px solid var(--blue-light);
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+      z-index: 16;
+      width: max-content;
     }
   }
-  .popup-content{
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    padding: 8px 16px;
-    background: var(--white);
-    border: 1px solid var(--blue-light);
-    border-radius: 12px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
-    z-index: 16;
-    width: max-content;
-  }
 }
+

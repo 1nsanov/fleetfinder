@@ -58,10 +58,7 @@ export class SignUpPageComponent implements OnInit{
       this.identifyService.signUp(request).pipe(
         catchError((error: HttpErrorResponse) => {
           this.isLoad = false;
-          let errorMessages = error.error.errors;
-          const errorArray = Object.values(errorMessages).flat();
-          const errorString = errorArray.join('<br>');
-          this.notification.error(errorString);
+          this.notification.errorFromHttp(error);
           return throwError(error);
         })
       ).subscribe(() => {

@@ -52,8 +52,6 @@ export class TransportsPageComponent implements OnInit{
     TypeFilter: this.CargoTypeItems.find(x => x.Value == null) ?? null,
     RegionFilter: this.RegionItems.find(x => x.Value == null) ?? null,
   }
-  // valueDropdownTypeFilter = this.CargoTypeItems.find(x => x.Value == null) ?? null;
-  // valueDropdownRegionFilter = this.RegionItems.find(x => x.Value == null) ?? null;
 
   constructor(private cargoTransportApiService: CargoTransportApiService,
               private identifyService: IdentifyApiService,
@@ -115,13 +113,17 @@ export class TransportsPageComponent implements OnInit{
     this.pagination = { page: 1, pageSize: 6, total: 0 };
   }
   onSelectTypeFilter(item: DropdownItemModel<CargoType>){
+    if (item instanceof Event) return;
     this.filterCargoForm.TypeFilter = item.Value;
     this.valueDropdowns.TypeFilter = item;
+    this.resetPagination();
     this.getListRequest();
   }
   onSelectRegionFilter(item: DropdownItemModel<Region>){
+    if (item instanceof Event) return;
     this.filterCargoForm.RegionFilter = item.Value;
     this.valueDropdowns.RegionFilter = item;
+    this.resetPagination();
     this.getListRequest();
   }
 
@@ -138,6 +140,10 @@ export class TransportsPageComponent implements OnInit{
       this.filterCargoForm.UserFilter = this.identifyService.claims?.Id ?? null;
       this.titlePage = "Ваш транспорт";
     }
+  }
+
+  resetPagination() {
+    this.pagination = { page: 1, pageSize: 6, total: 0 };
   }
 
   get countFilters() : number {

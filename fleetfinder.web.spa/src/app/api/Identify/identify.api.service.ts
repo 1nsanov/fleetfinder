@@ -20,8 +20,9 @@ export class IdentifyApiService {
               private router: Router) { }
 
   signUp(request: ISignUpRequest) {
-    return  this.http.post<ITokenResponse>(this.url + "sign-up", request).pipe(
+    return this.http.post<ITokenResponse>(this.url + "sign-up", request).pipe(
       tap((result) => {
+        localStorage.clear();
         this.writeToken(result.Token)
       })
     );
@@ -29,6 +30,7 @@ export class IdentifyApiService {
   signIn(request: ISignInRequest) {
     return this.http.post<ITokenResponse>(this.url + "sign-in", request).pipe(
       tap((result) => {
+        localStorage.clear();
         this.writeToken(result.Token)
       })
     );
@@ -48,6 +50,7 @@ export class IdentifyApiService {
   }
 
   logout() {
+    localStorage.clear();
     return this.http.get<boolean>(this.url + "logout").pipe(
       tap(() => {
         this.writeToken(null)

@@ -1,5 +1,5 @@
-<div class="relative">
-  <app-button iconPath="../../../../assets/icons/icon-filter.svg" (click)="openPopup()" />
+<div class="filter-wrapper relative">
+  <app-button class="button-filter" iconPath="../../../../assets/icons/icon-filter.svg" (click)="openPopup()" />
   <div *ngIf="count > 0" class="circle-count">
     <p>{{count}}</p>
   </div>
