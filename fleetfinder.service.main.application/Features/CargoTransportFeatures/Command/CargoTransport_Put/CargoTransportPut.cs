@@ -22,7 +22,6 @@ public static partial class CargoTransportPut
         public async Task<ResponseDto> Handle(Command request, CancellationToken cancellationToken)
         {
             var entity = await _commandDbContext.CargoTransport
-                             .Include(ct => ct.Images)
                              .FirstOrDefaultAsync(ct => ct.Id == request.RequestDto.Id && ct.UserId == request.UserId, cancellationToken) 
                          ?? throw new EntityNotFoundException(request.RequestDto.Id);
             

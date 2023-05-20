@@ -5,6 +5,7 @@ using fleetfinder.service.main.domain.Enums.Transport.Cargo;
 using fleetfinder.service.main.domain.Enums.Transport.Passenger;
 using fleetfinder.service.main.domain.Enums.Transport.Special;
 using fleetfinder.service.main.domain.Order.Cargo;
+using fleetfinder.service.main.domain.Order.Passenger;
 using fleetfinder.service.main.domain.Order.Special;
 using fleetfinder.service.main.domain.Transport.Cargo;
 using fleetfinder.service.main.domain.Transport.Passenger;
@@ -33,6 +34,8 @@ public abstract class BaseDbContext : DbContext
     public DbSet<SpecialTransportImage> SpecialTransportImage { get; set; } = null!;
     public DbSet<CargoOrder> CargoOrder { get; set; } = null!;
     public DbSet<CargoOrderImage> CargoOrderImage { get; set; } = null!;
+    public DbSet<PassengerOrder> PassengerOrder { get; set; } = null!;
+    public DbSet<PassengerOrderImage> PassengerOrderImage { get; set; } = null!;
     public DbSet<SpecialOrder> SpecialOrder { get; set; } = null!;
     public DbSet<SpecialOrderImage> SpecialOrderImage { get; set; } = null!;
 
@@ -40,10 +43,11 @@ public abstract class BaseDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
         EntityBase_Builder(modelBuilder);
         Enums_Builder(modelBuilder);
         User_Builder(modelBuilder);
-        base.OnModelCreating(modelBuilder);
+        ImagesAutoInclude_Builder(modelBuilder);
     }
 
     #region Enums
@@ -121,5 +125,15 @@ public abstract class BaseDbContext : DbContext
         {
             etp.HasIndex(u => u.Login).IsUnique();
         });
+    }
+
+    private static void ImagesAutoInclude_Builder(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<CargoTransport>(etp => { etp.Navigation(x => x.Images).AutoInclude(); });
+        modelBuilder.Entity<PassengerTransport>(etp => { etp.Navigation(x => x.Images).AutoInclude(); });
+        modelBuilder.Entity<SpecialTransport>(etp => { etp.Navigation(x => x.Images).AutoInclude(); });
+        modelBuilder.Entity<CargoOrder>(etp => { etp.Navigation(x => x.Images).AutoInclude(); });
+        modelBuilder.Entity<PassengerOrder>(etp => { etp.Navigation(x => x.Images).AutoInclude(); });
+        modelBuilder.Entity<SpecialOrder>(etp => { etp.Navigation(x => x.Images).AutoInclude(); });
     }
 }

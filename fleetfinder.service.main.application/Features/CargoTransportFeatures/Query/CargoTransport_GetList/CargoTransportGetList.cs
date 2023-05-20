@@ -28,7 +28,6 @@ public static partial class CargoTransportGetList
         {
             var query = _queryDbContext.CargoTransport
                 .Include(ct => ct.User)
-                .Include(ct => ct.Images)
                 .AsQueryable();
 
             query = Sort(query, request.SortParameter);

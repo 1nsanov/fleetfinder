@@ -23,7 +23,6 @@ public static partial class CargoTransportGet
         {
             var entity = await _queryDbContext.CargoTransport
                              .Include(ct => ct.User)
-                             .Include(ct => ct.Images)
                              .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken: cancellationToken)
                                 ?? throw new EntityNotFoundException(request.Id);
             
