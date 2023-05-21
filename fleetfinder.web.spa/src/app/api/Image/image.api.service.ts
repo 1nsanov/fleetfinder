@@ -4,13 +4,15 @@ import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {ImagePostRequest} from "./post.models";
 import {Observable} from "rxjs";
 import {ImageDeleteRequest} from "./delete.models";
+import {IdentifyApiService} from "../Identify/identify.api.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ImageApiService {
   url : string = environment.apiUrl + "image"
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private identifyService: IdentifyApiService) { }
 
   async upload(request: ImagePostRequest) : Promise<string[]> {
     if (request.Files.length === 0) return [];
@@ -34,7 +36,11 @@ export class ImageApiService {
 
     const response = await fetch(this.url, {
       method: 'POST',
-      body: parentFormData
+      body: parentFormData,
+      headers: {
+        'Authorization': `Bearer ${this.identifyService.getAccessToken()}`,
+        'UserId': this.identifyService.claims?.Id?.toString() ?? ''
+      },
     });
 
     if (response.ok) {
