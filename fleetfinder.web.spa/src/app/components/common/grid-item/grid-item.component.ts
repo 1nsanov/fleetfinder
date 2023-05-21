@@ -5,11 +5,8 @@ import {cargoItems} from "../../../data/transport/cargo-items";
 import {CargoType} from "../../../models/enums/transport/cargo/cargo-type.enum";
 import {IGridItem} from "../../../models/interfaces/grid-item.interface";
 import {CargoTransportApiService} from "../../../api/CargoTransport/cargo-transport.api.service";
-import {catchError, throwError} from "rxjs";
-import {HttpErrorResponse} from "@angular/common/http";
 import {namesRoute} from "../../../data/names-route";
 import {Router} from "@angular/router";
-import {TransportService} from "../../../services/transport.service";
 
 @Component({
   selector: 'app-grid-item',

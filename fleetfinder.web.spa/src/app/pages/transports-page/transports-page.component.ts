@@ -88,8 +88,8 @@ export class TransportsPageComponent implements OnInit{
         this.items = res.Items;
         this.totalCount = res.TotalCount;
         this.pagination = {...this.pagination, total: this.totalCount}
-        if (isPreloadRequest && this.pagination.total > 0)
-          this.pagination = {...this.pagination, page: Math.ceil(this.pagination.total / this.pagination.pageSize)}
+        if (isPreloadRequest && request?.skipCount && request.skipCount > 0)
+          this.pagination = {...this.pagination, page: Math.ceil(request.skipCount / this.pagination.pageSize) + 1}
         this.isLoad = false;
       });
   }
@@ -144,6 +144,12 @@ export class TransportsPageComponent implements OnInit{
 
   resetPagination() {
     this.pagination = { page: 1, pageSize: 6, total: 0 };
+  }
+
+  resetRequest() {
+    this.searchTerm = "";
+    this.sortParameter = this.sortParameters[0];
+    this.resetFilter();
   }
 
   get countFilters() : number {
