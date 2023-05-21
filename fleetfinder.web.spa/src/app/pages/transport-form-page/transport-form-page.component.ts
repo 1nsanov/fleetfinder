@@ -255,24 +255,24 @@ export class TransportFormPageComponent implements OnInit{
   onSelectPaymentOrder(item: DropdownItemModel<PaymentOrder>){
     this.form.get('PaymentOrder')?.setValue(item.Value)
   }
-  valueDropdownRegion: DropdownItemModel<any> | null;
-  valueDropdownExperienceWork: DropdownItemModel<ExperienceWork> | null;
-  valueDropdownPaymentMethod: DropdownItemModel<PaymentMethod> | null;
-  valueDropdownPaymentOrder: DropdownItemModel<PaymentOrder> | null;
-  valueDropdownCargoBodyKind: DropdownItemModel<CargoBodyKind> | null;
-  valueDropdownCargoTransportationKind: DropdownItemModel<CargoTransportationKind> | null;
-  valueDropdownYearIssue: DropdownItemModel<string> | null;
+  valueRegion: DropdownItemModel<Region | null> = this.RegionItems[0];
+  valueExperienceWork: DropdownItemModel<ExperienceWork | null> = this.ExperienceWorkItems[0];
+  valuePaymentMethod: DropdownItemModel<PaymentMethod | null> = this.PaymentMethodItems[0];
+  valuePaymentOrder: DropdownItemModel<PaymentOrder | null> = this.PaymentOrderItems[0];
+  valueBodyKind: DropdownItemModel<CargoBodyKind | null> = this.CargoBodyKindItems[0];
+  valueTransportationKind: DropdownItemModel<CargoTransportationKind | null> = this.CargoTransportationKindItems[0];
+  valueYearIssue: DropdownItemModel<string> = this.YearsItems[0];
   onloadExist(item: CargoTransportGetResponse){
     const infoBox = this.cargo.find(x => x.Value == item.Type);
     if (infoBox) this.onSelectTransportType(infoBox, TransportType.Cargo)
 
-    this.valueDropdownRegion = this.RegionItems.find(x => x.Value === item.Region) ?? null;
-    this.valueDropdownExperienceWork = this.ExperienceWorkItems.find(x => x.Value === item.ExperienceWork) ?? null;
-    this.valueDropdownPaymentMethod = this.PaymentMethodItems.find(x => x.Value === item.PaymentMethod) ?? null;
-    this.valueDropdownPaymentOrder = this.PaymentOrderItems.find(x => x.Value === item.PaymentOrder) ?? null;
-    this.valueDropdownCargoBodyKind = this.CargoBodyKindItems.find(x => x.Value === item.Body.Kind) ?? null;
-    this.valueDropdownCargoTransportationKind = this.CargoTransportationKindItems.find(x => x.Value === item.TransportationKind) ?? null;
-    this.valueDropdownYearIssue = this.YearsItems.find(x => x.Value === item.YearIssue) ?? null;
+    this.valueRegion = this.RegionItems.find(x => x.Value === item.Region) ?? this.RegionItems[0];
+    this.valueExperienceWork = this.ExperienceWorkItems.find(x => x.Value === item.ExperienceWork) ?? this.ExperienceWorkItems[0];
+    this.valuePaymentMethod = this.PaymentMethodItems.find(x => x.Value === item.PaymentMethod) ?? this.PaymentMethodItems[0];
+    this.valuePaymentOrder = this.PaymentOrderItems.find(x => x.Value === item.PaymentOrder) ?? this.PaymentOrderItems[0];
+    this.valueBodyKind = this.CargoBodyKindItems.find(x => x.Value === item.Body.Kind) ?? this.CargoBodyKindItems[0];
+    this.valueTransportationKind = this.CargoTransportationKindItems.find(x => x.Value === item.TransportationKind) ?? this.CargoTransportationKindItems[0];
+    this.valueYearIssue = this.YearsItems.find(x => x.Value === item.YearIssue) ?? this.YearsItems[0];
 
     this.previewImages = item.Images;
   }

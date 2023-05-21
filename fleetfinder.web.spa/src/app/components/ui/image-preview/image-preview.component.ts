@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {ImageViewerService} from "../../../services/image-viewer.service";
-import {TimeoutService} from "../../../services/timeout.service";
 
 @Component({
   selector: 'app-image-preview',

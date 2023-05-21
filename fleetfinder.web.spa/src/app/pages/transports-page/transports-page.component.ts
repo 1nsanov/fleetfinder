@@ -36,8 +36,8 @@ export class TransportsPageComponent implements OnInit{
     { Value: new SortModel(CargoTransportSortParameter.PricePerKm, false) , Preview: "По цене  за километр (в)" },
     { Value: new SortModel(CargoTransportSortParameter.PricePerKm, true) , Preview: "По цене  за километр (у)" },
   ]
-  CargoTypeItems = getCargoTypeItems(true);
-  RegionItems = getRegionItems(true);
+  CargoTypeItems = getCargoTypeItems();
+  RegionItems = getRegionItems();
   //#endregion
   searchTerm: string = "";
   titlePage = "Поиск транспорта";

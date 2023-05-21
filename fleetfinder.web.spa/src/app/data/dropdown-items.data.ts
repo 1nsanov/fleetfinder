@@ -1,7 +1,9 @@
 ﻿import {DropdownItemModel} from "../models/dropdown-item.model";
 import {Region} from "../models/enums/common/region.enum";
 import {
-  CargoBodyKindConst, CargoTransportationKindConst, CargoTypeConst,
+  CargoBodyKindConst,
+  CargoTransportationKindConst,
+  CargoTypeConst,
   ExperienceWorkConst,
   PaymentMethodConst,
   PaymentOrderConst,
@@ -16,65 +18,77 @@ import {CargoBodyKind} from "../models/enums/transport/cargo/cargo-body-kind.enu
 import {CargoTransportationKind} from "../models/enums/transport/cargo/cargo-transportation-kind";
 import {CargoType} from "../models/enums/transport/cargo/cargo-type.enum";
 
-export function getRegionItems(isFilter: boolean = false) {
-  const array : DropdownItemModel<Region | null>[] = [];
-  if (isFilter) array.push(new DropdownItemModel<Region | null>(null, "Любой"))
-  const values = Object.values(Region).map(x =>
-    new DropdownItemModel<Region>(x as Region, RegionConst[x as Region])
-  );
-  array.push(...values);
-  return array;
+export function getRegionItems() {
+  return [
+    new DropdownItemModel<Region | null>(null, "Не выбрано"),
+    ...Object.values(Region).map(x =>
+      new DropdownItemModel<Region>(x as Region, RegionConst[x as Region])
+    )
+  ];
 }
 
 export function getExperienceWorkItems() {
-  return Object.values(ExperienceWork).map(x =>
-    new DropdownItemModel<ExperienceWork>(x as ExperienceWork, ExperienceWorkConst[x as ExperienceWork])
-  );
+  return [
+    new DropdownItemModel<ExperienceWork | null>(null, "Не выбрано"),
+    ...Object.values(ExperienceWork).map(x =>
+      new DropdownItemModel<ExperienceWork>(x as ExperienceWork, ExperienceWorkConst[x as ExperienceWork])
+    )
+  ];
 }
 
 export function getPaymentMethodItems() {
-  return Object.values(PaymentMethod).map(x =>
-    new DropdownItemModel<PaymentMethod>(x as PaymentMethod, PaymentMethodConst[x as PaymentMethod])
-  );
+  return [
+    new DropdownItemModel<PaymentMethod | null>(null, "Не выбрано"),
+    ...Object.values(PaymentMethod).map(x =>
+      new DropdownItemModel<PaymentMethod>(x as PaymentMethod, PaymentMethodConst[x as PaymentMethod])
+    )
+  ];
 }
 
 export function getPaymentOrderItems() {
-  return Object.values(PaymentOrder).map(x =>
-    new DropdownItemModel<PaymentOrder>(x as PaymentOrder, PaymentOrderConst[x as PaymentOrder])
-  );
+  return [
+    new DropdownItemModel<PaymentOrder | null>(null, "Не выбрано"),
+    ...Object.values(PaymentOrder).map(x =>
+      new DropdownItemModel<PaymentOrder>(x as PaymentOrder, PaymentOrderConst[x as PaymentOrder])
+    )
+  ];
 }
 
-export function getTransportTypeItems() {
-  return Object.values(TransportType).map(x =>
-    new DropdownItemModel<TransportType>(x as TransportType, TransportTypeConst[x as TransportType])
-  );
-}
+// export function getTransportTypeItems() {
+//   return Object.values(TransportType).map(x =>
+//     new DropdownItemModel<TransportType>(x as TransportType, TransportTypeConst[x as TransportType])
+//   );
+// }
 
 export function getCargoBodyKindItems() {
-  return Object.values(CargoBodyKind).map(x =>
-    new DropdownItemModel<CargoBodyKind>(x as CargoBodyKind, CargoBodyKindConst[x as CargoBodyKind])
-  );
+  return [
+    new DropdownItemModel<CargoBodyKind | null>(null, "Не выбрано"),
+    ...Object.values(CargoBodyKind).map(x =>
+      new DropdownItemModel<CargoBodyKind>(x as CargoBodyKind, CargoBodyKindConst[x as CargoBodyKind])
+    )
+  ];
 }
 
 export function getCargoTransportationKindItems() {
-  return Object.values(CargoTransportationKind).map(x =>
-    new DropdownItemModel<CargoTransportationKind>(x as CargoTransportationKind, CargoTransportationKindConst[x as CargoTransportationKind])
-  );
+  return [
+    new DropdownItemModel<CargoTransportationKind | null>(null, "Не выбрано"),
+    ...Object.values(CargoTransportationKind).map(x =>
+      new DropdownItemModel<CargoTransportationKind>(x as CargoTransportationKind, CargoTransportationKindConst[x as CargoTransportationKind])
+    )
+  ];
 }
 
-export function getCargoTypeItems(isFilter: boolean = false) {
-  const array : DropdownItemModel<CargoType | null>[] = [];
-  if (isFilter) array.push(new DropdownItemModel<CargoType | null>(null, "Любой"))
-  const values = Object.values(CargoType).map(x =>
-    new DropdownItemModel<CargoType>(x as CargoType, CargoTypeConst[x as CargoType])
-  );
-  array.push(...values);
-  return array;
+export function getCargoTypeItems() {
+  return [
+    new DropdownItemModel<CargoType | null>(null, "Не выбрано"),
+    ...Object.values(CargoType).map(x =>
+      new DropdownItemModel<CargoType>(x as CargoType, CargoTypeConst[x as CargoType])
+    )
+  ];
 }
 
 export function getYearItems(){
-  const years: DropdownItemModel<string>[] = []
-  years.push(new DropdownItemModel<string>('', 'Не выбрано'))
+  const years: DropdownItemModel<string>[] = [new DropdownItemModel<string>('', 'Не выбрано')]
   for (let i = 2023; i >= 1960; i--) {
     years.push(new DropdownItemModel<string>(i.toString(), i.toString()))
   }
