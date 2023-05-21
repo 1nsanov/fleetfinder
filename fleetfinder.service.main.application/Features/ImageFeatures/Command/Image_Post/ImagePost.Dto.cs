@@ -7,7 +7,6 @@ public static partial class ImagePost
 {
     public record RequestDto(
         FirebaseStorageFolder Folder, 
-        long Id, 
-        IFormFile File
+        List<IFormFile> Files
     );
 }

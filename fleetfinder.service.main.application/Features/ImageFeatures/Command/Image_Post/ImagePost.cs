@@ -7,47 +7,51 @@ namespace fleetfinder.service.main.application.Features.ImageFeatures.Command.Im
 public static partial class ImagePost
 {
 
-    public record Command(RequestDto RequestDto) : ICommandRequest<string>;
+    public record Command(RequestDto RequestDto) : ICommandRequest<List<string>>;
     
-    internal class Handler : IRequestHandler<Command, string>
+    internal class Handler : IRequestHandler<Command, List<string>>
     {
         private readonly IConfiguration _config;
-        private readonly IImageService _imageService;
         
-        public Handler(IConfiguration config, IImageService imageService)
+        public Handler(IConfiguration config)
         {
             _config = config;
-            _imageService = imageService;
         }
 
-        public async Task<string> Handle(Command request, CancellationToken cancellationToken)
+        public async Task<List<string>> Handle(Command request, CancellationToken cancellationToken)
         {
             var requestDto = request.RequestDto;
-            if (requestDto.File.Length <= 0)
-                throw new Exception("Invalid file.");
-        
-            long maxFileSize = 10 * 1024 * 1024; // 10 MB
-            if (requestDto.File.Length > maxFileSize)
-                throw new Exception("File size exceeds the maximum allowed limit.");
 
-            try
-            {
-                var stream = requestDto.File.OpenReadStream();
-                var fileName = $"{Guid.NewGuid()}{Path.GetExtension(requestDto.File.FileName)}";
-                var firebaseStorage = new FirebaseStorage(_config["FirebaseStorage:Bucket"]);
-                var imageUrl = await firebaseStorage
-                    .Child(_config[$"FirebaseStorage:Folders:{requestDto.Folder.ToString()}"])
-                    .Child(fileName)
-                    .PutAsync(stream);
-
-                _imageService.SaveImage(requestDto.Folder, requestDto.Id, imageUrl, cancellationToken);
+            if (requestDto.Files.Count == 0) return new List<string>();
             
-                return imageUrl;
-            }
-            catch (Exception ex)
+            requestDto.Files.ForEach(dto =>
             {
-                throw new Exception( $"An error occurred: {ex.Message}");
+                if (dto.Length <= 0) throw new Exception("Invalid file.");
+            });
+
+            var response = new List<string>();
+
+            foreach (var item in requestDto.Files)
+            {
+                try
+                {
+                    var stream = item.OpenReadStream();
+                    var fileName = $"{Guid.NewGuid()}{Path.GetExtension(item.FileName)}";
+                    var firebaseStorage = new FirebaseStorage(_config["FirebaseStorage:Bucket"]);
+                    var imageUrl = await firebaseStorage
+                        .Child(_config[$"FirebaseStorage:Folders:{requestDto.Folder.ToString()}"])
+                        .Child(fileName)
+                        .PutAsync(stream);
+            
+                    response.Add(imageUrl);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception( $"An error occurred: {ex.Message}");
+                }
             }
+
+            return response;
         }
     }
 }

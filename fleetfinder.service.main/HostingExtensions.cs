@@ -3,6 +3,7 @@ using fleetfinder.service.main.application.Common;
 using fleetfinder.service.main.application.Common.Middlewares;
 using fleetfinder.service.main.infrastructure.Common;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.OpenApi.Models;
 
 namespace fleetfinder.service.main;
@@ -56,7 +57,14 @@ public static class HostingExtensions
 
         builder.Services.RegisterInfrastructureLayer(builder.Configuration, builder.Environment);
         builder.Services.RegisterApplicationLayer(builder.Configuration);
-
+        
+        builder.Services.Configure<FormOptions>(o =>
+        {
+            o.ValueCountLimit = 10;
+            o.ValueLengthLimit = int.MaxValue;  
+            o.MultipartBodyLengthLimit = long.MaxValue;
+        });  
+        
         return builder.Build();
     }
 

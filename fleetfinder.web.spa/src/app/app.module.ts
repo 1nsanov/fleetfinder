@@ -38,6 +38,7 @@ import { FieldViewItemComponent } from './components/common/field-view-item/fiel
 import { MeasurementPipe } from './pipes/measurement.pipe';
 import {TransportFormPageComponent} from "./pages/transport-form-page/transport-form-page.component";
 import { FilterWrapperComponent } from './components/common/filter-wrapper/filter-wrapper.component';
+import { UploadImageComponent } from './components/ui/upload-image/upload-image.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import { FilterWrapperComponent } from './components/common/filter-wrapper/filte
     FieldViewItemComponent,
     MeasurementPipe,
     FilterWrapperComponent,
+    UploadImageComponent,
   ],
     imports: [
         BrowserModule, HttpClientModule, AppRoutingModule, NgOptimizedImage, ReactiveFormsModule,

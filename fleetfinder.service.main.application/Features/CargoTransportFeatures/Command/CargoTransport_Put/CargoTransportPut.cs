@@ -26,9 +26,17 @@ public static partial class CargoTransportPut
                          ?? throw new EntityNotFoundException(request.RequestDto.Id);
             
             var updated = _mapper.Map<RequestDto, CargoTransport>(request.RequestDto);
+
+            var updatedImage = new List<CargoTransportImage>();
+            foreach (var image in updated.Images)
+            {
+                var exist = entity.Images.FirstOrDefault(cti => cti.Url == image.Url);
+                updatedImage.Add(exist ?? image);
+            }
+
             entity.Price = updated.Price;
             entity.Body = updated.Body;
-            entity.Images = updated.Images;
+            entity.Images = updatedImage;
             _commandDbContext.Entry(entity).CurrentValues.SetValues(updated);
             _commandDbContext.Entry(entity).Property(ct => ct.UserId).IsModified = false;
             _commandDbContext.Entry(entity).Property(ct => ct.CreateDate).IsModified = false;

@@ -28,10 +28,18 @@
     </div>
     <div class="border-block flex gap-10 pb-5 mt-10">
       <div class="image-block relative">
-        <app-image-preview/>
+        <app-image-preview mode="edit"
+                           [previewFile]="previewFile"
+                           [images]="previewImages"
+                           (confirm)="onConfirmImage($event)"
+                           (cancel)="onCancelImage()"
+                           (remove)="onRemoveImg($event)"/>
         <app-type-transport-sign (click)="modalService.open()"
                                  [type]="currentType"
                                  [image]="currentTypeImg"/>
+        <div class="flex w-full justify-center mt-4">
+          <app-upload-image (onUpload)="onSelectImage($event)" [disabled]="previewImages.length >= 4 || !!previewFile"/>
+        </div>
       </div>
       <div *ngIf="currentType === TransportType.Cargo" class="input-block flex flex-col gap-5">
         <app-input label="Марка"

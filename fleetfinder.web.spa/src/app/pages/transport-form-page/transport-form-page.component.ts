@@ -39,6 +39,10 @@ import {ModeForm} from "../../models/enums/common/mode-form.enum";
 import {CargoTransportGetResponse} from "../../api/CargoTransport/get.models";
 import {CargoTransportPutRequestDto} from "../../api/CargoTransport/put.model";
 import {IdentifyApiService} from "../../api/Identify/identify.api.service";
+import {ImagePostRequest} from "../../api/Image/post.models";
+import {FirebaseStorageFolder} from "../../models/enums/common/firebase-storage-folder.enum";
+import {ImageApiService} from "../../api/Image/image.api.service";
+import {ImageDeleteRequest} from "../../api/Image/delete.models";
 
 @Component({
   selector: 'app-transport-form-page',
@@ -64,11 +68,20 @@ export class TransportFormPageComponent implements OnInit{
   currentType: TransportType | null = null;
   currentTypeImg : string | null = null;
   form: FormGroup<CargoTransportForm>;
+  requestImagePost : ImagePostRequest = {
+    Folder: FirebaseStorageFolder.CargoTransport,
+    Files: []
+  }
+  requestImageDelete : ImageDeleteRequest = {
+    Folder: FirebaseStorageFolder.CargoTransport,
+    Urls: []
+  }
   isLoad = false;
 
   constructor(public modalService: ModalService,
               public cargoTransportApiService: CargoTransportApiService,
               private identifyService: IdentifyApiService,
+              private imageService: ImageApiService,
               private notification: NotificationService,
               private transportService: TransportService,
               private route: ActivatedRoute,
@@ -96,16 +109,65 @@ export class TransportFormPageComponent implements OnInit{
     });
   }
 
-  save(){
+  //#region Api
+  async save(){
     this.formMarkAsTouched();
     if (this.form.valid) {
       if(this.mode === ModeForm.Add)
-        this.addTransport();
+        await this.addTransport();
       else
-        this.updateTransport();
+        await this.updateTransport();
     }
     else
       this.validType();
+  }
+
+  async addTransport(){
+    this.isLoad = true;
+
+    this.requestImagePost.Folder = FirebaseStorageFolder.CargoTransport;
+
+    await this.imageService.upload(this.requestImagePost).then((res) => {
+      const request = this.form.value as CargoTransportPostRequestDto;
+      request.Images = res;
+      this.cargoTransportApiService.post(request).pipe(
+        catchError((error: HttpErrorResponse) => {
+          this.isLoad = false;
+          this.notification.errorFromHttp(error);
+          return throwError(error);
+        })
+      ).subscribe((res) => {
+        this.notification.notify('Транспорт успешно добавлен')
+        this.router.navigate([namesRoute.TRANSPORT_CARGO_VIEW, res.Id]);
+      });
+    })
+  }
+
+  async updateTransport(){
+    this.isLoad = true;
+
+    this.requestImagePost.Folder = FirebaseStorageFolder.CargoTransport;
+    this.imageService.delete(this.requestImageDelete).pipe(
+      catchError((error: HttpErrorResponse) => {
+        return throwError(error);
+      })
+    ).subscribe();
+    await this.imageService.upload(this.requestImagePost).then((res) => {
+      const updateImages = this.previewImages.filter(x => x.match("firebase"));
+      updateImages.push(...res);
+      const request = this.form.value as CargoTransportPutRequestDto;
+      request.Images = updateImages;
+      this.cargoTransportApiService.put(request).pipe(
+        catchError((error: HttpErrorResponse) => {
+          this.isLoad = false;
+          this.notification.errorFromHttp(error);
+          return throwError(error);
+        })
+      ).subscribe((res) => {
+        this.notification.notify('Транспорт успешно обновлен')
+        this.router.navigate([namesRoute.TRANSPORT_CARGO_VIEW, res.Id]);
+      });
+    })
   }
 
   delete(){
@@ -123,77 +185,9 @@ export class TransportFormPageComponent implements OnInit{
       this.notification.error('Ошибка удаления!')
   }
 
-  addTransport(){
-    this.isLoad = true;
-    const request = this.form.value as CargoTransportPostRequestDto;
-    this.cargoTransportApiService.post(request).pipe(
-      catchError((error: HttpErrorResponse) => {
-        this.isLoad = false;
-        this.notification.errorFromHttp(error);
-        return throwError(error);
-      })
-    ).subscribe((res) => {
-      this.notification.notify('Транспорт успешно добавлен')
-      this.router.navigate([namesRoute.TRANSPORT_CARGO_VIEW, res.Id]);
-    });
-  }
+  //#endregion
 
-  updateTransport(){
-    this.isLoad = true;
-    const request = this.form.value as CargoTransportPutRequestDto;
-    this.cargoTransportApiService.put(request).pipe(
-      catchError((error: HttpErrorResponse) => {
-        this.isLoad = false;
-        this.notification.errorFromHttp(error);
-        return throwError(error);
-      })
-    ).subscribe((res) => {
-      this.notification.notify('Транспорт успешно обновлен')
-      this.router.navigate([namesRoute.TRANSPORT_CARGO_VIEW, res.Id]);
-    });
-  }
-
-  onSelectTransportType(item: IInfoBoxTransport, type: TransportType){
-    this.currentType = type;
-    this.currentTypeImg = this.transportService.getTypeImg(item, type);
-    switch (type){
-      case TransportType.Cargo:
-        this.form.get('Type')?.setValue(item.Value)
-        break;
-      case TransportType.Passenger:
-        break;
-      case TransportType.Special:
-        break;
-    }
-    this.modalService.close();
-  }
-
-  onSelectRegion(item: DropdownItemModel<Region>){
-    this.form.get('Region')?.setValue(item.Value)
-  }
-  onSelectYearsItems(item: DropdownItemModel<string>){
-    this.form.get('YearIssue')?.setValue(item.Value)
-  }
-  onSelectTransportationKind(item: DropdownItemModel<CargoTransportationKind>){
-    this.form.get('TransportationKind')?.setValue(item.Value)
-  }
-  onSelectCargoBodyKind(item: DropdownItemModel<CargoBodyKind>){
-    this.form.get('Body.Kind')?.setValue(item.Value)
-  }
-  onSelectExperienceWork(item: DropdownItemModel<ExperienceWork>){
-    this.form.get('ExperienceWork')?.setValue(item.Value)
-  }
-  onSelectPaymentMethod(item: DropdownItemModel<PaymentMethod>){
-    this.form.get('PaymentMethod')?.setValue(item.Value)
-  }
-  onSelectPaymentOrder(item: DropdownItemModel<PaymentOrder>){
-    this.form.get('PaymentOrder')?.setValue(item.Value)
-  }
-
-  cancel(){
-    this._location.back();
-  }
-
+  //#region Form
   initFormBuilder(item: CargoTransportGetResponse | null = null){
     this.form = this.formBuilder.group<CargoTransportForm>({
       Id: new FormControl<number | null>(item?.Id ?? null),
@@ -220,13 +214,46 @@ export class TransportFormPageComponent implements OnInit{
         Volume: new FormControl<number | null>(item?.Body.Volume ?? null),
         Kind: new FormControl<CargoBodyKind | null>(item?.Body.Kind ?? null),
       }),
-      Images: new FormControl<string[] | null>(item?.Images ?? []),
+      Images: new FormControl<string[]>(item?.Images ?? [])
     });
 
     if (item) this.onloadExist(item);
   }
 
+  formMarkAsTouched(){
+    Object.values(this.form.controls).forEach(control => {
+      control.markAsTouched();
+    });
+  }
+
+  validType(){
+    if (this.form.get('Type')?.invalid && this.form.get('Type')?.touched)
+      this.notification.error('Выберите тип транспорта!')
+  }
+  //#endregion
+
   //#region valueDropdowns
+  onSelectRegion(item: DropdownItemModel<Region>){
+    this.form.get('Region')?.setValue(item.Value)
+  }
+  onSelectYearsItems(item: DropdownItemModel<string>){
+    this.form.get('YearIssue')?.setValue(item.Value)
+  }
+  onSelectTransportationKind(item: DropdownItemModel<CargoTransportationKind>){
+    this.form.get('TransportationKind')?.setValue(item.Value)
+  }
+  onSelectCargoBodyKind(item: DropdownItemModel<CargoBodyKind>){
+    this.form.get('Body.Kind')?.setValue(item.Value)
+  }
+  onSelectExperienceWork(item: DropdownItemModel<ExperienceWork>){
+    this.form.get('ExperienceWork')?.setValue(item.Value)
+  }
+  onSelectPaymentMethod(item: DropdownItemModel<PaymentMethod>){
+    this.form.get('PaymentMethod')?.setValue(item.Value)
+  }
+  onSelectPaymentOrder(item: DropdownItemModel<PaymentOrder>){
+    this.form.get('PaymentOrder')?.setValue(item.Value)
+  }
   valueDropdownRegion: DropdownItemModel<any> | null;
   valueDropdownExperienceWork: DropdownItemModel<ExperienceWork> | null;
   valueDropdownPaymentMethod: DropdownItemModel<PaymentMethod> | null;
@@ -245,18 +272,59 @@ export class TransportFormPageComponent implements OnInit{
     this.valueDropdownCargoBodyKind = this.CargoBodyKindItems.find(x => x.Value === item.Body.Kind) ?? null;
     this.valueDropdownCargoTransportationKind = this.CargoTransportationKindItems.find(x => x.Value === item.TransportationKind) ?? null;
     this.valueDropdownYearIssue = this.YearsItems.find(x => x.Value === item.YearIssue) ?? null;
+
+    this.previewImages = item.Images;
   }
 
   //#endregion
 
-  formMarkAsTouched(){
-    Object.values(this.form.controls).forEach(control => {
-      control.markAsTouched();
-    });
+  //#region Images
+  previewFile: File | null = null;
+  previewImages: string[] = [];
+  onSelectImage(file: File | null) {
+    this.previewFile = file;
   }
 
-  validType(){
-    if (this.form.get('Type')?.invalid && this.form.get('Type')?.touched)
-      this.notification.error('Выберите тип транспорта!')
+  onConfirmImage(file: File | null){
+    if (!file) return;
+
+    this.requestImagePost.Files.push(file);
+
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+      this.previewImages.push(e.target.result);
+    };
+    reader.readAsDataURL(file);
+    this.previewFile = null;
+  }
+
+  onRemoveImg(url : string) {
+    if (this.mode === ModeForm.Edit)
+      this.requestImageDelete.Urls.push(url);
+    this.previewImages = this.previewImages.filter(x => x != url);
+  }
+
+  onCancelImage(){
+    this.previewFile = null;
+  }
+  //#endregion
+
+  onSelectTransportType(item: IInfoBoxTransport, type: TransportType){
+    this.currentType = type;
+    this.currentTypeImg = this.transportService.getTypeImg(item, type);
+    switch (type){
+      case TransportType.Cargo:
+        this.form.get('Type')?.setValue(item.Value)
+        break;
+      case TransportType.Passenger:
+        break;
+      case TransportType.Special:
+        break;
+    }
+    this.modalService.close();
+  }
+
+  cancel(){
+    this._location.back();
   }
 }

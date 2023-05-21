@@ -40,7 +40,7 @@
     <div class="main">
       <div class="row mb-5">
         <div class="images left-side relative">
-          <app-image-preview/>
+          <app-image-preview [images]="transport.Images"/>
           <app-type-transport-sign [type]="TransportType.Cargo"
                                    [image]="typeImg"/>
         </div>

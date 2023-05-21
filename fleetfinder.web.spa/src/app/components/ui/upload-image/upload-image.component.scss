@@ -1,0 +1,37 @@
+.custom-file-input{
+  transition: var(--transition-base);
+  width: 230px;
+  &::-webkit-file-upload-button {
+    visibility: hidden;
+  }
+  &::before {
+    content: 'Загрузить фото';
+    display: inline-block;
+    text-align: center;
+    background: var(--blue);
+    color: var(--white);
+    font-weight: 600;
+    font-size: 18px;
+    border-radius: 12px;
+    padding: 11px 0;
+    width: 230px;
+    outline: none;
+    white-space: nowrap;
+    -webkit-user-select: none;
+    cursor: pointer;
+    transition: var(--transition-base);
+  }
+  &:hover:not([disabled])::before {
+    background: var(--blue-saturated)
+  }
+  &:hover:not([disabled]){
+    scale: 1.1;
+  }
+  &[disabled]{
+    opacity: 0.5;
+  }
+  &[disabled]::before{
+    cursor: not-allowed;
+  }
+}
+

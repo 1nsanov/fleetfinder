@@ -41,7 +41,6 @@ public static class DependencyInjection
         services.AddSingleton<TokenService>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IIdentifyService, IdentifyService>();
-        services.AddScoped<IImageService, ImageService>();
         
         #endregion
 

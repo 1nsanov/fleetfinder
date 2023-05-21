@@ -6,7 +6,6 @@ public static partial class ImageDelete
 {
     public record RequestDto(
         FirebaseStorageFolder Folder, 
-        long Id, 
-        string Url
+        List<string> Urls
     );
 }

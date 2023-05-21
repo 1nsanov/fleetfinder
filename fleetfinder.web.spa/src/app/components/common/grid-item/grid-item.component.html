@@ -37,7 +37,7 @@
       <div class="flex gap-5">
         <div class="left-side">
           <div class="images">
-            <app-image-preview/>
+            <app-image-preview [images]="item.Images"/>
             <app-type-transport-sign theme="gridable"
                                      [type]="type"
                                      [image]="getTypeImg(item.Type, TransportType.Cargo)"/>

@@ -1,5 +1,20 @@
-<div class="image-preview flex items-center justify-center">
-  <div *ngIf="!image" class="wrapper-plug">
+<div *ngIf="!innerPreviewImg && images.length === 0" class="image-full-size image-preview flex items-center justify-center">
+  <div class="wrapper-plug">
     <img src="../../../assets/icons/icon-image.svg" alt="">
+  </div>
+</div>
+
+<div *ngIf="innerPreviewImg" class="image-full-size image-preview flex items-end justify-end" [style.background-image]="'url(' + innerPreviewImg + ')'">
+  <div class="flex gap-4 p-4">
+    <app-button theme="green" iconPath="../../../../assets/icons/icon-discket-add.svg" (click)="onConfirm()"/>
+    <app-button theme="light-blue" iconPath="../../../assets/icons/icon-cancel-rounded.svg" (click)="onCancel()"/>
+  </div>
+</div>
+
+<div *ngIf="images.length > 0 && !innerPreviewImg" class="images-container image-full-size">
+  <div *ngFor="let url of images" class="image-preview __item" [style.background-image]="'url(' + url + ')'">
+    <div class="remove flex p-4 items-end justify-end h-full">
+      <app-button *ngIf="mode == 'edit'" theme="red" iconPath="../../../../assets/icons/icon-waste-basket.svg" (click)="onRemove(url)"/>
+    </div>
   </div>
 </div>

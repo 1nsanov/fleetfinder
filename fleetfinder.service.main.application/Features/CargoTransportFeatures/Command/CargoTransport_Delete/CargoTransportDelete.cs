@@ -20,11 +20,11 @@ public static partial class CargoTransportDelete
         public async Task<ResponseDto> Handle(Command request, CancellationToken cancellationToken)
         {
             var entity = await _commandDbContext.CargoTransport
-                             .Include(ct => ct.Images)
                              .FirstOrDefaultAsync(ct => ct.Id == request.Id && ct.UserId == request.UserId, cancellationToken) 
                          ?? throw new EntityNotFoundException(request.Id);
 
             entity.State = State.Archived;
+            entity.Images.ForEach(image => image.State = State.Archived);
             await _commandDbContext.SaveChangesAsync(cancellationToken);
 
             return new ResponseDto(true);
