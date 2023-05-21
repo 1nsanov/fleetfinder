@@ -7,7 +7,7 @@ namespace fleetfinder.service.main.Controllers;
 
 [ApiController]
 [Route("api/image")]
-// [Authorize]
+[Authorize]
 public class ImageController : ControllerBase
 {
     private readonly IMediator _mediator;
