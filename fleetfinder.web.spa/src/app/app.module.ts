@@ -39,6 +39,7 @@ import { MeasurementPipe } from './pipes/measurement.pipe';
 import {TransportFormPageComponent} from "./pages/transport-form-page/transport-form-page.component";
 import { FilterWrapperComponent } from './components/common/filter-wrapper/filter-wrapper.component';
 import { UploadImageComponent } from './components/ui/upload-image/upload-image.component';
+import { ImageViewerComponent } from './components/ui/image-viewer/image-viewer.component';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import { UploadImageComponent } from './components/ui/upload-image/upload-image.
     MeasurementPipe,
     FilterWrapperComponent,
     UploadImageComponent,
+    ImageViewerComponent,
   ],
     imports: [
         BrowserModule, HttpClientModule, AppRoutingModule, NgOptimizedImage, ReactiveFormsModule,

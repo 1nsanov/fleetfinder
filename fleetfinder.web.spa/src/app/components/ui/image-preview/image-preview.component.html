@@ -12,9 +12,12 @@
 </div>
 
 <div *ngIf="images.length > 0 && !innerPreviewImg" class="images-container image-full-size">
-  <div *ngFor="let url of images" class="image-preview __item" [style.background-image]="'url(' + url + ')'">
+  <div *ngFor="let url of images" class="image-preview __item" [style.background-image]="'url(' + url + ')'" (click)="openViewer(url)"
+        [style.cursor]="enableViewer ? 'pointer' : 'default'">
     <div class="remove flex p-4 items-end justify-end h-full">
       <app-button *ngIf="mode == 'edit'" theme="red" iconPath="../../../../assets/icons/icon-waste-basket.svg" (click)="onRemove(url)"/>
     </div>
   </div>
 </div>
+
+<app-image-viewer *ngIf="imageViewerService.isOpened$ | async" [image]="imageViewer" (closed)="onCloseViewer()"/>
