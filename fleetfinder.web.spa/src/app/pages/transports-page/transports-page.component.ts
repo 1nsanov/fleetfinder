@@ -149,6 +149,7 @@ export class TransportsPageComponent implements OnInit{
   resetRequest() {
     this.searchTerm = "";
     this.sortParameter = this.sortParameters[0];
+    this.resetPagination();
     this.resetFilter();
   }
 

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {NotificationService} from "../../../services/notification.service";
 
 @Component({
@@ -10,6 +10,9 @@ export class UploadImageComponent {
   @Input() disabled: boolean = false;
 
   @Output() onUpload = new EventEmitter<File | null>();
+
+  @ViewChild('inputFile')
+  inputFile: ElementRef;
 
   constructor(private notification: NotificationService) {
   }
@@ -29,6 +32,7 @@ export class UploadImageComponent {
     }
 
     this.onUpload.emit(file);
+    this.inputFile.nativeElement.value = "";
   }
 
   private getFileExtension(fileName: string): string {
