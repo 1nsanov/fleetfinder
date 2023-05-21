@@ -42,7 +42,8 @@
         <div class="images left-side relative">
           <app-image-preview [images]="transport.Images"/>
           <app-type-transport-sign [type]="TransportType.Cargo"
-                                   [image]="typeImg"/>
+                                   [image]="typeImg"
+                                   [hint]="typeHint"/>
         </div>
         <div class="features right-side">
           <app-field-view-item title="Марка" [text]="transport.Brand"/>

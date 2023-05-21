@@ -36,7 +36,8 @@
                            (remove)="onRemoveImg($event)"/>
         <app-type-transport-sign (click)="modalService.open()"
                                  [type]="currentType"
-                                 [image]="currentTypeImg"/>
+                                 [image]="currentTypeImg"
+                                 [hint]="typeHint"/>
         <div class="flex w-full justify-center mt-4">
           <app-upload-image (onUpload)="onSelectImage($event)" [disabled]="previewImages.length >= 4 || !!previewFile"/>
         </div>

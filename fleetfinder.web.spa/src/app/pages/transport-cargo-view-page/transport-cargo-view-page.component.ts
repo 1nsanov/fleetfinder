@@ -27,6 +27,7 @@ export class TransportCargoViewPageComponent implements OnInit{
   CargoTransportationKindConst = CargoTransportationKindConst;
   TransportType = TransportType;
   typeImg: string | null;
+  typeHint: string = "";
   transport: CargoTransportGetResponse | null;
   bodyLengthWidthHeight: string = "";
   constructor(private route: ActivatedRoute,
@@ -59,8 +60,10 @@ export class TransportCargoViewPageComponent implements OnInit{
 
   setTypeImg(type: CargoType) {
     const itemBox = cargoItems.find(item => item.Value === type);
-    if (itemBox)
+    if (itemBox){
       this.typeImg = this.transportService.getTypeImg(itemBox, TransportType.Cargo);
+      this.typeHint = itemBox.Text;
+    }
   }
 
   routeEdit() {

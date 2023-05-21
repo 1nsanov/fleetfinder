@@ -67,6 +67,7 @@ export class TransportFormPageComponent implements OnInit{
   mode: ModeForm = ModeForm.Add;
   currentType: TransportType | null = null;
   currentTypeImg : string | null = null;
+  typeHint: string = "";
   form: FormGroup<CargoTransportForm>;
   requestImagePost : ImagePostRequest = {
     Folder: FirebaseStorageFolder.CargoTransport,
@@ -312,6 +313,7 @@ export class TransportFormPageComponent implements OnInit{
   onSelectTransportType(item: IInfoBoxTransport, type: TransportType){
     this.currentType = type;
     this.currentTypeImg = this.transportService.getTypeImg(item, type);
+    this.typeHint = item.Text;
     switch (type){
       case TransportType.Cargo:
         this.form.get('Type')?.setValue(item.Value)

@@ -13,6 +13,7 @@ export class TypeTransportSignComponent {
   @Input() image : string | null = "../../../assets/icons/icon-square-plus.svg";
   @Input() type: TransportType | null = null;
   @Input() theme: string = "";
+  @Input() hint: string = "";
 
   @Output() click = new EventEmitter<void>();
   cargo = cargoItems;

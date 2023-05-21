@@ -1,55 +1,77 @@
-.type-transport-sign{
+.wrapper-sign{
   top: -10px;
   right: -10px;
   position: absolute;
-  background: var(--blue-saturated);
-  border-radius: 8px;
-  rotate: 45deg;
-  width: 50px;
-  height: 50px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: var(--transition-base);
+  .hint{
+    opacity: 0;
+    position: absolute;
+    padding: 6px 9px;
+    background: var(--white);
+    border-radius: 8px;
+    box-shadow: var(--shadow-1);
+    font-size: 14px;
+    font-weight: 600;
+    top: 44px;
+    left: -50%;
+    text-align: center;
+    width: 100px;
+    cursor: default;
+    transition: var(--transition-base);
+  }
+  .type-transport-sign{
+    background: var(--blue-saturated);
+    border-radius: 8px;
+    rotate: 45deg;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-base);
 
-  &.cargo{
-    background: var(--black);
-  }
-  &.passenger{
-    background: var(--blue);
-  }
-  &.special{
-    background: var(--light);
-  }
-  img{
-    rotate: -45deg;
-    max-width: 30px;
-  }
-  &:hover{
-    scale: 1.05;
-  }
-
-
-  &.gridable{
-    width: 36px;
-    height: 36px;
-    &.cargo {
-      background: var(--blue-light);
+    &.cargo{
+      background: var(--black);
     }
-    &.passenger {
+    &.passenger{
       background: var(--blue);
     }
-    &.special {
+    &.special{
       background: var(--light);
     }
-    &:hover {
-      scale: 1;
-    }
-    img {
+    img{
       rotate: -45deg;
-      max-width: 24px;
-      filter: brightness(0.15) saturate(0);
+      max-width: 30px;
+    }
+    &:hover{
+      scale: 1.05;
+    }
+    &:hover + .hint{
+      opacity: 1;
+    }
+
+
+    &.gridable{
+      width: 36px;
+      height: 36px;
+      &.cargo {
+        background: var(--blue-light);
+      }
+      &.passenger {
+        background: var(--blue);
+      }
+      &.special {
+        background: var(--light);
+      }
+      &:hover {
+        scale: 1;
+      }
+      img {
+        rotate: -45deg;
+        max-width: 24px;
+        filter: brightness(0.15) saturate(0);
+      }
     }
   }
 }
+
