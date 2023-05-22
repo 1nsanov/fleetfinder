@@ -6,6 +6,7 @@ import {TransportType} from "../models/enums/transport/transport-type.enum";
 import {CargoBodyKind} from "../models/enums/transport/cargo/cargo-body-kind.enum";
 import {CargoTransportationKind} from "../models/enums/transport/cargo/cargo-transportation-kind";
 import {CargoType} from "../models/enums/transport/cargo/cargo-type.enum";
+import {SpecialType} from "../models/enums/transport/special/special-type.enum";
 
 export const RegionConst: Record<Region, string> = {
   [Region.Bender]: 'Бендеры',
@@ -117,3 +118,25 @@ export const CargoTypeConst: Record<CargoType, string> = {
   [CargoType.T10]: 'До 10 т.',
   [CargoType.T20]: 'До 20 т.',
 };
+
+export const SpecialTypeConst: Record<SpecialType, string> = {
+  [SpecialType.Excavator]: 'Экскаватор',
+  [SpecialType.AerialPlatform]: 'Автовышка',
+  [SpecialType.TruckCrane]: 'Автокран',
+  [SpecialType.TruckFuel]: 'Бензовоз',
+  [SpecialType.Bulldozer]: 'Бульдозер',
+  [SpecialType.HydraHammer]: 'Гидромолот',
+  [SpecialType.Grader]: 'Грейдер',
+  [SpecialType.CragLoader]: 'Грефейный погрузчик',
+  [SpecialType.RoadRoller]: 'Дорожный каток',
+  [SpecialType.MiniLoader]: 'Мини-погрузчик',
+  [SpecialType.MiniExcavator]: 'Мини-экскаватор',
+  [SpecialType.WasteCar]: 'Мусоровоз',
+  [SpecialType.DumpTruck]: 'Самосвал',
+  [SpecialType.Tractor]: 'Трактор',
+  [SpecialType.FrontLoader]: 'Фронтальный погрузчик',
+  [SpecialType.TruckCement]: 'Бетоновоз',
+  [SpecialType.ExcavatorLoader]: 'Эскаватор-погрузчик',
+  [SpecialType.Yamobur]: 'Ямобур и сваебой'
+};
+

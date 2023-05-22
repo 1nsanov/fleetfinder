@@ -1,6 +1,9 @@
 ﻿export const namesRoute = {
   HOME : "",
   TRANSPORTS : "transports",
+  TRANSPORTS_CARGO: "cargo",
+  TRANSPORTS_PASSENGER: "passenger",
+  TRANSPORTS_SPECIAL: "special",
   TRANSPORTS_MY : "transports/my",
   ORDERS: "orders",
   ABOUT: "about",

@@ -7,7 +7,7 @@ import {
   ExperienceWorkConst,
   PaymentMethodConst,
   PaymentOrderConst,
-  RegionConst,
+  RegionConst, SpecialTypeConst,
   TransportTypeConst
 } from "./enums.data";
 import {ExperienceWork} from "../models/enums/transport/experience-work.enum";
@@ -17,6 +17,9 @@ import {TransportType} from "../models/enums/transport/transport-type.enum";
 import {CargoBodyKind} from "../models/enums/transport/cargo/cargo-body-kind.enum";
 import {CargoTransportationKind} from "../models/enums/transport/cargo/cargo-transportation-kind";
 import {CargoType} from "../models/enums/transport/cargo/cargo-type.enum";
+import {SpecialType} from "../models/enums/transport/special/special-type.enum";
+import {SortModel} from "../models/sort.model";
+import {TransportSortParameter} from "../models/enums/transport/cargo/cargo-transport-sort-parameter.enum";
 
 export function getRegionItems() {
   return [
@@ -87,10 +90,32 @@ export function getCargoTypeItems() {
   ];
 }
 
+export function getSpecialItems() {
+  return [
+    new DropdownItemModel<SpecialType | null>(null, "Не выбрано"),
+    ...Object.values(SpecialType).map(x =>
+      new DropdownItemModel<SpecialType>(x as SpecialType, SpecialTypeConst[x as SpecialType])
+    )
+  ];
+}
+
 export function getYearItems(){
   const years: DropdownItemModel<string>[] = [new DropdownItemModel<string>('', 'Не выбрано')]
   for (let i = 2023; i >= 1960; i--) {
     years.push(new DropdownItemModel<string>(i.toString(), i.toString()))
   }
   return years;
+}
+
+export function getSortParameters(){
+  return [
+    { Value: new SortModel(TransportSortParameter.Default, false), Preview: "По дате создания (в)" },
+    { Value: new SortModel(TransportSortParameter.Default, true), Preview: "По дате создания (у)" },
+    { Value: new SortModel(TransportSortParameter.PricePerHour, false), Preview: "По цене за час (в)" },
+    { Value: new SortModel(TransportSortParameter.PricePerHour, true), Preview: "По цене за час (у)" },
+    { Value: new SortModel(TransportSortParameter.PricePerShift, false), Preview: "По цене за смену (в)" },
+    { Value: new SortModel(TransportSortParameter.PricePerShift, true), Preview: "По цене за смену (у)" },
+    { Value: new SortModel(TransportSortParameter.PricePerKm, false) , Preview: "По цене  за километр (в)" },
+    { Value: new SortModel(TransportSortParameter.PricePerKm, true) , Preview: "По цене  за километр (у)" },
+  ]
 }

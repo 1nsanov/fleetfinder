@@ -10,11 +10,20 @@ import {CargoTransportGetListRequestDto} from "../api/CargoTransport/get-list.mo
 export class TransportService {
   constructor() { }
 
-  public saveListRequest(key: string, request: CargoTransportGetListRequestDto) : void {
+  public saveListRequest(key: string, request: any) : void {
     const requestJson = JSON.stringify(request);
     localStorage.setItem(key, requestJson);
   }
-  public getListRequest(key: string) : CargoTransportGetListRequestDto | null{
+
+  public getCargoListRequest(key: string) : CargoTransportGetListRequestDto | null {
+    return this.getListRequest(key);
+  }
+
+  public getSpecialListRequest(key: string) : any | null {
+    return this.getListRequest(key);
+  }
+
+  private getListRequest(key: string) : any | null{
     const requestJson = localStorage.getItem(key);
     return requestJson ? JSON.parse(requestJson) : null;
   }

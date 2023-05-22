@@ -40,6 +40,10 @@ import {TransportFormPageComponent} from "./pages/transport-form-page/transport-
 import { FilterWrapperComponent } from './components/common/filter-wrapper/filter-wrapper.component';
 import { UploadImageComponent } from './components/ui/upload-image/upload-image.component';
 import { ImageViewerComponent } from './components/ui/image-viewer/image-viewer.component';
+import { TransportsCargoPageComponent } from './pages/transports/transports-cargo-page/transports-cargo-page.component';
+import { TransportsSpecialPageComponent } from './pages/transports/transports-special-page/transports-special-page.component';
+import { TransportsPassengerPageComponent } from './pages/transports/transports-passenger-page/transports-passenger-page.component';
+import { TransportsViewComponent } from './components/common/transports-view/transports-view.component';
 
 @NgModule({
   declarations: [
@@ -76,6 +80,10 @@ import { ImageViewerComponent } from './components/ui/image-viewer/image-viewer.
     FilterWrapperComponent,
     UploadImageComponent,
     ImageViewerComponent,
+    TransportsCargoPageComponent,
+    TransportsSpecialPageComponent,
+    TransportsPassengerPageComponent,
+    TransportsViewComponent,
   ],
     imports: [
         BrowserModule, HttpClientModule, AppRoutingModule, NgOptimizedImage, ReactiveFormsModule,

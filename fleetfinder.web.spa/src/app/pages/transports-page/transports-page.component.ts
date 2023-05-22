@@ -13,8 +13,10 @@ import {CargoType} from "../../models/enums/transport/cargo/cargo-type.enum";
 import {TransportFilter} from "../../models/transport/transport-filter.model";
 import {Region} from "../../models/enums/common/region.enum";
 import {IdentifyApiService} from "../../api/Identify/identify.api.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {TransportService} from "../../services/transport.service";
+import {namesRoute} from "../../data/names-route";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-transports-page',
@@ -22,138 +24,55 @@ import {TransportService} from "../../services/transport.service";
   styleUrls: ['./transports-page.component.scss']
 })
 export class TransportsPageComponent implements OnInit{
-  //#region Consts
-  currentTab: TransportType = TransportType.Cargo;
+  currentTab: TransportType | null = null;
   tab = TransportType;
-  TransportType = TransportType;
-  sortParameters: DropdownItemModel<SortModel<TransportSortParameter>>[] = [
-    { Value: new SortModel(TransportSortParameter.Default, false), Preview: "По дате создания (в)" },
-    { Value: new SortModel(TransportSortParameter.Default, true), Preview: "По дате создания (у)" },
-    { Value: new SortModel(TransportSortParameter.PricePerHour, false), Preview: "По цене за час (в)" },
-    { Value: new SortModel(TransportSortParameter.PricePerHour, true), Preview: "По цене за час (у)" },
-    { Value: new SortModel(TransportSortParameter.PricePerShift, false), Preview: "По цене за смену (в)" },
-    { Value: new SortModel(TransportSortParameter.PricePerShift, true), Preview: "По цене за смену (у)" },
-    { Value: new SortModel(TransportSortParameter.PricePerKm, false) , Preview: "По цене  за километр (в)" },
-    { Value: new SortModel(TransportSortParameter.PricePerKm, true) , Preview: "По цене  за километр (у)" },
-  ]
-  CargoTypeItems = getCargoTypeItems();
-  RegionItems = getRegionItems();
-  //#endregion
-  searchTerm: string = "";
+  private routerSubscription: Subscription = new Subscription();
+  namesRoute = namesRoute;
   titlePage = "Поиск транспорта";
-  sortParameter = this.sortParameters[0];
-  filterCargoForm : TransportFilter<CargoType> = new TransportFilter()
-  items : IGridItem[] | null = null;
-  totalCount : number = 0;
-  isLoad = false;
-  pagination = { page: 1, pageSize: 6, total: 0 };
+  rootPath: string = "";
 
-  valueDropdowns = {
-    TypeFilter: this.CargoTypeItems.find(x => x.Value == null) ?? null,
-    RegionFilter: this.RegionItems.find(x => x.Value == null) ?? null,
-  }
-
-  constructor(private cargoTransportApiService: CargoTransportApiService,
-              private identifyService: IdentifyApiService,
-              private router: Router,
-              private transportService: TransportService) {
+  constructor(private router: Router,) {
   }
 
   ngOnInit(): void {
-    this.setUserFilter();
-    this.getListRequest(this.transportService.getListRequest(this.router.url));
+    this.setTitlePage();
+    this.changeTab(this.router.url)
+    this.routerSubscription = this.router.events.subscribe( (event) => {
+      if (event instanceof NavigationEnd) {
+        this.changeTab(event.url);
+      }
+    });
   }
 
-  getListRequest(request : CargoTransportGetListRequestDto | null = null){
-    this.isLoad = true;
-    this.items = null;
-    const isPreloadRequest = request != null;
-    if (request == null){
-      request = new CargoTransportGetListRequestDto;
-      request.skipCount = this.pagination.page * this.pagination.pageSize - this.pagination.pageSize;
-      request.filter = this.filterCargoForm;
-      request.filter.TitleFilter = this.searchTerm;
-      request.sortParameter = this.sortParameter.Value.Parameter;
-      request.sortDesc = this.sortParameter.Value.ByDesc;
-      this.transportService.saveListRequest(this.router.url, request);
+  changeTab(url: string) {
+    this.currentTab = this.getTabByRoute(url);
+  }
+
+  routeTo(childPath: string){
+    this.router.navigate([`${this.rootPath}/${childPath}`])
+  }
+
+  getTabByRoute(route: string){
+    switch (route){
+      case `${this.rootPath}/${namesRoute.TRANSPORTS_CARGO}`:
+        return TransportType.Cargo;
+      case `${this.rootPath}/${namesRoute.TRANSPORTS_PASSENGER}`:
+        return TransportType.Passenger;
+      case `${this.rootPath}/${namesRoute.TRANSPORTS_SPECIAL}`:
+        return TransportType.Special;
+      default:
+        return null;
     }
-    else {
-      this.valueDropdowns.TypeFilter = this.CargoTypeItems.find(x => x.Value == request?.filter.TypeFilter) ?? null;
-      this.valueDropdowns.RegionFilter = this.RegionItems.find(x => x.Value == request?.filter.RegionFilter) ?? null;
-      this.sortParameter = this.sortParameters.find(x => x.Value.Parameter == request?.sortParameter && x.Value.ByDesc == request?.sortDesc) ?? this.sortParameters[0];
-      this.searchTerm = request.filter.TitleFilter ?? '';
-    }
-    this.cargoTransportApiService.getList(request)
-      .subscribe(res => {
-        this.items = res.Items;
-        this.totalCount = res.TotalCount;
-        this.pagination = {...this.pagination, total: this.totalCount}
-        if (isPreloadRequest && request?.skipCount && request.skipCount > 0)
-          this.pagination = {...this.pagination, page: Math.ceil(request.skipCount / this.pagination.pageSize) + 1}
-        this.isLoad = false;
-      });
   }
 
-  changeTab(tab: TransportType) {
-    this.currentTab = tab;
-  }
-
-  onSelect(item: DropdownItemModel<any>) {
-    this.sortParameter = item;
-    this.setDefaultPagination();
-    this.getListRequest();
-  }
-
-  public onPageChange(pagination: PaginationValue): void {
-    this.pagination = pagination;
-    this.getListRequest();
-  }
-
-  setDefaultPagination(){
-    this.pagination = { page: 1, pageSize: 6, total: 0 };
-  }
-  onSelectTypeFilter(item: DropdownItemModel<CargoType>){
-    if (item instanceof Event) return;
-    this.filterCargoForm.TypeFilter = item.Value;
-    this.valueDropdowns.TypeFilter = item;
-    this.resetPagination();
-    this.getListRequest();
-  }
-  onSelectRegionFilter(item: DropdownItemModel<Region>){
-    if (item instanceof Event) return;
-    this.filterCargoForm.RegionFilter = item.Value;
-    this.valueDropdowns.RegionFilter = item;
-    this.resetPagination();
-    this.getListRequest();
-  }
-
-  resetFilter() {
-    this.valueDropdowns.TypeFilter = this.CargoTypeItems.find(x => x.Value == null) ?? null;
-    this.filterCargoForm.TypeFilter = null;
-    this.valueDropdowns.RegionFilter = this.RegionItems.find(x => x.Value == null) ?? null;
-    this.filterCargoForm.RegionFilter = null;
-    this.getListRequest();
-  }
-
-  setUserFilter() {
+  setTitlePage() {
     if (this.router.url.includes('my')){
-      this.filterCargoForm.UserFilter = this.identifyService.claims?.Id ?? null;
+      this.rootPath = `/${namesRoute.TRANSPORTS_MY}`
       this.titlePage = "Ваш транспорт";
     }
-  }
-
-  resetPagination() {
-    this.pagination = { page: 1, pageSize: 6, total: 0 };
-  }
-
-  resetRequest() {
-    this.searchTerm = "";
-    this.sortParameter = this.sortParameters[0];
-    this.resetPagination();
-    this.resetFilter();
-  }
-
-  get countFilters() : number {
-    return Object.values(this.valueDropdowns).filter(x => x?.Value != null).length;
+    else {
+      this.rootPath = `/${namesRoute.TRANSPORTS}`
+      this.titlePage = "Поиск транспорта";
+    }
   }
 }
