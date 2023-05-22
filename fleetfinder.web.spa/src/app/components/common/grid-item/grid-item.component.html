@@ -34,21 +34,17 @@
         </div>
         <div class="right-side">
           <div class="base-info-block">
-            <div *ngIf="item.Brand" class="item">
-              <h4>Марка</h4>
-              <p>{{item.Brand}}</p>
-            </div>
-            <div *ngIf="item.YearIssue" class="item">
-              <h4>Год выпуска</h4>
-              <p>{{item.YearIssue | measurement:'г.'}}</p>
+            <div class="item">
+              <h4>Тип</h4>
+              <p>{{getTypeName(item.Type)}}</p>
             </div>
             <div *ngIf="item.TransportationKind" class="item">
               <h4>Вид перевозок</h4>
               <p>{{CargoTransportationKindConst[item.TransportationKind]}}</p>
             </div>
-            <div *ngIf="item.ExperienceWork" class="item">
-              <h4>Опыт работы</h4>
-              <p>{{ExperienceWorkConst[item.ExperienceWork]}}</p>
+            <div *ngIf="item.Description" class="item">
+              <h4>Описание</h4>
+              <p>{{item.Description.length > 50 ? item.Description.substring(0, 50) + '...' : item.Description}}</p>
             </div>
           </div>
         </div>
@@ -78,7 +74,7 @@
           </div>
         </div>
         <div class="right-side justify-end">
-          <app-contact-card [contact]="item.Contact" />
+          <app-contact-card [contact]="item.Contact" mode="short"/>
         </div>
       </div>
     </div>

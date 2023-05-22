@@ -1,7 +1,6 @@
 ﻿import {TransportSortParameter} from "../../models/enums/transport/cargo/cargo-transport-sort-parameter.enum";
 import {TransportFilter} from "../../models/transport/transport-filter.model";
 import {CargoType} from "../../models/enums/transport/cargo/cargo-type.enum";
-import {CargoTransportItem} from "../Common/Transport/CargoTransportItem";
 import {TransportItem} from "../Common/Transport/TransportItem";
 
 export class CargoTransportGetListRequestDto {

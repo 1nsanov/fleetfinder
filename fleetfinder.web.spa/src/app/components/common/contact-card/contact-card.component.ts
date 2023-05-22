@@ -8,4 +8,5 @@ import {Contact} from "../../../api/Common/Contact";
 })
 export class ContactCardComponent {
   @Input() contact: Contact;
+  @Input() mode: string = "full";
 }

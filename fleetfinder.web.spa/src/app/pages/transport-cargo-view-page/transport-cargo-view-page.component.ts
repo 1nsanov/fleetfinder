@@ -47,6 +47,7 @@ export class TransportCargoViewPageComponent implements OnInit{
   getItem(id: number){
     this.cargoTransportService.get(id).pipe(
       catchError((error: HttpErrorResponse) => {
+        this.router.navigate([`/${namesRoute.TRANSPORTS}`])
         return throwError(error);
       })
     ).subscribe((res) => {

@@ -3,10 +3,7 @@ import {navTab, NavTab} from "../../models/enums/nav-tab.enum";
 import {NavigationEnd, Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {namesRoute} from "../../data/names-route";
-import {ModalService} from "../../services/modal.service";
 import {IdentifyApiService} from "../../api/Identify/identify.api.service";
-import {TimeoutService} from "../../services/timeout.service";
-import {TransportService} from "../../services/transport.service";
 
 @Component({
   selector: 'app-layout-header-nav',
@@ -110,6 +107,9 @@ export class LayoutHeaderNavComponent implements OnInit, OnDestroy{
       case `/${namesRoute.HOME}`:
         return NavTab.Home;
       case `/${namesRoute.TRANSPORTS}`:
+      case `/${namesRoute.TRANSPORTS}/${namesRoute.TRANSPORTS_CARGO}`:
+      case `/${namesRoute.TRANSPORTS}/${namesRoute.TRANSPORTS_PASSENGER}`:
+      case `/${namesRoute.TRANSPORTS}/${namesRoute.TRANSPORTS_SPECIAL}`:
         return NavTab.Transports;
       case `/${namesRoute.ORDERS}`:
         return NavTab.Orders
