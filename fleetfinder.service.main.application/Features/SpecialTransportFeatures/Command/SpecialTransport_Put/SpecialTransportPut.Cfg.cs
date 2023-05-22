@@ -1,11 +1,10 @@
 ﻿using fleetfinder.service.main.application.Common.FeatureModels;
-using fleetfinder.service.main.domain.Bases;
-using fleetfinder.service.main.domain.Transport.Cargo;
+using fleetfinder.service.main.domain.Transport.Special;
 using Riok.Mapperly.Abstractions;
 
-namespace fleetfinder.service.main.application.Features.CargoTransportFeatures.Command.CargoTransport_Post;
+namespace fleetfinder.service.main.application.Features.SpecialTransportFeatures.Command.SpecialTransport_Put;
 
-public static partial class CargoTransportPost
+public static partial class SpecialTransportPut
 {
     #region Validator
 
@@ -38,9 +37,6 @@ public static partial class CargoTransportPost
                     .WithMessage("Поле '{PropertyName}' не может превышать {MaxLength} символов.")
                     .Unless(x => string.IsNullOrEmpty(x.Description));
 
-                RuleFor(x => x.Body)
-                    .SetValidator(new BodyDtoValidator());
-
                 RuleFor(x => x.Images)
                     .SetValidator(new ImagesValidator());
             }
@@ -65,33 +61,6 @@ public static partial class CargoTransportPost
                     .Unless(x => x is null);
             }
         }
-
-        public class BodyDtoValidator : AbstractValidator<BodyDto>
-        {
-            public BodyDtoValidator()
-            {
-                RuleFor(x => x.LoadCapacity)
-                    .GreaterThan(0).WithName("Грузоподъемность")
-                    .WithMessage("Поле '{PropertyName}' должно быть больше 0.")
-                    .Unless(x => x is null);
-                
-                RuleFor(x => x.Length)
-                    .GreaterThan(0).WithName("Длина").WithMessage("Поле '{PropertyName}' должно быть больше 0.")
-                    .Unless(x => x is null);
-
-                RuleFor(x => x.Width)
-                    .GreaterThan(0).WithName("Ширина").WithMessage("Поле '{PropertyName}' должно быть больше 0.")
-                    .Unless(x => x is null);
-
-                RuleFor(x => x.Height)
-                    .GreaterThan(0).WithName("Высота").WithMessage("Поле '{PropertyName}' должно быть больше 0.")
-                    .Unless(x => x is null);
-
-                RuleFor(x => x.Volume)
-                    .GreaterThan(0).WithName("Объем").WithMessage("Поле '{PropertyName}' должно быть больше 0.")
-                    .Unless(x => x is null);
-            }
-        }
         
         public class ImagesValidator : AbstractValidator<List<string>>
         {
@@ -111,11 +80,11 @@ public static partial class CargoTransportPost
     #endregion
 
     [Mapper(PropertyNameMappingStrategy = PropertyNameMappingStrategy.CaseInsensitive)]
-    partial class Mapping : IMapCodeGen<RequestDto, CargoTransport>
+    partial class Mapping : IMapCodeGen<RequestDto, SpecialTransport>
     {
-        public partial CargoTransport Map(RequestDto source);
+        public partial SpecialTransport Map(RequestDto source);
 
-        private List<CargoTransportImage> Map(List<string> source)
-            => source.ConvertAll(img => new CargoTransportImage { Url = img });
+        private List<SpecialTransportImage> Map(List<string> source)
+            => source.ConvertAll(img => new SpecialTransportImage { Url = img });
     }
 }

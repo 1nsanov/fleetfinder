@@ -13,7 +13,7 @@ import {ResponseSuccessModel} from "../Common/ResponseSuccessModel";
   providedIn: 'root'
 })
 export class CargoTransportApiService {
-  url : string = environment.apiUrl + "cargo/transport"
+  url : string = environment.apiUrl + "transport/cargo"
 
   constructor(private http: HttpClient) {
   }
@@ -32,7 +32,7 @@ export class CargoTransportApiService {
     return this.http.get<CargoTransportGetResponse>(this.url, { params: params });
   }
 
-  public getList(request : CargoTransportGetListRequestDto)  : Observable<CargoTransportGetListResponseDto>  {
+  public getList(request : CargoTransportGetListRequestDto) : Observable<CargoTransportGetListResponseDto>  {
     const params = new HttpParams()
       .set('pageSize', request.pageSize)
       .set('skipCount', request.skipCount)

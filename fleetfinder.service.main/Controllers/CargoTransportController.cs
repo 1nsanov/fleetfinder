@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace fleetfinder.service.main.Controllers;
 
 [ApiController]
-[Route("api/cargo/transport")]
+[Route("api/transport/cargo")]
 public class CargoTransportController : HeadersController
 {
     private readonly IMediator _mediator;
@@ -51,7 +51,7 @@ public class CargoTransportController : HeadersController
         CancellationToken cancellationToken,
         [FromQuery] int pageSize = 6,
         [FromQuery] int skipCount = 0,
-        [FromQuery] CargoTransportSortParameter sortParameter = CargoTransportSortParameter.Default,
+        [FromQuery] TransportSortParameter sortParameter = TransportSortParameter.Default,
         [FromQuery] bool sortDesc = false,
         [FromQuery] CargoTransportGetList.RequestFilter? requestFilter = null)
     {

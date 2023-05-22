@@ -1,11 +1,11 @@
 ﻿using fleetfinder.service.main.application.Common.FeatureModels;
-using fleetfinder.service.main.domain.Transport.Cargo;
+using fleetfinder.service.main.domain.Transport.Special;
 using fleetfinder.service.main.domain.Users;
 using Riok.Mapperly.Abstractions;
 
-namespace fleetfinder.service.main.application.Features.CargoTransportFeatures.Query.CargoTransport_GetList;
+namespace fleetfinder.service.main.application.Features.SpecialTransportFeatures.Query.SpecialTransport_GetList;
 
-public static partial class CargoTransportGetList
+public static partial class SpecialTransportGetList
 {
     #region Validator
 
@@ -21,14 +21,14 @@ public static partial class CargoTransportGetList
     #endregion
     
     [Mapper(PropertyNameMappingStrategy = PropertyNameMappingStrategy.CaseInsensitive)]
-    partial class Mapping : IMapCodeGen<List<CargoTransport>, List<CargoTransportDto>>
+    partial class Mapping : IMapCodeGen<List<SpecialTransport>, List<SpecialTransportDto>>
     {
-        public partial List<CargoTransportDto> Map(List<CargoTransport> source);
+        public partial List<SpecialTransportDto> Map(List<SpecialTransport> source);
 
-        [MapProperty(nameof(CargoTransport.User), nameof(CargoTransportDto.Contact))]
-        public partial CargoTransportDto Map(CargoTransport source);
+        [MapProperty(nameof(SpecialTransport.User), nameof(SpecialTransportDto.Contact))]
+        public partial SpecialTransportDto Map(SpecialTransport source);
 
-        private List<string> Map(List<CargoTransportImage> source) 
+        private List<string> Map(List<SpecialTransportImage> source) 
             => source.Select(x => x.Url).ToList();
         
         private ContactDto Map(User source)

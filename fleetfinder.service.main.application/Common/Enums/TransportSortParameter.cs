@@ -1,6 +1,6 @@
 ﻿namespace fleetfinder.service.main.application.Common.Enums;
 
-public enum CargoTransportSortParameter
+public enum TransportSortParameter
 {
     Default,
     PricePerHour,

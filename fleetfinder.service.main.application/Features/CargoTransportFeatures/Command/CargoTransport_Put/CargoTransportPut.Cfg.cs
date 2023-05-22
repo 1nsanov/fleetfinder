@@ -1,4 +1,5 @@
-﻿using fleetfinder.service.main.domain.Transport.Cargo;
+﻿using fleetfinder.service.main.application.Common.FeatureModels;
+using fleetfinder.service.main.domain.Transport.Cargo;
 using Riok.Mapperly.Abstractions;
 
 namespace fleetfinder.service.main.application.Features.CargoTransportFeatures.Command.CargoTransport_Put;
@@ -22,9 +23,6 @@ public static partial class CargoTransportPut
                     .NotEmpty().WithName("Заголовок").WithMessage("Поле '{PropertyName}' не может быть пустым.")
                     .MaximumLength(100).WithName("Заголовок")
                     .WithMessage("Поле '{PropertyName}' не может превышать {MaxLength} символов.");
-
-                RuleFor(x => x.Region)
-                    .IsInEnum().WithName("Регион").WithMessage("Поле '{PropertyName}' не может быть пустым.");
 
                 RuleFor(x => x.Brand)
                     .MaximumLength(50).WithName("Бренд")

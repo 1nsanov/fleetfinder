@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {TransportType} from "../../models/enums/transport/transport-type.enum";
 import {CargoTransportApiService} from "../../api/CargoTransport/cargo-transport.api.service";
-import {CargoTransportSortParameter} from "../../models/enums/transport/cargo/cargo-transport-sort-parameter.enum";
+import {TransportSortParameter} from "../../models/enums/transport/cargo/cargo-transport-sort-parameter.enum";
 import {DropdownItemModel} from "../../models/dropdown-item.model";
 import {SortModel} from "../../models/sort.model";
 import {CargoTransportGetListRequestDto} from "../../api/CargoTransport/get-list.models";
@@ -26,15 +26,15 @@ export class TransportsPageComponent implements OnInit{
   currentTab: TransportType = TransportType.Cargo;
   tab = TransportType;
   TransportType = TransportType;
-  sortParameters: DropdownItemModel<SortModel<CargoTransportSortParameter>>[] = [
-    { Value: new SortModel(CargoTransportSortParameter.Default, false), Preview: "По дате создания (в)" },
-    { Value: new SortModel(CargoTransportSortParameter.Default, true), Preview: "По дате создания (у)" },
-    { Value: new SortModel(CargoTransportSortParameter.PricePerHour, false), Preview: "По цене за час (в)" },
-    { Value: new SortModel(CargoTransportSortParameter.PricePerHour, true), Preview: "По цене за час (у)" },
-    { Value: new SortModel(CargoTransportSortParameter.PricePerShift, false), Preview: "По цене за смену (в)" },
-    { Value: new SortModel(CargoTransportSortParameter.PricePerShift, true), Preview: "По цене за смену (у)" },
-    { Value: new SortModel(CargoTransportSortParameter.PricePerKm, false) , Preview: "По цене  за километр (в)" },
-    { Value: new SortModel(CargoTransportSortParameter.PricePerKm, true) , Preview: "По цене  за километр (у)" },
+  sortParameters: DropdownItemModel<SortModel<TransportSortParameter>>[] = [
+    { Value: new SortModel(TransportSortParameter.Default, false), Preview: "По дате создания (в)" },
+    { Value: new SortModel(TransportSortParameter.Default, true), Preview: "По дате создания (у)" },
+    { Value: new SortModel(TransportSortParameter.PricePerHour, false), Preview: "По цене за час (в)" },
+    { Value: new SortModel(TransportSortParameter.PricePerHour, true), Preview: "По цене за час (у)" },
+    { Value: new SortModel(TransportSortParameter.PricePerShift, false), Preview: "По цене за смену (в)" },
+    { Value: new SortModel(TransportSortParameter.PricePerShift, true), Preview: "По цене за смену (у)" },
+    { Value: new SortModel(TransportSortParameter.PricePerKm, false) , Preview: "По цене  за километр (в)" },
+    { Value: new SortModel(TransportSortParameter.PricePerKm, true) , Preview: "По цене  за километр (у)" },
   ]
   CargoTypeItems = getCargoTypeItems();
   RegionItems = getRegionItems();

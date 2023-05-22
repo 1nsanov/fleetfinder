@@ -1,4 +1,5 @@
-﻿using fleetfinder.service.main.domain.Enums.Common;
+﻿using fleetfinder.service.main.application.Common.FeatureModels;
+using fleetfinder.service.main.domain.Enums.Common;
 using fleetfinder.service.main.domain.Enums.Transport;
 using fleetfinder.service.main.domain.Enums.Transport.Cargo;
 
@@ -20,21 +21,6 @@ public static partial class CargoTransportPost
         BodyDto Body,
         CargoTransportationKind? TransportationKind,
         List<string> Images
-    );
-
-    public record PriceDto(
-        decimal? PerHour,
-        decimal? PerShift,
-        decimal? PerKm
-    );
-
-    public record BodyDto(
-        decimal? LoadCapacity,
-        decimal? Length,
-        decimal? Width,
-        decimal? Height,
-        decimal? Volume,
-        CargoBodyKind? Kind
     );
 
     public record ResponseDto(long Id);

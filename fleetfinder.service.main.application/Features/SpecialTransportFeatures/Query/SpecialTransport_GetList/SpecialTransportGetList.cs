@@ -1,10 +1,10 @@
 ﻿using fleetfinder.service.main.application.Common.Enums;
-using fleetfinder.service.main.domain.Transport.Cargo;
+using fleetfinder.service.main.domain.Transport.Special;
 using Microsoft.EntityFrameworkCore;
 
-namespace fleetfinder.service.main.application.Features.CargoTransportFeatures.Query.CargoTransport_GetList;
+namespace fleetfinder.service.main.application.Features.SpecialTransportFeatures.Query.SpecialTransport_GetList;
 
-public static partial class CargoTransportGetList
+public static partial class SpecialTransportGetList
 {
     public record Query(
         int PageSize,
@@ -26,7 +26,7 @@ public static partial class CargoTransportGetList
 
         public async Task<ResponseDto> Handle(Query request, CancellationToken cancellationToken)
         {
-            var query = _queryDbContext.CargoTransport
+            var query = _queryDbContext.SpecialTransport
                 .Include(ct => ct.User)
                 .AsQueryable();
 
@@ -37,17 +37,17 @@ public static partial class CargoTransportGetList
             
             var totalCount = query.Count();
             if (totalCount == 0)
-                return new ResponseDto(new List<CargoTransportDto>(), 0);
+                return new ResponseDto(new List<SpecialTransportDto>(), 0);
             
             var entity = await query
                 .Skip(request.SkipCount)
                 .Take(request.PageSize)
                 .ToListAsync(cancellationToken);
             
-            return new ResponseDto(_mapper.Map<List<CargoTransport>, List<CargoTransportDto>>(entity), totalCount);
+            return new ResponseDto(_mapper.Map<List<SpecialTransport>, List<SpecialTransportDto>>(entity), totalCount);
         }
 
-        private IQueryable<CargoTransport> Sort(IQueryable<CargoTransport> query, TransportSortParameter sortParameter)
+        private IQueryable<SpecialTransport> Sort(IQueryable<SpecialTransport> query, TransportSortParameter sortParameter)
         {
             return sortParameter switch
             {
@@ -59,7 +59,7 @@ public static partial class CargoTransportGetList
             };
         }
 
-        private IQueryable<CargoTransport> Filter(IQueryable<CargoTransport> query, RequestFilter? requestFilter)
+        private IQueryable<SpecialTransport> Filter(IQueryable<SpecialTransport> query, RequestFilter? requestFilter)
         {
             if (requestFilter is null)
                 return query;

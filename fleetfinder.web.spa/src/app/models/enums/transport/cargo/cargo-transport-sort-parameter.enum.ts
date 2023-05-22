@@ -1,4 +1,4 @@
-﻿export enum CargoTransportSortParameter
+﻿export enum TransportSortParameter
 {
   Default,
   PricePerHour,

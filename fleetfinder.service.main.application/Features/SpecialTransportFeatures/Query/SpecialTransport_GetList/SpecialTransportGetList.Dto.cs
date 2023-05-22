@@ -1,15 +1,15 @@
 ﻿using fleetfinder.service.main.application.Common.FeatureModels;
 using fleetfinder.service.main.domain.Enums.Common;
 using fleetfinder.service.main.domain.Enums.Transport;
-using fleetfinder.service.main.domain.Enums.Transport.Cargo;
+using fleetfinder.service.main.domain.Enums.Transport.Special;
 
-namespace fleetfinder.service.main.application.Features.CargoTransportFeatures.Query.CargoTransport_GetList;
+namespace fleetfinder.service.main.application.Features.SpecialTransportFeatures.Query.SpecialTransport_GetList;
 
-public static partial class CargoTransportGetList
+public static partial class SpecialTransportGetList
 {
-    public record ResponseDto(List<CargoTransportDto> Items, int TotalCount);
+    public record ResponseDto(List<SpecialTransportDto> Items, int TotalCount);
 
-    public record CargoTransportDto(
+    public record SpecialTransportDto(
         long Id,
         string Title,
         Region Region,
@@ -18,8 +18,7 @@ public static partial class CargoTransportGetList
         ExperienceWork? ExperienceWork,
         PriceDto Price,
         string? Description,
-        CargoType Type,
-        CargoTransportationKind? TransportationKind,
+        SpecialType Type,
         List<string> Images,
         ContactDto Contact
     );
@@ -28,6 +27,6 @@ public static partial class CargoTransportGetList
         long? UserFilter,
         string? TitleFilter,
         Region? RegionFilter,
-        CargoType? TypeFilter
+        SpecialType? TypeFilter
     );
 }
