@@ -16,23 +16,11 @@
     margin-bottom: 5px;
     .title{
       display: flex;
-      justify-content: space-between;
       gap: 20px;
       h3{
         color: var(--blue-light);
         font-weight: 700;
         font-size: 20px;
-      }
-      .id {
-        font-weight: 700;
-        font-size: 10px;
-        line-height: 15px;
-        svg{
-          margin-right: 3px;
-          path {
-            fill: var(--white);
-          }
-        }
       }
     }
     .region{
@@ -118,6 +106,82 @@
             font-size: 12px;
             text-align: right;
             width: 50%;
+          }
+        }
+      }
+    }
+  }
+
+  &.cargo {
+    background: var(--black);
+    color: var(--white);
+    .header {
+      .title {
+        h3 {
+          color: var(--blue-light);
+        }
+      }
+      .region {
+        svg path {
+          fill: var(--white);
+        }
+      }
+    }
+    .header-separator{
+      background: var(--blue-light);
+    }
+    .main-content {
+      .left-side {
+        .prices {
+          .banner {
+            background-image: url("../../../../assets/icons/icon-price-banner.svg");
+          }
+        }
+      }
+      .right-side{
+        .base-info-block{
+          .item {
+            border-bottom: 1px solid var(--blue-light);
+          }
+        }
+      }
+    }
+  }
+  &.passenger {
+    background: var(--blue);
+    color: var(--white);
+  }
+  &.special {
+    background: var(--blue-light);
+    color: var(--black);
+    .header {
+      .title {
+        h3 {
+          color: var(--blue);
+        }
+      }
+      .region {
+        svg path {
+          fill: var(--black);
+        }
+      }
+    }
+    .header-separator{
+      background: var(--blue);
+    }
+    .main-content{
+      .left-side {
+        .prices {
+          .banner {
+            background-image: url("../../../../assets/icons/icon-price-banner-blue.svg");
+            color: var(--blue-light);
+          }
+        }
+      }
+      .right-side{
+        .base-info-block{
+          .item {
+            border-bottom: 1px solid var(--blue);
           }
         }
       }

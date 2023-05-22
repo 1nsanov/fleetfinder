@@ -7,6 +7,8 @@ import {IGridItem} from "../../../models/interfaces/grid-item.interface";
 import {CargoTransportApiService} from "../../../api/CargoTransport/cargo-transport.api.service";
 import {namesRoute} from "../../../data/names-route";
 import {Router} from "@angular/router";
+import {specialItems} from "../../../data/transport/special-items";
+import {SpecialType} from "../../../models/enums/transport/special/special-type.enum";
 
 @Component({
   selector: 'app-grid-item',
@@ -30,15 +32,14 @@ export class GridItemComponent {
     this.router.navigate([namesRoute.TRANSPORT_CARGO_VIEW, this.item.Id]);
   }
 
-  getTypeImg(item: any, type: TransportType){
-    this.type = type;
-    switch (type){
+  getTypeImg(item: any){
+    switch (this.type){
       case TransportType.Cargo:
         return  '../../../../assets/icons/transport/cargo/icon-cargo-' + cargoItems.find(x => x.Value as CargoType === item)?.Icon + '.svg';
       case TransportType.Passenger:
         return  '../../../../assets/icons/transport/passenger/icon-passenger-' + item.Icon + '.svg';
       case TransportType.Special:
-        return  '../../../../assets/icons/transport/special/icon-' + item.Icon + '.png';
+        return  '../../../../assets/icons/transport/special/icon-' + specialItems.find(x => x.Value as SpecialType === item)?.Icon + '.png';
     }
   }
 }

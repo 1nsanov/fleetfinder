@@ -3,6 +3,7 @@ import {IInfoBoxTransport} from "../models/interfaces/info-box-transport.interfa
 import {CargoType} from "../models/enums/transport/cargo/cargo-type.enum";
 import {TransportType} from "../models/enums/transport/transport-type.enum";
 import {CargoTransportGetListRequestDto} from "../api/CargoTransport/get-list.models";
+import {SpecialTransportGetListRequestDto} from "../api/SpecialTransport/get-list.models";
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class TransportService {
     return this.getListRequest(key);
   }
 
-  public getSpecialListRequest(key: string) : any | null {
+  public getSpecialListRequest(key: string) : SpecialTransportGetListRequestDto | null {
     return this.getListRequest(key);
   }
 

@@ -2,7 +2,6 @@ import {Component, Input, OnInit} from '@angular/core';
 import {DropdownItemModel} from "../../../models/dropdown-item.model";
 import {getCargoTypeItems, getRegionItems, getSortParameters, getSpecialItems} from "../../../data/dropdown-items.data";
 import {TransportFilter} from "../../../models/transport/transport-filter.model";
-import {CargoType} from "../../../models/enums/transport/cargo/cargo-type.enum";
 import {IGridItem} from "../../../models/interfaces/grid-item.interface";
 import { TransportType } from 'src/app/models/enums/transport/transport-type.enum';
 import {CargoTransportGetListRequestDto} from "../../../api/CargoTransport/get-list.models";
@@ -12,6 +11,8 @@ import {CargoTransportApiService} from "../../../api/CargoTransport/cargo-transp
 import {IdentifyApiService} from "../../../api/Identify/identify.api.service";
 import {Router} from "@angular/router";
 import {TransportService} from "../../../services/transport.service";
+import {SpecialTransportGetListRequestDto} from "../../../api/SpecialTransport/get-list.models";
+import {SpecialTransportApiService} from "../../../api/SpecialTransport/special-transport.api.service";
 
 interface ValueDropdowns {
   TypeFilter: DropdownItemModel<any | null> | null;
@@ -47,6 +48,7 @@ export class TransportsViewComponent implements OnInit{
   }
 
   constructor(private cargoTransportApiService: CargoTransportApiService,
+              private specialTransportApiService: SpecialTransportApiService,
               private identifyService: IdentifyApiService,
               private router: Router,
               private transportService: TransportService) {
@@ -64,7 +66,7 @@ export class TransportsViewComponent implements OnInit{
     this.items = null;
     const isPreloadRequest = request != null;
     if (request == null){
-      request = new CargoTransportGetListRequestDto;
+      request = new CargoTransportGetListRequestDto();
       request.skipCount = this.pagination.page * this.pagination.pageSize - this.pagination.pageSize;
       request.filter = this.filterCargoForm;
       request.filter.TitleFilter = this.searchTerm;
@@ -89,10 +91,34 @@ export class TransportsViewComponent implements OnInit{
       });
   }
 
-  getSpecialItems(request : any | null = null) {
+  getSpecialItems(request : SpecialTransportGetListRequestDto | null = null) {
     this.isLoad = true;
     this.items = null;
-    this.isLoad = false;
+    const isPreloadRequest = request != null;
+    if (request == null){
+      request = new SpecialTransportGetListRequestDto();
+      request.skipCount = this.pagination.page * this.pagination.pageSize - this.pagination.pageSize;
+      request.filter = this.filterCargoForm;
+      request.filter.TitleFilter = this.searchTerm;
+      request.sortParameter = this.sortParameter.Value.Parameter;
+      request.sortDesc = this.sortParameter.Value.ByDesc;
+      this.transportService.saveListRequest(this.router.url, request);
+    }
+    else {
+      this.valueDropdowns.TypeFilter = this.CargoTypeItems.find(x => x.Value == request?.filter.TypeFilter) ?? null;
+      this.valueDropdowns.RegionFilter = this.RegionItems.find(x => x.Value == request?.filter.RegionFilter) ?? null;
+      this.sortParameter = this.sortParameters.find(x => x.Value.Parameter == request?.sortParameter && x.Value.ByDesc == request?.sortDesc) ?? this.sortParameters[0];
+      this.searchTerm = request.filter.TitleFilter ?? '';
+    }
+    this.specialTransportApiService.getList(request)
+      .subscribe(res => {
+        this.items = res.Items;
+        this.totalCount = res.TotalCount;
+        this.pagination = {...this.pagination, total: this.totalCount}
+        if (isPreloadRequest && request?.skipCount && request.skipCount > 0)
+          this.pagination = {...this.pagination, page: Math.ceil(request.skipCount / this.pagination.pageSize) + 1}
+        this.isLoad = false;
+      });
   }
 
   getListItems(preload: boolean = false){
