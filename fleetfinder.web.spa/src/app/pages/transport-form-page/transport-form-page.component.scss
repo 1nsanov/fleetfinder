@@ -85,3 +85,28 @@ figure{
     }
   }
 }
+
+
+.scroll-wrapper{
+  max-height: calc(100vh - 200px);
+  overflow: auto;
+  /* width */
+  &::-webkit-scrollbar {
+    width: 3px;
+  }
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: #D2D2D2;
+    border-radius: 20px;
+  }
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: var(--black-50);
+    transition: var(--transition-base);
+    border-radius: 20px;
+  }
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    filter: brightness(1.2);
+  }
+}

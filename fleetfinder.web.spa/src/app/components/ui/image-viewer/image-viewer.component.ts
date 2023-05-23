@@ -1,4 +1,4 @@
-import {Component, EventEmitter, HostListener, Input, Output} from '@angular/core';
+import {Component, EventEmitter, HostListener, Input, OnDestroy, Output} from '@angular/core';
 import {TimeoutService} from "../../../services/timeout.service";
 import {ImageViewerService} from "../../../services/image-viewer.service";
 
@@ -7,7 +7,7 @@ import {ImageViewerService} from "../../../services/image-viewer.service";
   templateUrl: './image-viewer.component.html',
   styleUrls: ['./image-viewer.component.scss']
 })
-export class ImageViewerComponent {
+export class ImageViewerComponent  implements OnDestroy{
   @Input() image: string;
 
   @Output() closed = new EventEmitter<void>();
@@ -31,5 +31,10 @@ export class ImageViewerComponent {
 
   @HostListener('document:keydown.escape', ['$event']) async onEscapeKeydown(event: KeyboardEvent) {
     await this.closeModal();
+  }
+
+  ngOnDestroy(): void {
+    this.isOpened = false;
+    this.imageViewerService.close()
   }
 }
