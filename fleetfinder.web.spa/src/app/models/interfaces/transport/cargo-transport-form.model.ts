@@ -17,8 +17,11 @@ export interface CargoTransportForm {
   PaymentOrder: AbstractControl<PaymentOrder | null>;
   Price: FormGroup;
   Description: AbstractControl<string | null>;
-  Type: AbstractControl<CargoType | null>;
-  Body: FormGroup;
-  TransportationKind: AbstractControl<CargoTransportationKind | null>;
   Images: AbstractControl<string[] | null>;
+
+  // Unique: FormGroup;
+
+  // Type: AbstractControl<CargoType | null>;
+  // Body: FormGroup;
+  // TransportationKind: AbstractControl<CargoTransportationKind | null>;
 }

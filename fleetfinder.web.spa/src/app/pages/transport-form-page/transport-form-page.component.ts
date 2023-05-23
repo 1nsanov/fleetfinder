@@ -43,6 +43,13 @@ import {ImagePostRequest} from "../../api/Image/post.models";
 import {FirebaseStorageFolder} from "../../models/enums/common/firebase-storage-folder.enum";
 import {ImageApiService} from "../../api/Image/image.api.service";
 import {ImageDeleteRequest} from "../../api/Image/delete.models";
+import {CargoInfoForm} from "../../models/interfaces/transport/cargo-info-form.model";
+import {SpecialTransportGetResponse} from "../../api/SpecialTransport/get.models";
+import {SpecialInfoForm} from "../../models/interfaces/transport/special-info-form.model";
+import {SpecialType} from "../../models/enums/transport/special/special-type.enum";
+import {SpecialTransportApiService} from "../../api/SpecialTransport/special-transport.api.service";
+import {SpecialTransportPostRequestDto} from "../../api/SpecialTransport/post.models";
+import {SpecialTransportPutRequestDto} from "../../api/SpecialTransport/put.model";
 
 @Component({
   selector: 'app-transport-form-page',
@@ -69,6 +76,8 @@ export class TransportFormPageComponent implements OnInit{
   currentTypeImg : string | null = null;
   typeHint: string = "";
   form: FormGroup<CargoTransportForm>;
+  cargoInfoForm: FormGroup<CargoInfoForm>;
+  specialInfoForm: FormGroup<SpecialInfoForm>;
   requestImagePost : ImagePostRequest = {
     Folder: FirebaseStorageFolder.CargoTransport,
     Files: []
@@ -80,7 +89,8 @@ export class TransportFormPageComponent implements OnInit{
   isLoad = false;
 
   constructor(public modalService: ModalService,
-              public cargoTransportApiService: CargoTransportApiService,
+              private cargoTransportApiService: CargoTransportApiService,
+              private specialTransportApiService: SpecialTransportApiService,
               private identifyService: IdentifyApiService,
               private imageService: ImageApiService,
               private notification: NotificationService,
@@ -94,19 +104,41 @@ export class TransportFormPageComponent implements OnInit{
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
+      const type = params.get('type');
+      if (type)
+        this.currentType = type as TransportType;
       this.mode = id ? ModeForm.Edit : ModeForm.Add;
       if (id) {
-        this.cargoTransportApiService.get(parseInt(id)).subscribe((res) => {
-          if (res.UserId === this.identifyService.claims?.Id)
-            this.initFormBuilder(res);
-          else
-            this.router.navigate([`/${namesRoute.TRANSPORTS}`]).then(() => {
-              this.notification.error('Ошибка в доступе. Вы не являетесь создателем данного транспорта')
+        switch (this.currentType){
+          case TransportType.Cargo:
+            this.cargoTransportApiService.get(parseInt(id)).subscribe((res) => {
+              if (res.UserId === this.identifyService.claims?.Id){
+                this.initCargoInfoFormBuilder(res);
+                this.initFormBuilder(res);
+              }
+              else
+                this.guardRoute();
             });
-        });
+            break;
+          case TransportType.Passenger:
+            break;
+          case TransportType.Special:
+            this.specialTransportApiService.get(parseInt(id)).subscribe((res) => {
+              if (res.UserId === this.identifyService.claims?.Id) {
+                this.initSpecialInfoFormBuilder(res);
+                this.initFormBuilder(res);
+              }
+              else
+                this.guardRoute();
+            });
+            break;
+        }
       }
-      else
+      else{
         this.initFormBuilder();
+        this.initCargoInfoFormBuilder();
+        this.initSpecialInfoFormBuilder();
+      }
     });
   }
 
@@ -126,10 +158,32 @@ export class TransportFormPageComponent implements OnInit{
   async addTransport(){
     this.isLoad = true;
 
-    this.requestImagePost.Folder = FirebaseStorageFolder.CargoTransport;
+    switch (this.currentType){
+      case TransportType.Cargo:
+        await this.postCargo();
+        break;
+      case TransportType.Passenger:
+        break;
+      case TransportType.Special:
+        await this.postSpecial();
+        break;
+    }
+  }
 
+  async postCargo(){
+    this.requestImagePost.Folder = FirebaseStorageFolder.CargoTransport;
     await this.imageService.upload(this.requestImagePost).then((res) => {
       const request = this.form.value as CargoTransportPostRequestDto;
+      request.Type = this.cargoInfoForm.get('Type')?.value as CargoType;
+      request.TransportationKind = this.cargoInfoForm.get('TransportationKind')?.value as CargoTransportationKind;
+      request.Body = {
+        Kind : this.cargoInfoForm.get('Body.Kind')?.value,
+        Height : this.cargoInfoForm.get('Body.Height')?.value,
+        Volume : this.cargoInfoForm.get('Body.Volume')?.value,
+        Length : this.cargoInfoForm.get('Body.Length')?.value,
+        Width : this.cargoInfoForm.get('Body.Width')?.value,
+        LoadCapacity : this.cargoInfoForm.get('Body.LoadCapacity')?.value,
+      };
       request.Images = res;
       this.cargoTransportApiService.post(request).pipe(
         catchError((error: HttpErrorResponse) => {
@@ -144,9 +198,41 @@ export class TransportFormPageComponent implements OnInit{
     })
   }
 
+  async postSpecial(){
+    this.requestImagePost.Folder = FirebaseStorageFolder.SpecialTransport;
+    await this.imageService.upload(this.requestImagePost).then((res) => {
+      const request = this.form.value as SpecialTransportPostRequestDto;
+      request.Type = this.specialInfoForm.get('Type')?.value as SpecialType;
+      request.Images = res;
+      this.specialTransportApiService.post(request).pipe(
+        catchError((error: HttpErrorResponse) => {
+          this.isLoad = false;
+          this.notification.errorFromHttp(error);
+          return throwError(error);
+        })
+      ).subscribe((res) => {
+        this.notification.notify('Транспорт успешно добавлен')
+        this.router.navigate([namesRoute.TRANSPORT_SPECIAL_VIEW, res.Id]);
+      });
+    })
+  }
+
   async updateTransport(){
     this.isLoad = true;
 
+    switch (this.currentType){
+      case TransportType.Cargo:
+        await this.putCargo();
+        break;
+      case TransportType.Passenger:
+        break;
+      case TransportType.Special:
+        await this.putSpecial();
+        break;
+    }
+  }
+
+  async putCargo(){
     this.requestImagePost.Folder = FirebaseStorageFolder.CargoTransport;
     this.imageService.delete(this.requestImageDelete).pipe(
       catchError((error: HttpErrorResponse) => {
@@ -157,6 +243,16 @@ export class TransportFormPageComponent implements OnInit{
       const updateImages = this.previewImages.filter(x => x.match("firebase"));
       updateImages.push(...res);
       const request = this.form.value as CargoTransportPutRequestDto;
+      request.Type = this.cargoInfoForm.get('Type')?.value as CargoType;
+      request.TransportationKind = this.cargoInfoForm.get('TransportationKind')?.value as CargoTransportationKind;
+      request.Body = {
+        Kind : this.cargoInfoForm.get('Body.Kind')?.value,
+        Height : this.cargoInfoForm.get('Body.Height')?.value,
+        Volume : this.cargoInfoForm.get('Body.Volume')?.value,
+        Length : this.cargoInfoForm.get('Body.Length')?.value,
+        Width : this.cargoInfoForm.get('Body.Width')?.value,
+        LoadCapacity : this.cargoInfoForm.get('Body.LoadCapacity')?.value,
+      };
       request.Images = updateImages;
       this.cargoTransportApiService.put(request).pipe(
         catchError((error: HttpErrorResponse) => {
@@ -171,42 +267,91 @@ export class TransportFormPageComponent implements OnInit{
     })
   }
 
+  async putSpecial(){
+    this.requestImagePost.Folder = FirebaseStorageFolder.SpecialTransport;
+    this.imageService.delete(this.requestImageDelete).pipe(
+      catchError((error: HttpErrorResponse) => {
+        return throwError(error);
+      })
+    ).subscribe();
+    await this.imageService.upload(this.requestImagePost).then((res) => {
+      const updateImages = this.previewImages.filter(x => x.match("firebase"));
+      updateImages.push(...res);
+      const request = this.form.value as SpecialTransportPutRequestDto;
+      request.Type = this.specialInfoForm.get('Type')?.value as SpecialType;
+      request.Images = updateImages;
+      this.specialTransportApiService.put(request).pipe(
+        catchError((error: HttpErrorResponse) => {
+          this.isLoad = false;
+          this.notification.errorFromHttp(error);
+          return throwError(error);
+        })
+      ).subscribe((res) => {
+        this.notification.notify('Транспорт успешно обновлен')
+        this.router.navigate([namesRoute.TRANSPORT_SPECIAL_VIEW, res.Id]);
+      });
+    })
+  }
+
   delete(){
     if (this.form.value.Id){
       this.isLoad = true;
-      this.cargoTransportApiService.delete(this.form.value.Id).subscribe(() => {
-        this.isLoad = false;
-        this.router.navigate([`/${namesRoute.TRANSPORTS}`])
-          .then(() => {
-            this.notification.notify('Транспорт успешно удален')
+      switch (this.currentType){
+        case TransportType.Cargo:
+          this.cargoTransportApiService.delete(this.form.value.Id).subscribe(() => {
+            this.routeDeleteSuccess();
           })
-      })
+          break;
+        case TransportType.Passenger:
+          break;
+        case TransportType.Special:
+          this.specialTransportApiService.delete(this.form.value.Id).subscribe(() => {
+            this.routeDeleteSuccess();
+          })
+          break;
+      }
     }
     else
       this.notification.error('Ошибка удаления!')
   }
 
+  routeDeleteSuccess(){
+    this.isLoad = false;
+    this.router.navigate([`/${namesRoute.TRANSPORTS}`])
+      .then(() => {
+        this.notification.notify('Транспорт успешно удален')
+      })
+  }
+
   //#endregion
 
   //#region Form
-  initFormBuilder(item: CargoTransportGetResponse | null = null){
+  initFormBuilder(item: CargoTransportGetResponse | SpecialTransportGetResponse | null = null){
     this.form = this.formBuilder.group<CargoTransportForm>({
       Id: new FormControl<number | null>(item?.Id ?? null),
       Title: new FormControl<string | null>(item?.Title ?? null, Validators.required),
       Region: new FormControl<Region | null>(item?.Region ?? null, Validators.required),
-      Type: new FormControl<CargoType | null>(item?.Type ?? null, Validators.required),
       Brand: new FormControl<string | null>(item?.Brand ?? null),
       YearIssue: new FormControl<string | null>(item?.YearIssue ?? null),
       ExperienceWork: new FormControl<ExperienceWork | null>(item?.ExperienceWork ?? null),
       PaymentMethod: new FormControl<PaymentMethod | null>(item?.PaymentMethod ?? null),
       PaymentOrder: new FormControl<PaymentOrder | null>(item?.PaymentOrder ?? null),
       Description: new FormControl<string | null>(item?.Description ?? null),
-      TransportationKind: new FormControl<CargoTransportationKind | null>(item?.TransportationKind ?? null),
       Price: this.formBuilder.group<PriceForm>({
         PerHour: new FormControl<number | null>(item?.Price.PerHour ?? null),
         PerShift: new FormControl<number | null>(item?.Price.PerShift ?? null),
         PerKm: new FormControl<number | null>(item?.Price.PerKm ?? null)
       }),
+      Images: new FormControl<string[]>(item?.Images ?? []),
+    });
+
+    if (item) this.onloadExist(item);
+  }
+
+  initCargoInfoFormBuilder(item: CargoTransportGetResponse | null = null) {
+    this.cargoInfoForm = this.formBuilder.group<CargoInfoForm>({
+      Type: new FormControl<CargoType | null>(item?.Type ?? null, Validators.required),
+      TransportationKind: new FormControl<CargoTransportationKind | null>(item?.TransportationKind ?? null),
       Body: this.formBuilder.group<BodyForm>({
         LoadCapacity: new FormControl<number | null>(item?.Body.LoadCapacity ?? null),
         Length: new FormControl<number | null>(item?.Body.Length ?? null),
@@ -214,11 +359,14 @@ export class TransportFormPageComponent implements OnInit{
         Height: new FormControl<number | null>(item?.Body.Height ?? null),
         Volume: new FormControl<number | null>(item?.Body.Volume ?? null),
         Kind: new FormControl<CargoBodyKind | null>(item?.Body.Kind ?? null),
-      }),
-      Images: new FormControl<string[]>(item?.Images ?? [])
-    });
+      })
+    })
+  }
 
-    if (item) this.onloadExist(item);
+  initSpecialInfoFormBuilder(item : SpecialTransportGetResponse | null = null){
+    this.specialInfoForm = this.formBuilder.group<SpecialInfoForm>({
+      Type: new FormControl<SpecialType | null>(item?.Type ?? null, Validators.required),
+    })
   }
 
   formMarkAsTouched(){
@@ -241,10 +389,10 @@ export class TransportFormPageComponent implements OnInit{
     this.form.get('YearIssue')?.setValue(item.Value)
   }
   onSelectTransportationKind(item: DropdownItemModel<CargoTransportationKind>){
-    this.form.get('TransportationKind')?.setValue(item.Value)
+    this.cargoInfoForm.get('TransportationKind')?.setValue(item.Value)
   }
   onSelectCargoBodyKind(item: DropdownItemModel<CargoBodyKind>){
-    this.form.get('Body.Kind')?.setValue(item.Value)
+    this.cargoInfoForm.get('Body.Kind')?.setValue(item.Value)
   }
   onSelectExperienceWork(item: DropdownItemModel<ExperienceWork>){
     this.form.get('ExperienceWork')?.setValue(item.Value)
@@ -262,17 +410,29 @@ export class TransportFormPageComponent implements OnInit{
   valueBodyKind: DropdownItemModel<CargoBodyKind | null> = this.CargoBodyKindItems[0];
   valueTransportationKind: DropdownItemModel<CargoTransportationKind | null> = this.CargoTransportationKindItems[0];
   valueYearIssue: DropdownItemModel<string> = this.YearsItems[0];
-  onloadExist(item: CargoTransportGetResponse){
-    const infoBox = this.cargo.find(x => x.Value == item.Type);
-    if (infoBox) this.onSelectTransportType(infoBox, TransportType.Cargo)
+  onloadExist(item: CargoTransportGetResponse | SpecialTransportGetResponse){
+    if (!this.currentType) return;
+
+    if (this.currentType == TransportType.Cargo) {
+      const infoBox = this.cargo.find(x => x.Value == item.Type);
+      if (infoBox)  this.onSelectTransportType(infoBox, this.currentType)
+    }
+    else if (this.currentType == TransportType.Special) {
+      const infoBox = this.special.find(x => x.Value == item.Type);
+      if (infoBox)  this.onSelectTransportType(infoBox, this.currentType)
+    }
+
 
     this.valueRegion = this.RegionItems.find(x => x.Value === item.Region) ?? this.RegionItems[0];
+    this.valueYearIssue = this.YearsItems.find(x => x.Value === item.YearIssue) ?? this.YearsItems[0];
     this.valueExperienceWork = this.ExperienceWorkItems.find(x => x.Value === item.ExperienceWork) ?? this.ExperienceWorkItems[0];
     this.valuePaymentMethod = this.PaymentMethodItems.find(x => x.Value === item.PaymentMethod) ?? this.PaymentMethodItems[0];
     this.valuePaymentOrder = this.PaymentOrderItems.find(x => x.Value === item.PaymentOrder) ?? this.PaymentOrderItems[0];
-    this.valueBodyKind = this.CargoBodyKindItems.find(x => x.Value === item.Body.Kind) ?? this.CargoBodyKindItems[0];
-    this.valueTransportationKind = this.CargoTransportationKindItems.find(x => x.Value === item.TransportationKind) ?? this.CargoTransportationKindItems[0];
-    this.valueYearIssue = this.YearsItems.find(x => x.Value === item.YearIssue) ?? this.YearsItems[0];
+
+    if(item instanceof CargoTransportGetResponse){
+      this.valueBodyKind = this.CargoBodyKindItems.find(x => x.Value === item.Body.Kind) ?? this.CargoBodyKindItems[0];
+      this.valueTransportationKind = this.CargoTransportationKindItems.find(x => x.Value === item.TransportationKind) ?? this.CargoTransportationKindItems[0];
+    }
 
     this.previewImages = item.Images;
   }
@@ -316,11 +476,12 @@ export class TransportFormPageComponent implements OnInit{
     this.typeHint = item.Text;
     switch (type){
       case TransportType.Cargo:
-        this.form.get('Type')?.setValue(item.Value)
+        this.cargoInfoForm.get('Type')?.setValue(item.Value)
         break;
       case TransportType.Passenger:
         break;
       case TransportType.Special:
+        this.specialInfoForm.get('Type')?.setValue(item.Value)
         break;
     }
     this.modalService.close();
@@ -328,5 +489,11 @@ export class TransportFormPageComponent implements OnInit{
 
   cancel(){
     this._location.back();
+  }
+
+  guardRoute() {
+    this.router.navigate([`/${namesRoute.TRANSPORTS}`]).then(() => {
+      this.notification.error('Ошибка в доступе. Вы не являетесь создателем данного транспорта')
+    });
   }
 }

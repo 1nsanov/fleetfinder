@@ -5,6 +5,9 @@ import {Observable} from "rxjs";
 import {ResponseIdModel} from "../Common/ResponseIdModel";
 import {CargoTransportGetListResponseDto, SpecialTransportGetListRequestDto} from "./get-list.models";
 import {SpecialTransportGetResponse} from "./get.models";
+import {ResponseSuccessModel} from "../Common/ResponseSuccessModel";
+import {SpecialTransportPostRequestDto} from "./post.models";
+import {SpecialTransportPutRequestDto} from "./put.model";
 
 @Injectable({
   providedIn: 'root'
@@ -15,14 +18,14 @@ export class SpecialTransportApiService {
   constructor(private http: HttpClient) {
   }
 
-  // public post(request: CargoTransportPostRequestDto) : Observable<ResponseIdModel> {
-  //   return this.http.post<ResponseIdModel>(this.url, request);
-  // }
+  public post(request: SpecialTransportPostRequestDto) : Observable<ResponseIdModel> {
+    return this.http.post<ResponseIdModel>(this.url, request);
+  }
 
-  // public put(request: CargoTransportPutRequestDto) : Observable<ResponseIdModel>  {
-  //   return this.http.put<ResponseIdModel>(this.url, request);
-  // }
-  //
+  public put(request: SpecialTransportPutRequestDto) : Observable<ResponseIdModel>  {
+    return this.http.put<ResponseIdModel>(this.url, request);
+  }
+
   public get(id: number)  : Observable<SpecialTransportGetResponse> {
     const params = new HttpParams()
       .set('id', id.toString());
@@ -42,9 +45,9 @@ export class SpecialTransportApiService {
     return this.http.get<CargoTransportGetListResponseDto>(this.url + "/list", {params: params});
   }
 
-  // public delete(id : number) : Observable<ResponseSuccessModel> {
-  //   const params = new HttpParams()
-  //     .set('id', id.toString());
-  //   return this.http.delete<ResponseSuccessModel>(this.url, { params: params });
-  // }
+  public delete(id : number) : Observable<ResponseSuccessModel> {
+    const params = new HttpParams()
+      .set('id', id.toString());
+    return this.http.delete<ResponseSuccessModel>(this.url, { params: params });
+  }
 }

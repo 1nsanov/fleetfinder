@@ -70,7 +70,7 @@ export class TransportsViewComponent implements OnInit{
       case TransportType.Passenger:
         break;
       case TransportType.Special:
-        this.getSpecialItems(preload ? this.transportService.getSpecialListRequest(this.router.url) : null);
+        this.getSpecialListRequest(preload ? this.transportService.getSpecialListRequest(this.router.url) : null);
         break;
     }
   }
@@ -105,7 +105,7 @@ export class TransportsViewComponent implements OnInit{
       });
   }
 
-  getSpecialItems(request : SpecialTransportGetListRequestDto | null = null) {
+  getSpecialListRequest(request : SpecialTransportGetListRequestDto | null = null) {
     this.isLoad = true;
     this.items = null;
     const isPreloadRequest = request != null;

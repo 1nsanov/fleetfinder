@@ -42,7 +42,7 @@ const routes: Routes = [
   { path: namesRoute.SIGN_UP, component: SignUpPageComponent },
   { path: namesRoute.SIGN_IN, component: SignInPageComponent },
   { path: namesRoute.TRANSPORT_ADD, component: TransportFormPageComponent, canActivate: [AuthGuard] },
-  { path: `${namesRoute.TRANSPORT_EDIT}/:id`, component: TransportFormPageComponent, canActivate: [AuthGuard] },
+  { path: `${namesRoute.TRANSPORT_EDIT}/:type/:id`, component: TransportFormPageComponent, canActivate: [AuthGuard] },
   { path: `${namesRoute.TRANSPORT_CARGO_VIEW}/:id`, component: TransportCargoViewPageComponent },
   { path: `${namesRoute.TRANSPORT_SPECIAL_VIEW}/:id`, component: TransportSpecialViewPageComponent }
 ]

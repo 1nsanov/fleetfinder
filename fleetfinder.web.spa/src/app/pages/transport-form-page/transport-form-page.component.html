@@ -42,33 +42,32 @@
           <app-upload-image (onUpload)="onSelectImage($event)" [disabled]="previewImages.length >= 4 || !!previewFile"/>
         </div>
       </div>
-      <div *ngIf="currentType === TransportType.Cargo" class="input-block flex flex-col gap-5">
+      <div *ngIf="currentType != null" class="input-block flex flex-col gap-5">
         <app-input label="Марка"
                    [value]="form.get('Brand')?.value ?? ''"
                    (valueChange)="form.get('Brand')?.setValue($event)"/>
         <app-dropdown label="Год выпуска" placeholder="гггг." [items]="YearsItems" (select)="onSelectYearsItems($event)" [value]="valueYearIssue"/>
-        <app-dropdown label="Вид перевозок" [items]="CargoTransportationKindItems" (select)="onSelectTransportationKind($event)" [value]="valueTransportationKind"
-                      [error]="form.get('TransportationKind')?.invalid && form.get('TransportationKind')?.touched ? 'Поле обязательно к заполнению' : ''"/>
-        <div>
-          <label>Кузов</label>
+        <div *ngIf="currentType == TransportType.Cargo">
+          <app-dropdown label="Вид перевозок" [items]="CargoTransportationKindItems" (select)="onSelectTransportationKind($event)" [value]="valueTransportationKind"/>
+          <label class="mt-3">Кузов</label>
           <div class="grid grid-cols-2 gap-5 mb-5">
             <app-input type="number" label="Длина" placeholder="м."
-                       [value]="form.get('Body.Length')?.value ?? ''"
-                       (valueChange)="form.get('Body.Length')?.setValue($event)"/>
+                       [value]="cargoInfoForm.get('Body.Length')?.value ?? ''"
+                       (valueChange)="cargoInfoForm.get('Body.Length')?.setValue($event)"/>
             <app-input type="number" label="Ширина" placeholder="м."
-                       [value]="form.get('Body.Width')?.value ?? ''"
-                       (valueChange)="form.get('Body.Width')?.setValue($event)"/>
+                       [value]="cargoInfoForm.get('Body.Width')?.value ?? ''"
+                       (valueChange)="cargoInfoForm.get('Body.Width')?.setValue($event)"/>
             <app-input type="number" label="Высота" placeholder="м."
-                       [value]="form.get('Body.Height')?.value ?? ''"
-                       (valueChange)="form.get('Body.Height')?.setValue($event)"/>
+                       [value]="cargoInfoForm.get('Body.Height')?.value ?? ''"
+                       (valueChange)="cargoInfoForm.get('Body.Height')?.setValue($event)"/>
             <app-input type="number" label="Объем" placeholder="м/куб."
-                       [value]="form.get('Body.Volume')?.value ?? ''"
-                       (valueChange)="form.get('Body.Volume')?.setValue($event)"/>
+                       [value]="cargoInfoForm.get('Body.Volume')?.value ?? ''"
+                       (valueChange)="cargoInfoForm.get('Body.Volume')?.setValue($event)"/>
           </div>
           <div class="grid grid-cols-1 gap-5">
             <app-input type="number" label="Грузоподъемность" placeholder="т."
-                       [value]="form.get('Body.LoadCapacity')?.value ?? ''"
-                       (valueChange)="form.get('Body.LoadCapacity')?.setValue($event)"/>
+                       [value]="cargoInfoForm.get('Body.LoadCapacity')?.value ?? ''"
+                       (valueChange)="cargoInfoForm.get('Body.LoadCapacity')?.setValue($event)"/>
             <app-dropdown label="Вид" [items]="CargoBodyKindItems" (select)="onSelectCargoBodyKind($event)" [value]="valueBodyKind"/>
           </div>
         </div>
@@ -106,7 +105,7 @@
 
 <app-modal-window *ngIf="modalService.isVisible$ | async" title="Выбор типа">
   <div class="flex flex-col">
-    <figure>
+    <figure *ngIf="currentType == TransportType.Cargo && mode == 'Edit' || !currentType">
       <h3>Грузовой транспорт</h3>
       <section class="cargo">
         <div *ngFor="let item of cargo"
@@ -120,7 +119,7 @@
         </div>
       </section>
     </figure>
-<!--    <figure>-->
+<!--    <figure *ngIf="currentType == TransportType.Cargo && mode == 'edit' || !currentType">-->
 <!--      <h3>Пассажирский транспорт</h3>-->
 <!--      <section class="passenger">-->
 <!--        <div *ngFor="let item of passenger"-->
@@ -133,18 +132,19 @@
 <!--        </div>-->
 <!--      </section>-->
 <!--    </figure>-->
-<!--    <figure>-->
-<!--      <h3>Спецтехника</h3>-->
-<!--      <section class="special">-->
-<!--        <div *ngFor="let item of special"-->
-<!--             class="box-transport"-->
-<!--        >-->
-<!--          <div class="image">-->
-<!--            <img [src]="'../../../assets/icons/transport/special/icon-' + item.Icon + '.png'" alt="">-->
-<!--          </div>-->
-<!--          <p>{{item.Text}}</p>-->
-<!--        </div>-->
-<!--      </section>-->
-<!--    </figure>-->
+    <figure *ngIf="currentType == TransportType.Special && mode == 'Edit' || !currentType">
+      <h3>Спецтехника</h3>
+      <section class="special">
+        <div *ngFor="let item of special"
+             class="box-transport"
+             (click)="onSelectTransportType(item, TransportType.Special)"
+        >
+          <div class="image">
+            <img [src]="'../../../assets/icons/transport/special/icon-' + item.Icon + '.png'" alt="">
+          </div>
+          <p>{{item.Text}}</p>
+        </div>
+      </section>
+    </figure>
   </div>
 </app-modal-window>

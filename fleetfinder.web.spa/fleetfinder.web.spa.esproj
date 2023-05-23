@@ -14,7 +14,6 @@
     <Folder Include="src\app\components\ui" />
     <Folder Include="src\app\guards" />
     <Folder Include="src\app\layouts" />
-    <Folder Include="src\app\models\interfaces\common" />
     <Folder Include="src\app\pages\transports" />
     <Folder Include="src\app\pipes" />
   </ItemGroup>

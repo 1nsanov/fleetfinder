@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, Params, Router} from "@angular/router";
 import {IdentifyApiService} from "../../api/Identify/identify.api.service";
 import {TransportService} from "../../services/transport.service";
 import {namesRoute} from "../../data/names-route";
@@ -61,7 +61,7 @@ export class TransportSpecialViewPageComponent {
   }
 
   routeEdit() {
-    this.router.navigate([namesRoute.TRANSPORT_EDIT, this.transport?.Id]);
+    this.router.navigate([namesRoute.TRANSPORT_EDIT, TransportType.Special, this.transport?.Id]);
   }
 
   get isMyTransport() {

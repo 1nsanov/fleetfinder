@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, Params, Router} from "@angular/router";
 import {CargoTransportApiService} from "../../api/CargoTransport/cargo-transport.api.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {catchError, throwError} from "rxjs";
@@ -68,7 +68,7 @@ export class TransportCargoViewPageComponent implements OnInit{
   }
 
   routeEdit() {
-    this.router.navigate([namesRoute.TRANSPORT_EDIT, this.transport?.Id]);
+    this.router.navigate([namesRoute.TRANSPORT_EDIT, TransportType.Cargo, this.transport?.Id]);
   }
 
   get isMyTransport() {
