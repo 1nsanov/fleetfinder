@@ -11,5 +11,6 @@
   SIGN_IN: "sign-in",
   TRANSPORT_ADD: "transport/add",
   TRANSPORT_EDIT: "transport/edit",
-  TRANSPORT_CARGO_VIEW: "transport/cargo/view"
+  TRANSPORT_CARGO_VIEW: "transport/cargo/view",
+  TRANSPORT_SPECIAL_VIEW: "transport/special/view"
 }

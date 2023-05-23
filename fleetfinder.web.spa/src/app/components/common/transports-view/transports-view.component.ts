@@ -58,7 +58,21 @@ export class TransportsViewComponent implements OnInit{
   ngOnInit(): void {
     this.initPage();
     this.setUserFilter();
-    this.getListItems();
+    this.getListItems(true);
+  }
+
+
+  getListItems(preload: boolean = false){
+    switch (this.type){
+      case TransportType.Cargo:
+        this.getCargoListRequest(preload ? this.transportService.getCargoListRequest(this.router.url) : null);
+        break;
+      case TransportType.Passenger:
+        break;
+      case TransportType.Special:
+        this.getSpecialItems(preload ? this.transportService.getSpecialListRequest(this.router.url) : null);
+        break;
+    }
   }
 
   getCargoListRequest(request : CargoTransportGetListRequestDto | null = null){
@@ -119,19 +133,6 @@ export class TransportsViewComponent implements OnInit{
           this.pagination = {...this.pagination, page: Math.ceil(request.skipCount / this.pagination.pageSize) + 1}
         this.isLoad = false;
       });
-  }
-
-  getListItems(preload: boolean = false){
-    switch (this.type){
-      case TransportType.Cargo:
-        this.getCargoListRequest(preload ? this.transportService.getCargoListRequest(this.router.url) : null);
-        break;
-      case TransportType.Passenger:
-        break;
-      case TransportType.Special:
-        this.getSpecialItems(preload ? this.transportService.getSpecialListRequest(this.router.url) : null);
-        break;
-    }
   }
 
   initPage(){

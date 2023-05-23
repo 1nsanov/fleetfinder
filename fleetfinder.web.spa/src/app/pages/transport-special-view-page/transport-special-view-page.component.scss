@@ -1,0 +1,53 @@
+.header{
+  color: var(--black);
+  margin-bottom: 40px;
+  h2{
+    font-weight: 700;
+    font-size: 24px;
+  }
+  .id{
+    svg path{
+      fill: var(--black);
+    }
+    p{
+      margin-left: 5px;
+      font-weight: 700;
+    }
+  }
+  .region{
+    color: var(--green);
+    svg path {
+      fill: var(--green);
+    }
+    p{
+      margin-left: 10px;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 20px;
+    }
+  }
+  .date{
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 20px;
+    text-align: right;
+  }
+}
+.main{
+  .row{
+    display: flex;
+    gap: 2.5rem;
+    .left-side,
+    .right-side{
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .features,
+    .prices,
+    .payment {
+      gap: 10px;
+    }
+  }
+}
+

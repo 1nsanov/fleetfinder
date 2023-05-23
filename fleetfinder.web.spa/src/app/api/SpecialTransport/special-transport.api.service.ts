@@ -4,6 +4,7 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {ResponseIdModel} from "../Common/ResponseIdModel";
 import {CargoTransportGetListResponseDto, SpecialTransportGetListRequestDto} from "./get-list.models";
+import {SpecialTransportGetResponse} from "./get.models";
 
 @Injectable({
   providedIn: 'root'
@@ -22,11 +23,11 @@ export class SpecialTransportApiService {
   //   return this.http.put<ResponseIdModel>(this.url, request);
   // }
   //
-  // public get(id: number)  : Observable<CargoTransportGetResponse> {
-  //   const params = new HttpParams()
-  //     .set('id', id.toString());
-  //   return this.http.get<CargoTransportGetResponse>(this.url, { params: params });
-  // }
+  public get(id: number)  : Observable<SpecialTransportGetResponse> {
+    const params = new HttpParams()
+      .set('id', id.toString());
+    return this.http.get<SpecialTransportGetResponse>(this.url, { params: params });
+  }
 
   public getList(request : SpecialTransportGetListRequestDto) : Observable<CargoTransportGetListResponseDto>  {
     const params = new HttpParams()

@@ -28,7 +28,7 @@ export class GridItemComponent {
   }
 
   onClick() {
-    this.router.navigate([namesRoute.TRANSPORT_CARGO_VIEW, this.item.Id]);
+    this.router.navigate([this.getRouteToView(), this.item.Id]);
   }
 
   getTypeImg(item: any){
@@ -50,6 +50,17 @@ export class GridItemComponent {
         return  ""
       case TransportType.Special:
         return specialItems.find(x => x.Value as CargoType === item)?.Text;
+    }
+  }
+
+  getRouteToView(){
+    switch (this.type){
+      case TransportType.Cargo:
+        return namesRoute.TRANSPORT_CARGO_VIEW;
+      case TransportType.Passenger:
+        return  ""
+      case TransportType.Special:
+        return namesRoute.TRANSPORT_SPECIAL_VIEW;
     }
   }
 }

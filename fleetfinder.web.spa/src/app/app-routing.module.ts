@@ -17,6 +17,9 @@ import {
 import {
   TransportsSpecialPageComponent
 } from "./pages/transports/transports-special-page/transports-special-page.component";
+import {
+  TransportSpecialViewPageComponent
+} from "./pages/transport-special-view-page/transport-special-view-page.component";
 
 const routes: Routes = [
   { path: namesRoute.HOME, component:  LandingPageComponent},
@@ -40,7 +43,8 @@ const routes: Routes = [
   { path: namesRoute.SIGN_IN, component: SignInPageComponent },
   { path: namesRoute.TRANSPORT_ADD, component: TransportFormPageComponent, canActivate: [AuthGuard] },
   { path: `${namesRoute.TRANSPORT_EDIT}/:id`, component: TransportFormPageComponent, canActivate: [AuthGuard] },
-  { path: `${namesRoute.TRANSPORT_CARGO_VIEW}/:id`, component: TransportCargoViewPageComponent }
+  { path: `${namesRoute.TRANSPORT_CARGO_VIEW}/:id`, component: TransportCargoViewPageComponent },
+  { path: `${namesRoute.TRANSPORT_SPECIAL_VIEW}/:id`, component: TransportSpecialViewPageComponent }
 ]
 
 @NgModule({
