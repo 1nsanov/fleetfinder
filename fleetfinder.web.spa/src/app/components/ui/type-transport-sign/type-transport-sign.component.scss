@@ -19,6 +19,7 @@
     min-width: 100px;
     cursor: default;
     transition: var(--transition-base);
+    z-index: 10;
   }
   .type-transport-sign{
     background: var(--blue-saturated);

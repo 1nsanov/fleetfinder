@@ -105,7 +105,7 @@
 
 <app-modal-window *ngIf="modalService.isVisible$ | async" title="Выбор типа">
   <div class="flex flex-col scroll-wrapper">
-    <figure *ngIf="currentType == TransportType.Cargo && mode == 'Edit' || !currentType">
+    <figure *ngIf="currentType == TransportType.Cargo && mode == 'Edit' || !currentType || mode == 'Add'">
       <h3>Грузовой транспорт</h3>
       <section class="cargo">
         <div *ngFor="let item of cargo"
@@ -132,7 +132,7 @@
 <!--        </div>-->
 <!--      </section>-->
 <!--    </figure>-->
-    <figure *ngIf="currentType == TransportType.Special && mode == 'Edit' || !currentType">
+    <figure *ngIf="currentType == TransportType.Special && mode == 'Edit' || !currentType  || mode == 'Add'">
       <h3>Спецтехника</h3>
       <section class="special">
         <div *ngFor="let item of special"
