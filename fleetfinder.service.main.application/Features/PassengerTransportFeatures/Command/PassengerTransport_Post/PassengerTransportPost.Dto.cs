@@ -2,7 +2,6 @@
 using fleetfinder.service.main.domain.Enums.Common;
 using fleetfinder.service.main.domain.Enums.Transport;
 using fleetfinder.service.main.domain.Enums.Transport.Passenger;
-using fleetfinder.service.main.domain.Enums.Transport.Special;
 
 namespace fleetfinder.service.main.application.Features.PassengerTransportFeatures.Command.PassengerTransport_Post;
 

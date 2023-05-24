@@ -4,10 +4,15 @@ import {
   CargoBodyKindConst,
   CargoTransportationKindConst,
   CargoTypeConst,
-  ExperienceWorkConst,
+  ExperienceWorkConst, PassengerFacilitiesConst,
+  PassengerOptionConst,
+  PassengerRentalDurationConst,
+  PassengerTransportationKindConst,
+  PassengerTypeConst,
   PaymentMethodConst,
   PaymentOrderConst,
-  RegionConst, SpecialTypeConst,
+  RegionConst,
+  SpecialTypeConst,
   TransportTypeConst
 } from "./enums.data";
 import {ExperienceWork} from "../models/enums/transport/experience-work.enum";
@@ -20,6 +25,11 @@ import {CargoType} from "../models/enums/transport/cargo/cargo-type.enum";
 import {SpecialType} from "../models/enums/transport/special/special-type.enum";
 import {SortModel} from "../models/sort.model";
 import {TransportSortParameter} from "../models/enums/transport/cargo/cargo-transport-sort-parameter.enum";
+import {PassengerType} from "../models/enums/transport/passenger/passenger-type.enum";
+import {PassengerTransportationKind} from "../models/enums/transport/passenger/passenger-transportation-kind.enum";
+import {PassengerRentalDuration} from "../models/enums/transport/passenger/passenger-rental-duration.enum";
+import {PassengerOption} from "../models/enums/transport/passenger/passenger-option.enum";
+import {PassengerFacilities} from "../models/enums/transport/passenger/passenger-facilities.enum";
 
 export function getRegionItems() {
   return [
@@ -90,7 +100,16 @@ export function getCargoTypeItems() {
   ];
 }
 
-export function getSpecialItems() {
+export function getPassengerTypeItems() {
+  return [
+    new DropdownItemModel<PassengerType | null>(null, "Не выбрано"),
+    ...Object.values(PassengerType).map(x =>
+      new DropdownItemModel<PassengerType>(x as PassengerType, PassengerTypeConst[x as PassengerType])
+    )
+  ];
+}
+
+export function getSpecialTypeItems() {
   return [
     new DropdownItemModel<SpecialType | null>(null, "Не выбрано"),
     ...Object.values(SpecialType).map(x =>
@@ -119,3 +138,40 @@ export function getSortParameters(){
     { Value: new SortModel(TransportSortParameter.PricePerKm, true) , Preview: "По цене  за километр (у)" },
   ]
 }
+
+export function getPassengerTransportationKindItems() {
+  return [
+    new DropdownItemModel<PassengerTransportationKind | null>(null, "Не выбрано"),
+    ...Object.values(PassengerTransportationKind).map(x =>
+      new DropdownItemModel<PassengerTransportationKind>(x as PassengerTransportationKind, PassengerTransportationKindConst[x as PassengerTransportationKind])
+    )
+  ];
+}
+
+export function getPassengerRentalDurationItems() {
+  return [
+    new DropdownItemModel<PassengerRentalDuration | null>(null, "Не выбрано"),
+    ...Object.values(PassengerRentalDuration).map(x =>
+      new DropdownItemModel<PassengerRentalDuration>(x as PassengerRentalDuration, PassengerRentalDurationConst[x as PassengerRentalDuration])
+    )
+  ];
+}
+
+export function getPassengerOptionItems() {
+  return [
+    new DropdownItemModel<PassengerOption | null>(null, "Не выбрано"),
+    ...Object.values(PassengerOption).map(x =>
+      new DropdownItemModel<PassengerOption>(x as PassengerOption, PassengerOptionConst[x as PassengerOption])
+    )
+  ];
+}
+
+export function getPassengerFacilitiesItems() {
+  return [
+    new DropdownItemModel<PassengerFacilities | null>(null, "Не выбрано"),
+    ...Object.values(PassengerFacilities).map(x =>
+      new DropdownItemModel<PassengerFacilities>(x as PassengerFacilities, PassengerFacilitiesConst[x as PassengerFacilities])
+    )
+  ];
+}
+

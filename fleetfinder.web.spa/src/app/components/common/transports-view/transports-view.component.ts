@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {DropdownItemModel} from "../../../models/dropdown-item.model";
-import {getCargoTypeItems, getRegionItems, getSortParameters, getSpecialItems} from "../../../data/dropdown-items.data";
+import {getCargoTypeItems, getRegionItems, getSortParameters, getSpecialTypeItems} from "../../../data/dropdown-items.data";
 import {TransportFilter} from "../../../models/transport/transport-filter.model";
 import {IGridItem} from "../../../models/interfaces/grid-item.interface";
 import { TransportType } from 'src/app/models/enums/transport/transport-type.enum';
@@ -31,7 +31,7 @@ export class TransportsViewComponent implements OnInit{
   TransportType = TransportType;
   sortParameters = getSortParameters();
   CargoTypeItems = getCargoTypeItems();
-  SpecialTypeItems = getSpecialItems();
+  SpecialTypeItems = getSpecialTypeItems();
   RegionItems = getRegionItems();
   //#endregion
   searchTerm: string = "";

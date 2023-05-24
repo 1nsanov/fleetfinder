@@ -9,10 +9,3 @@ public enum PassengerType : byte
     Shiftw,
     Water
 }
-
-// { Icon: "taxi", Text: "Такси" },
-// { Icon: "limousine", Text: "Лимузины" },
-// { Icon: "minivan", Text: "Минивэны" },
-// { Icon: "bus", Text: "Автобусы" },
-// { Icon: "shiftw", Text: "Вахтовики" },
-// { Icon: "water", Text: "Водный" },

@@ -7,6 +7,11 @@ import {CargoBodyKind} from "../models/enums/transport/cargo/cargo-body-kind.enu
 import {CargoTransportationKind} from "../models/enums/transport/cargo/cargo-transportation-kind";
 import {CargoType} from "../models/enums/transport/cargo/cargo-type.enum";
 import {SpecialType} from "../models/enums/transport/special/special-type.enum";
+import {PassengerType} from "../models/enums/transport/passenger/passenger-type.enum";
+import {PassengerTransportationKind} from "../models/enums/transport/passenger/passenger-transportation-kind.enum";
+import {PassengerRentalDuration} from "../models/enums/transport/passenger/passenger-rental-duration.enum";
+import {PassengerOption} from "../models/enums/transport/passenger/passenger-option.enum";
+import {PassengerFacilities} from "../models/enums/transport/passenger/passenger-facilities.enum";
 
 export const RegionConst: Record<Region, string> = {
   [Region.Bender]: 'Бендеры',
@@ -119,6 +124,15 @@ export const CargoTypeConst: Record<CargoType, string> = {
   [CargoType.T20]: 'До 20 т.',
 };
 
+export const PassengerTypeConst: Record<PassengerType, string> = {
+  [PassengerType.Taxi]: 'Такси',
+  [PassengerType.Limousine]: 'Лимузины',
+  [PassengerType.Minivan]: 'Минивэны',
+  [PassengerType.Bus]: 'Автобусы',
+  [PassengerType.Shiftw]: 'Вахтовики',
+  [PassengerType.Water]: 'Водный',
+};
+
 export const SpecialTypeConst: Record<SpecialType, string> = {
   [SpecialType.Excavator]: 'Экскаватор',
   [SpecialType.AerialPlatform]: 'Автовышка',
@@ -138,5 +152,54 @@ export const SpecialTypeConst: Record<SpecialType, string> = {
   [SpecialType.TruckCement]: 'Бетоновоз',
   [SpecialType.ExcavatorLoader]: 'Эскаватор-погрузчик',
   [SpecialType.Yamobur]: 'Ямобур и сваебой'
+};
+
+export const PassengerTransportationKindConst: Record<PassengerTransportationKind, string> = {
+  [PassengerTransportationKind.Order]: 'Заказные перевозки',
+  [PassengerTransportationKind.Children]: 'Перевозка детей',
+  [PassengerTransportationKind.Tourists]: 'Перевозка туристов',
+  [PassengerTransportationKind.Intercity]: 'Междугородние перевозки',
+  [PassengerTransportationKind.AbroadTrips]: 'Поездки за границу',
+  [PassengerTransportationKind.Corporate]: 'Корпоративные перевозки',
+  [PassengerTransportationKind.AirportTransfer]: 'Трансфер в аэропорт',
+  [PassengerTransportationKind.EmployeeDelivery]: 'Доставка сотрудников',
+  [PassengerTransportationKind.Wedding]: 'Свадебные перевозки',
+  [PassengerTransportationKind.VIP]: 'VIP перевозки',
+  [PassengerTransportationKind.Medical]: 'Перевозка больных (медицинский)',
+  [PassengerTransportationKind.Funeral]: 'Ритуальные перевозки',
+  [PassengerTransportationKind.Pet]: 'Зоотакси (перевозка животных)',
+  [PassengerTransportationKind.CarHome]: 'Автодом',
+  [PassengerTransportationKind.Excursion]: 'Экскурсионный',
+  [PassengerTransportationKind.PartyBus]: 'Пати бас',
+  [PassengerTransportationKind.Courier]: 'Курьерские услуги',
+}
+
+export const PassengerRentalDurationConst: Record<PassengerRentalDuration, string> = {
+  [PassengerRentalDuration.PerDay]: 'На сутки',
+  [PassengerRentalDuration.OneDay]: 'На день',
+  [PassengerRentalDuration.PerHour]: 'На час',
+  [PassengerRentalDuration.PerMonth]: 'На месяц',
+  [PassengerRentalDuration.LongTerm]: 'Долгосрочная',
+}
+
+export const PassengerOptionConst: Record<PassengerOption, string> = {
+  [PassengerOption.AudioSystemAndMicrophone]: 'Аудио система и микрофон',
+  [PassengerOption.AirConditioner]: 'Кондиционер',
+  [PassengerOption.VentilationSystem]: 'Система вентиляции',
+  [PassengerOption.LargeLuggageCompartments]: 'Большие багажные отделения',
+  [PassengerOption.MonitorAndDVD]: 'Монитор и DVD',
+  [PassengerOption.IndividualLighting]: 'Индивидуальное освещение',
+  [PassengerOption.SeatHeating]: 'Подогрев сидений',
+  [PassengerOption.SpaciousSalon]: 'Просторный салон',
+  [PassengerOption.SafetyBelts]: 'Ремни безопасности',
+  [PassengerOption.ClimateControl]: 'Климат контроль',
+  [PassengerOption.Toilet]: 'Туалет',
+  [PassengerOption.SleepingPlaces]: 'Спальные места',
+}
+
+export const PassengerFacilitiesConst: Record<PassengerFacilities, string> = {
+  [PassengerFacilities.Comfortable]: 'Комфортабельный',
+  [PassengerFacilities.Economy]: 'Эконом класс',
+  [PassengerFacilities.Standard]: 'Стандартный',
 };
 
