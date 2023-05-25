@@ -65,6 +65,10 @@
       }
       &.passenger {
         background: var(--yellow);
+        img {
+          filter: brightness(0.19) saturate(1.8) hue-rotate(179deg);
+          scale: 0.9;
+        }
       }
       &.special {
         background: var(--blue);

@@ -150,6 +150,37 @@
   &.passenger {
     background: var(--blue);
     color: var(--white);
+    .header {
+      .title {
+        h3 {
+          color: var(--yellow);
+        }
+      }
+      .region {
+        svg path {
+          fill: var(--white);
+        }
+      }
+    }
+    .header-separator{
+      background: var(--yellow);
+    }
+    .main-content {
+      .left-side {
+        .prices {
+          .banner {
+            background-image: url("../../../../assets/icons/icon-price-banner-yellow.svg");
+          }
+        }
+      }
+      .right-side{
+        .base-info-block{
+          .item {
+            border-bottom: 1px solid var(--yellow);
+          }
+        }
+      }
+    }
   }
   &.special {
     background: var(--blue-light);

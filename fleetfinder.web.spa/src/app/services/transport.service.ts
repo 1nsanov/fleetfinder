@@ -4,6 +4,7 @@ import {CargoType} from "../models/enums/transport/cargo/cargo-type.enum";
 import {TransportType} from "../models/enums/transport/transport-type.enum";
 import {CargoTransportGetListRequestDto} from "../api/CargoTransport/get-list.models";
 import {SpecialTransportGetListRequestDto} from "../api/SpecialTransport/get-list.models";
+import {PassengerTransportGetListRequestDto} from "../api/PassengerTransport/get-list.models";
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,10 @@ export class TransportService {
   }
 
   public getCargoListRequest(key: string) : CargoTransportGetListRequestDto | null {
+    return this.getListRequest(key);
+  }
+
+  public getPassengerListRequest(key: string) : PassengerTransportGetListRequestDto | null {
     return this.getListRequest(key);
   }
 

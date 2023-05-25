@@ -13,6 +13,8 @@ import {Router} from "@angular/router";
 import {TransportService} from "../../../services/transport.service";
 import {SpecialTransportGetListRequestDto} from "../../../api/SpecialTransport/get-list.models";
 import {SpecialTransportApiService} from "../../../api/SpecialTransport/special-transport.api.service";
+import {PassengerTransportGetListRequestDto} from "../../../api/PassengerTransport/get-list.models";
+import {PassengerTransportApiService} from "../../../api/PassengerTransport/passenger-transport.api.service";
 
 interface ValueDropdowns {
   TypeFilter: DropdownItemModel<any | null> | null;
@@ -49,6 +51,7 @@ export class TransportsViewComponent implements OnInit{
 
   constructor(private cargoTransportApiService: CargoTransportApiService,
               private specialTransportApiService: SpecialTransportApiService,
+              private passengerTransportApiService: PassengerTransportApiService,
               private identifyService: IdentifyApiService,
               private router: Router,
               private transportService: TransportService) {
@@ -63,11 +66,14 @@ export class TransportsViewComponent implements OnInit{
 
 
   getListItems(preload: boolean = false){
+    this.isLoad = true;
+    this.items = null;
     switch (this.type){
       case TransportType.Cargo:
         this.getCargoListRequest(preload ? this.transportService.getCargoListRequest(this.router.url) : null);
         break;
       case TransportType.Passenger:
+        this.getPassengerListRequest(preload ? this.transportService.getPassengerListRequest(this.router.url) : null);
         break;
       case TransportType.Special:
         this.getSpecialListRequest(preload ? this.transportService.getSpecialListRequest(this.router.url) : null);
@@ -76,8 +82,6 @@ export class TransportsViewComponent implements OnInit{
   }
 
   getCargoListRequest(request : CargoTransportGetListRequestDto | null = null){
-    this.isLoad = true;
-    this.items = null;
     const isPreloadRequest = request != null;
     if (request == null){
       request = new CargoTransportGetListRequestDto();
@@ -88,12 +92,9 @@ export class TransportsViewComponent implements OnInit{
       request.sortDesc = this.sortParameter.Value.ByDesc;
       this.transportService.saveListRequest(this.router.url, request);
     }
-    else {
-      this.valueDropdowns.TypeFilter = this.CargoTypeItems.find(x => x.Value == request?.filter.TypeFilter) ?? null;
-      this.valueDropdowns.RegionFilter = this.RegionItems.find(x => x.Value == request?.filter.RegionFilter) ?? null;
-      this.sortParameter = this.sortParameters.find(x => x.Value.Parameter == request?.sortParameter && x.Value.ByDesc == request?.sortDesc) ?? this.sortParameters[0];
-      this.searchTerm = request.filter.TitleFilter ?? '';
-    }
+    else
+      this.setValuesRequest(request);
+
     this.cargoTransportApiService.getList(request)
       .subscribe(res => {
         this.items = res.Items;
@@ -105,9 +106,32 @@ export class TransportsViewComponent implements OnInit{
       });
   }
 
+  getPassengerListRequest(request: PassengerTransportGetListRequestDto | null = null){
+    const isPreloadRequest = request != null;
+    if (request == null){
+      request = new PassengerTransportGetListRequestDto();
+      request.skipCount = this.pagination.page * this.pagination.pageSize - this.pagination.pageSize;
+      request.filter = this.filterCargoForm;
+      request.filter.TitleFilter = this.searchTerm;
+      request.sortParameter = this.sortParameter.Value.Parameter;
+      request.sortDesc = this.sortParameter.Value.ByDesc;
+      this.transportService.saveListRequest(this.router.url, request);
+    }
+    else
+      this.setValuesRequest(request);
+
+    this.passengerTransportApiService.getList(request)
+      .subscribe(res => {
+        this.items = res.Items;
+        this.totalCount = res.TotalCount;
+        this.pagination = {...this.pagination, total: this.totalCount}
+        if (isPreloadRequest && request?.skipCount && request.skipCount > 0)
+          this.pagination = {...this.pagination, page: Math.ceil(request.skipCount / this.pagination.pageSize) + 1}
+        this.isLoad = false;
+      });
+  }
+
   getSpecialListRequest(request : SpecialTransportGetListRequestDto | null = null) {
-    this.isLoad = true;
-    this.items = null;
     const isPreloadRequest = request != null;
     if (request == null){
       request = new SpecialTransportGetListRequestDto();
@@ -118,12 +142,9 @@ export class TransportsViewComponent implements OnInit{
       request.sortDesc = this.sortParameter.Value.ByDesc;
       this.transportService.saveListRequest(this.router.url, request);
     }
-    else {
-      this.valueDropdowns.TypeFilter = this.CargoTypeItems.find(x => x.Value == request?.filter.TypeFilter) ?? null;
-      this.valueDropdowns.RegionFilter = this.RegionItems.find(x => x.Value == request?.filter.RegionFilter) ?? null;
-      this.sortParameter = this.sortParameters.find(x => x.Value.Parameter == request?.sortParameter && x.Value.ByDesc == request?.sortDesc) ?? this.sortParameters[0];
-      this.searchTerm = request.filter.TitleFilter ?? '';
-    }
+    else
+      this.setValuesRequest(request);
+
     this.specialTransportApiService.getList(request)
       .subscribe(res => {
         this.items = res.Items;
@@ -133,6 +154,13 @@ export class TransportsViewComponent implements OnInit{
           this.pagination = {...this.pagination, page: Math.ceil(request.skipCount / this.pagination.pageSize) + 1}
         this.isLoad = false;
       });
+  }
+
+  setValuesRequest(request: any ){
+    this.valueDropdowns.TypeFilter = this.CargoTypeItems.find(x => x.Value == request?.filter.TypeFilter) ?? null;
+    this.valueDropdowns.RegionFilter = this.RegionItems.find(x => x.Value == request?.filter.RegionFilter) ?? null;
+    this.sortParameter = this.sortParameters.find(x => x.Value.Parameter == request?.sortParameter && x.Value.ByDesc == request?.sortDesc) ?? this.sortParameters[0];
+    this.searchTerm = request.filter.TitleFilter ?? '';
   }
 
   initPage(){

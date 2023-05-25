@@ -40,7 +40,11 @@
             </div>
             <div *ngIf="item.TransportationKind" class="item">
               <h4>Вид перевозок</h4>
-              <p>{{CargoTransportationKindConst[item.TransportationKind]}}</p>
+              <p>{{getTransportationTypeName()}}</p>
+            </div>
+            <div *ngIf="item.Facilities" class="item">
+              <h4>Класс</h4>
+              <p>{{PassengerFacilitiesConst[item.Facilities]}}</p>
             </div>
             <div *ngIf="item.Description" class="item">
               <h4>Описание</h4>

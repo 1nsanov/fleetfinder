@@ -10,6 +10,7 @@ import {PassengerFacilities} from "../../models/enums/transport/passenger/passen
 import {SizeModel} from "../Common/Transport/SizeModel";
 import {PassengerOption} from "../../models/enums/transport/passenger/passenger-option.enum";
 import {PassengerTransportationKind} from "../../models/enums/transport/passenger/passenger-transportation-kind.enum";
+import {PassengerType} from "../../models/enums/transport/passenger/passenger-type.enum";
 
 export class PassengerTransportGetResponse {
   Id: number;
@@ -22,7 +23,7 @@ export class PassengerTransportGetResponse {
   PaymentOrder: PaymentOrder | null;
   Price: PriceModel;
   Description: string | null;
-  Type: SpecialType;
+  Type: PassengerType;
   Images: string[];
   RentalDuration: PassengerRentalDuration | null;
   Facilities: PassengerFacilities | null;

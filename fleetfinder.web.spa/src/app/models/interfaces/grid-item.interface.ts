@@ -2,6 +2,8 @@
 import { Region } from "../enums/common/region.enum";
 import { Contact } from "src/app/api/Common/Contact";
 import {PriceModel} from "../../api/Common/Transport/PriceModel";
+import {PassengerFacilities} from "../enums/transport/passenger/passenger-facilities.enum";
+import {PassengerTransportationKind} from "../enums/transport/passenger/passenger-transportation-kind.enum";
 
 export interface IGridItem {
   Id: number;
@@ -13,6 +15,7 @@ export interface IGridItem {
   Images: string[];
 
   //nullable
-  TransportationKind: CargoTransportationKind | null;
+  TransportationKind: CargoTransportationKind | PassengerTransportationKind | null;
+  Facilities: PassengerFacilities | null;
   Description: string | null;
 }
