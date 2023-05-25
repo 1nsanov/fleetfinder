@@ -86,16 +86,9 @@ export class IdentifyApiService {
   }
 
   writeToken(token: TokenModel | null){
-    if (!token) {
-      this.cookieService.set('access_token', '');
-      this.cookieService.set('refresh_token', '');
-      this.cookieService.set('expiry_time', '');
-    }
-    else{
-      this.cookieService.set('access_token', token.Access);
-      this.cookieService.set('refresh_token', token.Refresh);
-      this.cookieService.set('expiry_time', token.ExpiryTime.toString())
-    }
+    this.cookieService.set('access_token', token ? token.Access : '', { path: '/'});
+    this.cookieService.set('refresh_token', token ? token.Refresh : '', { path: '/'});
+    this.cookieService.set('expiry_time', token ? token.ExpiryTime.toString() : '', { path: '/'})
   }
 
   private getRefreshToken() : string {

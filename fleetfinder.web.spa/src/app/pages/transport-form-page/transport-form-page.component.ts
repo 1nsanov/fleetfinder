@@ -232,65 +232,67 @@ export class TransportFormPageComponent implements OnInit{
     }
   }
 
-  async putCargo(){
+  putCargo(){
     this.requestImagePost.Folder = FirebaseStorageFolder.CargoTransport;
     this.imageService.delete(this.requestImageDelete).pipe(
       catchError((error: HttpErrorResponse) => {
         return throwError(error);
       })
-    ).subscribe();
-    await this.imageService.upload(this.requestImagePost).then((res) => {
-      const updateImages = this.previewImages.filter(x => x.match("firebase"));
-      updateImages.push(...res);
-      const request = this.form.value as CargoTransportPutRequestDto;
-      request.Type = this.cargoInfoForm.get('Type')?.value as CargoType;
-      request.TransportationKind = this.cargoInfoForm.get('TransportationKind')?.value as CargoTransportationKind;
-      request.Body = {
-        Kind : this.cargoInfoForm.get('Body.Kind')?.value,
-        Height : this.cargoInfoForm.get('Body.Height')?.value,
-        Volume : this.cargoInfoForm.get('Body.Volume')?.value,
-        Length : this.cargoInfoForm.get('Body.Length')?.value,
-        Width : this.cargoInfoForm.get('Body.Width')?.value,
-        LoadCapacity : this.cargoInfoForm.get('Body.LoadCapacity')?.value,
-      };
-      request.Images = updateImages;
-      this.cargoTransportApiService.put(request).pipe(
-        catchError((error: HttpErrorResponse) => {
-          this.isLoad = false;
-          this.notification.errorFromHttp(error);
-          return throwError(error);
-        })
-      ).subscribe((res) => {
-        this.notification.notify('Транспорт успешно обновлен')
-        this.router.navigate([namesRoute.TRANSPORT_CARGO_VIEW, res.Id]);
-      });
-    })
+    ).subscribe(async () => {
+      await this.imageService.upload(this.requestImagePost).then((res) => {
+        const updateImages = this.previewImages.filter(x => x.match("firebase"));
+        updateImages.push(...res);
+        const request = this.form.value as CargoTransportPutRequestDto;
+        request.Type = this.cargoInfoForm.get('Type')?.value as CargoType;
+        request.TransportationKind = this.cargoInfoForm.get('TransportationKind')?.value as CargoTransportationKind;
+        request.Body = {
+          Kind : this.cargoInfoForm.get('Body.Kind')?.value,
+          Height : this.cargoInfoForm.get('Body.Height')?.value,
+          Volume : this.cargoInfoForm.get('Body.Volume')?.value,
+          Length : this.cargoInfoForm.get('Body.Length')?.value,
+          Width : this.cargoInfoForm.get('Body.Width')?.value,
+          LoadCapacity : this.cargoInfoForm.get('Body.LoadCapacity')?.value,
+        };
+        request.Images = updateImages;
+        this.cargoTransportApiService.put(request).pipe(
+          catchError((error: HttpErrorResponse) => {
+            this.isLoad = false;
+            this.notification.errorFromHttp(error);
+            return throwError(error);
+          })
+        ).subscribe((res) => {
+          this.notification.notify('Транспорт успешно обновлен')
+          this.router.navigate([namesRoute.TRANSPORT_CARGO_VIEW, res.Id]);
+        });
+      })
+    });
   }
 
-  async putSpecial(){
+  putSpecial(){
     this.requestImagePost.Folder = FirebaseStorageFolder.SpecialTransport;
     this.imageService.delete(this.requestImageDelete).pipe(
       catchError((error: HttpErrorResponse) => {
         return throwError(error);
       })
-    ).subscribe();
-    await this.imageService.upload(this.requestImagePost).then((res) => {
-      const updateImages = this.previewImages.filter(x => x.match("firebase"));
-      updateImages.push(...res);
-      const request = this.form.value as SpecialTransportPutRequestDto;
-      request.Type = this.specialInfoForm.get('Type')?.value as SpecialType;
-      request.Images = updateImages;
-      this.specialTransportApiService.put(request).pipe(
-        catchError((error: HttpErrorResponse) => {
-          this.isLoad = false;
-          this.notification.errorFromHttp(error);
-          return throwError(error);
-        })
-      ).subscribe((res) => {
-        this.notification.notify('Транспорт успешно обновлен')
-        this.router.navigate([namesRoute.TRANSPORT_SPECIAL_VIEW, res.Id]);
-      });
-    })
+    ).subscribe(async () => {
+      await this.imageService.upload(this.requestImagePost).then((res) => {
+        const updateImages = this.previewImages.filter(x => x.match("firebase"));
+        updateImages.push(...res);
+        const request = this.form.value as SpecialTransportPutRequestDto;
+        request.Type = this.specialInfoForm.get('Type')?.value as SpecialType;
+        request.Images = updateImages;
+        this.specialTransportApiService.put(request).pipe(
+          catchError((error: HttpErrorResponse) => {
+            this.isLoad = false;
+            this.notification.errorFromHttp(error);
+            return throwError(error);
+          })
+        ).subscribe((res) => {
+          this.notification.notify('Транспорт успешно обновлен')
+          this.router.navigate([namesRoute.TRANSPORT_SPECIAL_VIEW, res.Id]);
+        });
+      })
+    });
   }
 
   delete(){

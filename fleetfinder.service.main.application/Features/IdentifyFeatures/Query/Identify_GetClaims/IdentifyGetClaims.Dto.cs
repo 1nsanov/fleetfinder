@@ -4,6 +4,7 @@ public static partial class IdentifyGetClaims
 {
     public record ResponseDto(
         long? Id,
-        string? FullName
+        string? FullName,
+        string? ImageUrl
     );
 }

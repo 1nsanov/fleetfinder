@@ -35,6 +35,7 @@ public static partial class PassengerTransportPut
             }
 
             entity.Price = updated.Price;
+            entity.Size = updated.Size;
             entity.Images = updatedImage;
             _commandDbContext.Entry(entity).CurrentValues.SetValues(updated);
             _commandDbContext.Entry(entity).Property(ct => ct.UserId).IsModified = false;

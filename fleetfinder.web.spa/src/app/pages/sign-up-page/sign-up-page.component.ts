@@ -27,6 +27,7 @@ export class SignUpPageComponent implements OnInit{
 
   constructor(private identifyService: IdentifyApiService,
               private notification: NotificationService,
+              private timeoutService: TimeoutService,
               private router: Router,
               private formBuilder: FormBuilder) {
   }
@@ -61,7 +62,8 @@ export class SignUpPageComponent implements OnInit{
           this.notification.errorFromHttp(error);
           return throwError(error);
         })
-      ).subscribe(() => {
+      ).subscribe(async () => {
+        await this.timeoutService.wait(100);
         this.router.navigate([`/${namesRoute.HOME}`]).then(() => window.location.reload());
       });
     }

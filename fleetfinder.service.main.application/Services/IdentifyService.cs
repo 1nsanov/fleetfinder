@@ -85,13 +85,14 @@ public class IdentifyService : IIdentifyService
             new Claim(ClaimTypes.NameIdentifier, user.Login),
             new Claim(ClaimTypes.Sid, user.Id.ToString()),
             new Claim(ClaimTypes.GivenName, $"{user.FullName.First} {user.FullName.Second} {user.FullName.Surname}"),
+            new Claim(ClaimTypes.Uri, user.ImageUrl ?? ""),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
 
         return new JwtSecurityToken(_config["Jwt:Issuer"],
             _config["Jwt:Audience"],
             claims,
-            expires: DateTime.UtcNow.AddDays(1),
+            expires: DateTime.UtcNow.AddHours(1),
             signingCredentials: credentials);
     }
 

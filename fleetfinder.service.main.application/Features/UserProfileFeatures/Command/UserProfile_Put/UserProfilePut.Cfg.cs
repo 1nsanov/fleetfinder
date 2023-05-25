@@ -2,9 +2,9 @@
 using fleetfinder.service.main.domain.Users;
 using Riok.Mapperly.Abstractions;
 
-namespace fleetfinder.service.main.application.Features.IdentifyFeatures.Command.Identify_SignUp;
+namespace fleetfinder.service.main.application.Features.UserProfileFeatures.Command.UserProfile_Put;
 
-public static partial class IdentifySignUp
+public static partial class UserProfilePut
 {
     #region Validator
 
@@ -19,14 +19,12 @@ public static partial class IdentifySignUp
         {
             public RequestValidator()
             {
-                RuleFor(dto => dto.Login).NotEmpty()
-                    .MinimumLength(4).WithName("Логин").WithMessage("Поле '{PropertyName}' не может быть меньше {MinLength} символов.")
-                    .MaximumLength(16).WithName("Логин").WithMessage("Поле '{PropertyName}' не может превышать {MaxLength} символов.");
-                RuleFor(dto => dto.Password).NotEmpty().MinimumLength(8).MaximumLength(100)
-                    .WithName("Пароль").WithMessage("Поле '{PropertyName}' не может быть меньше {MinLength} символов.");
                 RuleFor(dto => dto.Email).NotEmpty().EmailAddress()
                     .WithName("Эл. почта").WithMessage("Поле {PropertyName} имеет не верный формат.");
                 RuleFor(dto => dto.FullName).SetValidator(new NameValidator());
+                RuleFor(dto => dto.ImageUrl).NotEmpty().WithMessage("Ссылка на изображение не может быть пустой.")
+                    .Matches(@"^https?://[^\s/$.?#].[^\s]*$").WithMessage("8Ссылка на изображение должна быть корректной URL-адресом.")
+                    .Unless(dto => dto.ImageUrl is null);
             }
         }
         

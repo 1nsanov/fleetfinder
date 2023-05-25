@@ -6,6 +6,7 @@ import {namesRoute} from "../../data/names-route";
 import {NotificationService} from "../../services/notification.service";
 import {SignInModel} from "../../models/interfaces/user/sign-in.model";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {TimeoutService} from "../../services/timeout.service";
 
 @Component({
   selector: 'app-sign-in-page',
@@ -19,7 +20,8 @@ export class SignInPageComponent implements OnInit{
   constructor(private identifyService: IdentifyApiService,
               private router: Router,
               private notification: NotificationService,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder,
+              private timeoutService: TimeoutService) {
   }
 
   ngOnInit(): void {
@@ -31,9 +33,12 @@ export class SignInPageComponent implements OnInit{
     if (this.form.valid){
       this.isLoad = true;
       const request = this.form.value as ISignInRequest;
-      this.identifyService.signIn(request).subscribe(() => {
+      this.identifyService.signIn(request).subscribe(async () => {
+        await this.timeoutService.wait(100);
         this.isLoad = false;
-        this.router.navigate([`/${namesRoute.HOME}`]).then(() => window.location.reload())
+        this.router.navigate([`/${namesRoute.HOME}`]).then(() => {
+          window.location.reload()
+        })
       }, error => {
         this.isLoad = false
         this.notification.error("Не верный логин и/или пароль.")

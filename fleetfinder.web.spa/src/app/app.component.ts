@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import {environment} from "../environments/environment";
 import {GlobalLoaderService} from "./services/global-loader.service";
 import {IdentifyApiService} from "./api/Identify/identify.api.service";
 

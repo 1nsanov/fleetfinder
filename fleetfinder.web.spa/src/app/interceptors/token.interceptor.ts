@@ -6,11 +6,13 @@ import {
 } from '@angular/common/http';
 import {catchError, Observable, switchMap, throwError} from 'rxjs';
 import {IdentifyApiService} from "../api/Identify/identify.api.service";
+import {NotificationService} from "../services/notification.service";
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
 
-  constructor(private identifyService: IdentifyApiService) {}
+  constructor(private identifyService: IdentifyApiService,
+              private notification: NotificationService) {}
   private refreshTokenInProgress = false;
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<any> {
     if (this.identifyService.isAuthenticated() && !this.refreshTokenInProgress) {
@@ -20,13 +22,15 @@ export class TokenInterceptor implements HttpInterceptor {
         this.refreshTokenInProgress = true;
         return this.identifyService.refreshToken().pipe(
           catchError((error) => {
-            if (error instanceof HttpErrorResponse && (error.status === 500))
+            if (error instanceof HttpErrorResponse){
+              this.notification.error("Токен авторизиции истек")
               this.identifyService.logout().subscribe();
-
+            }
             return throwError(error);
           }),
           switchMap((result) => {
             this.refreshTokenInProgress = false;
+            console.log("switchMap")
             const authRequest = request.clone({
               headers: request.headers
                 .set('Authorization', `Bearer ${result.Token.Access}`)

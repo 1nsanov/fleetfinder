@@ -18,14 +18,15 @@ public static partial class IdentifyGetClaims
         public async Task<ResponseDto> Handle(Command request, CancellationToken cancellationToken)
         {
             if (request.AccessToken is null) 
-                return new ResponseDto(null, null);
+                return new ResponseDto(null, null, null);
             
             var principal = _identifyService.GetPrincipalFromToken(request.AccessToken, true);
             var claimSid = principal.Claims.FirstOrDefault(claim => claim.Type.Contains("sid"))?.Value;
             var userId = long.Parse(claimSid);
-            var claimGivenName = principal.Claims.FirstOrDefault(claim => claim.Type.Contains("givenname"))?.Value;
+            var givenName = principal.Claims.FirstOrDefault(claim => claim.Type.Contains("givenname"))?.Value;
+            var imageUrl = principal.Claims.FirstOrDefault(claim => claim.Type.Contains("uri"))?.Value;
             
-            return new ResponseDto(userId, claimGivenName);
+            return new ResponseDto(userId, givenName, imageUrl);
         }
     }
 }
