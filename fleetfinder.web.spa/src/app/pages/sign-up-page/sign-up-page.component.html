@@ -20,7 +20,9 @@
                      (valueChange)="form.get('FullName.Surname')?.setValue($event)"/>
         </div>
       </div>
-      <app-input label="Организация" />
+      <app-input label="Организация"
+                 [value]="form.get('Organization')?.value ?? ''"
+                 (valueChange)="form.get('Organization')?.setValue($event)"/>
       <app-button theme="green" (click)="nextStep()">
         Далее
       </app-button>
