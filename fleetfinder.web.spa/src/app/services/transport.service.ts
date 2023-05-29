@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {IInfoBoxTransport} from "../models/interfaces/info-box-transport.interface";
-import {CargoType} from "../models/enums/transport/cargo/cargo-type.enum";
 import {TransportType} from "../models/enums/transport/transport-type.enum";
 import {CargoTransportGetListRequestDto} from "../api/CargoTransport/get-list.models";
 import {SpecialTransportGetListRequestDto} from "../api/SpecialTransport/get-list.models";
 import {PassengerTransportGetListRequestDto} from "../api/PassengerTransport/get-list.models";
+import {PassengerType} from "../models/enums/transport/passenger/passenger-type.enum";
 
 @Injectable({
   providedIn: 'root'
@@ -47,5 +47,29 @@ export class TransportService {
       case TransportType.Special:
         return '../../../assets/icons/transport/special/icon-' + item.Icon + '.png';
     }
+  }
+
+  public isTaxi(type: PassengerType) : boolean {
+    return type === PassengerType.Taxi;
+  }
+
+  public isBus(type: PassengerType) : boolean {
+    return type === PassengerType.Bus;
+  }
+
+  public isLimousine(type: PassengerType) : boolean {
+    return type === PassengerType.Limousine;
+  }
+
+  public isMinivan(type: PassengerType) : boolean {
+    return type === PassengerType.Minivan;
+  }
+
+  public isShiftw(type: PassengerType) : boolean {
+    return type === PassengerType.Shiftw;
+  }
+
+  public isWater(type: PassengerType) : boolean {
+    return type === PassengerType.Water;
   }
 }

@@ -39,7 +39,7 @@ export class TransportPassengerViewPageComponent {
               private router: Router,
               private passengerTransportService: PassengerTransportApiService,
               private identifyService: IdentifyApiService,
-              private transportService: TransportService) {
+              public transportService: TransportService) {
   }
 
   ngOnInit(): void {
@@ -78,9 +78,5 @@ export class TransportPassengerViewPageComponent {
 
   get isMyTransport() {
     return this.transport?.UserId === this.identifyService.claims?.Id;
-  }
-
-  getSize() {
-    return
   }
 }

@@ -20,6 +20,7 @@ import {CargoTransportationKind} from "../../../models/enums/transport/cargo/car
 import {
   PassengerTransportationKind
 } from "../../../models/enums/transport/passenger/passenger-transportation-kind.enum";
+import {TransportService} from "../../../services/transport.service";
 
 @Component({
   selector: 'app-grid-item',
@@ -31,13 +32,12 @@ export class GridItemComponent {
   @Input() type: TransportType;
 
   RegionConst = RegionConst;
-  CargoTransportationKindConst = CargoTransportationKindConst;
-  PassengerTransportationKindConst = PassengerTransportationKindConst;
   PassengerFacilitiesConst = PassengerFacilitiesConst;
   TransportType = TransportType;
 
   constructor(private cargoTransportService: CargoTransportApiService,
-              private router: Router) {
+              private router: Router,
+              public transportService: TransportService) {
   }
 
   onClick() {

@@ -49,13 +49,13 @@
           <app-field-view-item title="Марка" [text]="transport.Brand"/>
           <app-field-view-item title="Год выпуска" [text]="transport.YearIssue | measurement:'г.'"/>
 
-          <app-field-view-item title="Срок аренды" [text]="transport.RentalDuration ? PassengerRentalDurationConst[transport.RentalDuration] : '-'"/>
-          <app-field-view-item title="Класс" [text]="transport.Facilities ? PassengerFacilitiesConst[transport.Facilities] : '-'"/>
-          <app-field-view-item title="Кол-во мест" [text]="transport.CountSeats"/>
-          <app-field-view-item title="Длина/Ширина/Высота" [text]="sizeText"/>
-          <app-field-view-item title="Опции" [text]="transport.Option ? PassengerOptionConst[transport.Option] : '-'"/>
+          <app-field-view-item *ngIf="transportService.isBus(transport.Type) || transportService.isMinivan(transport.Type)" title="Срок аренды" [text]="transport.RentalDuration ? PassengerRentalDurationConst[transport.RentalDuration] : '-'"/>
+          <app-field-view-item *ngIf="transportService.isBus(transport.Type) || transportService.isMinivan(transport.Type) || transportService.isTaxi(transport.Type)"  title="Класс" [text]="transport.Facilities ? PassengerFacilitiesConst[transport.Facilities] : '-'"/>
+          <app-field-view-item *ngIf="!transportService.isTaxi(transport.Type)" title="Кол-во мест" [text]="transport.CountSeats"/>
+          <app-field-view-item *ngIf="transportService.isBus(transport.Type)" title="Длина/Ширина/Высота" [text]="sizeText"/>
+          <app-field-view-item *ngIf="transportService.isBus(transport.Type) || transportService.isMinivan(transport.Type)" title="Опции" [text]="transport.Option ? PassengerOptionConst[transport.Option] : '-'"/>
           <app-field-view-item title="Вид перевозок" [text]="transport.TransportationKind ? PassengerTransportationKindConst[transport.TransportationKind] : '-'"/>
-          <app-field-view-item title="Цвет" [text]="transport.Color"/>
+          <app-field-view-item *ngIf="transportService.isBus(transport.Type) || transportService.isMinivan(transport.Type)" title="Цвет" [text]="transport.Color"/>
           <app-field-view-item title="Мин. время аренды" [text]="transport.MinOrderTime | measurement:'мин.'"/>
 
         </div>
