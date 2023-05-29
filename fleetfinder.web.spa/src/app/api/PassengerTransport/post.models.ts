@@ -3,7 +3,6 @@ import { ExperienceWork } from "src/app/models/enums/transport/experience-work.e
 import { PaymentMethod } from "src/app/models/enums/transport/payment-method.enum";
 import { PaymentOrder } from "src/app/models/enums/transport/payment-order.enum";
 import {PriceModel} from "../Common/Transport/PriceModel";
-import {SpecialType} from "../../models/enums/transport/special/special-type.enum";
 import {PassengerType} from "../../models/enums/transport/passenger/passenger-type.enum";
 import {PassengerRentalDuration} from "../../models/enums/transport/passenger/passenger-rental-duration.enum";
 import {PassengerFacilities} from "../../models/enums/transport/passenger/passenger-facilities.enum";

@@ -3,6 +3,9 @@ import {
   getCargoBodyKindItems,
   getCargoTransportationKindItems,
   getExperienceWorkItems,
+  getPassengerFacilitiesItems, getPassengerOptionItems,
+  getPassengerRentalDurationItems,
+  getPassengerTransportationKindItems,
   getPaymentMethodItems,
   getPaymentOrderItems,
   getRegionItems,
@@ -31,7 +34,7 @@ import {ExperienceWork} from "../../models/enums/transport/experience-work.enum"
 import {PaymentMethod} from "../../models/enums/transport/payment-method.enum";
 import {PaymentOrder} from "../../models/enums/transport/payment-order.enum";
 import {TransportService} from "../../services/transport.service";
-import {CargoTransportForm} from "../../models/interfaces/transport/cargo-transport-form.model";
+import {TransportForm} from "../../models/interfaces/transport/cargo-transport-form.model";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {PriceForm} from "../../models/interfaces/transport/price-form.model";
 import {BodyForm} from "../../models/interfaces/transport/body-form.model";
@@ -50,6 +53,17 @@ import {SpecialType} from "../../models/enums/transport/special/special-type.enu
 import {SpecialTransportApiService} from "../../api/SpecialTransport/special-transport.api.service";
 import {SpecialTransportPostRequestDto} from "../../api/SpecialTransport/post.models";
 import {SpecialTransportPutRequestDto} from "../../api/SpecialTransport/put.model";
+import {PassengerTransportPostRequestDto} from "../../api/PassengerTransport/post.models";
+import {PassengerType} from "../../models/enums/transport/passenger/passenger-type.enum";
+import {PassengerTransportApiService} from "../../api/PassengerTransport/passenger-transport.api.service";
+import {PassengerInfoForm} from "../../models/interfaces/transport/passenger-info-form.model";
+import {PassengerTransportPutRequestDto} from "../../api/PassengerTransport/put.model";
+import {PassengerTransportGetResponse} from "../../api/PassengerTransport/get.models";
+import {PassengerRentalDuration} from "../../models/enums/transport/passenger/passenger-rental-duration.enum";
+import {PassengerFacilities} from "../../models/enums/transport/passenger/passenger-facilities.enum";
+import {PassengerOption} from "../../models/enums/transport/passenger/passenger-option.enum";
+import {PassengerTransportationKind} from "../../models/enums/transport/passenger/passenger-transportation-kind.enum";
+import {SizeForm} from "../../models/interfaces/transport/size-form.model";
 
 @Component({
   selector: 'app-transport-form-page',
@@ -64,6 +78,10 @@ export class TransportFormPageComponent implements OnInit{
   PaymentOrderItems = getPaymentOrderItems();
   CargoBodyKindItems = getCargoBodyKindItems();
   CargoTransportationKindItems = getCargoTransportationKindItems();
+  PassengerTransportationKindItems = getPassengerTransportationKindItems();
+  PassengerRentalDurationItems = getPassengerRentalDurationItems();
+  PassengerFacilitiesItems = getPassengerFacilitiesItems();
+  PassengerOptionItems = getPassengerOptionItems();
   YearsItems = getYearItems();
   cargo = cargoItems;
   passenger = passengerItems;
@@ -75,8 +93,9 @@ export class TransportFormPageComponent implements OnInit{
   currentType: TransportType | null = null;
   currentTypeImg : string | null = null;
   typeHint: string = "";
-  form: FormGroup<CargoTransportForm>;
+  form: FormGroup<TransportForm>;
   cargoInfoForm: FormGroup<CargoInfoForm>;
+  passengerInfoForm: FormGroup<PassengerInfoForm>;
   specialInfoForm: FormGroup<SpecialInfoForm>;
   requestImagePost : ImagePostRequest = {
     Folder: FirebaseStorageFolder.CargoTransport,
@@ -90,6 +109,7 @@ export class TransportFormPageComponent implements OnInit{
 
   constructor(public modalService: ModalService,
               private cargoTransportApiService: CargoTransportApiService,
+              private passengerTransportApiService: PassengerTransportApiService,
               private specialTransportApiService: SpecialTransportApiService,
               private identifyService: IdentifyApiService,
               private imageService: ImageApiService,
@@ -121,6 +141,13 @@ export class TransportFormPageComponent implements OnInit{
             });
             break;
           case TransportType.Passenger:
+            this.passengerTransportApiService.get(parseInt(id)).subscribe((res) => {
+              if (res.UserId === this.identifyService.claims?.Id) {
+                this.initPassengerInfoFormBuilder(res);
+                this.initFormBuilder(res);
+              } else
+                this.guardRoute();
+            });
             break;
           case TransportType.Special:
             this.specialTransportApiService.get(parseInt(id)).subscribe((res) => {
@@ -137,6 +164,7 @@ export class TransportFormPageComponent implements OnInit{
       else{
         this.initFormBuilder();
         this.initCargoInfoFormBuilder();
+        this.initPassengerInfoFormBuilder();
         this.initSpecialInfoFormBuilder();
       }
     });
@@ -163,6 +191,7 @@ export class TransportFormPageComponent implements OnInit{
         await this.postCargo();
         break;
       case TransportType.Passenger:
+        await this.postPassenger();
         break;
       case TransportType.Special:
         await this.postSpecial();
@@ -198,6 +227,25 @@ export class TransportFormPageComponent implements OnInit{
     })
   }
 
+  async postPassenger(){
+    this.requestImagePost.Folder = FirebaseStorageFolder.PassengerTransport;
+    await this.imageService.upload(this.requestImagePost).then((res) => {
+      let request = this.form.value as PassengerTransportPostRequestDto;
+      request = this.fillRequestPassenger(request);
+      request.Images = res;
+      this.passengerTransportApiService.post(request).pipe(
+        catchError((error: HttpErrorResponse) => {
+          this.isLoad = false;
+          this.notification.errorFromHttp(error);
+          return throwError(error);
+        })
+      ).subscribe((res) => {
+        this.notification.notify('Транспорт успешно добавлен')
+        this.router.navigate([namesRoute.TRANSPORT_PASSENGER_VIEW, res.Id]);
+      });
+    })
+  }
+
   async postSpecial(){
     this.requestImagePost.Folder = FirebaseStorageFolder.SpecialTransport;
     await this.imageService.upload(this.requestImagePost).then((res) => {
@@ -225,6 +273,7 @@ export class TransportFormPageComponent implements OnInit{
         await this.putCargo();
         break;
       case TransportType.Passenger:
+        await this.putPassenger();
         break;
       case TransportType.Special:
         await this.putSpecial();
@@ -263,6 +312,33 @@ export class TransportFormPageComponent implements OnInit{
         ).subscribe((res) => {
           this.notification.notify('Транспорт успешно обновлен')
           this.router.navigate([namesRoute.TRANSPORT_CARGO_VIEW, res.Id]);
+        });
+      })
+    });
+  }
+
+  putPassenger(){
+    this.requestImagePost.Folder = FirebaseStorageFolder.PassengerTransport;
+    this.imageService.delete(this.requestImageDelete).pipe(
+      catchError((error: HttpErrorResponse) => {
+        return throwError(error);
+      })
+    ).subscribe(async () => {
+      await this.imageService.upload(this.requestImagePost).then((res) => {
+        const updateImages = this.previewImages.filter(x => x.match("firebase"));
+        updateImages.push(...res);
+        let request = this.form.value as PassengerTransportPutRequestDto;
+        request = this.fillRequestPassenger(request) as PassengerTransportPutRequestDto;
+        request.Images = updateImages;
+        this.passengerTransportApiService.put(request).pipe(
+          catchError((error: HttpErrorResponse) => {
+            this.isLoad = false;
+            this.notification.errorFromHttp(error);
+            return throwError(error);
+          })
+        ).subscribe((res) => {
+          this.notification.notify('Транспорт успешно обновлен')
+          this.router.navigate([namesRoute.TRANSPORT_PASSENGER_VIEW, res.Id]);
         });
       })
     });
@@ -325,11 +401,28 @@ export class TransportFormPageComponent implements OnInit{
       })
   }
 
+  fillRequestPassenger(request: PassengerTransportPostRequestDto | PassengerTransportPutRequestDto) {
+    request.Type = this.passengerInfoForm.get('Type')?.value as PassengerType;
+    request.RentalDuration = this.passengerInfoForm.get('RentalDuration')?.value as PassengerRentalDuration;
+    request.Facilities = this.passengerInfoForm.get('Facilities')?.value as PassengerFacilities;
+    request.CountSeats = this.passengerInfoForm.get('CountSeats')?.value ?? null;
+    request.Option = this.passengerInfoForm.get('Option')?.value as PassengerOption;
+    request.TransportationKind = this.passengerInfoForm.get('TransportationKind')?.value as PassengerTransportationKind;
+    request.Color = this.passengerInfoForm.get('Color')?.value ?? null;
+    request.MinOrderTime = this.passengerInfoForm.get('MinOrderTime')?.value ?? null;
+    request.Size = {
+      Length: this.passengerInfoForm.get('Length')?.value ?? null,
+      Width: this.passengerInfoForm.get('Width')?.value ?? null,
+      Height: this.passengerInfoForm.get('Height')?.value ?? null,
+    };
+    return request;
+  }
+
   //#endregion
 
   //#region Form
-  initFormBuilder(item: CargoTransportGetResponse | SpecialTransportGetResponse | null = null){
-    this.form = this.formBuilder.group<CargoTransportForm>({
+  initFormBuilder(item: CargoTransportGetResponse | SpecialTransportGetResponse | PassengerTransportGetResponse | null = null){
+    this.form = this.formBuilder.group<TransportForm>({
       Id: new FormControl<number | null>(item?.Id ?? null),
       Title: new FormControl<string | null>(item?.Title ?? null, Validators.required),
       Region: new FormControl<Region | null>(item?.Region ?? null, Validators.required),
@@ -371,6 +464,24 @@ export class TransportFormPageComponent implements OnInit{
     })
   }
 
+  initPassengerInfoFormBuilder(item : PassengerTransportGetResponse | null = null){
+    this.passengerInfoForm = this.formBuilder.group<PassengerInfoForm>({
+      Type: new FormControl<PassengerType | null>(item?.Type ?? null, Validators.required),
+      RentalDuration: new FormControl<PassengerRentalDuration | null>(item?.RentalDuration ?? null),
+      Facilities: new FormControl<PassengerFacilities | null>(item?.Facilities ?? null),
+      CountSeats: new FormControl<any>(item?.CountSeats ?? null),
+      Option: new FormControl<PassengerOption | null>(item?.Option ?? null),
+      TransportationKind: new FormControl<PassengerTransportationKind | null>(item?.TransportationKind ?? null),
+      Color: new FormControl<string | null>(item?.Color ?? null),
+      MinOrderTime: new FormControl<number | null>(item?.MinOrderTime ?? null),
+      Size: this.formBuilder.group<SizeForm>({
+        Length: new FormControl<number | null>(item?.Size.Length ?? null),
+        Width: new FormControl<number | null>(item?.Size.Width ?? null),
+        Height: new FormControl<number | null>(item?.Size.Height ?? null),
+      })
+    })
+  }
+
   formMarkAsTouched(){
     Object.values(this.form.controls).forEach(control => {
       control.markAsTouched();
@@ -405,25 +516,45 @@ export class TransportFormPageComponent implements OnInit{
   onSelectPaymentOrder(item: DropdownItemModel<PaymentOrder>){
     this.form.get('PaymentOrder')?.setValue(item.Value)
   }
+  onSelectPassengerRentalDuration(item: DropdownItemModel<PassengerRentalDuration>){
+    this.passengerInfoForm.get('RentalDuration')?.setValue(item.Value)
+  }
+  onSelectPassengerFacilities(item: DropdownItemModel<PassengerFacilities>){
+    this.passengerInfoForm.get('Facilities')?.setValue(item.Value)
+  }
+  onSelectPassengerTransportationKind(item: DropdownItemModel<PassengerTransportationKind>){
+    this.passengerInfoForm.get('TransportationKind')?.setValue(item.Value)
+  }
+  onSelectPassengerOption(item: DropdownItemModel<PassengerOption>){
+    this.passengerInfoForm.get('Option')?.setValue(item.Value)
+  }
   valueRegion: DropdownItemModel<Region | null> = this.RegionItems[0];
   valueExperienceWork: DropdownItemModel<ExperienceWork | null> = this.ExperienceWorkItems[0];
   valuePaymentMethod: DropdownItemModel<PaymentMethod | null> = this.PaymentMethodItems[0];
   valuePaymentOrder: DropdownItemModel<PaymentOrder | null> = this.PaymentOrderItems[0];
   valueBodyKind: DropdownItemModel<CargoBodyKind | null> = this.CargoBodyKindItems[0];
   valueTransportationKind: DropdownItemModel<CargoTransportationKind | null> = this.CargoTransportationKindItems[0];
+  valuePassengerTransportationKind: DropdownItemModel<PassengerTransportationKind | null> = this.PassengerTransportationKindItems[0];
+  valuePassengerRentalDuration: DropdownItemModel<PassengerRentalDuration | null> = this.PassengerRentalDurationItems[0];
+  valuePassengerFacilities: DropdownItemModel<PassengerFacilities | null> = this.PassengerFacilitiesItems[0];
+  valuePassengerOption: DropdownItemModel<PassengerOption | null> = this.PassengerOptionItems[0];
   valueYearIssue: DropdownItemModel<string> = this.YearsItems[0];
-  onloadExist(item: CargoTransportGetResponse | SpecialTransportGetResponse){
+
+  onloadExist(item: CargoTransportGetResponse | SpecialTransportGetResponse | PassengerTransportGetResponse){
     if (!this.currentType) return;
 
     if (this.currentType == TransportType.Cargo) {
       const infoBox = this.cargo.find(x => x.Value == item.Type);
       if (infoBox)  this.onSelectTransportType(infoBox, this.currentType)
     }
+    else if (this.currentType == TransportType.Passenger) {
+      const infoBox = this.passenger.find(x => x.Value == item.Type);
+      if (infoBox)  this.onSelectTransportType(infoBox, this.currentType)
+    }
     else if (this.currentType == TransportType.Special) {
       const infoBox = this.special.find(x => x.Value == item.Type);
       if (infoBox)  this.onSelectTransportType(infoBox, this.currentType)
     }
-
 
     this.valueRegion = this.RegionItems.find(x => x.Value === item.Region) ?? this.RegionItems[0];
     this.valueYearIssue = this.YearsItems.find(x => x.Value === item.YearIssue) ?? this.YearsItems[0];
@@ -481,6 +612,7 @@ export class TransportFormPageComponent implements OnInit{
         this.cargoInfoForm.get('Type')?.setValue(item.Value)
         break;
       case TransportType.Passenger:
+        this.passengerInfoForm.get('Type')?.setValue(item.Value)
         break;
       case TransportType.Special:
         this.specialInfoForm.get('Type')?.setValue(item.Value)
