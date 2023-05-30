@@ -14,5 +14,5 @@ export interface PassengerInfoForm {
   Option: AbstractControl<PassengerOption | null>;
   TransportationKind: AbstractControl<PassengerTransportationKind | null>;
   Color: AbstractControl<string | null>;
-  MinOrderTime: AbstractControl<number | null>;
+  MinOrderTime: AbstractControl<any>;
 }

@@ -42,7 +42,7 @@
               <h4>Вид перевозок</h4>
               <p>{{getTransportationTypeName()}}</p>
             </div>
-            <div *ngIf="item.Facilities && (transportService.isBus(item.Type) || transportService.isMinivan(item.Type) || transportService.isTaxi(item.Type))" class="item">
+            <div *ngIf="item.Facilities && transportService.isShowFacilities(item.Type)" class="item">
               <h4>Класс</h4>
               <p>{{PassengerFacilitiesConst[item.Facilities]}}</p>
             </div>

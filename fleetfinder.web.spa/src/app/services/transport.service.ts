@@ -49,27 +49,44 @@ export class TransportService {
     }
   }
 
-  public isTaxi(type: PassengerType) : boolean {
+  //#region passenger showing field
+
+  public isShowRentalDuration(type: PassengerType) {
+    return this.isBus(type) || this.isMinivan(type)
+  }
+
+  public isShowFacilities(type: PassengerType) {
+    return this.isBus(type) || this.isMinivan(type) || this.isTaxi(type);
+  }
+
+  public isShowCountSeats(type: PassengerType) {
+    return !this.isTaxi(type);
+  }
+
+  public isShowSize(type: PassengerType) {
+    return this.isBus(type);
+  }
+
+  public isShowOption(type: PassengerType) {
+    return this.isBus(type) || this.isMinivan(type)
+  }
+
+  public isShowColor(type: PassengerType) {
+    return this.isBus(type) || this.isMinivan(type)
+  }
+
+
+  private isTaxi(type: PassengerType) : boolean {
     return type === PassengerType.Taxi;
   }
 
-  public isBus(type: PassengerType) : boolean {
+  private isBus(type: PassengerType) : boolean {
     return type === PassengerType.Bus;
   }
 
-  public isLimousine(type: PassengerType) : boolean {
-    return type === PassengerType.Limousine;
-  }
-
-  public isMinivan(type: PassengerType) : boolean {
+  private isMinivan(type: PassengerType) : boolean {
     return type === PassengerType.Minivan;
   }
 
-  public isShiftw(type: PassengerType) : boolean {
-    return type === PassengerType.Shiftw;
-  }
-
-  public isWater(type: PassengerType) : boolean {
-    return type === PassengerType.Water;
-  }
+  //#endregion
 }

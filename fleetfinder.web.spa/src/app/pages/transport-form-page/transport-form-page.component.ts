@@ -3,7 +3,8 @@ import {
   getCargoBodyKindItems,
   getCargoTransportationKindItems,
   getExperienceWorkItems,
-  getPassengerFacilitiesItems, getPassengerOptionItems,
+  getPassengerFacilitiesItems,
+  getPassengerOptionItems,
   getPassengerRentalDurationItems,
   getPassengerTransportationKindItems,
   getPaymentMethodItems,
@@ -108,13 +109,13 @@ export class TransportFormPageComponent implements OnInit{
   isLoad = false;
 
   constructor(public modalService: ModalService,
+              public transportService: TransportService,
               private cargoTransportApiService: CargoTransportApiService,
               private passengerTransportApiService: PassengerTransportApiService,
               private specialTransportApiService: SpecialTransportApiService,
               private identifyService: IdentifyApiService,
               private imageService: ImageApiService,
               private notification: NotificationService,
-              private transportService: TransportService,
               private route: ActivatedRoute,
               private router: Router,
               private _location: Location,
@@ -516,16 +517,16 @@ export class TransportFormPageComponent implements OnInit{
   onSelectPaymentOrder(item: DropdownItemModel<PaymentOrder>){
     this.form.get('PaymentOrder')?.setValue(item.Value)
   }
-  onSelectPassengerRentalDuration(item: DropdownItemModel<PassengerRentalDuration>){
+  onSelectPassengerRentalDuration(item: DropdownItemModel<PassengerRentalDuration | null>){
     this.passengerInfoForm.get('RentalDuration')?.setValue(item.Value)
   }
-  onSelectPassengerFacilities(item: DropdownItemModel<PassengerFacilities>){
+  onSelectPassengerFacilities(item: DropdownItemModel<PassengerFacilities | null>){
     this.passengerInfoForm.get('Facilities')?.setValue(item.Value)
   }
-  onSelectPassengerTransportationKind(item: DropdownItemModel<PassengerTransportationKind>){
+  onSelectPassengerTransportationKind(item: DropdownItemModel<PassengerTransportationKind | null>){
     this.passengerInfoForm.get('TransportationKind')?.setValue(item.Value)
   }
-  onSelectPassengerOption(item: DropdownItemModel<PassengerOption>){
+  onSelectPassengerOption(item: DropdownItemModel<PassengerOption | null>){
     this.passengerInfoForm.get('Option')?.setValue(item.Value)
   }
   valueRegion: DropdownItemModel<Region | null> = this.RegionItems[0];
@@ -612,6 +613,11 @@ export class TransportFormPageComponent implements OnInit{
         this.cargoInfoForm.get('Type')?.setValue(item.Value)
         break;
       case TransportType.Passenger:
+        this.initPassengerInfoFormBuilder()
+        this.onSelectPassengerRentalDuration(this.PassengerRentalDurationItems[0]);
+        this.onSelectPassengerFacilities(this.PassengerFacilitiesItems[0]);
+        this.onSelectPassengerTransportationKind(this.PassengerTransportationKindItems[0]);
+        this.onSelectPassengerOption(this.PassengerOptionItems[0]);
         this.passengerInfoForm.get('Type')?.setValue(item.Value)
         break;
       case TransportType.Special:
@@ -629,5 +635,9 @@ export class TransportFormPageComponent implements OnInit{
     this.router.navigate([`/${namesRoute.TRANSPORTS}`]).then(() => {
       this.notification.error('Ошибка в доступе. Вы не являетесь создателем данного транспорта')
     });
+  }
+
+  get passengerType() : PassengerType {
+    return this.passengerInfoForm.get('Type')?.value ?? PassengerType.Taxi;
   }
 }
