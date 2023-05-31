@@ -17,7 +17,7 @@ export class InputComponent implements OnInit{
   @Input() error: string = "";
   @Input() vDropdown: boolean = false;
 
-  @Output() valueChange = new EventEmitter<string>();
+  @Output() valueChange = new EventEmitter<any>();
   @Output() click = new EventEmitter<void>();
   @Output() focus = new EventEmitter<void>();
   @Output() blur = new EventEmitter<void>();
@@ -39,7 +39,7 @@ export class InputComponent implements OnInit{
 
   onInput(e: Event){
     this.service.switchState(true);
-    this.valueChange.emit((e.target as HTMLInputElement).value)
+    this.valueChange.emit(!!(e.target as HTMLInputElement).value ? (e.target as HTMLInputElement).value : null)
   }
   onClick(e: Event) {
     e.stopPropagation();

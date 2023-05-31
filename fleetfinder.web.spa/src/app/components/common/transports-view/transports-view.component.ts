@@ -1,6 +1,12 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {DropdownItemModel} from "../../../models/dropdown-item.model";
-import {getCargoTypeItems, getRegionItems, getSortParameters, getSpecialTypeItems} from "../../../data/dropdown-items.data";
+import {
+  getCargoTypeItems,
+  getPassengerTypeItems,
+  getRegionItems,
+  getSortParameters,
+  getSpecialTypeItems
+} from "../../../data/dropdown-items.data";
 import {TransportFilter} from "../../../models/transport/transport-filter.model";
 import {IGridItem} from "../../../models/interfaces/grid-item.interface";
 import { TransportType } from 'src/app/models/enums/transport/transport-type.enum';
@@ -33,6 +39,7 @@ export class TransportsViewComponent implements OnInit{
   TransportType = TransportType;
   sortParameters = getSortParameters();
   CargoTypeItems = getCargoTypeItems();
+  PassengerTypeItems = getPassengerTypeItems();
   SpecialTypeItems = getSpecialTypeItems();
   RegionItems = getRegionItems();
   //#endregion
@@ -170,6 +177,8 @@ export class TransportsViewComponent implements OnInit{
         this.currentTypeItems = this.CargoTypeItems;
         break;
       case TransportType.Passenger:
+        this.valueDropdowns.TypeFilter = this.PassengerTypeItems.find(x => x.Value == null) ?? null
+        this.currentTypeItems = this.PassengerTypeItems;
         break;
       case TransportType.Special:
         this.valueDropdowns.TypeFilter = this.SpecialTypeItems.find(x => x.Value == null) ?? null

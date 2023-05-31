@@ -65,6 +65,7 @@ import {PassengerFacilities} from "../../models/enums/transport/passenger/passen
 import {PassengerOption} from "../../models/enums/transport/passenger/passenger-option.enum";
 import {PassengerTransportationKind} from "../../models/enums/transport/passenger/passenger-transportation-kind.enum";
 import {SizeForm} from "../../models/interfaces/transport/size-form.model";
+import {PriceModel} from "../../api/Common/Transport/PriceModel";
 
 @Component({
   selector: 'app-transport-form-page',
@@ -283,7 +284,7 @@ export class TransportFormPageComponent implements OnInit{
   }
 
   putCargo(){
-    this.requestImagePost.Folder = FirebaseStorageFolder.CargoTransport;
+    this.requestImagePost.Folder = this.requestImageDelete.Folder = FirebaseStorageFolder.CargoTransport;
     this.imageService.delete(this.requestImageDelete).pipe(
       catchError((error: HttpErrorResponse) => {
         return throwError(error);
@@ -319,7 +320,7 @@ export class TransportFormPageComponent implements OnInit{
   }
 
   putPassenger(){
-    this.requestImagePost.Folder = FirebaseStorageFolder.PassengerTransport;
+    this.requestImagePost.Folder = this.requestImageDelete.Folder = FirebaseStorageFolder.PassengerTransport;
     this.imageService.delete(this.requestImageDelete).pipe(
       catchError((error: HttpErrorResponse) => {
         return throwError(error);
@@ -346,7 +347,7 @@ export class TransportFormPageComponent implements OnInit{
   }
 
   putSpecial(){
-    this.requestImagePost.Folder = FirebaseStorageFolder.SpecialTransport;
+    this.requestImagePost.Folder = this.requestImageDelete.Folder = FirebaseStorageFolder.SpecialTransport;
     this.imageService.delete(this.requestImageDelete).pipe(
       catchError((error: HttpErrorResponse) => {
         return throwError(error);
@@ -417,6 +418,14 @@ export class TransportFormPageComponent implements OnInit{
       Height: this.passengerInfoForm.get('Height')?.value ?? null,
     };
     return request;
+  }
+
+  convertPriceModel(price: PriceModel) : PriceModel{
+    return {
+      PerHour: price.PerHour ?? null,
+      PerShift: price.PerShift ?? null,
+      PerKm: price.PerKm ?? null,
+    }
   }
 
   //#endregion

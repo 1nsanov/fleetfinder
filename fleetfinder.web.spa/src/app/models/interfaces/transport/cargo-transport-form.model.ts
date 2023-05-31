@@ -1,6 +1,4 @@
-﻿import {CargoType} from "../../enums/transport/cargo/cargo-type.enum";
-import {CargoTransportationKind} from "../../enums/transport/cargo/cargo-transportation-kind";
-import {Region} from "../../enums/common/region.enum";
+﻿import {Region} from "../../enums/common/region.enum";
 import {AbstractControl, FormGroup} from "@angular/forms";
 import { ExperienceWork } from "../../enums/transport/experience-work.enum";
 import { PaymentMethod } from "../../enums/transport/payment-method.enum";
@@ -18,10 +16,4 @@ export interface TransportForm {
   Price: FormGroup;
   Description: AbstractControl<string | null>;
   Images: AbstractControl<string[] | null>;
-
-  // Unique: FormGroup;
-
-  // Type: AbstractControl<CargoType | null>;
-  // Body: FormGroup;
-  // TransportationKind: AbstractControl<CargoTransportationKind | null>;
 }
