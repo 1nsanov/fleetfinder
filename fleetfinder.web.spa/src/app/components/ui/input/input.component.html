@@ -1,4 +1,4 @@
-<div class="input_wrapper" [ngClass]="{'input-error': error}" (click)="onClick($event)">
+<div class="input_wrapper" [ngClass]="{'input-error': error, 'disabled': disabled}" (click)="onClick($event)">
   <div class="input-label"
        [ngClass]="{
          'input-label-focus' : service.isTransform$.value,
@@ -25,6 +25,7 @@
     (focus)="onFocus()"
     (blur)="onBlur()"
     [readonly]="vDropdown"
+    [disabled]="disabled"
   >
 </div>
 <div [ngClass]="{'hidden-error': !error}" class="error">

@@ -16,6 +16,7 @@ export class InputComponent implements OnInit{
   @Input() type: string = "text";
   @Input() error: string = "";
   @Input() vDropdown: boolean = false;
+  @Input() disabled: boolean = false;
 
   @Output() valueChange = new EventEmitter<any>();
   @Output() click = new EventEmitter<void>();

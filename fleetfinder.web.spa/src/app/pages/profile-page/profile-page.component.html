@@ -1,0 +1,80 @@
+<h2 class="title-page">Ваш профиль</h2>
+<main class="flex gap-8">
+  <div class="left-side flex flex-col">
+    <div class="avatar">
+      <div class="avatar-viewer">
+        <img src="../../../assets/icons/icon-avatar.svg" alt="">
+      </div>
+    </div>
+    <div class="username mb-4 mt-4">
+      victor
+    </div>
+    <div class="flex justify-center" *ngIf="isEdit">
+      <app-upload-image />
+    </div>
+  </div>
+  <div class="right-side flex flex-col">
+    <label>ФИО</label>
+    <div class="grid grid-cols-3 gap-5 mb-5">
+      <app-input label="Фамилия" [disabled]="isEdit"/>
+      <app-input label="Имя" [disabled]="isEdit"/>
+      <app-input label="Отчество" [disabled]="isEdit"/>
+    </div>
+    <div class="flex flex-col gap-5 mb-5">
+      <app-input label="Организация" [disabled]="isEdit"/>
+      <app-input label="Эл. почта" [disabled]="isEdit"/>
+    </div>
+
+    <label>Контактные данные</label>
+    <div class="grid grid-cols-2 gap-5 mb-5">
+      <div class="left flex flex-col gap-5">
+        <app-input label="Telegram" [disabled]="isEdit"/>
+        <app-input label="Viber" [disabled]="isEdit"/>
+        <app-input label="WhatsApp" [disabled]="isEdit"/>
+      </div>
+
+      <div class="right">
+<!--        <app-contact-card/>-->
+      </div>
+    </div>
+    <app-input label="Режим работы" [disabled]="isEdit"/>
+
+    <div class="flex gap-5 mt-5 mb-5">
+      <div class="flex-grow" *ngIf="!isEdit">
+        <app-button theme="yellow" (click)="isEdit = true">
+          Редактировать
+        </app-button>
+      </div>
+      <div class="flex-grow" *ngIf="isEdit">
+        <app-button theme="green" (click)="saveProfile()">
+          Сохранить
+        </app-button>
+      </div>
+      <div class="flex-grow" *ngIf="isEdit">
+        <app-button theme="red" (click)="cancelProfile()">
+          Отмена
+        </app-button>
+      </div>
+    </div>
+
+    <label class="flex gap-2 items-center cursor-pointer" (click)="isActiveChangePassword = !isActiveChangePassword">
+      <p>Смена пароля</p>
+      <img [ngClass]="{'rotate': isActiveChangePassword}" src="../../../assets/icons/icon-arrow-drop-down-rounded.svg" alt="">
+    </label>
+    <div *ngIf="isActiveChangePassword" class="flex flex-col gap-5">
+      <div class="flex gap-5">
+        <div class="w-full">
+          <app-input label="Старый пароль" [disabled]="false"/>
+        </div>
+        <div class="w-full">
+          <app-input label="Новай пароль" [disabled]="false"/>
+        </div>
+      </div>
+      <div class="flex-wrap">
+        <app-button theme="green" (click)="changePassword()">
+          Изменить пароль
+        </app-button>
+      </div>
+    </div>
+  </div>
+</main>

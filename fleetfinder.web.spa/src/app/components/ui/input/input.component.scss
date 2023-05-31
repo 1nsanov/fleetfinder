@@ -1,6 +1,8 @@
 .input_wrapper{
   position: relative;
-
+  &.disabled {
+    opacity: 0.7;
+  }
   .input-base{
     background: var(--white);
     border: 2px solid var(--black);

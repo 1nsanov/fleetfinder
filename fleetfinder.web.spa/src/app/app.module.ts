@@ -46,6 +46,7 @@ import { TransportsPassengerPageComponent } from './pages/transports/transports-
 import { TransportsViewComponent } from './components/common/transports-view/transports-view.component';
 import { TransportSpecialViewPageComponent } from './pages/transport-special-view-page/transport-special-view-page.component';
 import { TransportPassengerViewPageComponent } from './pages/transport-passenger-view-page/transport-passenger-view-page.component';
+import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 
 @NgModule({
   declarations: [
@@ -88,6 +89,7 @@ import { TransportPassengerViewPageComponent } from './pages/transport-passenger
     TransportsViewComponent,
     TransportSpecialViewPageComponent,
     TransportPassengerViewPageComponent,
+    ProfilePageComponent,
   ],
     imports: [
         BrowserModule, HttpClientModule, AppRoutingModule, NgOptimizedImage, ReactiveFormsModule,

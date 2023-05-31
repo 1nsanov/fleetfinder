@@ -13,5 +13,6 @@
   TRANSPORT_EDIT: "transport/edit",
   TRANSPORT_CARGO_VIEW: "transport/cargo/view",
   TRANSPORT_PASSENGER_VIEW: "transport/passenger/view",
-  TRANSPORT_SPECIAL_VIEW: "transport/special/view"
+  TRANSPORT_SPECIAL_VIEW: "transport/special/view",
+  PROFILE: "profile"
 }

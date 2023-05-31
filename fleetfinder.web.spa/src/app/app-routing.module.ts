@@ -23,6 +23,7 @@ import {
 import {
   TransportPassengerViewPageComponent
 } from "./pages/transport-passenger-view-page/transport-passenger-view-page.component";
+import {ProfilePageComponent} from "./pages/profile-page/profile-page.component";
 
 const routes: Routes = [
   { path: namesRoute.HOME, component:  LandingPageComponent},
@@ -48,7 +49,8 @@ const routes: Routes = [
   { path: `${namesRoute.TRANSPORT_EDIT}/:type/:id`, component: TransportFormPageComponent, canActivate: [AuthGuard] },
   { path: `${namesRoute.TRANSPORT_CARGO_VIEW}/:id`, component: TransportCargoViewPageComponent },
   { path: `${namesRoute.TRANSPORT_PASSENGER_VIEW}/:id`, component: TransportPassengerViewPageComponent },
-  { path: `${namesRoute.TRANSPORT_SPECIAL_VIEW}/:id`, component: TransportSpecialViewPageComponent }
+  { path: `${namesRoute.TRANSPORT_SPECIAL_VIEW}/:id`, component: TransportSpecialViewPageComponent },
+  { path: namesRoute.PROFILE, component: ProfilePageComponent, canActivate: [AuthGuard] }
 ]
 
 @NgModule({
