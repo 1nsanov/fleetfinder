@@ -40,7 +40,7 @@ const routes: Routes = [
       { path: namesRoute.TRANSPORTS_SPECIAL, component: TransportsSpecialPageComponent },
     ]
   },
-  { path: namesRoute.ORDERS, component: OrdersPageComponent },
+  // { path: namesRoute.ORDERS, component: OrdersPageComponent },
   { path: namesRoute.ABOUT, component: AboutPageComponent },
   { path: namesRoute.SIGN_UP, component: SignUpPageComponent },
   { path: namesRoute.SIGN_IN, component: SignInPageComponent },

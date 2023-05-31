@@ -22,18 +22,18 @@
           </svg>
         </div>
       </div>
-      <div class="item"
-           [ngClass]="{'active': currentNavTab == navTab.orders}"
-           (click)="changeNavTab(navTab.orders)"
-      >
-        <span>Заказы</span>
-        <div class="img-svg">
-          <svg class="orders" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M24.6667 5.33333H7.33333C6.59695 5.33333 6 5.93029 6 6.66667V28C6 28.7364 6.59695 29.3333 7.33333 29.3333H24.6667C25.403 29.3333 26 28.7364 26 28V6.66667C26 5.93029 25.403 5.33333 24.6667 5.33333Z" stroke-width="2.66667" stroke-linejoin="round"/>
-            <path d="M12 2.66666V6.66666M20 2.66666V6.66666M10.6667 12.6667H21.3334M10.6667 18H18.6667M10.6667 23.3333H16" stroke-width="2.66667" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-      </div>
+<!--      <div class="item"-->
+<!--           [ngClass]="{'active': currentNavTab == navTab.orders}"-->
+<!--           (click)="changeNavTab(navTab.orders)"-->
+<!--      >-->
+<!--        <span>Заказы</span>-->
+<!--        <div class="img-svg">-->
+<!--          <svg class="orders" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+<!--            <path d="M24.6667 5.33333H7.33333C6.59695 5.33333 6 5.93029 6 6.66667V28C6 28.7364 6.59695 29.3333 7.33333 29.3333H24.6667C25.403 29.3333 26 28.7364 26 28V6.66667C26 5.93029 25.403 5.33333 24.6667 5.33333Z" stroke-width="2.66667" stroke-linejoin="round"/>-->
+<!--            <path d="M12 2.66666V6.66666M20 2.66666V6.66666M10.6667 12.6667H21.3334M10.6667 18H18.6667M10.6667 23.3333H16" stroke-width="2.66667" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--          </svg>-->
+<!--        </div>-->
+<!--      </div>-->
       <div class="item"
            [ngClass]="{'active': currentNavTab == navTab.about}"
            (click)="changeNavTab(navTab.about)"
@@ -80,16 +80,16 @@
           <div class="__item-nav" (click)="routeTo(namesRoute.TRANSPORTS_MY)">
             <p>Ваш транспорт</p>
           </div>
-          <div class="__item-nav">
-            <p>Ваши заказы</p>
-          </div>
+<!--          <div class="__item-nav">-->
+<!--            <p>Ваши заказы</p>-->
+<!--          </div>-->
           <div class="separate"></div>
           <div class="__item-nav" (click)="routeTo(namesRoute.TRANSPORT_ADD)" >
             <p>Добавить транспорт</p>
           </div>
-          <div class="__item-nav">
-            <p>Добавить заказ</p>
-          </div>
+<!--          <div class="__item-nav">-->
+<!--            <p>Добавить заказ</p>-->
+<!--          </div>-->
           <div class="separate"></div>
           <div class="__item-nav" (click)="logout()">
             <p>Выход</p>
