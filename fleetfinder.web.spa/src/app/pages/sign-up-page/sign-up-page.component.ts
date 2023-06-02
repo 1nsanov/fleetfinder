@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {IdentifyApiService} from "../../api/Identify/identify.api.service";
-import {FullName, SignUpModel} from "../../models/interfaces/user/sign-up.model";
+import {FullNameForm, SignUpModel} from "../../models/interfaces/user/sign-up.model";
 import {ISignUpRequest} from "../../api/Identify/identify.api.models";
 import {NotificationService} from "../../services/notification.service";
 import {Router} from "@angular/router";
@@ -76,7 +76,7 @@ export class SignUpPageComponent implements OnInit{
       RepeatPassword: new FormControl<string| null>('', Validators.required),
       Email: new FormControl<string| null>('', Validators.required),
       Organization: new FormControl<string| null>(''),
-      FullName: this.formBuilder.group<FullName>({
+      FullName: this.formBuilder.group<FullNameForm>({
         First: new FormControl<string | null>('', Validators.required),
         Second: new FormControl<string | null>('', Validators.required),
         Surname: new FormControl<string | null>(''),

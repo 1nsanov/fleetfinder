@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, Output, OnInit, OnChanges, SimpleChanges} from '@angular/core';
 import {DomSanitizer} from "@angular/platform-browser";
 import {InputService} from "../../../services/input.service";
 import {TimeoutService} from "../../../services/timeout.service";
@@ -8,7 +8,7 @@ import {TimeoutService} from "../../../services/timeout.service";
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.scss']
 })
-export class InputComponent implements OnInit{
+export class InputComponent implements OnInit, OnChanges {
   @Input() value: string;
   @Input() placeholder: string = ""
   @Input() label: string;
@@ -38,10 +38,16 @@ export class InputComponent implements OnInit{
       this.service.switchState(true);
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.service && changes.value)
+      this.service.switchState(!!this.value);
+  }
+
   onInput(e: Event){
     this.service.switchState(true);
     this.valueChange.emit(!!(e.target as HTMLInputElement).value ? (e.target as HTMLInputElement).value : null)
   }
+
   onClick(e: Event) {
     e.stopPropagation();
     if (this.vDropdown) this.click.emit();
