@@ -1,4 +1,14 @@
-import {Component, EventEmitter, Input, Output, OnInit, OnChanges, SimpleChanges} from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  OnInit,
+  OnChanges,
+  SimpleChanges,
+  ElementRef,
+  Renderer2
+} from '@angular/core';
 import {DomSanitizer} from "@angular/platform-browser";
 import {InputService} from "../../../services/input.service";
 import {TimeoutService} from "../../../services/timeout.service";
@@ -17,6 +27,7 @@ export class InputComponent implements OnInit, OnChanges {
   @Input() error: string = "";
   @Input() vDropdown: boolean = false;
   @Input() disabled: boolean = false;
+  @Input() mask: string;
 
   @Output() valueChange = new EventEmitter<any>();
   @Output() click = new EventEmitter<void>();
@@ -26,7 +37,9 @@ export class InputComponent implements OnInit, OnChanges {
   service: InputService;
 
   constructor(private sanitizer: DomSanitizer,
-              private timeoutService: TimeoutService) {
+              private timeoutService: TimeoutService,
+              private elementRef: ElementRef,
+              private renderer: Renderer2) {
   }
 
   ngOnInit(): void {
@@ -36,6 +49,9 @@ export class InputComponent implements OnInit, OnChanges {
       this.service.blockState();
     else if (this.value)
       this.service.switchState(true);
+
+    // if (this.mask)
+    //   this.renderer.setAttribute(this.elementRef.nativeElement.querySelector(`#${this.service.id.substring(0, 8)}`), 'mask', this.mask);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
