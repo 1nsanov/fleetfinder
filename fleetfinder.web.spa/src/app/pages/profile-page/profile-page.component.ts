@@ -57,27 +57,39 @@ export class ProfilePageComponent implements OnInit{
         Surname: new FormControl<string | null>(item.FullName?.Surname ?? null),
       }),
       Contact: this.formBuilder.group<ContactForm>({
-        PhoneViber: new FormControl<string | null>(item.Contact?.PhoneViber ?? null),
-        PhoneTelegram: new FormControl<string | null>(item.Contact?.PhoneTelegram ?? null),
-        PhoneWhatsapp: new FormControl<string | null>(item.Contact?.PhoneWhatsapp ?? null),
+        PhoneViber: new FormControl<string | null>(item.Contact?.PhoneViber ?? null, [Validators.minLength(8), Validators.maxLength(8)]),
+        PhoneTelegram: new FormControl<string | null>(item.Contact?.PhoneTelegram ?? null, [Validators.minLength(8), Validators.maxLength(8)]),
+        PhoneWhatsapp: new FormControl<string | null>(item.Contact?.PhoneWhatsapp ?? null, [Validators.minLength(8), Validators.maxLength(8)]),
         WorkingMode: new FormControl<string | null>(item.Contact?.WorkingMode ?? null),
       }),
     })
   }
 
+
+  fullNameGroup: FormGroup;
+  contactGroup: FormGroup;
   formMarkAsTouched(){
     Object.values(this.profileForm.controls).forEach(control => {
       control.markAsTouched();
     });
     this.formFullNameMarkAsTouched();
+    this.formContactMarkAsTouched();
   }
 
-  fullNameGroup: FormGroup;
   formFullNameMarkAsTouched(){
     this.fullNameGroup = this.profileForm.get('FullName') as FormGroup;
     if (this.fullNameGroup) {
-      const fullNameControls = this.fullNameGroup.controls;
-      Object.values(fullNameControls).forEach(control => {
+      const controls = this.fullNameGroup.controls;
+      Object.values(controls).forEach(control => {
+        control.markAsTouched();
+      });
+    }
+  }
+  formContactMarkAsTouched(){
+    this.contactGroup = this.profileForm.get('Contact') as FormGroup;
+    if (this.contactGroup) {
+      const controls = this.contactGroup.controls;
+      Object.values(controls).forEach(control => {
         control.markAsTouched();
       });
     }
@@ -85,7 +97,7 @@ export class ProfilePageComponent implements OnInit{
 
   saveProfile(){
     this.formMarkAsTouched();
-    if (this.profileForm.valid && this.fullNameGroup.valid){
+    if (this.profileForm.valid && this.fullNameGroup.valid && this.contactGroup.valid){
       this.disableForm = true;
     }
   }

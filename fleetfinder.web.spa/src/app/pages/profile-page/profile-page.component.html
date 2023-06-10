@@ -51,14 +51,17 @@
           <app-input label="Telegram"
                      [value]="profileForm.get('Contact.PhoneTelegram')?.value ?? ''"
                      (valueChange)="profileForm.get('Contact.PhoneTelegram')?.setValue($event)"
+                     [error]="profileForm.get('Contact.PhoneTelegram')?.invalid && profileForm.get('Contact.PhoneTelegram')?.touched ? 'Поле должно иметь длину 8 символов' : ''"
                      [disabled]="disableForm"/>
           <app-input label="Viber"
                      [value]="profileForm.get('Contact.PhoneViber')?.value ?? ''"
                      (valueChange)="profileForm.get('Contact.PhoneViber')?.setValue($event)"
+                     [error]="profileForm.get('Contact.PhoneViber')?.invalid && profileForm.get('Contact.PhoneViber')?.touched ? 'Поле должно иметь длину 8 символов' : ''"
                      [disabled]="disableForm"/>
           <app-input label="WhatsApp"
                      [value]="profileForm.get('Contact.PhoneWhatsapp')?.value ?? ''"
                      (valueChange)="profileForm.get('Contact.PhoneWhatsapp')?.setValue($event)"
+                     [error]="profileForm.get('Contact.PhoneWhatsapp')?.invalid && profileForm.get('Contact.PhoneWhatsapp')?.touched ? 'Поле должно иметь длину 8 символов' : ''"
                      [disabled]="disableForm"/>
         </div>
 

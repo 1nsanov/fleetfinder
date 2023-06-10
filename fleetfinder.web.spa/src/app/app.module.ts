@@ -47,7 +47,6 @@ import { TransportsViewComponent } from './components/common/transports-view/tra
 import { TransportSpecialViewPageComponent } from './pages/transport-special-view-page/transport-special-view-page.component';
 import { TransportPassengerViewPageComponent } from './pages/transport-passenger-view-page/transport-passenger-view-page.component';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
-// import {NgxMaskDirective, NgxMaskPipe, provideEnvironmentNgxMask, provideNgxMask} from "ngx-mask";
 
 @NgModule({
   declarations: [
@@ -94,12 +93,10 @@ import { ProfilePageComponent } from './pages/profile-page/profile-page.componen
   ],
     imports: [
         BrowserModule, HttpClientModule, AppRoutingModule, NgOptimizedImage, ReactiveFormsModule,
-      // NgxMaskDirective, NgxMaskPipe
     ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: RedirectInterceptor, multi: true },
-    // provideEnvironmentNgxMask(), provideNgxMask()
   ],
   bootstrap: [AppComponent]
 })
