@@ -9,7 +9,6 @@
   .header{
     .image{
       border-radius: 50%;
-      background: white;
       box-shadow: var(--shadow-1);
       width: 32px;
       min-width: 32px;
@@ -17,6 +16,9 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
       img{
         height: 20px;
       }

@@ -195,4 +195,8 @@ export class LayoutHeaderNavComponent implements OnInit, OnDestroy{
       this.closePopup();
     }
   }
+
+  get avatarImg() {
+    return this.identifyService.claims?.ImageUrl ?? '';
+  }
 }

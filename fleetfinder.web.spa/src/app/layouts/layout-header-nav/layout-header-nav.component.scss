@@ -108,6 +108,9 @@
         cursor: pointer;
         transition: var(--transition-base);
         margin-right: 5px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
         &.unsignin{
           border: 2px solid var(--red);
           filter: drop-shadow(0px 4px 30px rgba(159, 225, 94, 0.35));

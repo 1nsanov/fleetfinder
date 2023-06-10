@@ -18,6 +18,6 @@ public static partial class PassengerTransportGet
     
         private ContactDto Map(User source)
             => new(source.Organization ?? $"{source.FullName.First} {source.FullName.Second} {source.FullName.Surname}", source.Contact.PhoneViber,
-                source.Contact.PhoneTelegram, source.Contact.PhoneWhatsapp, source.Contact.WorkingMode);
+                source.Contact.PhoneTelegram, source.Contact.PhoneWhatsapp, source.Contact.WorkingMode, source.ImageUrl);
     }
 }

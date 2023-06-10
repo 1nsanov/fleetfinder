@@ -3,15 +3,18 @@
   <main class="flex gap-8" *ngIf="profileForm">
     <div class="left-side flex flex-col">
       <div class="avatar">
-        <div class="avatar-viewer">
-          <img src="../../../assets/icons/icon-avatar.svg" alt="">
+        <div class="avatar-viewer" [style.background-image]="'url(' + previewImage + ')'">
+          <img *ngIf="!previewImage" src="../../../assets/icons/icon-avatar.svg" alt="">
+          <div class="btn-remove-img">
+            <app-button *ngIf="previewImage && !disableForm" theme="red" iconPath="../../../assets/icons/icon-waste-basket.svg" (click)="onRemoveImage()"/>
+          </div>
         </div>
       </div>
       <div class="username mb-4 mt-4">
         {{login}}
       </div>
       <div class="flex justify-center" *ngIf="!disableForm">
-        <app-upload-image />
+        <app-upload-image (onUpload)="onSelectImage($event)"/>
       </div>
     </div>
     <div class="right-side flex flex-col">
@@ -81,12 +84,12 @@
           </app-button>
         </div>
         <div class="flex-grow" *ngIf="!disableForm">
-          <app-button theme="green" (click)="saveProfile()">
+          <app-button theme="green" (click)="saveProfile()" [isLoad]="isLoadSave">
             Сохранить
           </app-button>
         </div>
         <div class="flex-grow" *ngIf="!disableForm">
-          <app-button theme="red" (click)="cancelProfile()">
+          <app-button theme="red" (click)="cancelProfile()" [disabled]="isLoadSave">
             Отмена
           </app-button>
         </div>
@@ -106,7 +109,7 @@
           </div>
         </div>
         <div class="flex-wrap">
-          <app-button theme="green" (click)="changePassword()">
+          <app-button theme="green" (click)="changePassword()" [disabled]="isLoadSave">
             Изменить пароль
           </app-button>
         </div>

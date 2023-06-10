@@ -3,12 +3,18 @@ import {IdentifyApiService} from "../../api/Identify/identify.api.service";
 import {UserProfileApiService} from "../../api/UserProfile/user-profile.api.service";
 import {ImageApiService} from "../../api/Image/image.api.service";
 import {Contact} from "../../api/Common/Contact";
-import {reportUnhandledError} from "rxjs/internal/util/reportUnhandledError";
 import {UserProfileGetResponse} from "../../api/UserProfile/get.model";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ProfileForm} from "../../models/interfaces/user/profile/profile-form.model";
 import {FullNameForm} from "../../models/interfaces/user/sign-up.model";
 import {ContactForm} from "../../models/interfaces/user/profile/contact-form.model";
+import {ImagePostRequest} from "../../api/Image/post.models";
+import {FirebaseStorageFolder} from "../../models/enums/common/firebase-storage-folder.enum";
+import {UserProfilePutRequest} from "../../api/UserProfile/put.model";
+import {catchError, throwError} from "rxjs";
+import {HttpErrorResponse} from "@angular/common/http";
+import {NotificationService} from "../../services/notification.service";
+import {ImageDeleteRequest} from "../../api/Image/delete.models";
 
 @Component({
   selector: 'app-profile-page',
@@ -23,11 +29,25 @@ export class ProfilePageComponent implements OnInit{
   login: string;
   copyResponse: UserProfileGetResponse;
   profileForm: FormGroup<ProfileForm>
+  fullNameGroup: FormGroup;
+  contactGroup: FormGroup;
+  previewImage: string | null = null;
+  requestImagePost : ImagePostRequest = {
+    Folder: FirebaseStorageFolder.UserProfile,
+    Files: []
+  }
+  requestImageDelete : ImageDeleteRequest = {
+    Folder: FirebaseStorageFolder.UserProfile,
+    Urls: []
+  }
+  isLoadSave = false;
+  imgRemoveTemp: string | null = null;
 
   constructor(public identifyService: IdentifyApiService,
               private userProfileService: UserProfileApiService,
               private imageService: ImageApiService,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder,
+              private notification: NotificationService) {
   }
 
   ngOnInit(): void {
@@ -42,6 +62,7 @@ export class ProfilePageComponent implements OnInit{
       this.contact.ImageUrl = res.ImageUrl;
       this.contact.Title = res.Organization ?? `${res.FullName.First} ${res.FullName.Second} ${res.FullName.Surname}`
       this.login = res.Login;
+      this.previewImage = res.ImageUrl;
       this.initFormProfileBuilder(res);
       this.isLoadProfile = false;
     })
@@ -65,9 +86,6 @@ export class ProfilePageComponent implements OnInit{
     })
   }
 
-
-  fullNameGroup: FormGroup;
-  contactGroup: FormGroup;
   formMarkAsTouched(){
     Object.values(this.profileForm.controls).forEach(control => {
       control.markAsTouched();
@@ -95,10 +113,35 @@ export class ProfilePageComponent implements OnInit{
     }
   }
 
-  saveProfile(){
+  async saveProfile(){
     this.formMarkAsTouched();
-    if (this.profileForm.valid && this.fullNameGroup.valid && this.contactGroup.valid){
-      this.disableForm = true;
+    if (this.profileForm.valid && this.fullNameGroup.valid && this.contactGroup.valid) {
+      this.disableForm = false;
+      this.isLoadSave = true;
+
+      this.imageService.delete(this.requestImageDelete).subscribe( async () => {
+        if (this.previewImage?.match("firebase"))
+          this.requestImagePost.Files = [];
+        await this.imageService.upload(this.requestImagePost).then((res) => {
+          let request = this.profileForm.value as UserProfilePutRequest;
+          if (res.length > 0)
+            request.ImageUrl = res[0];
+          else
+            request.ImageUrl = this.previewImage;
+          this.userProfileService.put(request).pipe(
+            catchError((error: HttpErrorResponse) => {
+              this.isLoadSave = false;
+              this.notification.errorFromHttp(error);
+              return throwError(error);
+            })
+          ).subscribe(() => {
+            this.identifyService.getClaims().subscribe();
+            this.notification.notify('Данные успешно обновлены')
+            this.disableForm = true;
+            this.isLoadSave = false;
+          })
+        })
+      })
     }
   }
 
@@ -109,5 +152,23 @@ export class ProfilePageComponent implements OnInit{
 
   changePassword(){
 
+  }
+
+  onSelectImage(file: File | null) {
+    if (!file) return;
+
+    this.requestImagePost.Files.push(file);
+
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+      this.previewImage = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  onRemoveImage() {
+    if (this.previewImage?.match("firebase"))
+      this.requestImageDelete.Urls.push(this.previewImage);
+    this.previewImage = null;
   }
 }

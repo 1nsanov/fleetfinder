@@ -5,5 +5,6 @@ public record ContactDto(
     string? PhoneViber,
     string? PhoneTelegram,
     string? PhoneWhatsapp,
-    string? WorkingMode
+    string? WorkingMode,
+    string? ImageUrl
 );

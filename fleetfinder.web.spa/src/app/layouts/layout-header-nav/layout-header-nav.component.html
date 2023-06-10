@@ -49,9 +49,10 @@
     <div class="user relative">
       <div class="i-c-p flex items-center" (click)="openPopup()">
         <div class="avatar i-c-p"
+             [style.background-image]="'url(' + avatarImg + ')'"
              [ngClass]="{'signin' : identifyService.isAuthenticated(), 'unsignin' : !identifyService.isAuthenticated()}"
         >
-          <img class="i-c-p" src="../../../assets/icons/icon-avatar.svg" alt="">
+          <img *ngIf="!avatarImg" class="i-c-p" src="../../../assets/icons/icon-avatar.svg" alt="">
         </div>
         <img class="i-c-p cursor-pointer" [ngClass]="{'rotate': isOpenPopup}" src="../../../assets/icons/icon-arrow-dropdown-2.svg" alt="">
       </div>
