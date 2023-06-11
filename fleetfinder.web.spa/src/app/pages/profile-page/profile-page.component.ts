@@ -15,6 +15,8 @@ import {catchError, throwError} from "rxjs";
 import {HttpErrorResponse} from "@angular/common/http";
 import {NotificationService} from "../../services/notification.service";
 import {ImageDeleteRequest} from "../../api/Image/delete.models";
+import {ChangePasswordForm} from "../../models/interfaces/user/profile/change-password-form.model";
+import {UserProfilePutPassword} from "../../api/UserProfile/put-password.model";
 
 @Component({
   selector: 'app-profile-page',
@@ -31,6 +33,7 @@ export class ProfilePageComponent implements OnInit{
   profileForm: FormGroup<ProfileForm>
   fullNameGroup: FormGroup;
   contactGroup: FormGroup;
+  changePasswordForm: FormGroup<ChangePasswordForm>;
   previewImage: string | null = null;
   requestImagePost : ImagePostRequest = {
     Folder: FirebaseStorageFolder.UserProfile,
@@ -41,6 +44,7 @@ export class ProfilePageComponent implements OnInit{
     Urls: []
   }
   isLoadSave = false;
+  isLoadChangePassword = false;
 
   constructor(public identifyService: IdentifyApiService,
               private userProfileService: UserProfileApiService,
@@ -51,6 +55,7 @@ export class ProfilePageComponent implements OnInit{
 
   ngOnInit(): void {
     this.getUser();
+    this.initFormChangePasswordBuilder();
   }
 
   getUser(){
@@ -84,7 +89,6 @@ export class ProfilePageComponent implements OnInit{
       }),
     })
   }
-
   formMarkAsTouched(){
     Object.values(this.profileForm.controls).forEach(control => {
       control.markAsTouched();
@@ -92,7 +96,6 @@ export class ProfilePageComponent implements OnInit{
     this.formFullNameMarkAsTouched();
     this.formContactMarkAsTouched();
   }
-
   formFullNameMarkAsTouched(){
     this.fullNameGroup = this.profileForm.get('FullName') as FormGroup;
     if (this.fullNameGroup) {
@@ -102,7 +105,6 @@ export class ProfilePageComponent implements OnInit{
       });
     }
   }
-
   formContactMarkAsTouched(){
     this.contactGroup = this.profileForm.get('Contact') as FormGroup;
     if (this.contactGroup) {
@@ -113,12 +115,32 @@ export class ProfilePageComponent implements OnInit{
     }
   }
 
+  initFormChangePasswordBuilder(){
+    this.changePasswordForm = this.formBuilder.group<ChangePasswordForm>({
+      CurrentPassword: new FormControl<string | null>(null, Validators.required),
+      NewPassword: new FormControl<string | null>(null, Validators.required),
+    });
+  }
+
+  formChangePasswordNarkAsTouched(){
+    Object.values(this.changePasswordForm.controls).forEach(control => {
+      control.markAsTouched();
+    });
+  }
+
+
   async saveProfile(){
     this.formMarkAsTouched();
     if (this.profileForm.valid && this.fullNameGroup.valid && this.contactGroup.valid) {
       this.disableForm = false;
       this.isLoadSave = true;
-      this.imageService.delete(this.requestImageDelete).subscribe( async () => {
+      this.imageService.delete(this.requestImageDelete).pipe(
+          catchError((error: HttpErrorResponse) => {
+            this.isLoadSave = false;
+            this.notification.errorFromHttp(error);
+            return throwError(error);
+          })
+        ).subscribe( async () => {
         if (this.previewImage?.includes("firebase"))
           this.requestImagePost.Files = [];
         await this.imageService.upload(this.requestImagePost).then((res) => {
@@ -147,13 +169,40 @@ export class ProfilePageComponent implements OnInit{
     }
   }
 
-  cancelProfile(){
+  resetChangeProfile() {
     this.initFormProfileBuilder(this.copyResponse);
     this.disableForm = true;
   }
 
   changePassword(){
+    this.formChangePasswordNarkAsTouched();
+    if (this.changePasswordForm.valid) {
+      this.resetChangeProfile();
+      this.isLoadChangePassword = true;
+      const request = this.changePasswordForm.value as UserProfilePutPassword;
+      this.userProfileService.changePassword(request).pipe(
+        catchError((error: HttpErrorResponse) => {
+          this.isLoadChangePassword = false;
+          this.initFormChangePasswordBuilder();
+          if (error.error instanceof Object)
+            this.notification.errorFromHttp(error);
+          else {
+            const message = error.error.toString().split(":")[1].split(".")[0];
+            this.notification.error(message);
+          }
+          return throwError(error);
+        })
+      ).subscribe(() => {
+        this.initFormChangePasswordBuilder();
+        this.isLoadChangePassword = false;
+        this.notification.notify('Пароль успешно обновлен')
+      })
+    }
+  }
 
+  switchVisibleChangePassword() {
+    if (!this.isLoadChangePassword)
+      this.isActiveChangePassword = !this.isActiveChangePassword;
   }
 
   onSelectImage(file: File | null) {

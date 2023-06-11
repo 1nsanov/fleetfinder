@@ -43,6 +43,20 @@
 
 .right-side {
   flex: 2;
+  .switcher-change-password{
+    img {
+      transition: var(--transition-base);
+    }
+  }
+  .change-password-box{
+    transform: scaleY(0) translateY(-50%);
+    height: 0;
+    transition: var(--transition-base);
+    &.opened{
+      transform: scaleY(1) translateY(0);
+      height: 97.5px;
+    }
+  }
 }
 
 .rotate {

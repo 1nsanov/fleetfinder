@@ -15,8 +15,9 @@ public static partial class UserProfilePasswordPut
         {
             public RequestValidator()
             {
-                RuleFor(dto => dto.NewPassword).NotEmpty().MinimumLength(8).MaximumLength(100)
-                    .WithName("Пароль").WithMessage("Поле '{PropertyName}' не может быть меньше {MinLength} символов.");
+                RuleFor(dto => dto.NewPassword).NotEmpty()
+                    .MinimumLength(8).WithName("Новый пароль").WithMessage("Поле '{PropertyName}' не может быть длиной не менее {MinLength} символов.")
+                    .MaximumLength(100).WithMessage("Поле '{PropertyName}' не может превышать {MaxLength} символов.");
             }
         }
     }

@@ -79,7 +79,7 @@
 
       <div class="flex gap-5 mt-5 mb-5">
         <div class="flex-grow" *ngIf="disableForm">
-          <app-button theme="yellow" (click)="disableForm = false">
+          <app-button theme="yellow" (click)="disableForm = false" [disabled]="isLoadChangePassword">
             Редактировать
           </app-button>
         </div>
@@ -89,27 +89,38 @@
           </app-button>
         </div>
         <div class="flex-grow" *ngIf="!disableForm">
-          <app-button theme="red" (click)="cancelProfile()" [disabled]="isLoadSave">
+          <app-button theme="red" (click)="resetChangeProfile()" [disabled]="isLoadSave">
             Отмена
           </app-button>
         </div>
       </div>
 
-      <label class="flex gap-2 items-center cursor-pointer" (click)="isActiveChangePassword = !isActiveChangePassword">
+      <label class="flex gap-2 items-center cursor-pointer switcher-change-password" (click)="switchVisibleChangePassword()">
         <p>Смена пароля</p>
         <img [ngClass]="{'rotate': isActiveChangePassword}" src="../../../assets/icons/icon-arrow-drop-down-rounded.svg" alt="">
       </label>
-      <div *ngIf="isActiveChangePassword" class="flex flex-col gap-5">
+      <div class="change-password-box flex flex-col gap-5" [ngClass]="{'opened': isActiveChangePassword}">
         <div class="flex gap-5">
           <div class="w-full">
-            <app-input label="Старый пароль" [disabled]="false"/>
+            <app-input label="Старый пароль"
+                       type="password"
+                       [value]="changePasswordForm.get('CurrentPassword')?.value ?? ''"
+                       (valueChange)="changePasswordForm.get('CurrentPassword')?.setValue($event)"
+                       [error]="changePasswordForm.get('CurrentPassword')?.invalid && changePasswordForm.get('CurrentPassword')?.touched ? 'Поле обязательно к заполнению' : ''"
+                       [disabled]="isLoadChangePassword"
+            />
           </div>
           <div class="w-full">
-            <app-input label="Новай пароль" [disabled]="false"/>
+            <app-input label="Новый пароль"
+                       type="password"
+                       [value]="changePasswordForm.get('NewPassword')?.value ?? ''"
+                       (valueChange)="changePasswordForm.get('NewPassword')?.setValue($event)"
+                       [error]="changePasswordForm.get('NewPassword')?.invalid && changePasswordForm.get('NewPassword')?.touched ? 'Поле обязательно к заполнению' : ''"
+                       [disabled]="isLoadChangePassword" />
           </div>
         </div>
         <div class="flex-wrap">
-          <app-button theme="green" (click)="changePassword()" [disabled]="isLoadSave">
+          <app-button theme="green" (click)="changePassword()" [disabled]="isLoadSave" [isLoad]="isLoadChangePassword">
             Изменить пароль
           </app-button>
         </div>
