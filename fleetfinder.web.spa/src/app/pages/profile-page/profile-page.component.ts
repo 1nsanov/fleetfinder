@@ -41,7 +41,6 @@ export class ProfilePageComponent implements OnInit{
     Urls: []
   }
   isLoadSave = false;
-  imgRemoveTemp: string | null = null;
 
   constructor(public identifyService: IdentifyApiService,
               private userProfileService: UserProfileApiService,
@@ -103,6 +102,7 @@ export class ProfilePageComponent implements OnInit{
       });
     }
   }
+
   formContactMarkAsTouched(){
     this.contactGroup = this.profileForm.get('Contact') as FormGroup;
     if (this.contactGroup) {
@@ -118,14 +118,13 @@ export class ProfilePageComponent implements OnInit{
     if (this.profileForm.valid && this.fullNameGroup.valid && this.contactGroup.valid) {
       this.disableForm = false;
       this.isLoadSave = true;
-
       this.imageService.delete(this.requestImageDelete).subscribe( async () => {
-        if (this.previewImage?.match("firebase"))
+        if (this.previewImage?.includes("firebase"))
           this.requestImagePost.Files = [];
         await this.imageService.upload(this.requestImagePost).then((res) => {
           let request = this.profileForm.value as UserProfilePutRequest;
           if (res.length > 0)
-            request.ImageUrl = res[0];
+            request.ImageUrl = this.previewImage = res[0];
           else
             request.ImageUrl = this.previewImage;
           this.userProfileService.put(request).pipe(
@@ -136,9 +135,12 @@ export class ProfilePageComponent implements OnInit{
             })
           ).subscribe(() => {
             this.identifyService.getClaims().subscribe();
-            this.notification.notify('Данные успешно обновлены')
+            this.contact = request.Contact as Contact;
+            this.contact.Title = request.Organization ?? `${request.FullName.First} ${request.FullName.Second} ${request.FullName.Surname}`
+            this.contact.ImageUrl = this.previewImage;
             this.disableForm = true;
             this.isLoadSave = false;
+            this.notification.notify('Данные успешно обновлены')
           })
         })
       })
@@ -156,19 +158,22 @@ export class ProfilePageComponent implements OnInit{
 
   onSelectImage(file: File | null) {
     if (!file) return;
-
-    this.requestImagePost.Files.push(file);
-
+    this.requestImagePost.Files = [file];
     const reader = new FileReader();
     reader.onload = (e: any) => {
+      this.initImageRequestDelete();
       this.previewImage = e.target.result;
     };
     reader.readAsDataURL(file);
   }
 
   onRemoveImage() {
-    if (this.previewImage?.match("firebase"))
-      this.requestImageDelete.Urls.push(this.previewImage);
+    this.initImageRequestDelete();
     this.previewImage = null;
+  }
+
+  initImageRequestDelete(){
+    if (this.previewImage && this.previewImage.includes("firebase"))
+      this.requestImageDelete.Urls = [this.previewImage];
   }
 }
