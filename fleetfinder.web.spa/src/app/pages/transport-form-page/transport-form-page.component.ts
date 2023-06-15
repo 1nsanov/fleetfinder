@@ -420,14 +420,6 @@ export class TransportFormPageComponent implements OnInit{
     return request;
   }
 
-  convertPriceModel(price: PriceModel) : PriceModel{
-    return {
-      PerHour: price.PerHour ?? null,
-      PerShift: price.PerShift ?? null,
-      PerKm: price.PerKm ?? null,
-    }
-  }
-
   //#endregion
 
   //#region Form
@@ -555,15 +547,15 @@ export class TransportFormPageComponent implements OnInit{
 
     if (this.currentType == TransportType.Cargo) {
       const infoBox = this.cargo.find(x => x.Value == item.Type);
-      if (infoBox)  this.onSelectTransportType(infoBox, this.currentType)
+      if (infoBox) this.onSelectTransportType(infoBox, this.currentType)
     }
     else if (this.currentType == TransportType.Passenger) {
       const infoBox = this.passenger.find(x => x.Value == item.Type);
-      if (infoBox)  this.onSelectTransportType(infoBox, this.currentType)
+      if (infoBox) this.onSelectTransportType(infoBox, this.currentType, false)
     }
     else if (this.currentType == TransportType.Special) {
       const infoBox = this.special.find(x => x.Value == item.Type);
-      if (infoBox)  this.onSelectTransportType(infoBox, this.currentType)
+      if (infoBox) this.onSelectTransportType(infoBox, this.currentType)
     }
 
     this.valueRegion = this.RegionItems.find(x => x.Value === item.Region) ?? this.RegionItems[0];
@@ -572,10 +564,18 @@ export class TransportFormPageComponent implements OnInit{
     this.valuePaymentMethod = this.PaymentMethodItems.find(x => x.Value === item.PaymentMethod) ?? this.PaymentMethodItems[0];
     this.valuePaymentOrder = this.PaymentOrderItems.find(x => x.Value === item.PaymentOrder) ?? this.PaymentOrderItems[0];
 
-    if(item instanceof CargoTransportGetResponse){
-      this.valueBodyKind = this.CargoBodyKindItems.find(x => x.Value === item.Body.Kind) ?? this.CargoBodyKindItems[0];
-      this.valueTransportationKind = this.CargoTransportationKindItems.find(x => x.Value === item.TransportationKind) ?? this.CargoTransportationKindItems[0];
+    try {
+      const cargo = item as CargoTransportGetResponse;
+      this.valueBodyKind = this.CargoBodyKindItems.find(x => x.Value === cargo.Body.Kind) ?? this.CargoBodyKindItems[0];
+      this.valueTransportationKind = this.CargoTransportationKindItems.find(x => x.Value === cargo.TransportationKind) ?? this.CargoTransportationKindItems[0];
     }
+    catch (e){}
+
+    try{
+      const passenger = item as PassengerTransportGetResponse;
+      this.valuePassengerTransportationKind = this.PassengerTransportationKindItems.find(x => x.Value === passenger.TransportationKind) ?? this.PassengerTransportationKindItems[0];
+    }
+    catch (e){}
 
     this.previewImages = item.Images;
   }
@@ -613,7 +613,7 @@ export class TransportFormPageComponent implements OnInit{
   }
   //#endregion
 
-  onSelectTransportType(item: IInfoBoxTransport, type: TransportType){
+  onSelectTransportType(item: IInfoBoxTransport, type: TransportType, isInitEmpty: boolean = true){
     this.currentType = type;
     this.currentTypeImg = this.transportService.getTypeImg(item, type);
     this.typeHint = item.Text;
@@ -622,11 +622,13 @@ export class TransportFormPageComponent implements OnInit{
         this.cargoInfoForm.get('Type')?.setValue(item.Value)
         break;
       case TransportType.Passenger:
-        this.initPassengerInfoFormBuilder()
-        this.onSelectPassengerRentalDuration(this.PassengerRentalDurationItems[0]);
-        this.onSelectPassengerFacilities(this.PassengerFacilitiesItems[0]);
-        this.onSelectPassengerTransportationKind(this.PassengerTransportationKindItems[0]);
-        this.onSelectPassengerOption(this.PassengerOptionItems[0]);
+        if (isInitEmpty){
+          this.initPassengerInfoFormBuilder()
+          this.onSelectPassengerRentalDuration(this.PassengerRentalDurationItems[0]);
+          this.onSelectPassengerFacilities(this.PassengerFacilitiesItems[0]);
+          this.onSelectPassengerTransportationKind(this.PassengerTransportationKindItems[0]);
+          this.onSelectPassengerOption(this.PassengerOptionItems[0]);
+        }
         this.passengerInfoForm.get('Type')?.setValue(item.Value)
         break;
       case TransportType.Special:
