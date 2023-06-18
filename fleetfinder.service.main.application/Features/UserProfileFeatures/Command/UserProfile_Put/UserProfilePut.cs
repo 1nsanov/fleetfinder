@@ -26,6 +26,7 @@ public static partial class UserProfilePut
             var updated = _mapper.Map<RequestDto, User>(request.RequestDto);
             updated.Id = request.UserId;
             entity.Contact = updated.Contact;
+            entity.FullName = updated.FullName;
             
             _commandDbContext.Entry(entity).CurrentValues.SetValues(updated);
             _commandDbContext.Entry(entity).Property(u => u.CreateDate).IsModified = false;
