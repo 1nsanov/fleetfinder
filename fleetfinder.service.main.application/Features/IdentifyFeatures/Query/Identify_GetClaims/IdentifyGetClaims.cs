@@ -27,12 +27,13 @@ public static partial class IdentifyGetClaims
             var principal = _identifyService.GetPrincipalFromToken(request.AccessToken, true);
             var claimSid = principal.Claims.FirstOrDefault(claim => claim.Type.Contains("sid"))?.Value;
             var userId = long.Parse(claimSid);
-            var givenName = principal.Claims.FirstOrDefault(claim => claim.Type.Contains("givenname"))?.Value;
 
             var user = await _queryDbContext.User.FirstOrDefaultAsync(u => u.Id == userId, cancellationToken)
                 ?? throw new EntityNotFoundException(userId);
+
+            var fullName = $"{user.FullName.First} {user.FullName.Second} {user.FullName.Surname}";
             
-            return new ResponseDto(userId, givenName, user.ImageUrl);
+            return new ResponseDto(userId, fullName, user.ImageUrl);
         }
     }
 }
