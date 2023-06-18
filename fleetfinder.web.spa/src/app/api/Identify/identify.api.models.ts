@@ -8,7 +8,7 @@ export interface ISignUpRequest{
   FullName: {
     First: string;
     Second: string;
-    Surname: string;
+    Surname: string | null;
   };
 }
 export interface ITokenResponse{

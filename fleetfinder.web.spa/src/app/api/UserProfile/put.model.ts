@@ -5,6 +5,10 @@ export interface UserProfilePutRequest {
   Email: string;
   Organization: string | null;
   ImageUrl: string | null;
-  FullName : FullNameForm;
+  FullName: {
+    First: string;
+    Second: string;
+    Surname: string | null;
+  };
   Contact: ContactProfile;
 }
