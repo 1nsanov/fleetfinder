@@ -64,7 +64,7 @@ export class ProfilePageComponent implements OnInit{
       this.copyResponse = res;
       this.contact = res.Contact as Contact;
       this.contact.ImageUrl = res.ImageUrl;
-      this.contact.Title = res.Organization ?? `${res.FullName.First} ${res.FullName.Second} ${res.FullName.Surname}`
+      this.contact.Title = !!res.Organization ? res.Organization : `${res.FullName.First} ${res.FullName.Second} ${res.FullName.Surname ?? ''}`
       this.login = res.Login;
       this.previewImage = res.ImageUrl;
       this.initFormProfileBuilder(res);
@@ -134,13 +134,7 @@ export class ProfilePageComponent implements OnInit{
     if (this.profileForm.valid && this.fullNameGroup.valid && this.contactGroup.valid) {
       this.disableForm = false;
       this.isLoadSave = true;
-      this.imageService.delete(this.requestImageDelete).pipe(
-          catchError((error: HttpErrorResponse) => {
-            this.isLoadSave = false;
-            this.notification.errorFromHttp(error);
-            return throwError(error);
-          })
-        ).subscribe( async () => {
+      this.imageService.delete(this.requestImageDelete).subscribe( async () => {
         if (this.previewImage?.includes("firebase"))
           this.requestImagePost.Files = [];
         await this.imageService.upload(this.requestImagePost).then((res) => {
@@ -158,7 +152,7 @@ export class ProfilePageComponent implements OnInit{
           ).subscribe(() => {
             this.identifyService.getClaims().subscribe();
             this.contact = request.Contact as Contact;
-            this.contact.Title = request.Organization ?? `${request.FullName.First} ${request.FullName.Second} ${request.FullName.Surname}`
+            this.contact.Title = !!request.Organization ? request.Organization : `${request.FullName.First} ${request.FullName.Second} ${request.FullName.Surname ?? ''}`
             this.contact.ImageUrl = this.previewImage;
             this.disableForm = true;
             this.isLoadSave = false;
