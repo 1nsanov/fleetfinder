@@ -4,7 +4,5 @@ namespace fleetfinder.service.main.application.Common.Interfaces.Services;
 
 public interface IUserService
 {
-    public Task<User> GetById(long id, CancellationToken cancellationToken);
     public Task<User> GetUserByLoginPassword(string login, string password, CancellationToken cancellationToken);
-
 }

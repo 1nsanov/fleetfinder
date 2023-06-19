@@ -171,6 +171,7 @@ export class ProfilePageComponent implements OnInit{
 
   resetChangeProfile() {
     this.initFormProfileBuilder(this.copyResponse);
+    this.previewImage = this.copyResponse.ImageUrl;
     this.disableForm = true;
   }
 

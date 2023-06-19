@@ -5,7 +5,6 @@
   TRANSPORTS_PASSENGER: "passenger",
   TRANSPORTS_SPECIAL: "special",
   TRANSPORTS_MY : "transports/my",
-  ORDERS: "orders",
   ABOUT: "about",
   SIGN_UP: "sign-up",
   SIGN_IN: "sign-in",

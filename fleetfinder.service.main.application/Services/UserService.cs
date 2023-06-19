@@ -14,11 +14,6 @@ public class UserService : IUserService
         _queryDbContext = queryDbContext;
     }
 
-    public Task<User> GetById(long id, CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
-    }
-    
     public async Task<User> GetUserByLoginPassword(string login, string password, CancellationToken cancellationToken)
     {
         return await _queryDbContext.User.FirstOrDefaultAsync(u => u.Login == login && u.Password == password, cancellationToken: cancellationToken)

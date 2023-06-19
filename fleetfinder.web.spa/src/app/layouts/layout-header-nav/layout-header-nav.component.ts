@@ -111,8 +111,6 @@ export class LayoutHeaderNavComponent implements OnInit, OnDestroy{
       case `/${namesRoute.TRANSPORTS}/${namesRoute.TRANSPORTS_PASSENGER}`:
       case `/${namesRoute.TRANSPORTS}/${namesRoute.TRANSPORTS_SPECIAL}`:
         return NavTab.Transports;
-      case `/${namesRoute.ORDERS}`:
-        return NavTab.Orders
       case `/${namesRoute.ABOUT}`:
         return NavTab.About
       default:
