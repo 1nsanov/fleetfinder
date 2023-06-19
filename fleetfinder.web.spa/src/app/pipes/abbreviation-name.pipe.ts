@@ -8,7 +8,7 @@ export class AbbreviationNamePipe implements PipeTransform {
     if (!value) return '';
     const name = value.split(' ');
     let abbr = `${name[0]} ${name[1][0].toUpperCase()}.`;
-    if (name.length > 2)
+    if (name[2].length > 0)
         abbr += name[2][0].toUpperCase() + '.';
     return abbr;
   }

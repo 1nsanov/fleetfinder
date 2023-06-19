@@ -30,11 +30,11 @@ public static partial class IdentifySignUp
                 throw new ValidationException("Пользователь с таким логином уже существует.");
 
             var entity = _mapper.Map<RequestDto, User>(requestDto); 
-
-            var token = _identifyService.GenerateTokenUser(entity);
             
             await _commandDbContext.User.AddAsync(entity, cancellationToken);
             await _commandDbContext.SaveChangesAsync(cancellationToken);
+            
+            var token = _identifyService.GenerateTokenUser(entity);
             
             return new ResponseDto(token);
         }
