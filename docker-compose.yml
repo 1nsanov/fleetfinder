@@ -1,8 +1,58 @@
-version: '3.4'
+x-db-env: &db-env
+  POSTGRES_USER: admin
+  POSTGRES_PASSWORD: 1234567890admin
+
+x-minio-env: &minio-env
+  MINIO_ROOT_USER: admin
+  MINIO_ROOT_PASSWORD: 1234567890admin
 
 services:
-  fleetfinder.service.main:
-    image: ${DOCKER_REGISTRY-}fleetfinderservicemain
+  fleetfinder.api:
+    image: ${DOCKER_REGISTRY-}fleetfinder.api
+    container_name: fleetfinder.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings__DefaultConnection=Host=fleetfinder.db;Database=FleetFinderDb;Username=admin;Password=1234567890admin;Port=5432;Pooling=true;"
     build:
       context: .
       dockerfile: ./Dockerfile
+    ports:
+      - "8000:80"
+    depends_on:
+      fleetfinder.db:
+        condition: service_healthy
+
+  fleetfinder.db:
+    image: postgres:17.10
+    container_name: fleetfinder.db
+    environment:
+      <<: *db-env
+      POSTGRES_DB: FleetFinderDb
+    ports:
+      - "5437:5432"
+    restart: always
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U admin -d FleetFinderDb" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    volumes:
+      - fleetfinder_postgres_data:/var/lib/postgresql
+
+  fleetfinder.minio:
+    image: minio/minio:latest
+    container_name: fleetfinder.minio
+    environment:
+      <<: *minio-env
+    command: server /data --console-address ":9001"
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    restart: always
+    volumes:
+      - fleetfinder_minio_data:/data
+        
+volumes:
+  fleetfinder_postgres_data:
+  fleetfinder_minio_data:
