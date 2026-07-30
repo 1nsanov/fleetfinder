@@ -135,7 +135,7 @@ export class ProfilePageComponent implements OnInit{
       this.disableForm = false;
       this.isLoadSave = true;
       this.imageService.delete(this.requestImageDelete).subscribe( async () => {
-        if (this.previewImage?.includes("firebase"))
+        if (this.previewImage && !this.previewImage.startsWith('data:'))
           this.requestImagePost.Files = [];
         await this.imageService.upload(this.requestImagePost).then((res) => {
           let request = this.profileForm.value as UserProfilePutRequest;
@@ -217,7 +217,7 @@ export class ProfilePageComponent implements OnInit{
   }
 
   initImageRequestDelete(){
-    if (this.previewImage && this.previewImage.includes("firebase"))
+    if (this.previewImage && !this.previewImage.startsWith('data:'))
       this.requestImageDelete.Urls = [this.previewImage];
   }
 }

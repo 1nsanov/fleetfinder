@@ -291,7 +291,7 @@ export class TransportFormPageComponent implements OnInit{
       })
     ).subscribe(async () => {
       await this.imageService.upload(this.requestImagePost).then((res) => {
-        const updateImages = this.previewImages.filter(x => x.match("firebase"));
+        const updateImages = this.previewImages.filter(x => !x.startsWith('data:'));
         updateImages.push(...res);
         const request = this.form.value as CargoTransportPutRequestDto;
         request.Type = this.cargoInfoForm.get('Type')?.value as CargoType;
@@ -327,7 +327,7 @@ export class TransportFormPageComponent implements OnInit{
       })
     ).subscribe(async () => {
       await this.imageService.upload(this.requestImagePost).then((res) => {
-        const updateImages = this.previewImages.filter(x => x.match("firebase"));
+        const updateImages = this.previewImages.filter(x => !x.startsWith('data:'));
         updateImages.push(...res);
         let request = this.form.value as PassengerTransportPutRequestDto;
         request = this.fillRequestPassenger(request) as PassengerTransportPutRequestDto;
@@ -354,7 +354,7 @@ export class TransportFormPageComponent implements OnInit{
       })
     ).subscribe(async () => {
       await this.imageService.upload(this.requestImagePost).then((res) => {
-        const updateImages = this.previewImages.filter(x => x.match("firebase"));
+        const updateImages = this.previewImages.filter(x => !x.startsWith('data:'));
         updateImages.push(...res);
         const request = this.form.value as SpecialTransportPutRequestDto;
         request.Type = this.specialInfoForm.get('Type')?.value as SpecialType;
