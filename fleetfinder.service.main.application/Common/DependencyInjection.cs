@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using fleetfinder.service.main.application.Common.Interfaces.Services;
+using fleetfinder.service.main.application.Common.Options;
 using fleetfinder.service.main.application.Common.Validation;
 using fleetfinder.service.main.application.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -38,6 +39,8 @@ public static class DependencyInjection
 
         #region Services
 
+        services.Configure<PasswordOptions>(configuration.GetSection(PasswordOptions.SectionName));
+        services.AddSingleton<IPasswordService, PasswordService>();
         services.AddSingleton<TokenService>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IIdentifyService, IdentifyService>();

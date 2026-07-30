@@ -13,6 +13,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "ConnectionStrings__DefaultConnection=Host=fleetfinder.db;Database=FleetFinderDb;Username=admin;Password=1234567890admin;Port=5432;Pooling=true;"
+      - "Password__EncryptionKey=unIxW8lskG6Nwu0EpayAjIGAMLRD+V8nyrc/8kcyJlk="
     build:
       context: .
       dockerfile: ./Dockerfile

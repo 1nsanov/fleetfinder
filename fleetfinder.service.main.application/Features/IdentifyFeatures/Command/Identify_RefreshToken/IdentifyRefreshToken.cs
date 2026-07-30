@@ -26,7 +26,7 @@ public static partial class IdentifyRefreshToken
             var entity = await _identifyService.GetUserByAccessToken(request.AccessToken, cancellationToken);
 
             var validToken = entity.RefreshToken?.Value == request.RefreshToken &&
-                             entity.RefreshToken.ExpiryTime < DateTime.UtcNow;
+                             entity.RefreshToken.ExpiryTime > DateTime.UtcNow;
             if (!validToken) throw new SecurityTokenValidationException("Invalid access token or refresh token");
 
             var token = _identifyService.GenerateTokenUser(entity);

@@ -13,12 +13,18 @@ public static partial class IdentifySignUp
         private readonly CommandDbContext _commandDbContext;
         private readonly IMapper _mapper;
         private readonly IIdentifyService _identifyService;
+        private readonly IPasswordService _passwordService;
 
-        public Handler(CommandDbContext commandDbContext, IMapper mapper, IIdentifyService identifyService)
+        public Handler(
+            CommandDbContext commandDbContext,
+            IMapper mapper,
+            IIdentifyService identifyService,
+            IPasswordService passwordService)
         {
             _commandDbContext = commandDbContext;
             _mapper = mapper;
             _identifyService = identifyService;
+            _passwordService = passwordService;
         }
 
         public async Task<ResponseDto> Handle(Command request, CancellationToken cancellationToken)
@@ -29,7 +35,8 @@ public static partial class IdentifySignUp
             if (duplicateLogin is not null)
                 throw new ValidationException("Пользователь с таким логином уже существует.");
 
-            var entity = _mapper.Map<RequestDto, User>(requestDto); 
+            var entity = _mapper.Map<RequestDto, User>(requestDto);
+            entity.Password = _passwordService.EncryptPassword(requestDto.Password);
             
             await _commandDbContext.User.AddAsync(entity, cancellationToken);
             await _commandDbContext.SaveChangesAsync(cancellationToken);
