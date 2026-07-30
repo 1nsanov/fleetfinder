@@ -6,7 +6,7 @@ namespace fleetfinder.service.main.application.Features.ImageFeatures.Command.Im
 public static partial class ImagePost
 {
     public record RequestDto(
-        FirebaseStorageFolder Folder, 
+        StorageFolder Folder, 
         List<IFormFile> Files
     );
 }

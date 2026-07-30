@@ -1,5 +1,4 @@
 ﻿using fleetfinder.service.main.application.Common.FeatureModels;
-using fleetfinder.service.main.domain.Bases;
 using fleetfinder.service.main.domain.Transport.Cargo;
 using Riok.Mapperly.Abstractions;
 

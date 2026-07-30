@@ -1,6 +1,6 @@
-﻿export enum FirebaseStorageFolder {
+export enum StorageFolder {
   CargoTransport = "CargoTransport",
-  PassengerTransport  = "PassengerTransport",
+  PassengerTransport = "PassengerTransport",
   SpecialTransport = "SpecialTransport",
   CargoOrder = "CargoOrder",
   PassengerOrder = "PassengerOrder",

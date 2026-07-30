@@ -14,6 +14,11 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - "ConnectionStrings__DefaultConnection=Host=fleetfinder.db;Database=FleetFinderDb;Username=admin;Password=1234567890admin;Port=5432;Pooling=true;"
       - "Password__EncryptionKey=unIxW8lskG6Nwu0EpayAjIGAMLRD+V8nyrc/8kcyJlk="
+      - "S3Storage__ServiceUrl=http://fleetfinder.minio:9000"
+      - "S3Storage__PublicBaseUrl=http://localhost:9000"
+      - "S3Storage__AccessKey=admin"
+      - "S3Storage__SecretKey=1234567890admin"
+      - "S3Storage__Bucket=fleetfinder"
     build:
       context: .
       dockerfile: ./Dockerfile
@@ -22,6 +27,8 @@ services:
     depends_on:
       fleetfinder.db:
         condition: service_healthy
+      fleetfinder.minio-init:
+        condition: service_completed_successfully
 
   fleetfinder.db:
     image: postgres:17.10
@@ -53,7 +60,24 @@ services:
     restart: always
     volumes:
       - fleetfinder_minio_data:/data
-        
+
+  fleetfinder.minio-init:
+    image: minio/mc:latest
+    container_name: fleetfinder.minio-init
+    depends_on:
+      fleetfinder.minio:
+        condition: service_started
+    entrypoint: >
+      /bin/sh -c "
+      until mc alias set local http://fleetfinder.minio:9000 admin 1234567890admin; do
+        echo 'waiting for minio...';
+        sleep 2;
+      done;
+      mc mb --ignore-existing local/fleetfinder;
+      mc anonymous set download local/fleetfinder;
+      exit 0;
+      "
+
 volumes:
   fleetfinder_postgres_data:
   fleetfinder_minio_data:

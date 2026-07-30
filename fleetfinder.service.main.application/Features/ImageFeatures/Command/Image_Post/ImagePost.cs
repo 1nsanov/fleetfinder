@@ -1,21 +1,18 @@
-﻿using Firebase.Storage;
-using fleetfinder.service.main.application.Common.Interfaces.Services;
-using Microsoft.Extensions.Configuration;
+﻿using fleetfinder.service.main.application.Common.Interfaces.Services;
 
 namespace fleetfinder.service.main.application.Features.ImageFeatures.Command.Image_Post;
 
 public static partial class ImagePost
 {
-
     public record Command(RequestDto RequestDto) : ICommandRequest<List<string>>;
-    
+
     internal class Handler : IRequestHandler<Command, List<string>>
     {
-        private readonly IConfiguration _config;
-        
-        public Handler(IConfiguration config)
+        private readonly IObjectStorageService _objectStorage;
+
+        public Handler(IObjectStorageService objectStorage)
         {
-            _config = config;
+            _objectStorage = objectStorage;
         }
 
         public async Task<List<string>> Handle(Command request, CancellationToken cancellationToken)
@@ -23,7 +20,7 @@ public static partial class ImagePost
             var requestDto = request.RequestDto;
 
             if (requestDto.Files.Count == 0) return new List<string>();
-            
+
             requestDto.Files.ForEach(dto =>
             {
                 if (dto.Length <= 0) throw new Exception("Invalid file.");
@@ -35,19 +32,22 @@ public static partial class ImagePost
             {
                 try
                 {
-                    var stream = item.OpenReadStream();
+                    await using var stream = item.OpenReadStream();
                     var fileName = $"{Guid.NewGuid()}{Path.GetExtension(item.FileName)}";
-                    var firebaseStorage = new FirebaseStorage(_config["FirebaseStorage:Bucket"]);
-                    var imageUrl = await firebaseStorage
-                        .Child(_config[$"FirebaseStorage:Folders:{requestDto.Folder.ToString()}"])
-                        .Child(fileName)
-                        .PutAsync(stream);
-            
+                    var contentType = string.IsNullOrWhiteSpace(item.ContentType)
+                        ? "application/octet-stream"
+                        : item.ContentType;
+                    var imageUrl = await _objectStorage.UploadAsync(
+                        requestDto.Folder,
+                        fileName,
+                        stream,
+                        contentType,
+                        cancellationToken);
                     response.Add(imageUrl);
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception( $"An error occurred: {ex.Message}");
+                    throw new Exception($"An error occurred: {ex.Message}");
                 }
             }
 
