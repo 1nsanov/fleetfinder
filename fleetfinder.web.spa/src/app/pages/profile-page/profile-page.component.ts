@@ -9,7 +9,7 @@ import {ProfileForm} from "../../models/interfaces/user/profile/profile-form.mod
 import {FullNameForm} from "../../models/interfaces/user/sign-up.model";
 import {ContactForm} from "../../models/interfaces/user/profile/contact-form.model";
 import {ImagePostRequest} from "../../api/Image/post.models";
-import {FirebaseStorageFolder} from "../../models/enums/common/firebase-storage-folder.enum";
+import {StorageFolder} from "../../models/enums/common/storage-folder.enum";
 import {UserProfilePutRequest} from "../../api/UserProfile/put.model";
 import {catchError, throwError} from "rxjs";
 import {HttpErrorResponse} from "@angular/common/http";
@@ -36,11 +36,11 @@ export class ProfilePageComponent implements OnInit{
   changePasswordForm: FormGroup<ChangePasswordForm>;
   previewImage: string | null = null;
   requestImagePost : ImagePostRequest = {
-    Folder: FirebaseStorageFolder.UserProfile,
+    Folder: StorageFolder.UserProfile,
     Files: []
   }
   requestImageDelete : ImageDeleteRequest = {
-    Folder: FirebaseStorageFolder.UserProfile,
+    Folder: StorageFolder.UserProfile,
     Urls: []
   }
   isLoadSave = false;
@@ -135,7 +135,7 @@ export class ProfilePageComponent implements OnInit{
       this.disableForm = false;
       this.isLoadSave = true;
       this.imageService.delete(this.requestImageDelete).subscribe( async () => {
-        if (this.previewImage?.includes("firebase"))
+        if (this.previewImage && !this.previewImage.startsWith('data:'))
           this.requestImagePost.Files = [];
         await this.imageService.upload(this.requestImagePost).then((res) => {
           let request = this.profileForm.value as UserProfilePutRequest;
@@ -217,7 +217,7 @@ export class ProfilePageComponent implements OnInit{
   }
 
   initImageRequestDelete(){
-    if (this.previewImage && this.previewImage.includes("firebase"))
+    if (this.previewImage && !this.previewImage.startsWith('data:'))
       this.requestImageDelete.Urls = [this.previewImage];
   }
 }

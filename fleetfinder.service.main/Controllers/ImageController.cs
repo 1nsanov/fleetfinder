@@ -1,7 +1,6 @@
 ﻿using fleetfinder.service.main.application.Common.Enums;
 using fleetfinder.service.main.application.Features.ImageFeatures.Command.Image_Post;
 using fleetfinder.service.main.application.Features.ImageFeatures.Command.ImageDelete;
-using Microsoft.AspNetCore.Authorization;
 
 namespace fleetfinder.service.main.Controllers;
 
@@ -24,7 +23,7 @@ public class ImageController : ControllerBase
     
     [HttpDelete]
     public async Task<IActionResult> DeleteImage(
-        [FromQuery] FirebaseStorageFolder folder,
+        [FromQuery] StorageFolder folder,
         [FromQuery] List<string> url,
         CancellationToken cancellationToken)
     {

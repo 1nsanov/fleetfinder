@@ -28,4 +28,11 @@ public static class DependencyInjection
 
         return services;
     }
+
+    public static void ApplyMigrations(this IServiceProvider services)
+    {
+        using var scope = services.CreateScope();
+        var context = scope.ServiceProvider.GetRequiredService<MigrationDbContext>();
+        context.Database.Migrate();
+    }
 }

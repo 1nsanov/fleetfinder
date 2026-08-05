@@ -1,6 +1,6 @@
-﻿namespace fleetfinder.service.main.application.Common.Enums;
+namespace fleetfinder.service.main.application.Common.Enums;
 
-public enum FirebaseStorageFolder
+public enum StorageFolder
 {
     CargoTransport,
     PassengerTransport,

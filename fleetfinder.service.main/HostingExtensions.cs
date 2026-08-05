@@ -70,6 +70,8 @@ public static class HostingExtensions
 
     public static WebApplication ConfigurePipeline(this WebApplication app)
     {
+        app.Services.ApplyMigrations();
+
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();

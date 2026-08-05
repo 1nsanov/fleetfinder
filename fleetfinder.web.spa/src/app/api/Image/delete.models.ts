@@ -1,6 +1,6 @@
-﻿import {FirebaseStorageFolder} from "../../models/enums/common/firebase-storage-folder.enum";
+﻿import {StorageFolder} from "../../models/enums/common/storage-folder.enum";
 
 export interface ImageDeleteRequest {
-  Folder: FirebaseStorageFolder,
+  Folder: StorageFolder,
   Urls: string[],
 }

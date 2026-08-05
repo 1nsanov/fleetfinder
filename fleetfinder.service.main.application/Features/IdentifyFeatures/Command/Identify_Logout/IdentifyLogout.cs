@@ -1,5 +1,4 @@
-﻿using System.Security.Authentication;
-using fleetfinder.service.main.application.Common.Interfaces.Services;
+﻿using fleetfinder.service.main.application.Common.Interfaces.Services;
 using fleetfinder.service.main.application.Services;
 
 namespace fleetfinder.service.main.application.Features.IdentifyFeatures.Command.Identify_Logout;

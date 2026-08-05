@@ -5,7 +5,7 @@ namespace fleetfinder.service.main.application.Features.ImageFeatures.Command.Im
 public static partial class ImageDelete
 {
     public record RequestDto(
-        FirebaseStorageFolder Folder, 
+        StorageFolder Folder, 
         List<string> Urls
     );
 }

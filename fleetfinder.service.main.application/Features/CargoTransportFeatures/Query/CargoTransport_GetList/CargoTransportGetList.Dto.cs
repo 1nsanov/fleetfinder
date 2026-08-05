@@ -1,6 +1,5 @@
 ﻿using fleetfinder.service.main.application.Common.FeatureModels;
 using fleetfinder.service.main.domain.Enums.Common;
-using fleetfinder.service.main.domain.Enums.Transport;
 using fleetfinder.service.main.domain.Enums.Transport.Cargo;
 
 namespace fleetfinder.service.main.application.Features.CargoTransportFeatures.Query.CargoTransport_GetList;

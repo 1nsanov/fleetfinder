@@ -8,15 +8,20 @@ namespace fleetfinder.service.main.application.Services;
 public class UserService : IUserService
 {
     private readonly QueryDbContext _queryDbContext;
-    
-    public UserService(QueryDbContext queryDbContext)
+    private readonly IPasswordService _passwordService;
+
+    public UserService(QueryDbContext queryDbContext, IPasswordService passwordService)
     {
         _queryDbContext = queryDbContext;
+        _passwordService = passwordService;
     }
 
     public async Task<User> GetUserByLoginPassword(string login, string password, CancellationToken cancellationToken)
     {
-        return await _queryDbContext.User.FirstOrDefaultAsync(u => u.Login == login && u.Password == password, cancellationToken: cancellationToken)
-               ?? throw new EntityNotFoundException($"User with login '{login}' and password '{password}'");
+        var user = await _queryDbContext.User.FirstOrDefaultAsync(u => u.Login == login, cancellationToken: cancellationToken);
+        if (user is null || !_passwordService.VerifyPassword(password, user.Password))
+            throw new EntityNotFoundException($"User with login '{login}' not found");
+
+        return user;
     }
 }

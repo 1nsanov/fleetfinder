@@ -44,7 +44,7 @@ import {CargoTransportGetResponse} from "../../api/CargoTransport/get.models";
 import {CargoTransportPutRequestDto} from "../../api/CargoTransport/put.model";
 import {IdentifyApiService} from "../../api/Identify/identify.api.service";
 import {ImagePostRequest} from "../../api/Image/post.models";
-import {FirebaseStorageFolder} from "../../models/enums/common/firebase-storage-folder.enum";
+import {StorageFolder} from "../../models/enums/common/storage-folder.enum";
 import {ImageApiService} from "../../api/Image/image.api.service";
 import {ImageDeleteRequest} from "../../api/Image/delete.models";
 import {CargoInfoForm} from "../../models/interfaces/transport/cargo-info-form.model";
@@ -100,11 +100,11 @@ export class TransportFormPageComponent implements OnInit{
   passengerInfoForm: FormGroup<PassengerInfoForm>;
   specialInfoForm: FormGroup<SpecialInfoForm>;
   requestImagePost : ImagePostRequest = {
-    Folder: FirebaseStorageFolder.CargoTransport,
+    Folder: StorageFolder.CargoTransport,
     Files: []
   }
   requestImageDelete : ImageDeleteRequest = {
-    Folder: FirebaseStorageFolder.CargoTransport,
+    Folder: StorageFolder.CargoTransport,
     Urls: []
   }
   isLoad = false;
@@ -202,7 +202,7 @@ export class TransportFormPageComponent implements OnInit{
   }
 
   async postCargo(){
-    this.requestImagePost.Folder = FirebaseStorageFolder.CargoTransport;
+    this.requestImagePost.Folder = StorageFolder.CargoTransport;
     await this.imageService.upload(this.requestImagePost).then((res) => {
       const request = this.form.value as CargoTransportPostRequestDto;
       request.Type = this.cargoInfoForm.get('Type')?.value as CargoType;
@@ -230,7 +230,7 @@ export class TransportFormPageComponent implements OnInit{
   }
 
   async postPassenger(){
-    this.requestImagePost.Folder = FirebaseStorageFolder.PassengerTransport;
+    this.requestImagePost.Folder = StorageFolder.PassengerTransport;
     await this.imageService.upload(this.requestImagePost).then((res) => {
       let request = this.form.value as PassengerTransportPostRequestDto;
       request = this.fillRequestPassenger(request);
@@ -249,7 +249,7 @@ export class TransportFormPageComponent implements OnInit{
   }
 
   async postSpecial(){
-    this.requestImagePost.Folder = FirebaseStorageFolder.SpecialTransport;
+    this.requestImagePost.Folder = StorageFolder.SpecialTransport;
     await this.imageService.upload(this.requestImagePost).then((res) => {
       const request = this.form.value as SpecialTransportPostRequestDto;
       request.Type = this.specialInfoForm.get('Type')?.value as SpecialType;
@@ -284,14 +284,14 @@ export class TransportFormPageComponent implements OnInit{
   }
 
   putCargo(){
-    this.requestImagePost.Folder = this.requestImageDelete.Folder = FirebaseStorageFolder.CargoTransport;
+    this.requestImagePost.Folder = this.requestImageDelete.Folder = StorageFolder.CargoTransport;
     this.imageService.delete(this.requestImageDelete).pipe(
       catchError((error: HttpErrorResponse) => {
         return throwError(error);
       })
     ).subscribe(async () => {
       await this.imageService.upload(this.requestImagePost).then((res) => {
-        const updateImages = this.previewImages.filter(x => x.match("firebase"));
+        const updateImages = this.previewImages.filter(x => !x.startsWith('data:'));
         updateImages.push(...res);
         const request = this.form.value as CargoTransportPutRequestDto;
         request.Type = this.cargoInfoForm.get('Type')?.value as CargoType;
@@ -320,14 +320,14 @@ export class TransportFormPageComponent implements OnInit{
   }
 
   putPassenger(){
-    this.requestImagePost.Folder = this.requestImageDelete.Folder = FirebaseStorageFolder.PassengerTransport;
+    this.requestImagePost.Folder = this.requestImageDelete.Folder = StorageFolder.PassengerTransport;
     this.imageService.delete(this.requestImageDelete).pipe(
       catchError((error: HttpErrorResponse) => {
         return throwError(error);
       })
     ).subscribe(async () => {
       await this.imageService.upload(this.requestImagePost).then((res) => {
-        const updateImages = this.previewImages.filter(x => x.match("firebase"));
+        const updateImages = this.previewImages.filter(x => !x.startsWith('data:'));
         updateImages.push(...res);
         let request = this.form.value as PassengerTransportPutRequestDto;
         request = this.fillRequestPassenger(request) as PassengerTransportPutRequestDto;
@@ -347,14 +347,14 @@ export class TransportFormPageComponent implements OnInit{
   }
 
   putSpecial(){
-    this.requestImagePost.Folder = this.requestImageDelete.Folder = FirebaseStorageFolder.SpecialTransport;
+    this.requestImagePost.Folder = this.requestImageDelete.Folder = StorageFolder.SpecialTransport;
     this.imageService.delete(this.requestImageDelete).pipe(
       catchError((error: HttpErrorResponse) => {
         return throwError(error);
       })
     ).subscribe(async () => {
       await this.imageService.upload(this.requestImagePost).then((res) => {
-        const updateImages = this.previewImages.filter(x => x.match("firebase"));
+        const updateImages = this.previewImages.filter(x => !x.startsWith('data:'));
         updateImages.push(...res);
         const request = this.form.value as SpecialTransportPutRequestDto;
         request.Type = this.specialInfoForm.get('Type')?.value as SpecialType;
