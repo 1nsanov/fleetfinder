@@ -1,7 +1,9 @@
-﻿using System.Text;
+﻿using System.Net.Http.Headers;
+using System.Text;
 using Amazon.S3;
 using fleetfinder.service.main.application.Common.Interfaces.Services;
 using fleetfinder.service.main.application.Common.Options;
+using fleetfinder.service.main.application.Common.Seed;
 using fleetfinder.service.main.application.Common.Validation;
 using fleetfinder.service.main.application.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -61,7 +63,16 @@ public static class DependencyInjection
         services.AddSingleton<TokenService>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IIdentifyService, IdentifyService>();
-        
+
+        services.Configure<SeedOptions>(configuration.GetSection(SeedOptions.SectionName));
+        services.AddHttpClient(DemoDataSeeder.HttpClientName, client =>
+        {
+            client.Timeout = TimeSpan.FromSeconds(60);
+            client.DefaultRequestHeaders.UserAgent.ParseAdd("FleetFinderDemoSeeder/1.0");
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("image/*"));
+        });
+        services.AddScoped<IDemoDataSeeder, DemoDataSeeder>();
+
         #endregion
 
         #region JWT

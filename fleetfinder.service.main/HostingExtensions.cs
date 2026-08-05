@@ -1,6 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 using fleetfinder.service.main.application.Common;
 using fleetfinder.service.main.application.Common.Middlewares;
+using fleetfinder.service.main.application.Common.Seed;
 using fleetfinder.service.main.infrastructure.Common;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Http.Features;
@@ -68,9 +69,10 @@ public static class HostingExtensions
         return builder.Build();
     }
 
-    public static WebApplication ConfigurePipeline(this WebApplication app)
+    public static async Task<WebApplication> ConfigurePipelineAsync(this WebApplication app)
     {
         app.Services.ApplyMigrations();
+        await app.Services.SeedDemoDataAsync();
 
         if (app.Environment.IsDevelopment())
         {
