@@ -2,11 +2,14 @@ import { Injectable } from '@angular/core';
 import {IClaims, ISignInRequest, ISignUpRequest, ITokenResponse} from "./identify.api.models";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
-import {CookieService} from "ngx-cookie-service";
 import {catchError, tap, throwError} from "rxjs";
 import {TokenModel} from "../../models/token.model";
 import {namesRoute} from "../../data/names-route";
 import {Router} from "@angular/router";
+
+const ACCESS_TOKEN_KEY = 'access_token';
+const REFRESH_TOKEN_KEY = 'refresh_token';
+const EXPIRY_TIME_KEY = 'expiry_time';
 
 @Injectable({
   providedIn: 'root'
@@ -16,13 +19,11 @@ export class IdentifyApiService {
   claims: IClaims | null = null;
 
   constructor(private http: HttpClient,
-              private cookieService: CookieService,
               private router: Router) { }
 
   signUp(request: ISignUpRequest) {
     return this.http.post<ITokenResponse>(this.url + "sign-up", request).pipe(
       tap((result) => {
-        localStorage.clear();
         this.writeToken(result.Token)
       })
     );
@@ -30,7 +31,6 @@ export class IdentifyApiService {
   signIn(request: ISignInRequest) {
     return this.http.post<ITokenResponse>(this.url + "sign-in", request).pipe(
       tap((result) => {
-        localStorage.clear();
         this.writeToken(result.Token)
       })
     );
@@ -50,7 +50,6 @@ export class IdentifyApiService {
   }
 
   logout() {
-    localStorage.clear();
     return this.http.get<boolean>(this.url + "logout").pipe(
       tap(() => {
         this.writeToken(null)
@@ -73,7 +72,7 @@ export class IdentifyApiService {
   }
 
   getAccessToken() : string {
-    return this.cookieService.get('access_token');
+    return localStorage.getItem(ACCESS_TOKEN_KEY) ?? '';
   }
 
   isAuthenticated() : boolean {
@@ -81,17 +80,23 @@ export class IdentifyApiService {
   }
 
   getTokenExpiration() {
-    const expiryTime = this.cookieService.get('expiry_time');
+    const expiryTime = localStorage.getItem(EXPIRY_TIME_KEY);
     return expiryTime ? Date.parse(expiryTime) : null
   }
 
   writeToken(token: TokenModel | null){
-    this.cookieService.set('access_token', token ? token.Access : '', { path: '/'});
-    this.cookieService.set('refresh_token', token ? token.Refresh : '', { path: '/'});
-    this.cookieService.set('expiry_time', token ? token.ExpiryTime.toString() : '', { path: '/'})
+    if (!token?.Access) {
+      localStorage.removeItem(ACCESS_TOKEN_KEY);
+      localStorage.removeItem(REFRESH_TOKEN_KEY);
+      localStorage.removeItem(EXPIRY_TIME_KEY);
+      return;
+    }
+    localStorage.setItem(ACCESS_TOKEN_KEY, token.Access);
+    localStorage.setItem(REFRESH_TOKEN_KEY, token.Refresh ?? '');
+    localStorage.setItem(EXPIRY_TIME_KEY, String(token.ExpiryTime));
   }
 
   private getRefreshToken() : string {
-    return this.cookieService.get('refresh_token');
+    return localStorage.getItem(REFRESH_TOKEN_KEY) ?? '';
   }
 }

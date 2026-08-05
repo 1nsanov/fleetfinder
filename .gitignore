@@ -371,3 +371,6 @@ FodyWeavers.xsd
 
 # Graphify
 graphify-out/
+
+# Cursor
+.cursor/

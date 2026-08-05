@@ -12,7 +12,7 @@ services:
     container_name: fleetfinder.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Host=fleetfinder.db;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};Port=5432;Pooling=true;
+      - ConnectionStrings__DefaultConnection=Host=db;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};Port=5432;Pooling=true;
       - Password__EncryptionKey=${PASSWORD_ENCRYPTION_KEY}
       - Jwt__Key=${JWT_KEY}
       - Jwt__Issuer=${JWT_ISSUER}
@@ -26,12 +26,23 @@ services:
       context: .
       dockerfile: ./Dockerfile
     ports:
-      - "8000:80"
+      - "8100:80"
+    restart: on-failure
     depends_on:
       fleetfinder.db:
         condition: service_healthy
       fleetfinder.minio-init:
         condition: service_completed_successfully
+
+  fleetfinder.web:
+    build:
+      context: ./fleetfinder.web.spa
+      dockerfile: Dockerfile
+    container_name: fleetfinder.web
+    ports:
+      - "${WEB_PORT:-4200}:80"
+    depends_on:
+      - fleetfinder.api
 
   fleetfinder.db:
     image: postgres:17.10
@@ -50,6 +61,10 @@ services:
       start_period: 10s
     volumes:
       - fleetfinder_postgres_data:/var/lib/postgresql/data
+    networks:
+      default:
+        aliases:
+          - db
 
   fleetfinder.minio:
     image: minio/minio:latest
@@ -58,11 +73,15 @@ services:
       <<: *minio-env
     command: server /data --console-address ":9001"
     ports:
-      - "9000:9000"
-      - "9001:9001"
+      - "9010:9000"
+      - "9011:9001"
     restart: always
     volumes:
       - fleetfinder_minio_data:/data
+    networks:
+      default:
+        aliases:
+          - minio
 
   fleetfinder.minio-init:
     image: minio/mc:latest
@@ -76,7 +95,7 @@ services:
       S3_BUCKET: ${S3_BUCKET}
     entrypoint: >
       /bin/sh -c "
-      until mc alias set local http://fleetfinder.minio:9000 \"$$MINIO_ROOT_USER\" \"$$MINIO_ROOT_PASSWORD\"; do
+      until mc alias set local http://minio:9000 \"$$MINIO_ROOT_USER\" \"$$MINIO_ROOT_PASSWORD\"; do
         echo 'waiting for minio...';
         sleep 2;
       done;
