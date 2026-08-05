@@ -368,3 +368,6 @@ FodyWeavers.xsd
 
 .env*
 !.env.example
+
+# Graphify
+graphify-out/

@@ -1,10 +1,10 @@
 x-db-env: &db-env
-  POSTGRES_USER: admin
-  POSTGRES_PASSWORD: 1234567890admin
+  POSTGRES_USER: ${POSTGRES_USER}
+  POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
 
 x-minio-env: &minio-env
-  MINIO_ROOT_USER: admin
-  MINIO_ROOT_PASSWORD: 1234567890admin
+  MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+  MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
 
 services:
   fleetfinder.api:
@@ -12,13 +12,16 @@ services:
     container_name: fleetfinder.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - "ConnectionStrings__DefaultConnection=Host=fleetfinder.db;Database=FleetFinderDb;Username=admin;Password=1234567890admin;Port=5432;Pooling=true;"
-      - "Password__EncryptionKey=unIxW8lskG6Nwu0EpayAjIGAMLRD+V8nyrc/8kcyJlk="
-      - "S3Storage__ServiceUrl=http://fleetfinder.minio:9000"
-      - "S3Storage__PublicBaseUrl=http://localhost:9000"
-      - "S3Storage__AccessKey=admin"
-      - "S3Storage__SecretKey=1234567890admin"
-      - "S3Storage__Bucket=fleetfinder"
+      - ConnectionStrings__DefaultConnection=Host=fleetfinder.db;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};Port=5432;Pooling=true;
+      - Password__EncryptionKey=${PASSWORD_ENCRYPTION_KEY}
+      - Jwt__Key=${JWT_KEY}
+      - Jwt__Issuer=${JWT_ISSUER}
+      - Jwt__Audience=${JWT_AUDIENCE}
+      - S3Storage__ServiceUrl=${S3_SERVICE_URL}
+      - S3Storage__PublicBaseUrl=${S3_PUBLIC_BASE_URL}
+      - S3Storage__AccessKey=${MINIO_ROOT_USER}
+      - S3Storage__SecretKey=${MINIO_ROOT_PASSWORD}
+      - S3Storage__Bucket=${S3_BUCKET}
     build:
       context: .
       dockerfile: ./Dockerfile
@@ -35,18 +38,18 @@ services:
     container_name: fleetfinder.db
     environment:
       <<: *db-env
-      POSTGRES_DB: FleetFinderDb
+      POSTGRES_DB: ${POSTGRES_DB}
     ports:
       - "5437:5432"
     restart: always
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U admin -d FleetFinderDb" ]
+      test: [ "CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB" ]
       interval: 5s
       timeout: 5s
       retries: 10
       start_period: 10s
     volumes:
-      - fleetfinder_postgres_data:/var/lib/postgresql
+      - fleetfinder_postgres_data:/var/lib/postgresql/data
 
   fleetfinder.minio:
     image: minio/minio:latest
@@ -67,14 +70,18 @@ services:
     depends_on:
       fleetfinder.minio:
         condition: service_started
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+      S3_BUCKET: ${S3_BUCKET}
     entrypoint: >
       /bin/sh -c "
-      until mc alias set local http://fleetfinder.minio:9000 admin 1234567890admin; do
+      until mc alias set local http://fleetfinder.minio:9000 \"$$MINIO_ROOT_USER\" \"$$MINIO_ROOT_PASSWORD\"; do
         echo 'waiting for minio...';
         sleep 2;
       done;
-      mc mb --ignore-existing local/fleetfinder;
-      mc anonymous set download local/fleetfinder;
+      mc mb --ignore-existing local/$$S3_BUCKET;
+      mc anonymous set download local/$$S3_BUCKET;
       exit 0;
       "
 
