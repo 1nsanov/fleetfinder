@@ -1,4 +1,4 @@
-import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {navTab, NavTab} from "../../models/enums/nav-tab.enum";
 import {NavigationEnd, Router} from "@angular/router";
 import {Subscription} from "rxjs";
@@ -9,6 +9,7 @@ import {IdentifyApiService} from "../../api/Identify/identify.api.service";
     selector: 'app-layout-header-nav',
     templateUrl: './layout-header-nav.component.html',
     styleUrls: ['./layout-header-nav.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class LayoutHeaderNavComponent implements OnInit, OnDestroy{

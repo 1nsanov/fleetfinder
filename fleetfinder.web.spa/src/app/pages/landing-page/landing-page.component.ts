@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import {IdentifyApiService} from "../../api/Identify/identify.api.service";
 import {NotificationService} from "../../services/notification.service";
 import {cargoItems} from "../../data/transport/cargo-items";
@@ -11,6 +11,7 @@ import {namesRoute} from "../../data/names-route";
     selector: 'app-landing-page',
     templateUrl: './landing-page.component.html',
     styleUrls: ['./landing-page.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class LandingPageComponent {

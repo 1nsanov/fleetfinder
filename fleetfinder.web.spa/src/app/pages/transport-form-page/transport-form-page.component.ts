@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {
   getCargoBodyKindItems,
   getCargoTransportationKindItems,
@@ -71,6 +71,7 @@ import {PriceModel} from "../../api/Common/Transport/PriceModel";
     selector: 'app-transport-form-page',
     templateUrl: './transport-form-page.component.html',
     styleUrls: ['./transport-form-page.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class TransportFormPageComponent implements OnInit{

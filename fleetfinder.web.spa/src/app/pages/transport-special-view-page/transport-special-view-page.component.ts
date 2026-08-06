@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import {IdentifyApiService} from "../../api/Identify/identify.api.service";
 import {TransportService} from "../../services/transport.service";
@@ -16,6 +16,7 @@ import { HttpErrorResponse } from "@angular/common/http";
     selector: 'app-transport-special-view-page',
     templateUrl: './transport-special-view-page.component.html',
     styleUrls: ['./transport-special-view-page.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class TransportSpecialViewPageComponent {

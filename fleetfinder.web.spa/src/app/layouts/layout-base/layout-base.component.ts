@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from "@angular/router";
 import {GlobalLoaderService} from "../../services/global-loader.service";
 
@@ -6,6 +6,7 @@ import {GlobalLoaderService} from "../../services/global-loader.service";
     selector: 'app-layout-base',
     templateUrl: './layout-base.component.html',
     styleUrls: ['./layout-base.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class LayoutBaseComponent {

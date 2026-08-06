@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import {GlobalLoaderService} from "../../../services/global-loader.service";
 import {IdentifyApiService} from "../../../api/Identify/identify.api.service";
 
@@ -6,6 +6,7 @@ import {IdentifyApiService} from "../../../api/Identify/identify.api.service";
     selector: 'app-global-loader',
     templateUrl: './global-loader.component.html',
     styleUrls: ['./global-loader.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class GlobalLoaderComponent {

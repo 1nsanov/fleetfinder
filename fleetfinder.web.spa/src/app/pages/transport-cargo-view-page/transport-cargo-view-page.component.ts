@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {CargoTransportApiService} from "../../api/CargoTransport/cargo-transport.api.service";
 import { HttpErrorResponse } from "@angular/common/http";
@@ -17,6 +17,7 @@ import {namesRoute} from "../../data/names-route";
     selector: 'app-transport-cargo-view-page',
     templateUrl: './transport-cargo-view-page.component.html',
     styleUrls: ['./transport-cargo-view-page.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class TransportCargoViewPageComponent implements OnInit{

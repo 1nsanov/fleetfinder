@@ -5,6 +5,7 @@ import {
   OnChanges,
   OnInit, Output,
   SimpleChanges,
+  ChangeDetectionStrategy
 } from '@angular/core';
 
 export interface PaginationValue {
@@ -17,6 +18,7 @@ export interface PaginationValue {
     selector: 'app-pagination',
     templateUrl: './pagination.component.html',
     styleUrls: ['./pagination.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class PaginationComponent

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {IdentifyApiService} from "../../api/Identify/identify.api.service";
 import {UserProfileApiService} from "../../api/UserProfile/user-profile.api.service";
 import {ImageApiService} from "../../api/Image/image.api.service";
@@ -22,6 +22,7 @@ import {UserProfilePutPassword} from "../../api/UserProfile/put-password.model";
     selector: 'app-profile-page',
     templateUrl: './profile-page.component.html',
     styleUrls: ['./profile-page.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class ProfilePageComponent implements OnInit{

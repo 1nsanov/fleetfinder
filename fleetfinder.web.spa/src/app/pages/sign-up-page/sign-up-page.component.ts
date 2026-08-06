@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {IdentifyApiService} from "../../api/Identify/identify.api.service";
 import {FullNameForm, SignUpModel} from "../../models/interfaces/user/sign-up.model";
 import {ISignUpRequest} from "../../api/Identify/identify.api.models";
@@ -14,6 +14,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
     selector: 'app-sign-up-page',
     templateUrl: './sign-up-page.component.html',
     styleUrls: ['./sign-up-page.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class SignUpPageComponent implements OnInit{

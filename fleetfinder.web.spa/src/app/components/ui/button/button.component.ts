@@ -1,10 +1,11 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy} from '@angular/core';
 import {BtnTheme} from "../../../models/enums/btn-theme.enum";
 
 @Component({
     selector: 'app-button',
     templateUrl: './button.component.html',
     styleUrls: ['./button.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class ButtonComponent implements OnInit{

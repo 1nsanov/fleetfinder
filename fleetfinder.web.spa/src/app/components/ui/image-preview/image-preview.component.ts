@@ -1,10 +1,11 @@
-import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output, ChangeDetectionStrategy} from '@angular/core';
 import {ImageViewerService} from "../../../services/image-viewer.service";
 
 @Component({
     selector: 'app-image-preview',
     templateUrl: './image-preview.component.html',
     styleUrls: ['./image-preview.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class ImagePreviewComponent implements OnChanges{

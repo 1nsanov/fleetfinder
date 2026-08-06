@@ -1,4 +1,4 @@
-import {Component, EventEmitter, HostListener, Input, OnDestroy, Output} from '@angular/core';
+import {Component, EventEmitter, HostListener, Input, OnDestroy, Output, ChangeDetectionStrategy} from '@angular/core';
 import {TimeoutService} from "../../../services/timeout.service";
 import {ImageViewerService} from "../../../services/image-viewer.service";
 
@@ -6,6 +6,7 @@ import {ImageViewerService} from "../../../services/image-viewer.service";
     selector: 'app-image-viewer',
     templateUrl: './image-viewer.component.html',
     styleUrls: ['./image-viewer.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class ImageViewerComponent  implements OnDestroy{

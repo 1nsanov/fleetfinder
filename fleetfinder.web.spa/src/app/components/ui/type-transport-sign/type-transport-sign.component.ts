@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output, ChangeDetectionStrategy} from '@angular/core';
 import { TransportType } from 'src/app/models/enums/transport/transport-type.enum';
 import {cargoItems} from "../../../data/transport/cargo-items";
 import {passengerItems} from "../../../data/transport/passenger-items";
@@ -8,6 +8,7 @@ import {specialItems} from "../../../data/transport/special-items";
     selector: 'app-type-transport-sign',
     templateUrl: './type-transport-sign.component.html',
     styleUrls: ['./type-transport-sign.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class TypeTransportSignComponent {

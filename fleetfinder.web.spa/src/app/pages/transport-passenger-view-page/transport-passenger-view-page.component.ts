@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {IdentifyApiService} from "../../api/Identify/identify.api.service";
 import {TransportService} from "../../services/transport.service";
@@ -20,6 +20,7 @@ import {PassengerTransportationKind} from "../../models/enums/transport/passenge
     selector: 'app-transport-passenger-view-page',
     templateUrl: './transport-passenger-view-page.component.html',
     styleUrls: ['./transport-passenger-view-page.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class TransportPassengerViewPageComponent {
