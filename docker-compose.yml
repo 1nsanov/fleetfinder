@@ -22,6 +22,8 @@ services:
       - S3Storage__AccessKey=${MINIO_ROOT_USER}
       - S3Storage__SecretKey=${MINIO_ROOT_PASSWORD}
       - S3Storage__Bucket=${S3_BUCKET}
+      - Seed__Enabled=${SEED_DEMO_DATA:-true}
+      - Seed__DemoPassword=${SEED_DEMO_PASSWORD:-Demo123!}
     build:
       context: .
       dockerfile: ./Dockerfile
