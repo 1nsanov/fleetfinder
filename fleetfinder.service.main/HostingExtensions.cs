@@ -5,7 +5,7 @@ using fleetfinder.service.main.application.Common.Seed;
 using fleetfinder.service.main.infrastructure.Common;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Http.Features;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 
 namespace fleetfinder.service.main;
 
@@ -21,7 +21,6 @@ public static class HostingExtensions
             options.JsonSerializerOptions.Converters.Add(enumConverter);
         });
 
-        builder.Services.AddDateOnlyTimeOnlyStringConverters();
         builder.Services.AddEndpointsApiExplorer();
 
         #region Swagger
@@ -29,7 +28,6 @@ public static class HostingExtensions
         builder.Services.AddSwaggerGen(options =>
         {
             options.SupportNonNullableReferenceTypes();
-            options.UseDateOnlyTimeOnlyStringConverters();
             options.CustomSchemaIds(type => type.FullName?.Replace("+", "_"));
             options.SwaggerDoc("v1", new OpenApiInfo { Title = "fleetfinder.service.main", Version = "v1" });
             options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
@@ -39,16 +37,9 @@ public static class HostingExtensions
                 BearerFormat = "JWT",
                 In = ParameterLocation.Header,
             });
-            options.AddSecurityRequirement(new OpenApiSecurityRequirement {
-                {
-                    new OpenApiSecurityScheme {
-                        Reference = new OpenApiReference {
-                            Type = ReferenceType.SecurityScheme,
-                            Id = "Bearer"
-                        }
-                    },
-                    new string[] {}
-                }
+            options.AddSecurityRequirement(document => new OpenApiSecurityRequirement
+            {
+                [new OpenApiSecuritySchemeReference("Bearer", document)] = []
             });
         });
 

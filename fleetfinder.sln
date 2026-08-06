@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "fleetfinder.service.main", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "fleetfinder.service.main.domain", "fleetfinder.service.main.domain\fleetfinder.service.main.domain.csproj", "{0E290278-3A56-4501-8BFD-B48AC1DE1BBC}"
 EndProject
-Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "fleetfinder.web.spa", "fleetfinder.web.spa\fleetfinder.web.spa.esproj", "{F22E4F51-7EA0-4986-8F1B-A78BF1245C0B}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "fleetfinder.service.main.application", "fleetfinder.service.main.application\fleetfinder.service.main.application.csproj", "{C3F37CBD-F5FD-48E9-BF15-A0ED941AD68F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "fleetfinder.service.main.infrastructure", "fleetfinder.service.main.infrastructure\fleetfinder.service.main.infrastructure.csproj", "{428CA67D-B2E4-4FEA-B098-9A5C0D3F70D5}"
@@ -31,11 +29,6 @@ Global
 		{0E290278-3A56-4501-8BFD-B48AC1DE1BBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E290278-3A56-4501-8BFD-B48AC1DE1BBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E290278-3A56-4501-8BFD-B48AC1DE1BBC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F22E4F51-7EA0-4986-8F1B-A78BF1245C0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F22E4F51-7EA0-4986-8F1B-A78BF1245C0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F22E4F51-7EA0-4986-8F1B-A78BF1245C0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F22E4F51-7EA0-4986-8F1B-A78BF1245C0B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F22E4F51-7EA0-4986-8F1B-A78BF1245C0B}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{C3F37CBD-F5FD-48E9-BF15-A0ED941AD68F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C3F37CBD-F5FD-48E9-BF15-A0ED941AD68F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3F37CBD-F5FD-48E9-BF15-A0ED941AD68F}.Release|Any CPU.ActiveCfg = Release|Any CPU
