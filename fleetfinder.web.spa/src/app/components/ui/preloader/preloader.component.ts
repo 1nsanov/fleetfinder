@@ -1,9 +1,11 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
 
 @Component({
-  selector: 'app-preloader',
-  templateUrl: './preloader.component.html',
-  styleUrls: ['./preloader.component.scss']
+    selector: 'app-preloader',
+    templateUrl: './preloader.component.html',
+    styleUrls: ['./preloader.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class PreloaderComponent {
   @Input() load: boolean = false;

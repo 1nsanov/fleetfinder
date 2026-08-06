@@ -1,7 +1,8 @@
 <div class="grid-items">
-  <app-grid-item
-    *ngFor="let item of items"
-    [item]="item"
-    [type]="type"
-  />
+  @for (item of items; track item) {
+    <app-grid-item
+      [item]="item"
+      [type]="type"
+      />
+  }
 </div>

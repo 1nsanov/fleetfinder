@@ -1,12 +1,14 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {NotificationService} from "../../../services/notification.service";
 import {NotifyModel} from "../../../models/notify.model";
 import {NotificationTheme} from "../../../models/enums/notification-theme.enum";
 
 @Component({
-  selector: 'app-notification',
-  templateUrl: './notification.component.html',
-  styleUrls: ['./notification.component.scss']
+    selector: 'app-notification',
+    templateUrl: './notification.component.html',
+    styleUrls: ['./notification.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class NotificationComponent implements OnInit{
   notify: NotifyModel | null = null;

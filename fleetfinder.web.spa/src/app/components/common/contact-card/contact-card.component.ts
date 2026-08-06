@@ -1,10 +1,12 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
 import {Contact} from "../../../api/Common/Contact";
 
 @Component({
-  selector: 'app-contact-card',
-  templateUrl: './contact-card.component.html',
-  styleUrls: ['./contact-card.component.scss']
+    selector: 'app-contact-card',
+    templateUrl: './contact-card.component.html',
+    styleUrls: ['./contact-card.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class ContactCardComponent {
   @Input() contact: Contact;

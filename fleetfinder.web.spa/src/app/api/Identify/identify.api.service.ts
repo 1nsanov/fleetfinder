@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {IClaims, ISignInRequest, ISignUpRequest, ITokenResponse} from "./identify.api.models";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {catchError, tap, throwError} from "rxjs";
 import {TokenModel} from "../../models/token.model";

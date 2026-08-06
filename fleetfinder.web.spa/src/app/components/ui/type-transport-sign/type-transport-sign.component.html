@@ -6,11 +6,13 @@
             'passenger' : type === TransportType.Passenger,
             'special' : type === TransportType.Special
            }"
-       (click)="onClick()">
+    (click)="onClick()">
     <img [src]="innerImage" alt="">
   </div>
-  <div *ngIf="hint" class="hint">
-    {{hint}}
-  </div>
+  @if (hint) {
+    <div class="hint">
+      {{hint}}
+    </div>
+  }
 </div>
 

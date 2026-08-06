@@ -1,11 +1,13 @@
-import {Component, EventEmitter, HostListener, Input, OnDestroy, Output} from '@angular/core';
+import {Component, EventEmitter, HostListener, Input, OnDestroy, Output, ChangeDetectionStrategy} from '@angular/core';
 import {TimeoutService} from "../../../services/timeout.service";
 import {ImageViewerService} from "../../../services/image-viewer.service";
 
 @Component({
-  selector: 'app-image-viewer',
-  templateUrl: './image-viewer.component.html',
-  styleUrls: ['./image-viewer.component.scss']
+    selector: 'app-image-viewer',
+    templateUrl: './image-viewer.component.html',
+    styleUrls: ['./image-viewer.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class ImageViewerComponent  implements OnDestroy{
   @Input() image: string;
@@ -29,7 +31,8 @@ export class ImageViewerComponent  implements OnDestroy{
     this.closed.emit();
   }
 
-  @HostListener('document:keydown.escape', ['$event']) async onEscapeKeydown(event: KeyboardEvent) {
+  @HostListener('document:keydown.escape')
+  async onEscapeKeydown() {
     await this.closeModal();
   }
 

@@ -1,9 +1,11 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
 
 @Component({
-  selector: 'app-field-view-item',
-  templateUrl: './field-view-item.component.html',
-  styleUrls: ['./field-view-item.component.scss']
+    selector: 'app-field-view-item',
+    templateUrl: './field-view-item.component.html',
+    styleUrls: ['./field-view-item.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class FieldViewItemComponent {
   @Input() title: string | null;

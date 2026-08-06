@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {TransportType} from "../../models/enums/transport/transport-type.enum";
 import {CargoTransportApiService} from "../../api/CargoTransport/cargo-transport.api.service";
 import {TransportSortParameter} from "../../models/enums/transport/cargo/cargo-transport-sort-parameter.enum";
@@ -19,9 +19,11 @@ import {namesRoute} from "../../data/names-route";
 import {Subscription} from "rxjs";
 
 @Component({
-  selector: 'app-transports-page',
-  templateUrl: './transports-page.component.html',
-  styleUrls: ['./transports-page.component.scss']
+    selector: 'app-transports-page',
+    templateUrl: './transports-page.component.html',
+    styleUrls: ['./transports-page.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class TransportsPageComponent implements OnInit{
   currentTab: TransportType | null = null;

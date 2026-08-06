@@ -1,9 +1,11 @@
-import {Component, HostListener, Input} from '@angular/core';
+import {Component, HostListener, Input, ChangeDetectionStrategy} from '@angular/core';
 
 @Component({
-  selector: 'app-filter-wrapper',
-  templateUrl: './filter-wrapper.component.html',
-  styleUrls: ['./filter-wrapper.component.scss']
+    selector: 'app-filter-wrapper',
+    templateUrl: './filter-wrapper.component.html',
+    styleUrls: ['./filter-wrapper.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class FilterWrapperComponent {
   @Input() count: number = 0;

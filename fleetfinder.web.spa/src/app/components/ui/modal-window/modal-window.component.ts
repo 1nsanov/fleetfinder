@@ -1,10 +1,12 @@
-import {Component, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, HostListener, Input, OnInit, Output, ChangeDetectionStrategy} from '@angular/core';
 import {ModalService} from "../../../services/modal.service";
 
 @Component({
-  selector: 'app-modal-window',
-  templateUrl: './modal-window.component.html',
-  styleUrls: ['./modal-window.component.scss']
+    selector: 'app-modal-window',
+    templateUrl: './modal-window.component.html',
+    styleUrls: ['./modal-window.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class ModalWindowComponent implements OnInit{
   @Input() title: string;
@@ -28,7 +30,8 @@ export class ModalWindowComponent implements OnInit{
     }, 290);
   }
 
-  @HostListener('document:keydown.escape', ['$event']) onEscapeKeydown(event: KeyboardEvent) {
+  @HostListener('document:keydown.escape')
+  onEscapeKeydown() {
     this.closeModal();
   }
 }

@@ -7,16 +7,19 @@ import {
   OnChanges,
   SimpleChanges,
   ElementRef,
-  Renderer2
+  Renderer2,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {DomSanitizer} from "@angular/platform-browser";
 import {InputService} from "../../../services/input.service";
 import {TimeoutService} from "../../../services/timeout.service";
 
 @Component({
-  selector: 'app-input',
-  templateUrl: './input.component.html',
-  styleUrls: ['./input.component.scss']
+    selector: 'app-input',
+    templateUrl: './input.component.html',
+    styleUrls: ['./input.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class InputComponent implements OnInit, OnChanges {
   @Input() value: string;

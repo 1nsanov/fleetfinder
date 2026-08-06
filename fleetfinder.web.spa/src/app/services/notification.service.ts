@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject} from "rxjs";
 import {NotificationTheme} from "../models/enums/notification-theme.enum";
 import {NotifyModel} from "../models/notify.model";
-import {HttpErrorResponse} from "@angular/common/http";
+import { HttpErrorResponse } from "@angular/common/http";
 
 
 

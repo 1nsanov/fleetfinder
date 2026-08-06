@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {
   getCargoBodyKindItems,
   getCargoTransportationKindItems,
@@ -22,7 +22,7 @@ import {CargoType} from "../../models/enums/transport/cargo/cargo-type.enum";
 import {CargoTransportPostRequestDto} from "../../api/CargoTransport/post.models";
 import {CargoTransportApiService} from "../../api/CargoTransport/cargo-transport.api.service";
 import {catchError, throwError} from "rxjs";
-import {HttpErrorResponse} from "@angular/common/http";
+import { HttpErrorResponse } from "@angular/common/http";
 import {namesRoute} from "../../data/names-route";
 import {NotificationService} from "../../services/notification.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -68,9 +68,11 @@ import {SizeForm} from "../../models/interfaces/transport/size-form.model";
 import {PriceModel} from "../../api/Common/Transport/PriceModel";
 
 @Component({
-  selector: 'app-transport-form-page',
-  templateUrl: './transport-form-page.component.html',
-  styleUrls: ['./transport-form-page.component.scss']
+    selector: 'app-transport-form-page',
+    templateUrl: './transport-form-page.component.html',
+    styleUrls: ['./transport-form-page.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class TransportFormPageComponent implements OnInit{
   //#region Consts/Items

@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
 import {
   CargoTransportationKindConst,
   PassengerFacilitiesConst,
@@ -23,9 +23,11 @@ import {
 import {TransportService} from "../../../services/transport.service";
 
 @Component({
-  selector: 'app-grid-item',
-  templateUrl: './grid-item.component.html',
-  styleUrls: ['./grid-item.component.scss']
+    selector: 'app-grid-item',
+    templateUrl: './grid-item.component.html',
+    styleUrls: ['./grid-item.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class GridItemComponent {
   @Input() item: IGridItem;

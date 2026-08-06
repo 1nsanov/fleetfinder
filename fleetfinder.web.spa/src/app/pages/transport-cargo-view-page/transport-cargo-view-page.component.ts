@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Params, Router} from "@angular/router";
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
+import {ActivatedRoute, Router} from "@angular/router";
 import {CargoTransportApiService} from "../../api/CargoTransport/cargo-transport.api.service";
-import {HttpErrorResponse} from "@angular/common/http";
+import { HttpErrorResponse } from "@angular/common/http";
 import {catchError, throwError} from "rxjs";
 import {CargoTransportGetResponse} from "../../api/CargoTransport/get.models";
 import {CargoBodyKindConst,
@@ -14,9 +14,11 @@ import {IdentifyApiService} from "../../api/Identify/identify.api.service";
 import {namesRoute} from "../../data/names-route";
 
 @Component({
-  selector: 'app-transport-cargo-view-page',
-  templateUrl: './transport-cargo-view-page.component.html',
-  styleUrls: ['./transport-cargo-view-page.component.scss']
+    selector: 'app-transport-cargo-view-page',
+    templateUrl: './transport-cargo-view-page.component.html',
+    styleUrls: ['./transport-cargo-view-page.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class TransportCargoViewPageComponent implements OnInit{
   RegionConst = RegionConst;

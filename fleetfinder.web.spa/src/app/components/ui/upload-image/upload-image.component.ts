@@ -1,10 +1,12 @@
-import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, Output, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {NotificationService} from "../../../services/notification.service";
 
 @Component({
-  selector: 'app-upload-image',
-  templateUrl: './upload-image.component.html',
-  styleUrls: ['./upload-image.component.scss']
+    selector: 'app-upload-image',
+    templateUrl: './upload-image.component.html',
+    styleUrls: ['./upload-image.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class UploadImageComponent {
   @Input() disabled: boolean = false;

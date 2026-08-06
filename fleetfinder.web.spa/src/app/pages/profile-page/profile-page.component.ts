@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {IdentifyApiService} from "../../api/Identify/identify.api.service";
 import {UserProfileApiService} from "../../api/UserProfile/user-profile.api.service";
 import {ImageApiService} from "../../api/Image/image.api.service";
@@ -12,16 +12,18 @@ import {ImagePostRequest} from "../../api/Image/post.models";
 import {StorageFolder} from "../../models/enums/common/storage-folder.enum";
 import {UserProfilePutRequest} from "../../api/UserProfile/put.model";
 import {catchError, throwError} from "rxjs";
-import {HttpErrorResponse} from "@angular/common/http";
+import { HttpErrorResponse } from "@angular/common/http";
 import {NotificationService} from "../../services/notification.service";
 import {ImageDeleteRequest} from "../../api/Image/delete.models";
 import {ChangePasswordForm} from "../../models/interfaces/user/profile/change-password-form.model";
 import {UserProfilePutPassword} from "../../api/UserProfile/put-password.model";
 
 @Component({
-  selector: 'app-profile-page',
-  templateUrl: './profile-page.component.html',
-  styleUrls: ['./profile-page.component.scss']
+    selector: 'app-profile-page',
+    templateUrl: './profile-page.component.html',
+    styleUrls: ['./profile-page.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class ProfilePageComponent implements OnInit{
   disableForm: boolean = true;

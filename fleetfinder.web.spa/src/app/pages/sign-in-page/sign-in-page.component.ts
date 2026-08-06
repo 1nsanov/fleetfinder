@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {IdentifyApiService} from "../../api/Identify/identify.api.service";
 import {ISignInRequest} from "../../api/Identify/identify.api.models";
 import {Router} from "@angular/router";
@@ -9,9 +9,11 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {TimeoutService} from "../../services/timeout.service";
 
 @Component({
-  selector: 'app-sign-in-page',
-  templateUrl: './sign-in-page.component.html',
-  styleUrls: ['./sign-in-page.component.scss']
+    selector: 'app-sign-in-page',
+    templateUrl: './sign-in-page.component.html',
+    styleUrls: ['./sign-in-page.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class SignInPageComponent implements OnInit{
   form: FormGroup<SignInModel>;

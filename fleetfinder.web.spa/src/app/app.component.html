@@ -4,7 +4,9 @@
 
 <app-layout-base>
 
-  <router-outlet *ngIf="!(loaderService.loading$ | async)">
-  </router-outlet>
+  @if (!(loaderService.loading$ | async)) {
+    <router-outlet>
+    </router-outlet>
+  }
 
 </app-layout-base>

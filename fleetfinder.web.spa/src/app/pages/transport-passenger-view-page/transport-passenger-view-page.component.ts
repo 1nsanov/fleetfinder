@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {IdentifyApiService} from "../../api/Identify/identify.api.service";
 import {TransportService} from "../../services/transport.service";
 import {catchError, throwError} from "rxjs";
-import {HttpErrorResponse} from "@angular/common/http";
+import { HttpErrorResponse } from "@angular/common/http";
 import {namesRoute} from "../../data/names-route";
 import {ExperienceWorkConst, PaymentOrderConst, PaymentMethodConst, RegionConst, PassengerRentalDurationConst, PassengerFacilitiesConst, PassengerOptionConst, PassengerTransportationKindConst } from 'src/app/data/enums.data';
 import { TransportType } from 'src/app/models/enums/transport/transport-type.enum';
@@ -17,9 +17,11 @@ import {PassengerOption} from "../../models/enums/transport/passenger/passenger-
 import {PassengerTransportationKind} from "../../models/enums/transport/passenger/passenger-transportation-kind.enum";
 
 @Component({
-  selector: 'app-transport-passenger-view-page',
-  templateUrl: './transport-passenger-view-page.component.html',
-  styleUrls: ['./transport-passenger-view-page.component.scss']
+    selector: 'app-transport-passenger-view-page',
+    templateUrl: './transport-passenger-view-page.component.html',
+    styleUrls: ['./transport-passenger-view-page.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class TransportPassengerViewPageComponent {
   RegionConst = RegionConst;

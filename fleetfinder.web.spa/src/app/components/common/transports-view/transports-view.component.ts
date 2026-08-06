@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {DropdownItemModel} from "../../../models/dropdown-item.model";
 import {
   getCargoTypeItems,
@@ -28,9 +28,11 @@ interface ValueDropdowns {
 }
 
 @Component({
-  selector: 'app-transports-view',
-  templateUrl: './transports-view.component.html',
-  styleUrls: ['./transports-view.component.scss']
+    selector: 'app-transports-view',
+    templateUrl: './transports-view.component.html',
+    styleUrls: ['./transports-view.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class TransportsViewComponent implements OnInit{
   @Input() type: TransportType;
