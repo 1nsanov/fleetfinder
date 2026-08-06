@@ -89,10 +89,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "fleetfinder.web.spa:build:production"
+              "buildTarget": "fleetfinder.web.spa:build:production"
             },
             "development": {
-              "browserTarget": "fleetfinder.web.spa:build:development"
+              "buildTarget": "fleetfinder.web.spa:build:development"
             }
           },
           "defaultConfiguration": "development",
@@ -103,7 +103,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "fleetfinder.web.spa:build"
+            "buildTarget": "fleetfinder.web.spa:build"
           }
         },
         "test": {
