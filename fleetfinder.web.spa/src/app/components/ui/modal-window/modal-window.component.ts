@@ -29,7 +29,8 @@ export class ModalWindowComponent implements OnInit{
     }, 290);
   }
 
-  @HostListener('document:keydown.escape', ['$event']) onEscapeKeydown(event: KeyboardEvent) {
+  @HostListener('document:keydown.escape')
+  onEscapeKeydown() {
     this.closeModal();
   }
 }

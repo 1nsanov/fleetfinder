@@ -30,7 +30,8 @@ export class ImageViewerComponent  implements OnDestroy{
     this.closed.emit();
   }
 
-  @HostListener('document:keydown.escape', ['$event']) async onEscapeKeydown(event: KeyboardEvent) {
+  @HostListener('document:keydown.escape')
+  async onEscapeKeydown() {
     await this.closeModal();
   }
 
