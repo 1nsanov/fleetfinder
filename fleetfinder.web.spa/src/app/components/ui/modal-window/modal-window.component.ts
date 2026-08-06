@@ -2,9 +2,10 @@ import {Component, EventEmitter, HostListener, Input, OnInit, Output} from '@ang
 import {ModalService} from "../../../services/modal.service";
 
 @Component({
-  selector: 'app-modal-window',
-  templateUrl: './modal-window.component.html',
-  styleUrls: ['./modal-window.component.scss']
+    selector: 'app-modal-window',
+    templateUrl: './modal-window.component.html',
+    styleUrls: ['./modal-window.component.scss'],
+    standalone: false
 })
 export class ModalWindowComponent implements OnInit{
   @Input() title: string;

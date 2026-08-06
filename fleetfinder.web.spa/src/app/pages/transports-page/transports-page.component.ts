@@ -19,9 +19,10 @@ import {namesRoute} from "../../data/names-route";
 import {Subscription} from "rxjs";
 
 @Component({
-  selector: 'app-transports-page',
-  templateUrl: './transports-page.component.html',
-  styleUrls: ['./transports-page.component.scss']
+    selector: 'app-transports-page',
+    templateUrl: './transports-page.component.html',
+    styleUrls: ['./transports-page.component.scss'],
+    standalone: false
 })
 export class TransportsPageComponent implements OnInit{
   currentTab: TransportType | null = null;

@@ -28,9 +28,10 @@ interface ValueDropdowns {
 }
 
 @Component({
-  selector: 'app-transports-view',
-  templateUrl: './transports-view.component.html',
-  styleUrls: ['./transports-view.component.scss']
+    selector: 'app-transports-view',
+    templateUrl: './transports-view.component.html',
+    styleUrls: ['./transports-view.component.scss'],
+    standalone: false
 })
 export class TransportsViewComponent implements OnInit{
   @Input() type: TransportType;

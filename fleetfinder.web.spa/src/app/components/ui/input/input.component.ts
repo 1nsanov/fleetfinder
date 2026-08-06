@@ -14,9 +14,10 @@ import {InputService} from "../../../services/input.service";
 import {TimeoutService} from "../../../services/timeout.service";
 
 @Component({
-  selector: 'app-input',
-  templateUrl: './input.component.html',
-  styleUrls: ['./input.component.scss']
+    selector: 'app-input',
+    templateUrl: './input.component.html',
+    styleUrls: ['./input.component.scss'],
+    standalone: false
 })
 export class InputComponent implements OnInit, OnChanges {
   @Input() value: string;

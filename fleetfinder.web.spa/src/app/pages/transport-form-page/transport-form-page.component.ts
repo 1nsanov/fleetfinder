@@ -68,9 +68,10 @@ import {SizeForm} from "../../models/interfaces/transport/size-form.model";
 import {PriceModel} from "../../api/Common/Transport/PriceModel";
 
 @Component({
-  selector: 'app-transport-form-page',
-  templateUrl: './transport-form-page.component.html',
-  styleUrls: ['./transport-form-page.component.scss']
+    selector: 'app-transport-form-page',
+    templateUrl: './transport-form-page.component.html',
+    styleUrls: ['./transport-form-page.component.scss'],
+    standalone: false
 })
 export class TransportFormPageComponent implements OnInit{
   //#region Consts/Items

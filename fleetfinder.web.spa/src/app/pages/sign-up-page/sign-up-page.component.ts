@@ -11,9 +11,10 @@ import {TimeoutService} from "../../services/timeout.service";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
-  selector: 'app-sign-up-page',
-  templateUrl: './sign-up-page.component.html',
-  styleUrls: ['./sign-up-page.component.scss']
+    selector: 'app-sign-up-page',
+    templateUrl: './sign-up-page.component.html',
+    styleUrls: ['./sign-up-page.component.scss'],
+    standalone: false
 })
 export class SignUpPageComponent implements OnInit{
   step: number = 1;

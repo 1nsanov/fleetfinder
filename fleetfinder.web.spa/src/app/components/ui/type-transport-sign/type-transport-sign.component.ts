@@ -5,9 +5,10 @@ import {passengerItems} from "../../../data/transport/passenger-items";
 import {specialItems} from "../../../data/transport/special-items";
 
 @Component({
-  selector: 'app-type-transport-sign',
-  templateUrl: './type-transport-sign.component.html',
-  styleUrls: ['./type-transport-sign.component.scss']
+    selector: 'app-type-transport-sign',
+    templateUrl: './type-transport-sign.component.html',
+    styleUrls: ['./type-transport-sign.component.scss'],
+    standalone: false
 })
 export class TypeTransportSignComponent {
   @Input() image : string | null = "../../../assets/icons/icon-square-plus.svg";

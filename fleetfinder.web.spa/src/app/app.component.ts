@@ -3,9 +3,10 @@ import {GlobalLoaderService} from "./services/global-loader.service";
 import {IdentifyApiService} from "./api/Identify/identify.api.service";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.css'],
+    standalone: false
 })
 export class AppComponent {
   constructor(public loaderService: GlobalLoaderService,

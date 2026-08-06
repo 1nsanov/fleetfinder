@@ -19,9 +19,10 @@ import {ChangePasswordForm} from "../../models/interfaces/user/profile/change-pa
 import {UserProfilePutPassword} from "../../api/UserProfile/put-password.model";
 
 @Component({
-  selector: 'app-profile-page',
-  templateUrl: './profile-page.component.html',
-  styleUrls: ['./profile-page.component.scss']
+    selector: 'app-profile-page',
+    templateUrl: './profile-page.component.html',
+    styleUrls: ['./profile-page.component.scss'],
+    standalone: false
 })
 export class ProfilePageComponent implements OnInit{
   disableForm: boolean = true;

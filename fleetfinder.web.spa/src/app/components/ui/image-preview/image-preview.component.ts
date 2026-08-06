@@ -2,9 +2,10 @@ import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {ImageViewerService} from "../../../services/image-viewer.service";
 
 @Component({
-  selector: 'app-image-preview',
-  templateUrl: './image-preview.component.html',
-  styleUrls: ['./image-preview.component.scss']
+    selector: 'app-image-preview',
+    templateUrl: './image-preview.component.html',
+    styleUrls: ['./image-preview.component.scss'],
+    standalone: false
 })
 export class ImagePreviewComponent implements OnChanges{
   @Input() previewFile: File | null = null;

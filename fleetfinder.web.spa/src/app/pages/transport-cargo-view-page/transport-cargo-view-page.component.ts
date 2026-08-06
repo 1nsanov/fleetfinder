@@ -14,9 +14,10 @@ import {IdentifyApiService} from "../../api/Identify/identify.api.service";
 import {namesRoute} from "../../data/names-route";
 
 @Component({
-  selector: 'app-transport-cargo-view-page',
-  templateUrl: './transport-cargo-view-page.component.html',
-  styleUrls: ['./transport-cargo-view-page.component.scss']
+    selector: 'app-transport-cargo-view-page',
+    templateUrl: './transport-cargo-view-page.component.html',
+    styleUrls: ['./transport-cargo-view-page.component.scss'],
+    standalone: false
 })
 export class TransportCargoViewPageComponent implements OnInit{
   RegionConst = RegionConst;

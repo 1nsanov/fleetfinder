@@ -13,9 +13,10 @@ import {catchError, throwError} from "rxjs";
 import { HttpErrorResponse } from "@angular/common/http";
 
 @Component({
-  selector: 'app-transport-special-view-page',
-  templateUrl: './transport-special-view-page.component.html',
-  styleUrls: ['./transport-special-view-page.component.scss']
+    selector: 'app-transport-special-view-page',
+    templateUrl: './transport-special-view-page.component.html',
+    styleUrls: ['./transport-special-view-page.component.scss'],
+    standalone: false
 })
 export class TransportSpecialViewPageComponent {
   RegionConst = RegionConst;

@@ -3,9 +3,10 @@ import {IGridItem} from "../../../models/interfaces/grid-item.interface";
 import {TransportType} from "../../../models/enums/transport/transport-type.enum";
 
 @Component({
-  selector: 'app-grid-items',
-  templateUrl: './grid-items.component.html',
-  styleUrls: ['./grid-items.component.scss']
+    selector: 'app-grid-items',
+    templateUrl: './grid-items.component.html',
+    styleUrls: ['./grid-items.component.scss'],
+    standalone: false
 })
 export class GridItemsComponent {
   @Input() items: IGridItem[] | null;

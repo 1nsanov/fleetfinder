@@ -6,9 +6,10 @@ import {namesRoute} from "../../data/names-route";
 import {IdentifyApiService} from "../../api/Identify/identify.api.service";
 
 @Component({
-  selector: 'app-layout-header-nav',
-  templateUrl: './layout-header-nav.component.html',
-  styleUrls: ['./layout-header-nav.component.scss']
+    selector: 'app-layout-header-nav',
+    templateUrl: './layout-header-nav.component.html',
+    styleUrls: ['./layout-header-nav.component.scss'],
+    standalone: false
 })
 export class LayoutHeaderNavComponent implements OnInit, OnDestroy{
   constructor(private router: Router,

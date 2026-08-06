@@ -23,9 +23,10 @@ import {
 import {TransportService} from "../../../services/transport.service";
 
 @Component({
-  selector: 'app-grid-item',
-  templateUrl: './grid-item.component.html',
-  styleUrls: ['./grid-item.component.scss']
+    selector: 'app-grid-item',
+    templateUrl: './grid-item.component.html',
+    styleUrls: ['./grid-item.component.scss'],
+    standalone: false
 })
 export class GridItemComponent {
   @Input() item: IGridItem;

@@ -3,9 +3,10 @@ import {TimeoutService} from "../../../services/timeout.service";
 import {ImageViewerService} from "../../../services/image-viewer.service";
 
 @Component({
-  selector: 'app-image-viewer',
-  templateUrl: './image-viewer.component.html',
-  styleUrls: ['./image-viewer.component.scss']
+    selector: 'app-image-viewer',
+    templateUrl: './image-viewer.component.html',
+    styleUrls: ['./image-viewer.component.scss'],
+    standalone: false
 })
 export class ImageViewerComponent  implements OnDestroy{
   @Input() image: string;

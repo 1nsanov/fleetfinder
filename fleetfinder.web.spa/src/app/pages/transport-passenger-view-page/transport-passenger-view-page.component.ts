@@ -17,9 +17,10 @@ import {PassengerOption} from "../../models/enums/transport/passenger/passenger-
 import {PassengerTransportationKind} from "../../models/enums/transport/passenger/passenger-transportation-kind.enum";
 
 @Component({
-  selector: 'app-transport-passenger-view-page',
-  templateUrl: './transport-passenger-view-page.component.html',
-  styleUrls: ['./transport-passenger-view-page.component.scss']
+    selector: 'app-transport-passenger-view-page',
+    templateUrl: './transport-passenger-view-page.component.html',
+    styleUrls: ['./transport-passenger-view-page.component.scss'],
+    standalone: false
 })
 export class TransportPassengerViewPageComponent {
   RegionConst = RegionConst;
