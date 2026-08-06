@@ -1,6 +1,6 @@
-import {Injectable, Query} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {environment} from "../../../environments/environment";
-import {HttpClient, HttpParams} from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import {ResponseIdModel} from "../Common/ResponseIdModel";
 import {CargoTransportPostRequestDto} from "./post.models";
 import {CargoTransportGetListRequestDto, CargoTransportGetListResponseDto} from "./get-list.models";

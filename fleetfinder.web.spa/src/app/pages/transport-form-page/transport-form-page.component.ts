@@ -22,7 +22,7 @@ import {CargoType} from "../../models/enums/transport/cargo/cargo-type.enum";
 import {CargoTransportPostRequestDto} from "../../api/CargoTransport/post.models";
 import {CargoTransportApiService} from "../../api/CargoTransport/cargo-transport.api.service";
 import {catchError, throwError} from "rxjs";
-import {HttpErrorResponse} from "@angular/common/http";
+import { HttpErrorResponse } from "@angular/common/http";
 import {namesRoute} from "../../data/names-route";
 import {NotificationService} from "../../services/notification.service";
 import {ActivatedRoute, Router} from "@angular/router";

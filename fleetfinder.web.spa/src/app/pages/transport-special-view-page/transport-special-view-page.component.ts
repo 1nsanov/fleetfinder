@@ -10,7 +10,7 @@ import {specialItems} from "../../data/transport/special-items";
 import {SpecialTransportApiService} from "../../api/SpecialTransport/special-transport.api.service";
 import {SpecialTransportGetResponse} from "../../api/SpecialTransport/get.models";
 import {catchError, throwError} from "rxjs";
-import {HttpErrorResponse} from "@angular/common/http";
+import { HttpErrorResponse } from "@angular/common/http";
 
 @Component({
   selector: 'app-transport-special-view-page',

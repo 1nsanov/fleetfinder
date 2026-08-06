@@ -5,7 +5,7 @@ import {ISignUpRequest} from "../../api/Identify/identify.api.models";
 import {NotificationService} from "../../services/notification.service";
 import {Router} from "@angular/router";
 import {namesRoute} from "../../data/names-route";
-import {HttpErrorResponse} from "@angular/common/http";
+import { HttpErrorResponse } from "@angular/common/http";
 import {catchError, throwError} from "rxjs";
 import {TimeoutService} from "../../services/timeout.service";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";

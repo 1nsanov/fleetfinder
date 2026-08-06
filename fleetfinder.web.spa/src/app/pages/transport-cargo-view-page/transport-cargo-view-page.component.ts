@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Params, Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {CargoTransportApiService} from "../../api/CargoTransport/cargo-transport.api.service";
-import {HttpErrorResponse} from "@angular/common/http";
+import { HttpErrorResponse } from "@angular/common/http";
 import {catchError, throwError} from "rxjs";
 import {CargoTransportGetResponse} from "../../api/CargoTransport/get.models";
 import {CargoBodyKindConst,

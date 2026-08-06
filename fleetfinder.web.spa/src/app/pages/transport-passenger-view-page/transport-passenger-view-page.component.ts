@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {IdentifyApiService} from "../../api/Identify/identify.api.service";
 import {TransportService} from "../../services/transport.service";
 import {catchError, throwError} from "rxjs";
-import {HttpErrorResponse} from "@angular/common/http";
+import { HttpErrorResponse } from "@angular/common/http";
 import {namesRoute} from "../../data/names-route";
 import {ExperienceWorkConst, PaymentOrderConst, PaymentMethodConst, RegionConst, PassengerRentalDurationConst, PassengerFacilitiesConst, PassengerOptionConst, PassengerTransportationKindConst } from 'src/app/data/enums.data';
 import { TransportType } from 'src/app/models/enums/transport/transport-type.enum';

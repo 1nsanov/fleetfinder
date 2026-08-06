@@ -12,7 +12,7 @@ import {ImagePostRequest} from "../../api/Image/post.models";
 import {StorageFolder} from "../../models/enums/common/storage-folder.enum";
 import {UserProfilePutRequest} from "../../api/UserProfile/put.model";
 import {catchError, throwError} from "rxjs";
-import {HttpErrorResponse} from "@angular/common/http";
+import { HttpErrorResponse } from "@angular/common/http";
 import {NotificationService} from "../../services/notification.service";
 import {ImageDeleteRequest} from "../../api/Image/delete.models";
 import {ChangePasswordForm} from "../../models/interfaces/user/profile/change-password-form.model";
