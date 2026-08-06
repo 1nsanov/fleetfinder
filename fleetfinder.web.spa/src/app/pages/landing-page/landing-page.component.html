@@ -45,40 +45,46 @@
   <figure>
     <h3>Грузовой транспорт</h3>
     <section class="cargo">
-      <div *ngFor="let item of cargo"
-           class="box-transport"
-      >
-        <div class="image">
-          <img [src]="'../../../assets/icons/transport/cargo/icon-cargo-' + item.Icon + '.svg'" alt="">
+      @for (item of cargo; track item) {
+        <div
+          class="box-transport"
+          >
+          <div class="image">
+            <img [src]="'../../../assets/icons/transport/cargo/icon-cargo-' + item.Icon + '.svg'" alt="">
+          </div>
+          <p>{{item.Text}}</p>
         </div>
-        <p>{{item.Text}}</p>
-      </div>
+      }
     </section>
   </figure>
   <figure>
     <h3>Пассажирский транспорт</h3>
     <section class="passenger">
-      <div *ngFor="let item of passenger"
-           class="box-transport"
-      >
-        <div class="image">
-          <img [src]="'../../../assets/icons/transport/passenger/icon-passenger-' + item.Icon + '.svg'" alt="">
+      @for (item of passenger; track item) {
+        <div
+          class="box-transport"
+          >
+          <div class="image">
+            <img [src]="'../../../assets/icons/transport/passenger/icon-passenger-' + item.Icon + '.svg'" alt="">
+          </div>
+          <p>{{item.Text}}</p>
         </div>
-        <p>{{item.Text}}</p>
-      </div>
+      }
     </section>
   </figure>
   <figure>
     <h3>Спецтехника</h3>
     <section class="special">
-      <div *ngFor="let item of special"
-           class="box-transport"
-      >
-        <div class="image">
-          <img [src]="'../../../assets/icons/transport/special/icon-' + item.Icon + '.png'" alt="">
+      @for (item of special; track item) {
+        <div
+          class="box-transport"
+          >
+          <div class="image">
+            <img [src]="'../../../assets/icons/transport/special/icon-' + item.Icon + '.png'" alt="">
+          </div>
+          <p>{{item.Text}}</p>
         </div>
-        <p>{{item.Text}}</p>
-      </div>
+      }
     </section>
   </figure>
 </article>

@@ -12,12 +12,18 @@
           'size-default' : size === 'default',
           'size-big' : size === 'big'
         }"
-        (click)="onClick($event)">
-  <div class="content" *ngIf="!isLoad">
-    <img *ngIf="iconPath" [src]="iconPath" alt="">
-    <ng-content></ng-content>
-  </div>
-  <div class="content" *ngIf="isLoad">
-    <img [src]="'../../../../assets/icons/loading-loop-' + colorLoading + '.svg'" alt="">
-  </div>
+  (click)="onClick($event)">
+  @if (!isLoad) {
+    <div class="content">
+      @if (iconPath) {
+        <img [src]="iconPath" alt="">
+      }
+      <ng-content></ng-content>
+    </div>
+  }
+  @if (isLoad) {
+    <div class="content">
+      <img [src]="'../../../../assets/icons/loading-loop-' + colorLoading + '.svg'" alt="">
+    </div>
+  }
 </button>
