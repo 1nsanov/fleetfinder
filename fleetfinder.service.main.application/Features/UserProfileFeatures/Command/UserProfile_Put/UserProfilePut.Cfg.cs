@@ -48,6 +48,19 @@ public static partial class UserProfilePut
     [Mapper(PropertyNameMappingStrategy = PropertyNameMappingStrategy.CaseInsensitive)]
     partial class Mapping : IMapCodeGen<RequestDto, User>
     {
+        [MapperIgnoreTarget(nameof(User.Login))]
+        [MapperIgnoreTarget(nameof(User.Password))]
+        [MapperIgnoreTarget(nameof(User.RefreshToken))]
+        [MapperIgnoreTarget(nameof(User.CargoTransports))]
+        [MapperIgnoreTarget(nameof(User.PassengerTransports))]
+        [MapperIgnoreTarget(nameof(User.SpecialTransports))]
+        [MapperIgnoreTarget(nameof(User.CargoOrders))]
+        [MapperIgnoreTarget(nameof(User.PassengerOrders))]
+        [MapperIgnoreTarget(nameof(User.SpecialOrders))]
+        [MapperIgnoreTarget(nameof(User.Id))]
+        [MapperIgnoreTarget(nameof(User.CreateDate))]
+        [MapperIgnoreTarget(nameof(User.UpdateDate))]
+        [MapperIgnoreTarget(nameof(User.State))]
         public partial User Map(RequestDto source);
     }
 }

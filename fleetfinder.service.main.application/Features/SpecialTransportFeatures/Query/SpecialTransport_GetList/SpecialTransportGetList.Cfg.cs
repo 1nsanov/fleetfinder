@@ -19,20 +19,34 @@ public static partial class SpecialTransportGetList
     }
 
     #endregion
-    
+
     [Mapper(PropertyNameMappingStrategy = PropertyNameMappingStrategy.CaseInsensitive)]
     partial class Mapping : IMapCodeGen<List<SpecialTransport>, List<SpecialTransportDto>>
     {
         public partial List<SpecialTransportDto> Map(List<SpecialTransport> source);
 
         [MapProperty(nameof(SpecialTransport.User), nameof(SpecialTransportDto.Contact))]
+        [MapperIgnoreSource(nameof(SpecialTransport.Brand))]
+        [MapperIgnoreSource(nameof(SpecialTransport.YearIssue))]
+        [MapperIgnoreSource(nameof(SpecialTransport.ExperienceWork))]
+        [MapperIgnoreSource(nameof(SpecialTransport.PaymentMethod))]
+        [MapperIgnoreSource(nameof(SpecialTransport.PaymentOrder))]
+        [MapperIgnoreSource(nameof(SpecialTransport.UserId))]
+        [MapperIgnoreSource(nameof(SpecialTransport.CreateDate))]
+        [MapperIgnoreSource(nameof(SpecialTransport.UpdateDate))]
+        [MapperIgnoreSource(nameof(SpecialTransport.State))]
         public partial SpecialTransportDto Map(SpecialTransport source);
 
-        private List<string> Map(List<SpecialTransportImage> source) 
+        private List<string> Map(List<SpecialTransportImage> source)
             => source.Select(x => x.Url).ToList();
-        
+
         private ContactDto Map(User source)
-            => new( !string.IsNullOrEmpty(source.Organization) ? source.Organization : $"{source.FullName.First} {source.FullName.Second} {source.FullName.Surname}", source.Contact.PhoneViber,
-                source.Contact.PhoneTelegram, source.Contact.PhoneWhatsapp, source.Contact.WorkingMode, source.ImageUrl);
+            => new(
+                !string.IsNullOrEmpty(source.Organization)
+                    ? source.Organization
+                    : $"{source.FullName.First} {source.FullName.Second} {source.FullName.Surname}",
+                source.Contact.PhoneViber,
+                source.Contact.PhoneTelegram, source.Contact.PhoneWhatsapp, source.Contact.WorkingMode,
+                source.ImageUrl);
     }
 }

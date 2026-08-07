@@ -8,6 +8,18 @@ public static partial class UserProfileGet
     [Mapper(PropertyNameMappingStrategy = PropertyNameMappingStrategy.CaseInsensitive)]
     partial class Mapping : IMapCodeGen<User, ResponseDto>
     {
+        [MapperIgnoreSource(nameof(User.Password))]
+        [MapperIgnoreSource(nameof(User.RefreshToken))]
+        [MapperIgnoreSource(nameof(User.CargoTransports))]
+        [MapperIgnoreSource(nameof(User.PassengerTransports))]
+        [MapperIgnoreSource(nameof(User.SpecialTransports))]
+        [MapperIgnoreSource(nameof(User.CargoOrders))]
+        [MapperIgnoreSource(nameof(User.PassengerOrders))]
+        [MapperIgnoreSource(nameof(User.SpecialOrders))]
+        [MapperIgnoreSource(nameof(User.Id))]
+        [MapperIgnoreSource(nameof(User.CreateDate))]
+        [MapperIgnoreSource(nameof(User.UpdateDate))]
+        [MapperIgnoreSource(nameof(User.State))]
         public partial ResponseDto Map(User source);
     }
 }
