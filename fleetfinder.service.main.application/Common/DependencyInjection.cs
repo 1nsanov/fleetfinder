@@ -15,26 +15,31 @@ namespace fleetfinder.service.main.application.Common;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection RegisterApplicationLayer(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection RegisterApplicationLayer(this IServiceCollection services,
+        IConfiguration configuration)
     {
         services.AddMediatR(conf => conf.RegisterServicesFromAssemblyContaining(typeof(DependencyInjection)));
 
         #region Mapper
-        
+
         services.AddScoped<IMapper, MapperService>();
 
         services.Scan(scan => scan
             .FromAssembliesOf(typeof(IMapCodeGen<,>))
-            .AddClasses(classes => classes.AssignableTo(typeof(IMapCodeGen<,>)))
+            .AddClasses(
+                classes => classes.AssignableTo(typeof(IMapCodeGen<,>)),
+                publicOnly: false)
             .AsImplementedInterfaces()
             .WithScopedLifetime());
-        
+
         services.Scan(scan => scan
             .FromAssembliesOf(typeof(IMapToExistCodeGen<,>))
-            .AddClasses(classes => classes.AssignableTo(typeof(IMapToExistCodeGen<,>)))
+            .AddClasses(
+                classes => classes.AssignableTo(typeof(IMapCodeGen<,>)),
+                publicOnly: false)
             .AsImplementedInterfaces()
             .WithScopedLifetime());
-        
+
         #endregion
 
         services.AddValidatorsFromAssemblyContaining(typeof(DependencyInjection), includeInternalTypes: true);
@@ -90,11 +95,12 @@ public static class DependencyInjection
                     ValidAudience = configuration["Jwt:Audience"],
                     ClockSkew = TimeSpan.Zero,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-                        configuration["Jwt:Key"]))
+                        configuration["Jwt:Key"] ?? string.Empty))
                 };
             });
+
         #endregion
-        
+
         return services;
     }
 }

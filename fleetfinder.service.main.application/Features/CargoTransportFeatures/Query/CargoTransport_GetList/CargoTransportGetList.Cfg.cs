@@ -26,6 +26,16 @@ public static partial class CargoTransportGetList
         public partial List<CargoTransportDto> Map(List<CargoTransport> source);
 
         [MapProperty(nameof(CargoTransport.User), nameof(CargoTransportDto.Contact))]
+        [MapperIgnoreSource(nameof(CargoTransport.Body))]
+        [MapperIgnoreSource(nameof(CargoTransport.Brand))]
+        [MapperIgnoreSource(nameof(CargoTransport.YearIssue))]
+        [MapperIgnoreSource(nameof(CargoTransport.ExperienceWork))]
+        [MapperIgnoreSource(nameof(CargoTransport.PaymentMethod))]
+        [MapperIgnoreSource(nameof(CargoTransport.PaymentOrder))]
+        [MapperIgnoreSource(nameof(CargoTransport.UserId))]
+        [MapperIgnoreSource(nameof(CargoTransport.CreateDate))]
+        [MapperIgnoreSource(nameof(CargoTransport.UpdateDate))]
+        [MapperIgnoreSource(nameof(CargoTransport.State))]
         public partial CargoTransportDto Map(CargoTransport source);
 
         private List<string> Map(List<CargoTransportImage> source) 

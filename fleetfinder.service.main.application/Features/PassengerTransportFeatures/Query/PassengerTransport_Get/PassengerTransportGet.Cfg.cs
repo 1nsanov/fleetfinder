@@ -11,6 +11,8 @@ public static partial class PassengerTransportGet
     partial class Mapping : IMapCodeGen<PassengerTransport, ResponseDto>
     {
         [MapProperty(nameof(PassengerTransport.User), nameof(ResponseDto.Contact))]
+        [MapperIgnoreSource(nameof(PassengerTransport.UpdateDate))]
+        [MapperIgnoreSource(nameof(PassengerTransport.State))]
         public partial ResponseDto Map(PassengerTransport source);
 
         private List<string> Map(List<PassengerTransportImage> source) 

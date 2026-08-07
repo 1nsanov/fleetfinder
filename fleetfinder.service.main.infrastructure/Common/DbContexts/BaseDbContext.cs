@@ -1,9 +1,4 @@
 ﻿using fleetfinder.service.main.domain.Enums.Common;
-using fleetfinder.service.main.domain.Enums.Order.Cargo;
-using fleetfinder.service.main.domain.Enums.Transport;
-using fleetfinder.service.main.domain.Enums.Transport.Cargo;
-using fleetfinder.service.main.domain.Enums.Transport.Passenger;
-using fleetfinder.service.main.domain.Enums.Transport.Special;
 using fleetfinder.service.main.domain.Order.Cargo;
 using fleetfinder.service.main.domain.Order.Passenger;
 using fleetfinder.service.main.domain.Order.Special;
@@ -19,8 +14,7 @@ public abstract class BaseDbContext : DbContext
     protected BaseDbContext(DbContextOptions options)
         : base(options)
     {
-        this.Filter<EntityBase>(
-            q => q.Where(eb => eb.State == State.Actual));
+        this.Filter<EntityBase>(q => q.Where(eb => eb.State == State.Actual));
     }
 
     #region DbSets
@@ -45,58 +39,9 @@ public abstract class BaseDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
         EntityBase_Builder(modelBuilder);
-        Enums_Builder(modelBuilder);
         User_Builder(modelBuilder);
         ImagesAutoInclude_Builder(modelBuilder);
     }
-
-    #region Enums
-
-    // Для работы Enum-ов необходимо добавление в конструктор и метод
-    // Имена Enum-ов должны быть уникальны
-    static BaseDbContext()
-    {
-        NpgsqlConnection.GlobalTypeMapper.MapEnum<State>();
-        NpgsqlConnection.GlobalTypeMapper.MapEnum<Region>();
-        NpgsqlConnection.GlobalTypeMapper.MapEnum<ExperienceWork>();
-        NpgsqlConnection.GlobalTypeMapper.MapEnum<PaymentMethod>();
-        NpgsqlConnection.GlobalTypeMapper.MapEnum<PaymentOrder>();
-        NpgsqlConnection.GlobalTypeMapper.MapEnum<CargoType>();
-        NpgsqlConnection.GlobalTypeMapper.MapEnum<CargoBodyKind>();
-        NpgsqlConnection.GlobalTypeMapper.MapEnum<CargoTransportationKind>();
-        NpgsqlConnection.GlobalTypeMapper.MapEnum<CargoLoaders>();
-        NpgsqlConnection.GlobalTypeMapper.MapEnum<CargoLoadType>();
-        NpgsqlConnection.GlobalTypeMapper.MapEnum<CargoTransportationType>();
-        NpgsqlConnection.GlobalTypeMapper.MapEnum<PassengerType>();
-        NpgsqlConnection.GlobalTypeMapper.MapEnum<PassengerRentalDuration>();
-        NpgsqlConnection.GlobalTypeMapper.MapEnum<PassengerFacilities>();
-        NpgsqlConnection.GlobalTypeMapper.MapEnum<PassengerOption>();
-        NpgsqlConnection.GlobalTypeMapper.MapEnum<PassengerTransportationKind>();
-        NpgsqlConnection.GlobalTypeMapper.MapEnum<SpecialType>();
-    }
-    
-    private static void Enums_Builder(ModelBuilder modelBuilder)
-    {
-        modelBuilder.HasPostgresEnum<State>();
-        modelBuilder.HasPostgresEnum<Region>();
-        modelBuilder.HasPostgresEnum<ExperienceWork>();
-        modelBuilder.HasPostgresEnum<PaymentMethod>();
-        modelBuilder.HasPostgresEnum<PaymentOrder>();
-        modelBuilder.HasPostgresEnum<CargoType>();
-        modelBuilder.HasPostgresEnum<CargoBodyKind>();
-        modelBuilder.HasPostgresEnum<CargoTransportationKind>();
-        modelBuilder.HasPostgresEnum<CargoLoaders>();
-        modelBuilder.HasPostgresEnum<CargoLoadType>();
-        modelBuilder.HasPostgresEnum<CargoTransportationType>();
-        modelBuilder.HasPostgresEnum<PassengerType>();
-        modelBuilder.HasPostgresEnum<PassengerRentalDuration>();
-        modelBuilder.HasPostgresEnum<PassengerFacilities>();
-        modelBuilder.HasPostgresEnum<PassengerOption>();
-        modelBuilder.HasPostgresEnum<PassengerTransportationKind>();
-        modelBuilder.HasPostgresEnum<SpecialType>();
-    }
-
-    #endregion
 
     private static void EntityBase_Builder(ModelBuilder modelBuilder)
     {
@@ -118,13 +63,10 @@ public abstract class BaseDbContext : DbContext
             et.FindProperty("State")?.SetDefaultValueSql("'actual'::state");
         }
     }
-    
+
     private static void User_Builder(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<User>(etp =>
-        {
-            etp.HasIndex(u => u.Login).IsUnique();
-        });
+        modelBuilder.Entity<User>(etp => { etp.HasIndex(u => u.Login).IsUnique(); });
     }
 
     private static void ImagesAutoInclude_Builder(ModelBuilder modelBuilder)

@@ -82,6 +82,12 @@ public static partial class PassengerTransportPost
     [Mapper(PropertyNameMappingStrategy = PropertyNameMappingStrategy.CaseInsensitive)]
     partial class Mapping : IMapCodeGen<RequestDto, PassengerTransport>
     {
+        [MapperIgnoreTarget(nameof(PassengerTransport.User))]
+        [MapperIgnoreTarget(nameof(PassengerTransport.UserId))]
+        [MapperIgnoreTarget(nameof(PassengerTransport.Id))]
+        [MapperIgnoreTarget(nameof(PassengerTransport.CreateDate))]
+        [MapperIgnoreTarget(nameof(PassengerTransport.UpdateDate))]
+        [MapperIgnoreTarget(nameof(PassengerTransport.State))]
         public partial PassengerTransport Map(RequestDto source);
 
         private List<PassengerTransportImage> Map(List<string> source)

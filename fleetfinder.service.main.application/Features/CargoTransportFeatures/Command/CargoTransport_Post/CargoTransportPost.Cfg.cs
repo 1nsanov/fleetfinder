@@ -112,6 +112,12 @@ public static partial class CargoTransportPost
     [Mapper(PropertyNameMappingStrategy = PropertyNameMappingStrategy.CaseInsensitive)]
     partial class Mapping : IMapCodeGen<RequestDto, CargoTransport>
     {
+        [MapperIgnoreTarget(nameof(CargoTransport.User))]
+        [MapperIgnoreTarget(nameof(CargoTransport.UserId))]
+        [MapperIgnoreTarget(nameof(CargoTransport.Id))]
+        [MapperIgnoreTarget(nameof(CargoTransport.CreateDate))]
+        [MapperIgnoreTarget(nameof(CargoTransport.UpdateDate))]
+        [MapperIgnoreTarget(nameof(CargoTransport.State))]
         public partial CargoTransport Map(RequestDto source);
 
         private List<CargoTransportImage> Map(List<string> source)

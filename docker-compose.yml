@@ -12,7 +12,7 @@ services:
     container_name: fleetfinder.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Host=db;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};Port=5432;Pooling=true;
+      - ConnectionStrings__DefaultConnection=Host=fleetfinder.db;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};Port=5432;Pooling=true;
       - Password__EncryptionKey=${PASSWORD_ENCRYPTION_KEY}
       - Jwt__Key=${JWT_KEY}
       - Jwt__Issuer=${JWT_ISSUER}
@@ -28,7 +28,7 @@ services:
       context: .
       dockerfile: ./Dockerfile
     ports:
-      - "8100:80"
+      - "8100:8080"
     restart: on-failure
     depends_on:
       fleetfinder.db:
