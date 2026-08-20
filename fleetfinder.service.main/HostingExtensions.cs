@@ -68,6 +68,8 @@ public static class HostingExtensions
         app.Services.ApplyMigrations();
         await app.Services.SeedDemoDataAsync();
 
+        app.UseMiddleware<ExceptionHandlerMiddleware>();
+        
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
