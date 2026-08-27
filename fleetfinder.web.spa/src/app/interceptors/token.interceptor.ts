@@ -30,7 +30,6 @@ export class TokenInterceptor implements HttpInterceptor {
             const authRequest = request.clone({
               headers: request.headers
                 .set('Authorization', `Bearer ${result.Token.Access}`)
-                .set('UserId', this.identifyService.claims?.Id?.toString() ?? '')
             });
             return next.handle(authRequest);
           })
@@ -39,7 +38,6 @@ export class TokenInterceptor implements HttpInterceptor {
         const authRequest = request.clone({
           headers: request.headers
             .set('Authorization', `Bearer ${this.identifyService.getAccessToken()}`)
-            .set('UserId', this.identifyService.claims?.Id?.toString() ?? '')
         });
         return next.handle(authRequest);
       }

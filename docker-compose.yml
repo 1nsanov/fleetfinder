@@ -13,10 +13,13 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__DefaultConnection=Host=fleetfinder.db;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};Port=5432;Pooling=true;
-      - Password__EncryptionKey=${PASSWORD_ENCRYPTION_KEY}
       - Jwt__Key=${JWT_KEY}
       - Jwt__Issuer=${JWT_ISSUER}
       - Jwt__Audience=${JWT_AUDIENCE}
+      - Cors__AllowedOrigins__0=http://localhost:4200
+      - Cors__AllowedOrigins__1=http://127.0.0.1:4200
+      - Cors__AllowedOrigins__2=http://localhost:${WEB_PORT:-4200}
+      - Cors__AllowedOrigins__3=http://127.0.0.1:${WEB_PORT:-4200}
       - S3Storage__ServiceUrl=${S3_SERVICE_URL}
       - S3Storage__PublicBaseUrl=${S3_PUBLIC_BASE_URL}
       - S3Storage__AccessKey=${MINIO_ROOT_USER}

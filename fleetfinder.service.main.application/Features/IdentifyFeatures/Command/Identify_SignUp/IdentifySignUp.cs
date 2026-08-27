@@ -36,7 +36,7 @@ public static partial class IdentifySignUp
                 throw new ValidationException("Пользователь с таким логином уже существует.");
 
             var entity = _mapper.Map<RequestDto, User>(requestDto);
-            entity.Password = _passwordService.EncryptPassword(requestDto.Password);
+            entity.Password = _passwordService.HashPassword(requestDto.Password);
             
             await _commandDbContext.User.AddAsync(entity, cancellationToken);
             await _commandDbContext.SaveChangesAsync(cancellationToken);

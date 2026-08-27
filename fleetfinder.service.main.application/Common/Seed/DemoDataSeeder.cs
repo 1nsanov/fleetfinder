@@ -58,7 +58,7 @@ public class DemoDataSeeder : IDemoDataSeeder
 
         Randomizer.Seed = new Random(42);
         var faker = new Faker("ru");
-        var encryptedPassword = _passwordService.EncryptPassword(_options.DemoPassword);
+        var passwordHash = _passwordService.HashPassword(_options.DemoPassword);
         var http = _httpClientFactory.CreateClient(HttpClientName);
 
         _logger.LogInformation("Demo seed started");
@@ -77,7 +77,7 @@ public class DemoDataSeeder : IDemoDataSeeder
             users.Add(new User
             {
                 Login = login,
-                Password = encryptedPassword,
+                Password = passwordHash,
                 Email = faker.Internet.Email(login).ToLowerInvariant(),
                 Organization = faker.Company.CompanyName(),
                 ImageUrl = avatarUrl,

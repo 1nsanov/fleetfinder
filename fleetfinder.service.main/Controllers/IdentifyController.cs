@@ -3,7 +3,6 @@ using fleetfinder.service.main.application.Features.IdentifyFeatures.Command.Ide
 using fleetfinder.service.main.application.Features.IdentifyFeatures.Command.Identify_SignIn;
 using fleetfinder.service.main.application.Features.IdentifyFeatures.Command.Identify_SignUp;
 using fleetfinder.service.main.application.Features.IdentifyFeatures.Query.Identify_GetClaims;
-using Microsoft.AspNetCore.Authorization;
 
 namespace fleetfinder.service.main.Controllers
 {
@@ -43,7 +42,7 @@ namespace fleetfinder.service.main.Controllers
                 cancellationToken);
         }
 
-        [HttpGet("logout")]
+        [HttpPost("logout")]
         public async Task<bool> IdentifyLogout(CancellationToken cancellationToken)
         {
             return await _mediator.Send(
@@ -57,16 +56,5 @@ namespace fleetfinder.service.main.Controllers
             return await _mediator.Send(
                 new IdentifyGetClaims.Command(HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last()), cancellationToken);
         }
-
-        #region Test
-
-        [Authorize]
-        [HttpGet("test/auth")]
-        public void Test()
-        {
-            Ok();
-        }
-
-        #endregion
     }
 }

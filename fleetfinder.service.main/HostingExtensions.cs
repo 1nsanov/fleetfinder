@@ -2,6 +2,7 @@
 using System.Text.Json.Serialization;
 using fleetfinder.service.main.application.Common;
 using fleetfinder.service.main.application.Common.Middlewares;
+using fleetfinder.service.main.application.Common.Options;
 using fleetfinder.service.main.application.Common.Seed;
 using fleetfinder.service.main.infrastructure.Common;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
@@ -52,6 +53,22 @@ public static class HostingExtensions
 
         builder.Services.RegisterInfrastructureLayer(builder.Configuration, builder.Environment);
         builder.Services.RegisterApplicationLayer(builder.Configuration);
+
+        var allowedOrigins = builder.Configuration
+            .GetSection($"{CorsOptions.SectionName}:{nameof(CorsOptions.AllowedOrigins)}")
+            .Get<string[]>();
+        if (allowedOrigins is not { Length: > 0 })
+            throw new InvalidOperationException("Cors:AllowedOrigins must contain at least one origin");
+
+        builder.Services.AddCors(options =>
+        {
+            options.AddDefaultPolicy(policy =>
+            {
+                policy.WithOrigins(allowedOrigins)
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+            });
+        });
         
         builder.Services.Configure<FormOptions>(o =>
         {
@@ -68,6 +85,7 @@ public static class HostingExtensions
         app.Services.ApplyMigrations();
         await app.Services.SeedDemoDataAsync();
 
+        app.UseCors();
         app.UseMiddleware<ExceptionHandlerMiddleware>();
         
         if (app.Environment.IsDevelopment())
@@ -78,15 +96,7 @@ public static class HostingExtensions
 
         app.UseRouting();
 
-        app.UseCors(opt =>
-        {
-            opt.AllowAnyHeader();
-            opt.AllowAnyOrigin();
-            opt.AllowAnyMethod();
-        });
-
         app.UseAuthentication();
-        app.UseMiddleware<TokenServiceMiddleware>();
         app.UseAuthorization();
 
         app.MapControllers();

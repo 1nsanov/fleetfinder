@@ -38,8 +38,7 @@ export class ImageApiService {
       method: 'POST',
       body: parentFormData,
       headers: {
-        'Authorization': `Bearer ${this.identifyService.getAccessToken()}`,
-        'UserId': this.identifyService.claims?.Id?.toString() ?? ''
+        'Authorization': `Bearer ${this.identifyService.getAccessToken()}`
       },
     });
 

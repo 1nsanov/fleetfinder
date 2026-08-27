@@ -1,8 +1,17 @@
-﻿namespace fleetfinder.service.main.Controllers;
+﻿using System.Security.Claims;
 
+namespace fleetfinder.service.main.Controllers;
 
-public abstract class HeadersController
+public abstract class HeadersController : ControllerBase
 {
-    [FromHeader]
-    public long UserId { get; set; }
+    protected long UserId
+    {
+        get
+        {
+            var value = User.FindFirstValue(ClaimTypes.Sid);
+            return !long.TryParse(value, out var id)
+                ? throw new UnauthorizedAccessException("The user ID is missing from the token.")
+                : id;
+        }
+    }
 }

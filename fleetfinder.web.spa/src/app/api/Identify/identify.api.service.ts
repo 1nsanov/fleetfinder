@@ -50,7 +50,7 @@ export class IdentifyApiService {
   }
 
   logout() {
-    return this.http.get<boolean>(this.url + "logout").pipe(
+    return this.http.post<boolean>(this.url + "logout", {}).pipe(
       tap(() => {
         this.writeToken(null)
         this.router.navigate([`/${namesRoute.HOME}`]).then(() => window.location.reload())

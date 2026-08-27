@@ -65,7 +65,6 @@ public static class DependencyInjection
         });
         services.AddSingleton<IObjectStorageService, S3ObjectStorageService>();
 
-        services.AddSingleton<TokenService>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IIdentifyService, IdentifyService>();
 

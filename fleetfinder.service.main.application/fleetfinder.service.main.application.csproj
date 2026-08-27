@@ -13,6 +13,7 @@
     <ItemGroup>
       <PackageReference Include="AWSSDK.S3" />
       <PackageReference Include="Bogus" />
+      <PackageReference Include="Konscious.Security.Cryptography.Argon2" />
       <PackageReference Include="FluentValidation" />
       <PackageReference Include="FluentValidation.AspNetCore" />
       <PackageReference Include="MediatR" />

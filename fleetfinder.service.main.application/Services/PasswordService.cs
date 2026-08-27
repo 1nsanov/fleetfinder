@@ -2,86 +2,117 @@ using System.Security.Cryptography;
 using System.Text;
 using fleetfinder.service.main.application.Common.Interfaces.Services;
 using fleetfinder.service.main.application.Common.Options;
+using Konscious.Security.Cryptography;
 using Microsoft.Extensions.Options;
 
 namespace fleetfinder.service.main.application.Services;
 
 public class PasswordService : IPasswordService
 {
-    private readonly byte[] _key;
-    private const int AesBlockSize = 16;
-    private const int AesKeySize = 32;
+    private const string AlgorithmId = "argon2id";
+    private const int Version = 19;
+
+    private readonly PasswordOptions _options;
 
     public PasswordService(IOptions<PasswordOptions> options)
     {
-        var passwordOptions = options.Value ?? throw new ArgumentNullException(nameof(options));
-        if (string.IsNullOrWhiteSpace(passwordOptions.EncryptionKey))
-        {
-            throw new InvalidOperationException("PasswordOptions.EncryptionKey not set");
-        }
-
-        _key = Convert.FromBase64String(passwordOptions.EncryptionKey);
-        if (_key.Length != AesKeySize)
-        {
-            throw new InvalidOperationException($"EncryptionKey must be {AesKeySize} bytes in Base64");
-        }
+        _options = options.Value ?? throw new ArgumentNullException(nameof(options));
     }
 
-    public string EncryptPassword(string plainText)
+    public string HashPassword(string password)
     {
-        if (string.IsNullOrEmpty(plainText))
-        {
-            return plainText;
-        }
-
-        byte[] iv = RandomNumberGenerator.GetBytes(AesBlockSize);
-        using var aes = Aes.Create();
-        aes.Key = _key;
-        aes.IV = iv;
-        using ICryptoTransform encryptor = aes.CreateEncryptor();
-        byte[] plainBytes = Encoding.UTF8.GetBytes(plainText);
-        byte[] cipherBytes = encryptor.TransformFinalBlock(plainBytes, 0, plainBytes.Length);
-        byte[] result = new byte[iv.Length + cipherBytes.Length];
-        Buffer.BlockCopy(iv, 0, result, 0, iv.Length);
-        Buffer.BlockCopy(cipherBytes, 0, result, iv.Length, cipherBytes.Length);
-        return Convert.ToBase64String(result);
+        var salt = RandomNumberGenerator.GetBytes(_options.SaltSize);
+        var hash = ComputeHash(
+            password,
+            salt,
+            _options.MemorySize,
+            _options.Iterations,
+            _options.Parallelism,
+            _options.HashSize);
+        return Encode(_options.MemorySize, _options.Iterations, _options.Parallelism, salt, hash);
     }
 
-    public bool VerifyPassword(string password, string encryptedPassword)
+    public bool VerifyPassword(string password, string hashedPassword)
     {
+        if (!TryDecode(hashedPassword, out var memorySize, out var iterations, out var parallelism, out var salt, out var storedHash))
+            return false;
+
+        var computed = ComputeHash(password, salt, memorySize, iterations, parallelism, storedHash.Length);
+        return CryptographicOperations.FixedTimeEquals(computed, storedHash);
+    }
+
+    private static byte[] ComputeHash(
+        string password,
+        byte[] salt,
+        int memorySize,
+        int iterations,
+        int parallelism,
+        int hashSize)
+    {
+        using var argon2 = new Argon2id(Encoding.UTF8.GetBytes(password))
+        {
+            Salt = salt,
+            DegreeOfParallelism = parallelism,
+            MemorySize = memorySize,
+            Iterations = iterations
+        };
+        return argon2.GetBytes(hashSize);
+    }
+
+    private static string Encode(int memorySize, int iterations, int parallelism, byte[] salt, byte[] hash)
+    {
+        return $"${AlgorithmId}$v={Version}$m={memorySize},t={iterations},p={parallelism}${ToBase64(salt)}${ToBase64(hash)}";
+    }
+
+    private static bool TryDecode(
+        string encoded,
+        out int memorySize,
+        out int iterations,
+        out int parallelism,
+        out byte[] salt,
+        out byte[] hash)
+    {
+        memorySize = 0;
+        iterations = 0;
+        parallelism = 0;
+        salt = [];
+        hash = [];
+
+        if (string.IsNullOrEmpty(encoded))
+            return false;
+
+        var parts = encoded.Split('$');
+        if (parts.Length != 6 || parts[1] != AlgorithmId || parts[2] != $"v={Version}")
+            return false;
+
+        var parameters = parts[3].Split(',');
+        if (parameters.Length != 3
+            || !parameters[0].StartsWith("m=")
+            || !parameters[1].StartsWith("t=")
+            || !parameters[2].StartsWith("p=")
+            || !int.TryParse(parameters[0][2..], out memorySize)
+            || !int.TryParse(parameters[1][2..], out iterations)
+            || !int.TryParse(parameters[2][2..], out parallelism))
+            return false;
+
         try
         {
-            string decrypted = DecryptPassword(encryptedPassword);
-            return decrypted == password;
+            salt = FromBase64(parts[4]);
+            hash = FromBase64(parts[5]);
         }
-        catch
+        catch (FormatException)
         {
             return false;
         }
+
+        return salt.Length > 0 && hash.Length > 0 && memorySize > 0 && iterations > 0 && parallelism > 0;
     }
 
-    public string DecryptPassword(string encryptedPassword)
+    private static string ToBase64(byte[] bytes) => Convert.ToBase64String(bytes).TrimEnd('=');
+
+    private static byte[] FromBase64(string value)
     {
-        if (string.IsNullOrEmpty(encryptedPassword))
-        {
-            return encryptedPassword;
-        }
-
-        byte[] full = Convert.FromBase64String(encryptedPassword);
-        if (full.Length < AesBlockSize)
-        {
-            throw new CryptographicException("Invalid encrypted data");
-        }
-
-        byte[] iv = new byte[AesBlockSize];
-        byte[] cipherBytes = new byte[full.Length - AesBlockSize];
-        Buffer.BlockCopy(full, 0, iv, 0, AesBlockSize);
-        Buffer.BlockCopy(full, AesBlockSize, cipherBytes, 0, cipherBytes.Length);
-        using var aes = Aes.Create();
-        aes.Key = _key;
-        aes.IV = iv;
-        using ICryptoTransform decryptor = aes.CreateDecryptor();
-        byte[] plainBytes = decryptor.TransformFinalBlock(cipherBytes, 0, cipherBytes.Length);
-        return Encoding.UTF8.GetString(plainBytes);
+        var padded = value.Length % 4 == 0 ? value : value + new string('=', 4 - value.Length % 4);
+        return Convert.FromBase64String(padded);
     }
 }

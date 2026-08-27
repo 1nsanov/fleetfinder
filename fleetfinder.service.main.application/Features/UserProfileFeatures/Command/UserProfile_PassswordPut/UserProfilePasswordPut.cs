@@ -29,7 +29,7 @@ public static partial class UserProfilePasswordPut
             if (request.RequestDto.CurrentPassword == request.RequestDto.NewPassword)
                 throw new ValidationException("Текущий и новый пароль совпадают.");
             
-            entity.Password = _passwordService.EncryptPassword(request.RequestDto.NewPassword);
+            entity.Password = _passwordService.HashPassword(request.RequestDto.NewPassword);
             
             await _commandDbContext.SaveChangesAsync(cancellationToken);
 

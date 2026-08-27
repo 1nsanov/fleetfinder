@@ -40,11 +40,12 @@ public class IdentifyService : IIdentifyService
         var token = GenerateJwtSecurityToken(user);
         var accessToken = new JwtSecurityTokenHandler().WriteToken(token);
         var refreshToken = GenerateRefreshToken();
+        var refreshExpiry = DateTime.UtcNow.AddDays(_jwtOptions.RefreshTokenLifetimeDays);
 
         user.RefreshToken = new RefreshToken
         {
             Value = refreshToken,
-            ExpiryTime = token.ValidTo
+            ExpiryTime = refreshExpiry
         };
 
         return new TokenDto
@@ -92,7 +93,7 @@ public class IdentifyService : IIdentifyService
         return new JwtSecurityToken(_jwtOptions.Issuer,
             _jwtOptions.Audience,
             claims,
-            expires: DateTime.UtcNow.AddHours(1),
+            expires: DateTime.UtcNow.AddMinutes(_jwtOptions.AccessTokenLifetimeMinutes),
             signingCredentials: credentials);
     }
 
