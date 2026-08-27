@@ -26,8 +26,12 @@ public static partial class IdentifyGetClaims
             
             var principal = _identifyService.GetPrincipalFromToken(request.AccessToken, true);
             var claimSid = principal.Claims.FirstOrDefault(claim => claim.Type.Contains("sid"))?.Value;
+            if (string.IsNullOrEmpty(claimSid))
+            {
+                throw new ArgumentNullException(nameof(claimSid));
+            }
+            
             var userId = long.Parse(claimSid);
-
             var user = await _queryDbContext.User.FirstOrDefaultAsync(u => u.Id == userId, cancellationToken)
                 ?? throw new EntityNotFoundException(userId);
 

@@ -1,5 +1,4 @@
 ﻿using fleetfinder.service.main.domain.Enums.Common;
-using fleetfinder.service.main.domain.Enums.Order.Cargo;
 using fleetfinder.service.main.domain.Enums.Transport;
 using fleetfinder.service.main.domain.Enums.Transport.Cargo;
 using fleetfinder.service.main.domain.Enums.Transport.Passenger;
@@ -48,9 +47,6 @@ public static class DependencyInjection
         options.MapEnum<CargoType>("cargo_type");
         options.MapEnum<CargoBodyKind>("cargo_body_kind");
         options.MapEnum<CargoTransportationKind>("cargo_transportation_kind");
-        options.MapEnum<CargoLoaders>("cargo_loaders");
-        options.MapEnum<CargoLoadType>("cargo_load_type");
-        options.MapEnum<CargoTransportationType>("cargo_transportation_type");
         options.MapEnum<PassengerType>("passenger_type");
         options.MapEnum<PassengerRentalDuration>("passenger_rental_duration");
         options.MapEnum<PassengerFacilities>("passenger_facilities");

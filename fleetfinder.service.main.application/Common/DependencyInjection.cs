@@ -82,8 +82,13 @@ public static class DependencyInjection
 
         #region JWT
 
+        services.Configure<JwtOptions>(configuration.GetSection(JwtOptions.SectionName));
+
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(option =>
+            .AddJwtBearer();
+
+        services.AddOptions<JwtBearerOptions>(JwtBearerDefaults.AuthenticationScheme)
+            .Configure<IOptions<JwtOptions>>((option, jwtOptions) =>
             {
                 option.TokenValidationParameters = new TokenValidationParameters
                 {
@@ -91,11 +96,10 @@ public static class DependencyInjection
                     ValidateAudience = true,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-                    ValidIssuer = configuration["Jwt:Issuer"],
-                    ValidAudience = configuration["Jwt:Audience"],
+                    ValidIssuer = jwtOptions.Value.Issuer,
+                    ValidAudience = jwtOptions.Value.Audience,
                     ClockSkew = TimeSpan.Zero,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-                        configuration["Jwt:Key"] ?? string.Empty))
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.Value.Key))
                 };
             });
 

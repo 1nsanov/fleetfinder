@@ -1,7 +1,4 @@
 ﻿using fleetfinder.service.main.domain.Enums.Common;
-using fleetfinder.service.main.domain.Order.Cargo;
-using fleetfinder.service.main.domain.Order.Passenger;
-using fleetfinder.service.main.domain.Order.Special;
 using fleetfinder.service.main.domain.Transport.Cargo;
 using fleetfinder.service.main.domain.Transport.Passenger;
 using fleetfinder.service.main.domain.Transport.Special;
@@ -26,12 +23,6 @@ public abstract class BaseDbContext : DbContext
     public DbSet<PassengerTransportImage> PassengerTransportImage { get; set; } = null!;
     public DbSet<SpecialTransport> SpecialTransport { get; set; } = null!;
     public DbSet<SpecialTransportImage> SpecialTransportImage { get; set; } = null!;
-    public DbSet<CargoOrder> CargoOrder { get; set; } = null!;
-    public DbSet<CargoOrderImage> CargoOrderImage { get; set; } = null!;
-    public DbSet<PassengerOrder> PassengerOrder { get; set; } = null!;
-    public DbSet<PassengerOrderImage> PassengerOrderImage { get; set; } = null!;
-    public DbSet<SpecialOrder> SpecialOrder { get; set; } = null!;
-    public DbSet<SpecialOrderImage> SpecialOrderImage { get; set; } = null!;
 
     #endregion
 
@@ -74,8 +65,5 @@ public abstract class BaseDbContext : DbContext
         modelBuilder.Entity<CargoTransport>(etp => { etp.Navigation(x => x.Images).AutoInclude(); });
         modelBuilder.Entity<PassengerTransport>(etp => { etp.Navigation(x => x.Images).AutoInclude(); });
         modelBuilder.Entity<SpecialTransport>(etp => { etp.Navigation(x => x.Images).AutoInclude(); });
-        modelBuilder.Entity<CargoOrder>(etp => { etp.Navigation(x => x.Images).AutoInclude(); });
-        modelBuilder.Entity<PassengerOrder>(etp => { etp.Navigation(x => x.Images).AutoInclude(); });
-        modelBuilder.Entity<SpecialOrder>(etp => { etp.Navigation(x => x.Images).AutoInclude(); });
     }
 }

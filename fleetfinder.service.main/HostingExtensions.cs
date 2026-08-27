@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Reflection;
+using System.Text.Json.Serialization;
 using fleetfinder.service.main.application.Common;
 using fleetfinder.service.main.application.Common.Middlewares;
 using fleetfinder.service.main.application.Common.Seed;
@@ -27,9 +28,11 @@ public static class HostingExtensions
 
         builder.Services.AddSwaggerGen(options =>
         {
+            var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+            options.IncludeXmlComments(xmlPath);
             options.SupportNonNullableReferenceTypes();
-            options.CustomSchemaIds(type => type.FullName?.Replace("+", "_"));
-            options.SwaggerDoc("v1", new OpenApiInfo { Title = "fleetfinder.service.main", Version = "v1" });
+            options.CustomSchemaIds(GetSchemaId);
             options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
             {
                 Type = SecuritySchemeType.Http,
@@ -65,6 +68,8 @@ public static class HostingExtensions
         app.Services.ApplyMigrations();
         await app.Services.SeedDemoDataAsync();
 
+        app.UseMiddleware<ExceptionHandlerMiddleware>();
+        
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
@@ -81,16 +86,36 @@ public static class HostingExtensions
         });
 
         app.UseAuthentication();
-
         app.UseMiddleware<TokenServiceMiddleware>();
-        
         app.UseAuthorization();
 
-        app.UseEndpoints(endp =>
-        {
-            endp.MapControllers();
-        });
+        app.MapControllers();
+
+        app.MapGet("api/ping", () => "pong");
         
         return app;
+    }
+
+    private static string GetSchemaId(Type type)
+    {
+        if (type.IsGenericParameter)
+            return type.Name;
+
+        var names = new Stack<string>();
+        for (var current = type; current != null; current = current.DeclaringType)
+        {
+            var name = current.Name;
+            var tick = name.IndexOf('`');
+            if (tick >= 0)
+                name = name[..tick];
+            names.Push(name);
+        }
+
+        var id = string.Join("_", names);
+        if (!type.IsGenericType)
+            return id;
+
+        var args = string.Join("_", type.GetGenericArguments().Select(GetSchemaId));
+        return $"{id}_{args}";
     }
 }

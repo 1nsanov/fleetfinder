@@ -4,10 +4,11 @@ using System.Security.Cryptography;
 using System.Text;
 using fleetfinder.service.main.application.Common.Exceptions;
 using fleetfinder.service.main.application.Common.Interfaces.Services;
+using fleetfinder.service.main.application.Common.Options;
 using fleetfinder.service.main.application.Services.Models;
 using fleetfinder.service.main.domain.Users;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace fleetfinder.service.main.application.Services;
@@ -15,12 +16,12 @@ namespace fleetfinder.service.main.application.Services;
 public class IdentifyService : IIdentifyService
 {
     private readonly QueryDbContext _queryDbContext;
-    private readonly IConfiguration _config;
+    private readonly JwtOptions _jwtOptions;
 
-    public IdentifyService(QueryDbContext queryDbContext, IConfiguration config)
+    public IdentifyService(QueryDbContext queryDbContext, IOptions<JwtOptions> jwtOptions)
     {
         _queryDbContext = queryDbContext;
-        _config = config;
+        _jwtOptions = jwtOptions.Value;
     }
 
     public async Task<User> GetUserByAccessToken(string accessToken, CancellationToken cancellationToken)
@@ -33,19 +34,19 @@ public class IdentifyService : IIdentifyService
         return await _queryDbContext.User.FirstOrDefaultAsync(u => u.Login == login, cancellationToken)
             ?? throw new EntityNotFoundException("User by access token not found");
     }
-    
+
     public TokenDto GenerateTokenUser(User user)
     {
         var token = GenerateJwtSecurityToken(user);
         var accessToken = new JwtSecurityTokenHandler().WriteToken(token);
         var refreshToken = GenerateRefreshToken();
-        
+
         user.RefreshToken = new RefreshToken
         {
             Value = refreshToken,
             ExpiryTime = token.ValidTo
         };
-        
+
         return new TokenDto
         {
             Access = accessToken,
@@ -61,7 +62,7 @@ public class IdentifyService : IIdentifyService
             ValidateAudience = false,
             ValidateIssuer = false,
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"])),
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.Key)),
             ValidateLifetime = validateLifetime
         };
 
@@ -72,12 +73,12 @@ public class IdentifyService : IIdentifyService
 
         return principal;
     }
-   
+
     #region Private
 
     private JwtSecurityToken GenerateJwtSecurityToken(User user)
     {
-        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.Key));
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
         var claims = new[]
@@ -88,8 +89,8 @@ public class IdentifyService : IIdentifyService
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
 
-        return new JwtSecurityToken(_config["Jwt:Issuer"],
-            _config["Jwt:Audience"],
+        return new JwtSecurityToken(_jwtOptions.Issuer,
+            _jwtOptions.Audience,
             claims,
             expires: DateTime.UtcNow.AddHours(1),
             signingCredentials: credentials);

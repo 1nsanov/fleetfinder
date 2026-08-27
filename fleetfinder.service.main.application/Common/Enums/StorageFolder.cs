@@ -5,8 +5,5 @@ public enum StorageFolder
     CargoTransport,
     PassengerTransport,
     SpecialTransport,
-    CargoOrder,
-    PassengerOrder,
-    SpecialOrder,
     UserProfile
 }
