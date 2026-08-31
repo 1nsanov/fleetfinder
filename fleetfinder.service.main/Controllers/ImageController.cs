@@ -16,8 +16,18 @@ public class ImageController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<List<string>> UploadImage([FromForm] ImagePost.RequestDto request, CancellationToken cancellationToken)
+    public async Task<List<string>> UploadImage(
+        [FromForm] StorageFolder folder,
+        [FromForm] List<IFormFile> files,
+        CancellationToken cancellationToken)
     {
+        var request = new ImagePost.RequestDto(
+            folder,
+            files.Select(file => new ImagePost.FileUpload(
+                file.FileName,
+                file.ContentType,
+                file.Length,
+                file.OpenReadStream())).ToList());
         return await _mediator.Send(new ImagePost.Command(request), cancellationToken);
     }
     

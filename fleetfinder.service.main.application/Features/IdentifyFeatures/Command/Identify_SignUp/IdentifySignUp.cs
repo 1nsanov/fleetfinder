@@ -1,4 +1,4 @@
-﻿using fleetfinder.service.main.application.Common.Interfaces.Services;
+using fleetfinder.service.main.application.Common.Interfaces.Services;
 using fleetfinder.service.main.domain.Users;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,13 +10,13 @@ public static partial class IdentifySignUp
     
     public class Handler : IRequestHandler<Command, ResponseDto>
     {
-        private readonly CommandDbContext _commandDbContext;
+        private readonly ICommandDbContext _commandDbContext;
         private readonly IMapper _mapper;
         private readonly IIdentifyService _identifyService;
         private readonly IPasswordService _passwordService;
 
         public Handler(
-            CommandDbContext commandDbContext,
+            ICommandDbContext commandDbContext,
             IMapper mapper,
             IIdentifyService identifyService,
             IPasswordService passwordService)
@@ -33,7 +33,7 @@ public static partial class IdentifySignUp
 
             var duplicateLogin = await _commandDbContext.User.FirstOrDefaultAsync(u => u.Login == requestDto.Login, cancellationToken: cancellationToken);
             if (duplicateLogin is not null)
-                throw new ValidationException("Пользователь с таким логином уже существует.");
+                throw new ValidationException("A user with that username already exists.");
 
             var entity = _mapper.Map<RequestDto, User>(requestDto);
             entity.Password = _passwordService.HashPassword(requestDto.Password);

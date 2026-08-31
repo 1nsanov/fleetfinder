@@ -1,4 +1,4 @@
-﻿using fleetfinder.service.main.domain.Transport.Passenger;
+using fleetfinder.service.main.domain.Transport.Passenger;
 
 namespace fleetfinder.service.main.application.Features.PassengerTransportFeatures.Command.PassengerTransport_Post;
 
@@ -8,10 +8,10 @@ public static partial class PassengerTransportPost
     
     internal class Handler : IRequestHandler<Command, ResponseDto>
     {
-        private readonly CommandDbContext _commandDbContext;
+        private readonly ICommandDbContext _commandDbContext;
         private readonly IMapper _mapper;
         
-        public Handler(CommandDbContext commandDbContext, IMapper mapper)
+        public Handler(ICommandDbContext commandDbContext, IMapper mapper)
         {
             _commandDbContext = commandDbContext;
             _mapper = mapper;

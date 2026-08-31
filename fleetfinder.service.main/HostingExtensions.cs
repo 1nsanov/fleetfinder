@@ -1,10 +1,10 @@
 ﻿using System.Reflection;
 using System.Text.Json.Serialization;
 using fleetfinder.service.main.application.Common;
-using fleetfinder.service.main.application.Common.Middlewares;
 using fleetfinder.service.main.application.Common.Options;
 using fleetfinder.service.main.application.Common.Seed;
 using fleetfinder.service.main.infrastructure.Common;
+using fleetfinder.service.main.Middleware;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.OpenApi;

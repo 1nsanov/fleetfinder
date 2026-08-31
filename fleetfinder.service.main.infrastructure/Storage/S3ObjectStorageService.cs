@@ -5,7 +5,7 @@ using fleetfinder.service.main.application.Common.Interfaces.Services;
 using fleetfinder.service.main.application.Common.Options;
 using Microsoft.Extensions.Options;
 
-namespace fleetfinder.service.main.application.Services;
+namespace fleetfinder.service.main.infrastructure.Storage;
 
 public class S3ObjectStorageService : IObjectStorageService
 {

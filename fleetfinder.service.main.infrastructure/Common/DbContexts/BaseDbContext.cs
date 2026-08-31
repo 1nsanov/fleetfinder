@@ -1,4 +1,5 @@
-﻿using fleetfinder.service.main.domain.Enums.Common;
+﻿using fleetfinder.service.main.application.Common.Interfaces.Persistence;
+using fleetfinder.service.main.domain.Enums.Common;
 using fleetfinder.service.main.domain.Transport.Cargo;
 using fleetfinder.service.main.domain.Transport.Passenger;
 using fleetfinder.service.main.domain.Transport.Special;
@@ -6,7 +7,7 @@ using Z.EntityFramework.Plus;
 
 namespace fleetfinder.service.main.infrastructure.Common.DbContexts;
 
-public abstract class BaseDbContext : DbContext
+public abstract class BaseDbContext : DbContext, IQueryDbContext
 {
     protected BaseDbContext(DbContextOptions options)
         : base(options)
@@ -31,6 +32,7 @@ public abstract class BaseDbContext : DbContext
         base.OnModelCreating(modelBuilder);
         EntityBase_Builder(modelBuilder);
         User_Builder(modelBuilder);
+        OwnedTypes_Builder(modelBuilder);
         ImagesAutoInclude_Builder(modelBuilder);
     }
 
@@ -39,10 +41,8 @@ public abstract class BaseDbContext : DbContext
         var types = modelBuilder.Model.GetEntityTypes()
             .Where(t => t.ClrType.IsAssignableTo(typeof(EntityBase)));
 
-        // configuration for all derived entities
         foreach (var et in types)
         {
-            //default value
             var property = et.FindProperty("CreateDate") ?? throw new NullReferenceException();
             property.SetDefaultValueSql("timezone('utc', current_timestamp)");
             property.ValueGenerated = Microsoft.EntityFrameworkCore.Metadata.ValueGenerated.OnAdd;
@@ -58,6 +58,27 @@ public abstract class BaseDbContext : DbContext
     private static void User_Builder(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<User>(etp => { etp.HasIndex(u => u.Login).IsUnique(); });
+    }
+
+    private static void OwnedTypes_Builder(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<User>(e =>
+        {
+            e.OwnsOne(x => x.FullName);
+            e.OwnsOne(x => x.Contact);
+            e.OwnsOne(x => x.RefreshToken);
+        });
+        modelBuilder.Entity<CargoTransport>(e =>
+        {
+            e.OwnsOne(x => x.Price);
+            e.OwnsOne(x => x.Body);
+        });
+        modelBuilder.Entity<PassengerTransport>(e =>
+        {
+            e.OwnsOne(x => x.Price);
+            e.OwnsOne(x => x.Size);
+        });
+        modelBuilder.Entity<SpecialTransport>(e => e.OwnsOne(x => x.Price));
     }
 
     private static void ImagesAutoInclude_Builder(ModelBuilder modelBuilder)

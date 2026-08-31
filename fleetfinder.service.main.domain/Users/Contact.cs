@@ -1,8 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿namespace fleetfinder.service.main.domain.Users;
 
-namespace fleetfinder.service.main.domain.Users;
-
-[Owned]
 public class Contact
 {
     public string? PhoneViber { get; set; }

@@ -1,7 +1,6 @@
 ﻿using fleetfinder.service.main.domain.Transport.Cargo;
 using fleetfinder.service.main.domain.Transport.Passenger;
 using fleetfinder.service.main.domain.Transport.Special;
-using Microsoft.EntityFrameworkCore;
 
 namespace fleetfinder.service.main.domain.Users;
 
@@ -15,21 +14,17 @@ public class User : EntityBase
     public string? ImageUrl { get; set; }
     public Contact Contact { get; set; } = null!;
     public RefreshToken? RefreshToken { get; set; } = new();
-    
-    //Relations
     public List<CargoTransport> CargoTransports { get; set; } = new();
     public List<PassengerTransport> PassengerTransports  { get; set; } = new();
     public List<SpecialTransport> SpecialTransports { get; set; } = new();
 }
 
-[Owned]
 public class RefreshToken
 {
     public string? Value { get; set; }
     public DateTime? ExpiryTime { get; set; }
 }
 
-[Owned]
 public class FullName
 {
     public string First { get; set; } = null!;

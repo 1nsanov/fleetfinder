@@ -1,4 +1,4 @@
-﻿using fleetfinder.service.main.application.Common.Enums;
+using fleetfinder.service.main.application.Common.Enums;
 using fleetfinder.service.main.domain.Transport.Passenger;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,10 +15,10 @@ public static partial class PassengerTransportGetList
     
     internal class Handler : IRequestHandler<Query, ResponseDto>
     {
-        private readonly QueryDbContext _queryDbContext;
+        private readonly IQueryDbContext _queryDbContext;
         private readonly IMapper _mapper;
 
-        public Handler(QueryDbContext queryDbContext, IMapper mapper)
+        public Handler(IQueryDbContext queryDbContext, IMapper mapper)
         {
             _queryDbContext = queryDbContext;
             _mapper = mapper;
@@ -68,7 +68,7 @@ public static partial class PassengerTransportGetList
                 query = query.Where(ct => ct.UserId == requestFilter.UserFilter);
             
             if (requestFilter.TitleFilter is not null)
-                query = query.Where(ct => EF.Functions.ILike(ct.Title, $"%{requestFilter.TitleFilter}%"));
+                query = query.Where(ct => ct.Title.ToLower().Contains(requestFilter.TitleFilter.ToLower()));
 
             if (requestFilter.RegionFilter is not null)
                 query = query.Where(ct => ct.Region == requestFilter.RegionFilter);

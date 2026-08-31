@@ -7,18 +7,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <FrameworkReference Include="Microsoft.AspNetCore.App" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <PackageReference Include="AWSSDK.S3" />
       <PackageReference Include="Bogus" />
       <PackageReference Include="Konscious.Security.Cryptography.Argon2" />
       <PackageReference Include="FluentValidation" />
-      <PackageReference Include="FluentValidation.AspNetCore" />
+      <PackageReference Include="FluentValidation.DependencyInjectionExtensions" />
       <PackageReference Include="MediatR" />
-      <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" />
       <PackageReference Include="Microsoft.Extensions.Http" />
+      <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" />
       <PackageReference Include="Microsoft.IdentityModel.Tokens" />
       <PackageReference Include="Riok.Mapperly" />
       <PackageReference Include="Scrutor" />
@@ -27,7 +23,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\fleetfinder.service.main.domain\fleetfinder.service.main.domain.csproj" />
-      <ProjectReference Include="..\fleetfinder.service.main.infrastructure\fleetfinder.service.main.infrastructure.csproj" />
     </ItemGroup>
 
     <ItemGroup>

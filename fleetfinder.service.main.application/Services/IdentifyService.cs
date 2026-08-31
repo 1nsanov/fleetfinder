@@ -1,4 +1,4 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
@@ -15,10 +15,10 @@ namespace fleetfinder.service.main.application.Services;
 
 public class IdentifyService : IIdentifyService
 {
-    private readonly QueryDbContext _queryDbContext;
+    private readonly IQueryDbContext _queryDbContext;
     private readonly JwtOptions _jwtOptions;
 
-    public IdentifyService(QueryDbContext queryDbContext, IOptions<JwtOptions> jwtOptions)
+    public IdentifyService(IQueryDbContext queryDbContext, IOptions<JwtOptions> jwtOptions)
     {
         _queryDbContext = queryDbContext;
         _jwtOptions = jwtOptions.Value;

@@ -1,4 +1,4 @@
-﻿using fleetfinder.service.main.application.Common.Interfaces.Services;
+using fleetfinder.service.main.application.Common.Interfaces.Services;
 using Microsoft.IdentityModel.Tokens;
 
 namespace fleetfinder.service.main.application.Features.IdentifyFeatures.Command.Identify_RefreshToken;
@@ -10,9 +10,9 @@ public static partial class IdentifyRefreshToken
     internal class Handler : IRequestHandler<Command, ResponseDto>
     {
         private readonly IIdentifyService _identifyService;
-        private readonly CommandDbContext _commandDbContext;
+        private readonly ICommandDbContext _commandDbContext;
 
-        public Handler(IIdentifyService identifyService, CommandDbContext commandDbContext)
+        public Handler(IIdentifyService identifyService, ICommandDbContext commandDbContext)
         {
             _identifyService = identifyService;
             _commandDbContext = commandDbContext;

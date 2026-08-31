@@ -1,15 +1,13 @@
-﻿using System.Net;
+using System.Net;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using fleetfinder.service.main.application.Common.Exceptions;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Npgsql;
 
-namespace fleetfinder.service.main.application.Common.Middlewares;
+namespace fleetfinder.service.main.Middleware;
 
 public class ExceptionHandlerMiddleware
 {

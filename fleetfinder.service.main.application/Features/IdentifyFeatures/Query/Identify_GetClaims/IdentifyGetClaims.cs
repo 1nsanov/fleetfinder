@@ -1,4 +1,4 @@
-﻿using fleetfinder.service.main.application.Common.Exceptions;
+using fleetfinder.service.main.application.Common.Exceptions;
 using fleetfinder.service.main.application.Common.Interfaces.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,9 +11,9 @@ public static partial class IdentifyGetClaims
     internal class Handler : IRequestHandler<Command, ResponseDto>
     {
         private readonly IIdentifyService _identifyService;
-        private readonly QueryDbContext _queryDbContext;
+        private readonly IQueryDbContext _queryDbContext;
 
-        public Handler(IIdentifyService identifyService, QueryDbContext queryDbContext)
+        public Handler(IIdentifyService identifyService, IQueryDbContext queryDbContext)
         {
             _identifyService = identifyService;
             _queryDbContext = queryDbContext;

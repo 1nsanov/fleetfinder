@@ -21,10 +21,10 @@ public static partial class ImagePost
 
             if (requestDto.Files.Count == 0) return new List<string>();
 
-            requestDto.Files.ForEach(dto =>
+            foreach (var dto in requestDto.Files)
             {
                 if (dto.Length <= 0) throw new Exception("Invalid file.");
-            });
+            }
 
             var response = new List<string>();
 
@@ -32,7 +32,6 @@ public static partial class ImagePost
             {
                 try
                 {
-                    await using var stream = item.OpenReadStream();
                     var fileName = $"{Guid.NewGuid()}{Path.GetExtension(item.FileName)}";
                     var contentType = string.IsNullOrWhiteSpace(item.ContentType)
                         ? "application/octet-stream"
@@ -40,7 +39,7 @@ public static partial class ImagePost
                     var imageUrl = await _objectStorage.UploadAsync(
                         requestDto.Folder,
                         fileName,
-                        stream,
+                        item.Stream,
                         contentType,
                         cancellationToken);
                     response.Add(imageUrl);

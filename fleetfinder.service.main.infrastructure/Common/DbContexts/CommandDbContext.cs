@@ -1,6 +1,8 @@
-﻿namespace fleetfinder.service.main.infrastructure.Common.DbContexts;
+﻿using fleetfinder.service.main.application.Common.Interfaces.Persistence;
 
-public sealed class CommandDbContext : BaseDbContext
+namespace fleetfinder.service.main.infrastructure.Common.DbContexts;
+
+public sealed class CommandDbContext : BaseDbContext, ICommandDbContext
 {
     public CommandDbContext(DbContextOptions<CommandDbContext> options) : base(options)
     {

@@ -1,0 +1,9 @@
+<Project>
+  <Target Name="ForbidApplicationToInfrastructure"
+          AfterTargets="PrepareForBuild"
+          Condition="'$(MSBuildProjectName)' == 'fleetfinder.service.main.application'">
+    <Error
+      Condition="$([System.String]::Copy('@(ProjectReference)').Contains('fleetfinder.service.main.infrastructure'))"
+      Text="Application must not reference Infrastructure." />
+  </Target>
+</Project>

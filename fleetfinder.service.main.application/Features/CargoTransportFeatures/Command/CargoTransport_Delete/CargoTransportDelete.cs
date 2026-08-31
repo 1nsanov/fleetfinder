@@ -1,4 +1,4 @@
-﻿using fleetfinder.service.main.application.Common.Exceptions;
+using fleetfinder.service.main.application.Common.Exceptions;
 using fleetfinder.service.main.domain.Enums.Common;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,9 +10,9 @@ public static partial class CargoTransportDelete
     
     internal class Handler : IRequestHandler<Command, ResponseDto>
     {
-        private readonly CommandDbContext _commandDbContext;
+        private readonly ICommandDbContext _commandDbContext;
         
-        public Handler(CommandDbContext commandDbContext)
+        public Handler(ICommandDbContext commandDbContext)
         {
             _commandDbContext = commandDbContext;
         }

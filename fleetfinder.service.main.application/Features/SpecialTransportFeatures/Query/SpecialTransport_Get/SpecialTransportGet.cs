@@ -1,4 +1,4 @@
-﻿using fleetfinder.service.main.application.Common.Exceptions;
+using fleetfinder.service.main.application.Common.Exceptions;
 using fleetfinder.service.main.domain.Transport.Special;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,10 +10,10 @@ public static partial class SpecialTransportGet
     
     internal class Handler : IRequestHandler<Query, ResponseDto>
     {
-        private readonly QueryDbContext _queryDbContext;
+        private readonly IQueryDbContext _queryDbContext;
         private readonly IMapper _mapper;
 
-        public Handler(QueryDbContext queryDbContext, IMapper mapper)
+        public Handler(IQueryDbContext queryDbContext, IMapper mapper)
         {
             _queryDbContext = queryDbContext;
             _mapper = mapper;

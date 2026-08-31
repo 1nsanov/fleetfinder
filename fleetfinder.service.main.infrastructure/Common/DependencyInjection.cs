@@ -1,8 +1,15 @@
-﻿using fleetfinder.service.main.domain.Enums.Common;
+﻿using Amazon.S3;
+using fleetfinder.service.main.application.Common.Interfaces.Persistence;
+using fleetfinder.service.main.application.Common.Interfaces.Services;
+using fleetfinder.service.main.application.Common.Options;
+using fleetfinder.service.main.domain.Enums.Common;
 using fleetfinder.service.main.domain.Enums.Transport;
 using fleetfinder.service.main.domain.Enums.Transport.Cargo;
 using fleetfinder.service.main.domain.Enums.Transport.Passenger;
 using fleetfinder.service.main.domain.Enums.Transport.Special;
+using fleetfinder.service.main.infrastructure.Identity;
+using fleetfinder.service.main.infrastructure.Storage;
+using Microsoft.Extensions.Options;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure;
 
 namespace fleetfinder.service.main.infrastructure.Common;
@@ -19,11 +26,13 @@ public static class DependencyInjection
         {
             options.UseNpgsql(connectionString ?? "NotFound", ConfigureNpgsql);
         });
+        services.AddScoped<ICommandDbContext>(sp => sp.GetRequiredService<CommandDbContext>());
         services.AddDbContextPool<QueryDbContext>(options =>
         {
             options.UseNpgsql(connectionString ?? "NotFound", ConfigureNpgsql)
                 .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTrackingWithIdentityResolution);
         });
+        services.AddScoped<IQueryDbContext>(sp => sp.GetRequiredService<QueryDbContext>());
         services.AddDbContext<MigrationDbContext>(options =>
         {
             options.UseNpgsql(connectionString ?? "NotFound", opt =>
@@ -33,6 +42,22 @@ public static class DependencyInjection
                 opt.MigrationsAssembly(typeof(MigrationDbContext).Assembly.GetName().Name);
             });
         });
+
+        services.Configure<S3StorageOptions>(configuration.GetSection(S3StorageOptions.SectionName));
+        services.AddSingleton<IAmazonS3>(sp =>
+        {
+            var options = sp.GetRequiredService<IOptions<S3StorageOptions>>().Value;
+            var config = new AmazonS3Config
+            {
+                ServiceURL = options.ServiceUrl,
+                ForcePathStyle = true,
+                AuthenticationRegion = "us-east-1"
+            };
+            return new AmazonS3Client(options.AccessKey, options.SecretKey, config);
+        });
+        services.AddSingleton<IObjectStorageService, S3ObjectStorageService>();
+
+        services.AddJwtAuthentication(configuration);
 
         return services;
     }

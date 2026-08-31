@@ -25,7 +25,7 @@ public class DemoDataSeeder : IDemoDataSeeder
     private static readonly string[] DemoLogins = { "demo", "carrier1", "carrier2" };
     private const int TransportsPerType = 12;
 
-    private readonly CommandDbContext _db;
+    private readonly ICommandDbContext _db;
     private readonly IPasswordService _passwordService;
     private readonly IObjectStorageService _objectStorage;
     private readonly IHttpClientFactory _httpClientFactory;
@@ -33,7 +33,7 @@ public class DemoDataSeeder : IDemoDataSeeder
     private readonly ILogger<DemoDataSeeder> _logger;
 
     public DemoDataSeeder(
-        CommandDbContext db,
+        ICommandDbContext db,
         IPasswordService passwordService,
         IObjectStorageService objectStorage,
         IHttpClientFactory httpClientFactory,

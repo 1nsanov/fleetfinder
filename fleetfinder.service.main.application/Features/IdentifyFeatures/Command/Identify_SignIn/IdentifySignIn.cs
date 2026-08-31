@@ -1,4 +1,4 @@
-﻿using fleetfinder.service.main.application.Common.Interfaces.Services;
+using fleetfinder.service.main.application.Common.Interfaces.Services;
 
 namespace fleetfinder.service.main.application.Features.IdentifyFeatures.Command.Identify_SignIn;
 
@@ -10,9 +10,9 @@ public static partial class IdentifySignIn
     {
         private readonly IIdentifyService _identifyService;
         private readonly IUserService _userService;
-        private readonly CommandDbContext _commandDbContext; 
+        private readonly ICommandDbContext _commandDbContext; 
 
-        public Handler(IIdentifyService identifyService, IUserService userService, CommandDbContext commandDbContext)
+        public Handler(IIdentifyService identifyService, IUserService userService, ICommandDbContext commandDbContext)
         {
             _identifyService = identifyService;
             _userService = userService;
