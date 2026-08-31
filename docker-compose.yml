@@ -29,7 +29,7 @@ services:
       - Seed__DemoPassword=${SEED_DEMO_PASSWORD:-Demo123!}
     build:
       context: .
-      dockerfile: ./fleetfinder.service.main/Dockerfile
+      dockerfile: ./src/FleetFinder.Api/Dockerfile
     ports:
       - "8100:8080"
     restart: on-failure
@@ -41,7 +41,7 @@ services:
 
   fleetfinder.web:
     build:
-      context: ./fleetfinder.web.spa
+      context: ./src/FleetFinder.Web
       dockerfile: Dockerfile
     container_name: fleetfinder.web
     ports:

@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Bogus" />
+      <PackageReference Include="Konscious.Security.Cryptography.Argon2" />
+      <PackageReference Include="FluentValidation" />
+      <PackageReference Include="FluentValidation.DependencyInjectionExtensions" />
+      <PackageReference Include="MediatR" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" />
+      <PackageReference Include="Microsoft.Extensions.Http" />
+      <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" />
+      <PackageReference Include="Microsoft.IdentityModel.Tokens" />
+      <PackageReference Include="Riok.Mapperly" />
+      <PackageReference Include="Scrutor" />
+      <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\FleetFinder.Domain\FleetFinder.Domain.csproj" />
+    </ItemGroup>
+
+</Project>
