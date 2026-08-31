@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using FleetFinder.Domain.Enums.Common;
-using FleetFinder.Domain.Enums.Order.Cargo;
 using FleetFinder.Domain.Enums.Transport;
 using FleetFinder.Domain.Enums.Transport.Cargo;
 using FleetFinder.Domain.Enums.Transport.Passenger;
@@ -69,10 +68,10 @@ namespace FleetFinder.Infrastructure.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
-                    b.Property<CargoLoadType?>("LoadType")
+                    b.Property<byte?>("LoadType")
                         .HasColumnType("cargo_load_type");
 
-                    b.Property<CargoLoaders?>("Loaders")
+                    b.Property<byte?>("Loaders")
                         .HasColumnType("cargo_loaders");
 
                     b.Property<decimal>("MaxBudget")
@@ -96,7 +95,7 @@ namespace FleetFinder.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<CargoTransportationType?>("TransportationType")
+                    b.Property<byte?>("TransportationType")
                         .HasColumnType("cargo_transportation_type");
 
                     b.Property<CargoType>("Type")

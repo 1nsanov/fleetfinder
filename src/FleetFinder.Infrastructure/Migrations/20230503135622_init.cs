@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using FleetFinder.Domain.Enums.Common;
-using FleetFinder.Domain.Enums.Order.Cargo;
 using FleetFinder.Domain.Enums.Transport;
 using FleetFinder.Domain.Enums.Transport.Cargo;
 using FleetFinder.Domain.Enums.Transport.Passenger;
@@ -72,10 +71,10 @@ namespace FleetFinder.Infrastructure.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Type = table.Column<CargoType>(type: "cargo_type", nullable: false),
                     ShipmentDate = table.Column<DateOnly>(type: "date", nullable: false),
-                    Loaders = table.Column<CargoLoaders>(type: "cargo_loaders", nullable: true),
+                    Loaders = table.Column<byte>(type: "cargo_loaders", nullable: true),
                     BodyKind = table.Column<CargoBodyKind>(type: "cargo_body_kind", nullable: true),
-                    TransportationType = table.Column<CargoTransportationType>(type: "cargo_transportation_type", nullable: true),
-                    LoadType = table.Column<CargoLoadType>(type: "cargo_load_type", nullable: true),
+                    TransportationType = table.Column<byte>(type: "cargo_transportation_type", nullable: true),
+                    LoadType = table.Column<byte>(type: "cargo_load_type", nullable: true),
                     CreateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "timezone('utc', current_timestamp)"),
                     UpdateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "timezone('utc', current_timestamp)"),
                     State = table.Column<State>(type: "state", nullable: false, defaultValueSql: "'actual'::state"),
