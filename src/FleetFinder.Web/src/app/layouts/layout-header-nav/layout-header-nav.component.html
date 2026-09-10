@@ -39,7 +39,7 @@
         <div class="i-c-p flex items-center" (click)="openPopup()">
           <div class="avatar i-c-p"
             [style.background-image]="'url(' + avatarImg + ')'"
-            [ngClass]="{'signin' : identifyService.isAuthenticated(), 'unsignin' : !identifyService.isAuthenticated()}"
+            [ngClass]="{'signin' : identityService.isAuthenticated(), 'unsignin' : !identityService.isAuthenticated()}"
             >
             @if (!avatarImg) {
               <img class="i-c-p" src="../../../assets/icons/icon-avatar.svg" alt="">
@@ -51,7 +51,7 @@
           <div class="popup-triangle-bg">
             <div class="popup-triangle"></div>
           </div>
-          @if (!identifyService.isAuthenticated()) {
+          @if (!identityService.isAuthenticated()) {
             <div class="popup-content">
               <div class="__item-nav" (click)="routePageSignUp()">
                 <p>Регистрация</p>
@@ -61,11 +61,11 @@
               </div>
             </div>
           }
-          @if (identifyService.isAuthenticated()) {
+          @if (identityService.isAuthenticated()) {
             <div class="popup-content">
               <div class="header">
                 <p>Вы вошли как</p>
-                <p class="user-name">{{(!this.identifyService.claims ? "" : this.identifyService.claims.FullName) | abbreviationName}}</p>
+                <p class="user-name">{{(!this.identityService.claims ? "" : this.identityService.claims.FullName) | abbreviationName}}</p>
               </div>
               <div class="separate"></div>
               <div class="__item-nav" (click)="routeTo(namesRoute.PROFILE)">

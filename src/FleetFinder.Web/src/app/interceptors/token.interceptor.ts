@@ -7,26 +7,25 @@ import {NotificationService} from "../services/notification.service";
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
 
-  constructor(private identifyService: IdentityApiService,
+  constructor(private identityService: IdentityApiService,
               private notification: NotificationService) {}
   private refreshTokenInProgress = false;
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<any> {
-    if (this.identifyService.isAuthenticated() && !this.refreshTokenInProgress) {
-      const tokenExpiration = this.identifyService.getTokenExpiration();
+    if (this.identityService.isAuthenticated() && !this.refreshTokenInProgress) {
+      const tokenExpiration = this.identityService.getTokenExpiration();
       const now = new Date().getTime();
       if (tokenExpiration && tokenExpiration < now) {
         this.refreshTokenInProgress = true;
-        return this.identifyService.refreshToken().pipe(
+        return this.identityService.refreshToken().pipe(
           catchError((error) => {
             if (error instanceof HttpErrorResponse){
               this.notification.error("Токен авторизиции истек")
-              this.identifyService.logout().subscribe();
+              this.identityService.logout().subscribe();
             }
             return throwError(error);
           }),
           switchMap((result) => {
             this.refreshTokenInProgress = false;
-            console.log("switchMap")
             const authRequest = request.clone({
               headers: request.headers
                 .set('Authorization', `Bearer ${result.Token.Access}`)
@@ -37,7 +36,7 @@ export class TokenInterceptor implements HttpInterceptor {
       } else {
         const authRequest = request.clone({
           headers: request.headers
-            .set('Authorization', `Bearer ${this.identifyService.getAccessToken()}`)
+            .set('Authorization', `Bearer ${this.identityService.getAccessToken()}`)
         });
         return next.handle(authRequest);
       }

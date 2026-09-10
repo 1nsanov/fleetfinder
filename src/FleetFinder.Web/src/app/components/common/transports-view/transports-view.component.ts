@@ -61,7 +61,7 @@ export class TransportsViewComponent implements OnInit{
   constructor(private cargoTransportApiService: CargoTransportApiService,
               private specialTransportApiService: SpecialTransportApiService,
               private passengerTransportApiService: PassengerTransportApiService,
-              private identifyService: IdentityApiService,
+              private identityService: IdentityApiService,
               private router: Router,
               private transportService: TransportService) {
 
@@ -228,7 +228,7 @@ export class TransportsViewComponent implements OnInit{
 
   setUserFilter() {
     if (this.router.url.includes('my')){
-      this.filterCargoForm.UserFilter = this.identifyService.claims?.Id ?? null;
+      this.filterCargoForm.UserFilter = this.identityService.claims?.Id ?? null;
     }
   }
 

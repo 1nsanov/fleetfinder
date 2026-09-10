@@ -28,7 +28,6 @@ export class ImagePreviewComponent implements OnChanges{
     if(!changes.previewFile) return;
     const file = changes.previewFile.currentValue;
     if (file instanceof File) {
-      console.log(changes.previewFile.currentValue)
       const reader = new FileReader();
       reader.onload = (e: any) => {
         this.innerPreviewImg = e.target.result;

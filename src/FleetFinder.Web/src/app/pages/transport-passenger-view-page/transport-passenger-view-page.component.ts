@@ -40,7 +40,7 @@ export class TransportPassengerViewPageComponent {
   constructor(private route: ActivatedRoute,
               private router: Router,
               private passengerTransportService: PassengerTransportApiService,
-              private identifyService: IdentityApiService,
+              private identityService: IdentityApiService,
               public transportService: TransportService) {
   }
 
@@ -79,6 +79,6 @@ export class TransportPassengerViewPageComponent {
   }
 
   get isMyTransport() {
-    return this.transport?.UserId === this.identifyService.claims?.Id;
+    return this.transport?.UserId === this.identityService.claims?.Id;
   }
 }

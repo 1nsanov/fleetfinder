@@ -8,17 +8,17 @@ import {NotificationService} from "../services/notification.service";
   providedIn: 'root'
 })
 export class AuthGuard  {
-  constructor(private identifyService: IdentityApiService,
+  constructor(private identityService: IdentityApiService,
               private router: Router,
               private notification: NotificationService) {
   }
 
   canActivate(): boolean {
-    if (!this.identifyService.isAuthenticated()){
+    if (!this.identityService.isAuthenticated()){
       this.router.navigate([`/${namesRoute.SIGN_IN}`])
         .then(() => this.notification.notify('Для доступа к этой странице необходимо выполнить вход в систему.'))
     }
 
-    return this.identifyService.isAuthenticated();
+    return this.identityService.isAuthenticated();
   }
 }

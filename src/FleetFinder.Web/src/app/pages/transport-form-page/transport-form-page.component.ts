@@ -116,7 +116,7 @@ export class TransportFormPageComponent implements OnInit{
               private cargoTransportApiService: CargoTransportApiService,
               private passengerTransportApiService: PassengerTransportApiService,
               private specialTransportApiService: SpecialTransportApiService,
-              private identifyService: IdentityApiService,
+              private identityService: IdentityApiService,
               private imageService: ImageApiService,
               private notification: NotificationService,
               private route: ActivatedRoute,
@@ -136,7 +136,7 @@ export class TransportFormPageComponent implements OnInit{
         switch (this.currentType){
           case TransportType.Cargo:
             this.cargoTransportApiService.get(parseInt(id)).subscribe((res) => {
-              if (res.UserId === this.identifyService.claims?.Id){
+              if (res.UserId === this.identityService.claims?.Id){
                 this.initCargoInfoFormBuilder(res);
                 this.initFormBuilder(res);
               }
@@ -146,7 +146,7 @@ export class TransportFormPageComponent implements OnInit{
             break;
           case TransportType.Passenger:
             this.passengerTransportApiService.get(parseInt(id)).subscribe((res) => {
-              if (res.UserId === this.identifyService.claims?.Id) {
+              if (res.UserId === this.identityService.claims?.Id) {
                 this.initPassengerInfoFormBuilder(res);
                 this.initFormBuilder(res);
               } else
@@ -155,7 +155,7 @@ export class TransportFormPageComponent implements OnInit{
             break;
           case TransportType.Special:
             this.specialTransportApiService.get(parseInt(id)).subscribe((res) => {
-              if (res.UserId === this.identifyService.claims?.Id) {
+              if (res.UserId === this.identityService.claims?.Id) {
                 this.initSpecialInfoFormBuilder(res);
                 this.initFormBuilder(res);
               }

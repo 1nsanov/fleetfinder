@@ -19,7 +19,7 @@ export class SignInPageComponent implements OnInit{
   form: FormGroup<SignInModel>;
   isLoad = false;
 
-  constructor(private identifyService: IdentityApiService,
+  constructor(private identityService: IdentityApiService,
               private router: Router,
               private notification: NotificationService,
               private formBuilder: FormBuilder,
@@ -35,7 +35,7 @@ export class SignInPageComponent implements OnInit{
     if (this.form.valid){
       this.isLoad = true;
       const request = this.form.value as ISignInRequest;
-      this.identifyService.signIn(request).subscribe(async () => {
+      this.identityService.signIn(request).subscribe(async () => {
         await this.timeoutService.wait(100);
         this.isLoad = false;
         this.router.navigate([`/${namesRoute.HOME}`]).then(() => {

@@ -11,11 +11,11 @@ import {IdentityApiService} from "./api/Identity/identity.api.service";
 })
 export class AppComponent {
   constructor(public loaderService: GlobalLoaderService,
-              private identifyService: IdentityApiService) {
-    identifyService.getClaims().subscribe(() => {
-      const name = identifyService.claims?.FullName;
+              private identityService: IdentityApiService) {
+    identityService.getClaims().subscribe(() => {
+      const name = identityService.claims?.FullName;
       if (name)
-        loaderService.changeTitle(`Приветcтвуем вас, <br>${name}`);
+        loaderService.changeTitle(`Приветствуем вас, <br>${name}`);
       else
         setTimeout(() => loaderService.stop(), 250);
     }, error => setTimeout(() => loaderService.stop(), 250))

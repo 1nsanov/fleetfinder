@@ -31,7 +31,7 @@ export class TransportSpecialViewPageComponent {
   constructor(private route: ActivatedRoute,
               private router: Router,
               private specialTransportService: SpecialTransportApiService,
-              private identifyService: IdentityApiService,
+              private identityService: IdentityApiService,
               private transportService: TransportService) {
   }
 
@@ -67,6 +67,6 @@ export class TransportSpecialViewPageComponent {
   }
 
   get isMyTransport() {
-    return this.transport?.UserId === this.identifyService.claims?.Id;
+    return this.transport?.UserId === this.identityService.claims?.Id;
   }
 }

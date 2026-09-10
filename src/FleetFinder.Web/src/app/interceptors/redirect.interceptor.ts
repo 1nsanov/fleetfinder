@@ -9,7 +9,7 @@ import {IdentityApiService} from "../api/Identity/identity.api.service";
 export class RedirectInterceptor implements HttpInterceptor {
 
   constructor(private router: Router,
-              private identifyService: IdentityApiService) {}
+              private identityService: IdentityApiService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(
@@ -17,7 +17,7 @@ export class RedirectInterceptor implements HttpInterceptor {
         event => {},
         error => {
           if (error.status === 401) {
-            this.identifyService.writeToken(null);
+            this.identityService.writeToken(null);
             this.router.navigate([`/${namesRoute.HOME}`]).then(() => window.location.reload());
           }
         }

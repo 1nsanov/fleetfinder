@@ -12,7 +12,7 @@ import {IdentityApiService} from "../Identity/identity.api.service";
 export class ImageApiService {
   url : string = environment.apiUrl + "image"
   constructor(private http: HttpClient,
-              private identifyService: IdentityApiService) { }
+              private identityService: IdentityApiService) { }
 
   async upload(request: ImagePostRequest) : Promise<string[]> {
     if (request.Files.length === 0) return [];
@@ -38,7 +38,7 @@ export class ImageApiService {
       method: 'POST',
       body: parentFormData,
       headers: {
-        'Authorization': `Bearer ${this.identifyService.getAccessToken()}`
+        'Authorization': `Bearer ${this.identityService.getAccessToken()}`
       },
     });
 

@@ -35,7 +35,7 @@ export class TransportCargoViewPageComponent implements OnInit{
   constructor(private route: ActivatedRoute,
               private router: Router,
               private cargoTransportService: CargoTransportApiService,
-              private identifyService: IdentityApiService,
+              private identityService: IdentityApiService,
               private transportService: TransportService) {
   }
 
@@ -74,6 +74,6 @@ export class TransportCargoViewPageComponent implements OnInit{
   }
 
   get isMyTransport() {
-    return this.transport?.UserId === this.identifyService.claims?.Id;
+    return this.transport?.UserId === this.identityService.claims?.Id;
   }
 }

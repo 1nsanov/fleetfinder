@@ -14,7 +14,7 @@ import {IdentityApiService} from "../../api/Identity/identity.api.service";
 })
 export class LayoutHeaderNavComponent implements OnInit, OnDestroy{
   constructor(private router: Router,
-              public identifyService: IdentityApiService) {
+              public identityService: IdentityApiService) {
   }
 
   currentNavTab: NavTab | null = null;
@@ -170,7 +170,7 @@ export class LayoutHeaderNavComponent implements OnInit, OnDestroy{
 
   logout() {
     this.isLoadLogout = true;
-    this.identifyService.logout().subscribe();
+    this.identityService.logout().subscribe();
   }
 
 
@@ -197,6 +197,6 @@ export class LayoutHeaderNavComponent implements OnInit, OnDestroy{
   }
 
   get avatarImg() {
-    return this.identifyService.claims?.ImageUrl ?? '';
+    return this.identityService.claims?.ImageUrl ?? '';
   }
 }

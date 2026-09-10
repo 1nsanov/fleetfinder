@@ -48,7 +48,7 @@ export class ProfilePageComponent implements OnInit{
   isLoadSave = false;
   isLoadChangePassword = false;
 
-  constructor(public identifyService: IdentityApiService,
+  constructor(public identityService: IdentityApiService,
               private userProfileService: UserProfileApiService,
               private imageService: ImageApiService,
               private formBuilder: FormBuilder,
@@ -152,7 +152,7 @@ export class ProfilePageComponent implements OnInit{
               return throwError(error);
             })
           ).subscribe(() => {
-            this.identifyService.getClaims().subscribe();
+            this.identityService.getClaims().subscribe();
             this.contact = request.Contact as Contact;
             this.contact.Title = !!request.Organization ? request.Organization : `${request.FullName.First} ${request.FullName.Second} ${request.FullName.Surname ?? ''}`
             this.contact.ImageUrl = this.previewImage;

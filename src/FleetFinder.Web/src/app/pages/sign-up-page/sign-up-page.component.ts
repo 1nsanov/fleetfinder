@@ -27,7 +27,7 @@ export class SignUpPageComponent implements OnInit{
     Surname: "",
   }
 
-  constructor(private identifyService: IdentityApiService,
+  constructor(private identityService: IdentityApiService,
               private notification: NotificationService,
               private timeoutService: TimeoutService,
               private router: Router,
@@ -58,7 +58,7 @@ export class SignUpPageComponent implements OnInit{
     if (this.form.valid){
       this.isLoad = true;
       const request = this.form.value as ISignUpRequest;
-      this.identifyService.signUp(request).pipe(
+      this.identityService.signUp(request).pipe(
         catchError((error: HttpErrorResponse) => {
           this.isLoad = false;
           this.notification.errorFromHttp(error);

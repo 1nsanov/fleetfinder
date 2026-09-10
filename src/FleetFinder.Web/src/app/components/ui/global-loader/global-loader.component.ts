@@ -13,7 +13,7 @@ export class GlobalLoaderComponent {
   loading = true;
   isAnimationTitle = false;
   constructor(public loaderService: GlobalLoaderService,
-              public identifyService: IdentityApiService) {
+              public identityService: IdentityApiService) {
     this.loaderService.loading$.subscribe(() => {
       setTimeout(() => this.loading = this.loaderService.loading$.value, 500)
     })
