@@ -4,6 +4,18 @@ Marketplace for cargo, passenger, and special-machinery listings.
 
 Stack: ASP.NET Core API (.NET 10), Angular 22 SPA, PostgreSQL, MinIO (S3-compatible storage).
 
+![Landing](docs/screenshots/landing.png)
+![Listings](docs/screenshots/listings.png)
+![Listing card](docs/screenshots/listing.png)
+![Create listing](docs/screenshots/create.png)
+![Profile](docs/screenshots/profile.png)
+
+## What it does
+
+Search, filter, and publish cargo, passenger, and special-machinery ads with photos and a demo-seeded catalog.
+
+This is a portfolio refresh of a 2023 diploma project, not a greenfield rewrite: Clean Architecture + CQRS, Argon2id password hashing, Problem Details, and a one-command Docker Compose demo.
+
 ## Architecture
 
 Clean Architecture + CQRS (MediatR). Feature folders are vertical slices (create / update / delete / get / list per transport type).
