@@ -24,7 +24,7 @@
         {
             return _serviceProvider.GetService<TService>()
                 ?? throw new InvalidOperationException(
-                    $"Mapper from type {typeof(TService).GenericTypeArguments[0]} to {typeof(TService).GenericTypeArguments[1]} is not registred.");
+                    $"Mapper from type {typeof(TService).GenericTypeArguments[0]} to {typeof(TService).GenericTypeArguments[1]} is not registered.");
         }
     }
 }

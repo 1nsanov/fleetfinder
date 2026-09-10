@@ -25,4 +25,8 @@
       <ProjectReference Include="..\FleetFinder.Domain\FleetFinder.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <InternalsVisibleTo Include="FleetFinder.Application.Tests" />
+    </ItemGroup>
+
 </Project>

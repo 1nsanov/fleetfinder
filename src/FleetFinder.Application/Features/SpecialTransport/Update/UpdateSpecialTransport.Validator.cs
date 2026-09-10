@@ -19,21 +19,21 @@ public static partial class UpdateSpecialTransport
             public RequestValidator()
             {
                 RuleFor(x => x.Title)
-                    .NotEmpty().WithName("Заголовок").WithMessage("Поле '{PropertyName}' не может быть пустым.")
-                    .MaximumLength(100).WithName("Заголовок")
-                    .WithMessage("Поле '{PropertyName}' не может превышать {MaxLength} символов.");
+                    .NotEmpty().WithName("Title").WithMessage(ValidationMessages.NotEmpty)
+                    .MaximumLength(100).WithName("Title")
+                    .WithMessage(ValidationMessages.MaxLength);
 
                 RuleFor(x => x.Brand)
-                    .MaximumLength(50).WithName("Бренд")
-                    .WithMessage("Поле '{PropertyName}' не может превышать {MaxLength} символов.")
+                    .MaximumLength(50).WithName("Brand")
+                    .WithMessage(ValidationMessages.MaxLength)
                     .Unless(x => string.IsNullOrEmpty(x.Brand));
 
                 RuleFor(x => x.Price)
                     .SetValidator(new PriceDtoValidator());
 
                 RuleFor(x => x.Description)
-                    .MaximumLength(1000).WithName("Описание")
-                    .WithMessage("Поле '{PropertyName}' не может превышать {MaxLength} символов.")
+                    .MaximumLength(1000).WithName("Description")
+                    .WithMessage(ValidationMessages.MaxLength)
                     .Unless(x => string.IsNullOrEmpty(x.Description));
 
                 RuleFor(x => x.Images)
@@ -46,17 +46,17 @@ public static partial class UpdateSpecialTransport
             public PriceDtoValidator()
             {
                 RuleFor(x => x.PerHour)
-                    .GreaterThan(0).WithName("Цена за час").WithMessage("Поле '{PropertyName}' должно быть больше 0.")
+                    .GreaterThan(0).WithName("Price per hour").WithMessage(ValidationMessages.GreaterThanZero)
                     .Unless(x => x is null);
 
                 RuleFor(x => x.PerShift)
-                    .GreaterThan(0).WithName("Цена за смену")
-                    .WithMessage("Поле '{PropertyName}' должно быть больше 0.")
+                    .GreaterThan(0).WithName("Price per shift")
+                    .WithMessage(ValidationMessages.GreaterThanZero)
                     .Unless(x => x is null);
 
                 RuleFor(x => x.PerKm)
-                    .GreaterThan(0).WithName("Цена за километр")
-                    .WithMessage("Поле '{PropertyName}' должно быть больше 0.")
+                    .GreaterThan(0).WithName("Price per kilometer")
+                    .WithMessage(ValidationMessages.GreaterThanZero)
                     .Unless(x => x is null);
             }
         }
@@ -68,8 +68,8 @@ public static partial class UpdateSpecialTransport
                 RuleFor(x => x)
                     .ForEach(image => 
                     {
-                        image.NotEmpty().WithMessage("Ссылка на изображение не может быть пустой.")
-                            .Matches(@"^https?://[^\s/$.?#].[^\s]*$").WithMessage("Ссылка на изображение должна быть корректной URL-адресом.");
+                        image.NotEmpty().WithMessage(ValidationMessages.ImageUrlRequired)
+                            .Matches(@"^https?://[^\s/$.?#].[^\s]*$").WithMessage(ValidationMessages.ImageUrlInvalid);
                     })
                     .Unless(x => x.Count == 0);
             }

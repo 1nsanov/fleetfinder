@@ -4,6 +4,9 @@ using FleetFinder.Application.Features.Images.Upload;
 
 namespace FleetFinder.Api.Controllers;
 
+/// <summary>
+/// Object-storage uploads and deletes for listing and profile images.
+/// </summary>
 [ApiController]
 [Route("api/image")]
 public class ImageController : ControllerBase
@@ -15,6 +18,13 @@ public class ImageController : ControllerBase
         _mediator = mediator;
     }
 
+    /// <summary>
+    /// Uploads one or more image files to the given storage folder.
+    /// </summary>
+    /// <param name="folder">Target storage folder.</param>
+    /// <param name="files">Image files.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>Public URLs of uploaded images.</returns>
     [HttpPost]
     public async Task<List<string>> UploadImage(
         [FromForm] StorageFolder folder,
@@ -31,6 +41,12 @@ public class ImageController : ControllerBase
         return await _mediator.Send(new UploadImage.Command(request), cancellationToken);
     }
 
+    /// <summary>
+    /// Deletes images from the given storage folder by URL.
+    /// </summary>
+    /// <param name="folder">Storage folder.</param>
+    /// <param name="url">Image URLs to delete.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
     [HttpDelete]
     public async Task<IActionResult> DeleteImage(
         [FromQuery] StorageFolder folder,

@@ -8,17 +8,15 @@ public static partial class ChangePassword
         {
             RuleFor(cmd => cmd.RequestDto).SetValidator(new RequestValidator());
         }
-        
+
         internal class RequestValidator : AbstractValidator<RequestDto>
         {
             public RequestValidator()
             {
                 RuleFor(dto => dto.NewPassword).NotEmpty()
-                    .MinimumLength(8).WithName("Новый пароль").WithMessage("Поле '{PropertyName}' не может быть длиной не менее {MinLength} символов.")
-                    .MaximumLength(100).WithMessage("Поле '{PropertyName}' не может превышать {MaxLength} символов.");
+                    .MinimumLength(8).WithName("New password").WithMessage(ValidationMessages.MinLength)
+                    .MaximumLength(100).WithMessage(ValidationMessages.MaxLength);
             }
         }
     }
-
-    
 }

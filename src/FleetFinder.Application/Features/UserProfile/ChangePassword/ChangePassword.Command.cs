@@ -25,10 +25,10 @@ public static partial class ChangePassword
                          ?? throw new EntityNotFoundException(request.UserId);
 
             if (!_passwordService.VerifyPassword(request.RequestDto.CurrentPassword, entity.Password))
-                throw new ValidationException("Неверный текущий пароль.");
+                throw new ValidationException("Current password is incorrect.");
             
             if (request.RequestDto.CurrentPassword == request.RequestDto.NewPassword)
-                throw new ValidationException("Текущий и новый пароль совпадают.");
+                throw new ValidationException("Current password and new password must not match.");
             
             entity.Password = _passwordService.HashPassword(request.RequestDto.NewPassword);
             

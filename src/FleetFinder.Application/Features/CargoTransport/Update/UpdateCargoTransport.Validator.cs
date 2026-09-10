@@ -19,21 +19,21 @@ public static partial class UpdateCargoTransport
             public RequestValidator()
             {
                 RuleFor(x => x.Title)
-                    .NotEmpty().WithName("Заголовок").WithMessage("Поле '{PropertyName}' не может быть пустым.")
-                    .MaximumLength(100).WithName("Заголовок")
-                    .WithMessage("Поле '{PropertyName}' не может превышать {MaxLength} символов.");
+                    .NotEmpty().WithName("Title").WithMessage(ValidationMessages.NotEmpty)
+                    .MaximumLength(100).WithName("Title")
+                    .WithMessage(ValidationMessages.MaxLength);
 
                 RuleFor(x => x.Brand)
-                    .MaximumLength(50).WithName("Бренд")
-                    .WithMessage("Поле '{PropertyName}' не может превышать {MaxLength} символов.")
+                    .MaximumLength(50).WithName("Brand")
+                    .WithMessage(ValidationMessages.MaxLength)
                     .Unless(x => string.IsNullOrEmpty(x.Brand));
 
                 RuleFor(x => x.Price)
                     .SetValidator(new PriceDtoValidator());
 
                 RuleFor(x => x.Description)
-                    .MaximumLength(1000).WithName("Описание")
-                    .WithMessage("Поле '{PropertyName}' не может превышать {MaxLength} символов.")
+                    .MaximumLength(1000).WithName("Description")
+                    .WithMessage(ValidationMessages.MaxLength)
                     .Unless(x => string.IsNullOrEmpty(x.Description));
 
                 RuleFor(x => x.Body)
@@ -49,17 +49,17 @@ public static partial class UpdateCargoTransport
             public PriceDtoValidator()
             {
                 RuleFor(x => x.PerHour)
-                    .GreaterThan(0).WithName("Цена за час").WithMessage("Поле '{PropertyName}' должно быть больше 0.")
+                    .GreaterThan(0).WithName("Price per hour").WithMessage(ValidationMessages.GreaterThanZero)
                     .Unless(x => x is null);
 
                 RuleFor(x => x.PerShift)
-                    .GreaterThan(0).WithName("Цена за смену")
-                    .WithMessage("Поле '{PropertyName}' должно быть больше 0.")
+                    .GreaterThan(0).WithName("Price per shift")
+                    .WithMessage(ValidationMessages.GreaterThanZero)
                     .Unless(x => x is null);
 
                 RuleFor(x => x.PerKm)
-                    .GreaterThan(0).WithName("Цена за километр")
-                    .WithMessage("Поле '{PropertyName}' должно быть больше 0.")
+                    .GreaterThan(0).WithName("Price per kilometer")
+                    .WithMessage(ValidationMessages.GreaterThanZero)
                     .Unless(x => x is null);
             }
         }
@@ -69,24 +69,24 @@ public static partial class UpdateCargoTransport
             public BodyDtoValidator()
             {
                 RuleFor(x => x.LoadCapacity)
-                    .GreaterThan(0).WithName("Грузоподъемность")
-                    .WithMessage("Поле '{PropertyName}' должно быть больше 0.")
+                    .GreaterThan(0).WithName("Load capacity")
+                    .WithMessage(ValidationMessages.GreaterThanZero)
                     .Unless(x => x is null);
                 
                 RuleFor(x => x.Length)
-                    .GreaterThan(0).WithName("Длина").WithMessage("Поле '{PropertyName}' должно быть больше 0.")
+                    .GreaterThan(0).WithName("Length").WithMessage(ValidationMessages.GreaterThanZero)
                     .Unless(x => x is null);
 
                 RuleFor(x => x.Width)
-                    .GreaterThan(0).WithName("Ширина").WithMessage("Поле '{PropertyName}' должно быть больше 0.")
+                    .GreaterThan(0).WithName("Width").WithMessage(ValidationMessages.GreaterThanZero)
                     .Unless(x => x is null);
 
                 RuleFor(x => x.Height)
-                    .GreaterThan(0).WithName("Высота").WithMessage("Поле '{PropertyName}' должно быть больше 0.")
+                    .GreaterThan(0).WithName("Height").WithMessage(ValidationMessages.GreaterThanZero)
                     .Unless(x => x is null);
 
                 RuleFor(x => x.Volume)
-                    .GreaterThan(0).WithName("Объем").WithMessage("Поле '{PropertyName}' должно быть больше 0.")
+                    .GreaterThan(0).WithName("Volume").WithMessage(ValidationMessages.GreaterThanZero)
                     .Unless(x => x is null);
             }
         }
@@ -98,8 +98,8 @@ public static partial class UpdateCargoTransport
                 RuleFor(x => x)
                     .ForEach(image => 
                     {
-                        image.NotEmpty().WithMessage("Ссылка на изображение не может быть пустой.")
-                            .Matches(@"^https?://[^\s/$.?#].[^\s]*$").WithMessage("Ссылка на изображение должна быть корректной URL-адресом.");
+                        image.NotEmpty().WithMessage(ValidationMessages.ImageUrlRequired)
+                            .Matches(@"^https?://[^\s/$.?#].[^\s]*$").WithMessage(ValidationMessages.ImageUrlInvalid);
                     })
                     .Unless(x => x.Count == 0);
             }
