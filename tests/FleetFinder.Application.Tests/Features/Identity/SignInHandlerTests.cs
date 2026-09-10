@@ -1,4 +1,3 @@
-using FleetFinder.Application.Common.Exceptions;
 using FleetFinder.Application.Features.Identity.SignIn;
 using FleetFinder.Application.Services;
 using FleetFinder.Application.Tests.Fixtures;
@@ -46,6 +45,6 @@ public class SignInHandlerTests : IClassFixture<HandlerTestFixture>
             new SignIn.Command(new SignIn.RequestDto("demo", "WrongPass1")),
             CancellationToken.None);
 
-        await act.Should().ThrowAsync<EntityNotFoundException>();
+        await act.Should().ThrowAsync<UnauthorizedAccessException>();
     }
 }

@@ -1,15 +1,17 @@
 using FleetFinder.Application.Common.Enums;
 using FleetFinder.Application.Features.Images.Delete;
 using FleetFinder.Application.Features.Images.Upload;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FleetFinder.Api.Controllers;
 
 /// <summary>
 /// Object-storage uploads and deletes for listing and profile images.
 /// </summary>
+[Authorize]
 [ApiController]
 [Route("api/image")]
-public class ImageController : ControllerBase
+public class ImageController : HeadersController
 {
     private readonly IMediator _mediator;
 

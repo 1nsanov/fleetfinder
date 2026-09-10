@@ -61,11 +61,14 @@ public class IdentityService : IIdentityService
     {
         var tokenValidationParameters = new TokenValidationParameters
         {
-            ValidateAudience = false,
-            ValidateIssuer = false,
+            ValidateAudience = true,
+            ValidateIssuer = true,
+            ValidIssuer = _jwtOptions.Issuer,
+            ValidAudience = _jwtOptions.Audience,
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.Key)),
-            ValidateLifetime = validateLifetime
+            ValidateLifetime = validateLifetime,
+            ClockSkew = TimeSpan.Zero
         };
 
         var tokenHandler = new JwtSecurityTokenHandler();

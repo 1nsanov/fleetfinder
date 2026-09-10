@@ -70,12 +70,21 @@ public static class HostingExtensions
             });
         });
         
+        const int maxUploadFiles = 5;
+        const long maxFileBytes = 10 * 1024 * 1024;
+        const long maxMultipartBytes = maxUploadFiles * maxFileBytes;
+
+        builder.WebHost.ConfigureKestrel(options =>
+        {
+            options.Limits.MaxRequestBodySize = maxMultipartBytes;
+        });
+
         builder.Services.Configure<FormOptions>(o =>
         {
             o.ValueCountLimit = 10;
-            o.ValueLengthLimit = int.MaxValue;  
-            o.MultipartBodyLengthLimit = long.MaxValue;
-        });  
+            o.ValueLengthLimit = 1024 * 1024;
+            o.MultipartBodyLengthLimit = maxMultipartBytes;
+        });
         
         return builder.Build();
     }

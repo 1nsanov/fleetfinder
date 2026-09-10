@@ -1,6 +1,4 @@
-using FleetFinder.Application.Common.Exceptions;
 using FleetFinder.Application.Abstractions.Identity;
-using FleetFinder.Application.Abstractions.Storage;
 using FleetFinder.Domain.Users;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,7 +19,7 @@ public class UserService : IUserService
     {
         var user = await _queryDbContext.User.FirstOrDefaultAsync(u => u.Login == login, cancellationToken: cancellationToken);
         if (user is null || !_passwordService.VerifyPassword(password, user.Password))
-            throw new EntityNotFoundException($"User with login '{login}' not found");
+            throw new UnauthorizedAccessException("Invalid login or password");
 
         return user;
     }
