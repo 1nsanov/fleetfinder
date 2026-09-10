@@ -47,4 +47,21 @@ public class SignInHandlerTests : IClassFixture<HandlerTestFixture>
 
         await act.Should().ThrowAsync<UnauthorizedAccessException>();
     }
+
+    [Fact]
+    public async Task Handle_ThrowsUnauthorized_WhenLoginIsUnknown()
+    {
+        await using var db = _fx.CreateDb();
+        var handler = new SignIn.Handler(
+            _fx.CreateIdentityService(),
+            new UserService(db, _fx.PasswordService),
+            db);
+
+        var act = () => handler.Handle(
+            new SignIn.Command(new SignIn.RequestDto("missing", "Demo123!")),
+            CancellationToken.None);
+
+        await act.Should().ThrowAsync<UnauthorizedAccessException>()
+            .WithMessage("Invalid login or password");
+    }
 }

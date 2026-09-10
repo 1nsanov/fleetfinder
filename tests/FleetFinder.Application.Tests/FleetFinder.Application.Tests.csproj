@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="FluentAssertions" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
@@ -23,6 +24,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\FleetFinder.Application\FleetFinder.Application.csproj" />
     <ProjectReference Include="..\..\src\FleetFinder.Domain\FleetFinder.Domain.csproj" />
+    <ProjectReference Include="..\..\src\FleetFinder.Api\FleetFinder.Api.csproj" />
   </ItemGroup>
 
 </Project>

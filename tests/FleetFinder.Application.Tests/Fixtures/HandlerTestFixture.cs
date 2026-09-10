@@ -1,5 +1,6 @@
 using FleetFinder.Application.Abstractions;
 using FleetFinder.Application.Abstractions.Identity;
+using FleetFinder.Application.Abstractions.Persistence;
 using FleetFinder.Application.Common.Options;
 using FleetFinder.Application.Services;
 using FleetFinder.Application.Services.Models;
@@ -64,6 +65,18 @@ public sealed class HandlerTestFixture : IAsyncLifetime
             ExpiryTime = DateTime.UtcNow.AddMinutes(15)
         });
         return identity;
+    }
+
+    public IdentityService CreateRealIdentityService(IQueryDbContext db)
+    {
+        return new IdentityService(db, Options.Create(new JwtOptions
+        {
+            Key = "integration-test-jwt-key-32bytes!",
+            Issuer = "FleetFinder.Tests",
+            Audience = "FleetFinder.Tests",
+            AccessTokenLifetimeMinutes = 15,
+            RefreshTokenLifetimeDays = 7
+        }));
     }
 
     public IMapper CreateMapper<TSource, TDestination>(Func<TSource, TDestination> map)
