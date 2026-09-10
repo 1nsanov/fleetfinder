@@ -48,8 +48,10 @@ docker compose up --build -d
 |---|---|
 | Web UI | http://localhost:4200 |
 | API | http://localhost:8100 |
-| Swagger (Development) | http://localhost:8100/swagger |
+| Swagger | http://localhost:8100/swagger |
 | MinIO console | http://localhost:9011 |
+
+Swagger UI is served only when `ASPNETCORE_ENVIRONMENT=Development` (the Compose default).
 
 Stop: `make down` or `docker compose down`. Remove volumes: `make clean`.
 
