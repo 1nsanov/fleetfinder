@@ -4,7 +4,7 @@
       "commandName": "DockerCompose",
       "commandVersion": "1.0",
       "serviceActions": {
-        "fleetfinder.service.main": "StartDebugging"
+        "fleetfinder.api": "StartDebugging"
       }
     }
   }

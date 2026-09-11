@@ -1,0 +1,76 @@
+<article class="block-info __1 flex flex-col">
+  <h2>Получите с нами подходящее транспортное решение</h2>
+  <figure>
+    <section>
+      <p>Необходимо перевезти грузы или пассажиров с комфортом и стилем?</p>
+      <app-button size="big" theme="blue" (click)="routeToTransports()">
+        Поиск
+      </app-button>
+    </section>
+    <div class="image">
+    </div>
+  </figure>
+</article>
+
+<article class="block-info __2 flex flex-col">
+  <h2>Найдите идеальное решение для аренды спецтехники</h2>
+  <figure>
+    <section>
+      <p>Необходимо арендовать тяжелую технику или транспортные средства? </p>
+      <app-button size="big" theme="blue" (click)="routeToTransports()">
+        Поиск
+      </app-button>
+    </section>
+    <div class="image">
+    </div>
+  </figure>
+</article>
+
+<article class="block-info __4 flex flex-col">
+  <h2>Широкий ассортимент транспортных средств</h2>
+  <figure>
+    <h3>Грузовой транспорт</h3>
+    <section class="cargo">
+      @for (item of cargo; track item) {
+        <div
+          class="box-transport"
+          >
+          <div class="image">
+            <img [src]="'../../../assets/icons/transport/cargo/icon-cargo-' + item.Icon + '.svg'" alt="">
+          </div>
+          <p>{{item.Text}}</p>
+        </div>
+      }
+    </section>
+  </figure>
+  <figure>
+    <h3>Пассажирский транспорт</h3>
+    <section class="passenger">
+      @for (item of passenger; track item) {
+        <div
+          class="box-transport"
+          >
+          <div class="image">
+            <img [src]="'../../../assets/icons/transport/passenger/icon-passenger-' + item.Icon + '.svg'" alt="">
+          </div>
+          <p>{{item.Text}}</p>
+        </div>
+      }
+    </section>
+  </figure>
+  <figure>
+    <h3>Спецтехника</h3>
+    <section class="special">
+      @for (item of special; track item) {
+        <div
+          class="box-transport"
+          >
+          <div class="image">
+            <img [src]="'../../../assets/icons/transport/special/icon-' + item.Icon + '.png'" alt="">
+          </div>
+          <p>{{item.Text}}</p>
+        </div>
+      }
+    </section>
+  </figure>
+</article>
