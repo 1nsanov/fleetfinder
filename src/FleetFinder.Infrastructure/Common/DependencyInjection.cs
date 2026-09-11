@@ -52,7 +52,7 @@ public static class DependencyInjection
             {
                 ServiceURL = options.ServiceUrl,
                 ForcePathStyle = true,
-                AuthenticationRegion = "us-east-1"
+                AuthenticationRegion = options.Region
             };
             return new AmazonS3Client(options.AccessKey, options.SecretKey, config);
         });

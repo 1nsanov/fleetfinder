@@ -21,5 +21,8 @@ public class S3StorageOptions
     [Required]
     public string Bucket { get; set; } = null!;
 
+    [Required]
+    public string Region { get; set; } = "us-east-1";
+
     public Dictionary<string, string> Folders { get; set; } = new();
 }
