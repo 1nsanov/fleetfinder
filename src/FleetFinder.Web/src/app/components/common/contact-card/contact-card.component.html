@@ -1,0 +1,43 @@
+@if (contact) {
+  <div class="contact-card">
+    <div class="header flex gap-3 items-center">
+      <div class="image" [style.background-image]="'url(' + contact.ImageUrl + ')'">
+        @if (!contact.ImageUrl) {
+          <img ngSrc="../../../../assets/icons/icon-image.svg" alt="" height="64" width="64">
+        }
+      </div>
+      <div class="font-bold">{{contact.Title}}</div>
+    </div>
+    @if (mode !== 'short') {
+      <div class="phones flex flex-col">
+        @if (contact.PhoneTelegram) {
+          <div class="phone">
+            <img ngSrc="../../../../assets/icons/icon-telegram.svg" alt="" height="16" width="16">
+            <p>{{contact.PhoneTelegram | phone}}</p>
+          </div>
+        }
+        @if (contact.PhoneViber) {
+          <div class="phone">
+            <img ngSrc="../../../../assets/icons/icon-viber.svg" alt="" height="16" width="16">
+            <p>{{contact.PhoneViber | phone}}</p>
+          </div>
+        }
+        @if (contact.PhoneWhatsapp) {
+          <div class="phone">
+            <img ngSrc="../../../../assets/icons/icon-whatsapp.svg" alt="" height="16" width="16">
+            <p>{{contact.PhoneWhatsapp | phone}}</p>
+          </div>
+        }
+        @if (contact.WorkingMode) {
+          <div class="separator"></div>
+        }
+        @if (contact.WorkingMode) {
+          <div class="phone">
+            <img ngSrc="../../../../assets/icons/icon-access-time.svg" alt="" height="16" width="16">
+            <p>{{contact.WorkingMode}}</p>
+          </div>
+        }
+      </div>
+    }
+  </div>
+}

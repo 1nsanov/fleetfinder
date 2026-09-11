@@ -1,0 +1,29 @@
+<h2 class="title-page">{{titlePage}}</h2>
+<div class="btn-tab-nav">
+  <div class="__item cargo" (click)="routeTo(namesRoute.TRANSPORTS_CARGO)" [ngClass]="{'active' : currentTab === tab.Cargo}">
+    <p>Грузовой</p>
+  </div>
+  <div class="__item passenger" (click)="routeTo(namesRoute.TRANSPORTS_PASSENGER)"  [ngClass]="{'active' : currentTab === tab.Passenger}">
+    <p>Пассажирский</p>
+  </div>
+  <div class="__item special" (click)="routeTo(namesRoute.TRANSPORTS_SPECIAL)"  [ngClass]="{'active' : currentTab === tab.Special}">
+    <p>Спецтехника</p>
+  </div>
+</div>
+
+
+@if (!currentTab) {
+  <div class="select-question flex flex-col justify-center items-center">
+    <p class="text-center font-bold mb-8" style="font-size: 32px;">
+      Выберите вид транспорта
+    </p>
+    <img src="../../../assets/icons/icon-pointer-question.svg" alt="">
+  </div>
+}
+
+<router-outlet></router-outlet>
+
+
+
+
+

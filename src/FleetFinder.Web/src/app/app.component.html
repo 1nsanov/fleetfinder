@@ -1,0 +1,12 @@
+﻿<app-global-loader/>
+
+<app-notification/>
+
+<app-layout-base>
+
+  @if (!(loaderService.loading$ | async)) {
+    <router-outlet>
+    </router-outlet>
+  }
+
+</app-layout-base>

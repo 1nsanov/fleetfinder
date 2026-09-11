@@ -1,0 +1,19 @@
+@if (loading) {
+  <div
+    class="gl-l-wrapper fixed top-0 left-0 h-full w-full flex justify-center items-center"
+    style="padding: 0 30px"
+    [ngClass]="{'fade-out': !(loaderService.loading$ | async)}"
+    >
+    <div class="content flex flex-col justify-center items-center">
+      <div class="logo">
+        <img src="../../../../assets/images/logo-blue-1024.png" alt="">
+      </div>
+      <div class="loading">
+        <img src="../../../../assets/icons/dots-loader.svg" alt="">
+      </div>
+      <div class="title">
+        <p [ngClass]="{'animation': isAnimationTitle }" [innerHTML]="loaderService.title$ | async"></p>
+      </div>
+    </div>
+  </div>
+}

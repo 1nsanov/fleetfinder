@@ -1,0 +1,6 @@
+{
+  "outputDirectory": "dist/fleetfinder.web.spa/browser",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}

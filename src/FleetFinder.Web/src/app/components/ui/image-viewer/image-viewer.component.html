@@ -1,0 +1,13 @@
+<div class="image-viewer-overlay" (click)="closeModal()"></div>
+<div class="image-viewer-container fade-in"
+  [ngClass]="{'fade-out' : !isOpened}"
+  >
+  <div class="image-viewer-body">
+    <div class="close-btn" (click)="closeModal()">
+      <img src="../../../../assets/icons/icon-close.svg" alt="">
+    </div>
+    @if (image) {
+      <img class="image" [src]="image" alt="">
+    }
+  </div>
+</div>

@@ -1,0 +1,216 @@
+
+<div class="title-header flex justify-between w-full">
+  <h2 class="title-page">
+    {{mode == 'Add' ? 'Добавление транспорта' : 'Редактирование транспорта'}}
+  </h2>
+  <div class="btn-controls flex gap-4" style="margin-bottom: 20px;">
+    <app-button theme="green" [iconPath]="mode == 'Add' ? '../../../assets/icons/icon-discket-add.svg' : '../../../assets/icons/icon-discket-edit.svg'" [isLoad]="isLoad" (click)="save()"/>
+    <app-button theme="light-blue" iconPath="../../../assets/icons/icon-cancel-rounded.svg" (click)="cancel()" [disabled]="isLoad"/>
+    @if (mode == 'Edit') {
+      <app-button theme="red" iconPath="../../../assets/icons/icon-waste-basket.svg" [isLoad]="isLoad" (click)="delete()"/>
+    }
+  </div>
+</div>
+
+<app-preloader [load]="!form">
+  @if (form) {
+    <div class="main-block">
+      <div class="border-block flex gap-10 pb-5">
+        <div class="flex-grow">
+          <app-input label="Заголовок"
+            [value]="form.get('Title')?.value ?? ''"
+            (valueChange)="form.get('Title')?.setValue($event)"
+            [error]="form.get('Title')?.invalid && form.get('Title')?.touched ? 'Поле обязательно к заполнению' : ''"
+            />
+          </div>
+          <div class="flex-grow">
+            <app-dropdown label="Регион" [items]="RegionItems" (select)="onSelectRegion($event)"
+              [value]="valueRegion"
+              [error]="form.get('Region')?.invalid && form.get('Region')?.touched ? 'Поле обязательно к заполнению' : ''"/>
+            </div>
+          </div>
+          <div class="border-block flex gap-10 pb-5 mt-10">
+            <div class="image-block relative">
+              <app-image-preview mode="edit"
+                [previewFile]="previewFile"
+                [images]="previewImages"
+                (confirm)="onConfirmImage($event)"
+                (cancel)="onCancelImage()"
+                (remove)="onRemoveImg($event)"/>
+                <app-type-transport-sign (click)="modalService.open()"
+                  [type]="currentType"
+                  [image]="currentTypeImg"
+                  [hint]="typeHint"/>
+                  <div class="flex w-full justify-center mt-4">
+                    <app-upload-image (onUpload)="onSelectImage($event)" [disabled]="previewImages.length >= 4 || !!previewFile"/>
+                    </div>
+                  </div>
+                  @if (currentType != null) {
+                    <div class="input-block flex flex-col gap-5">
+                      <app-input label="Марка"
+                        [value]="form.get('Brand')?.value ?? ''"
+                        (valueChange)="form.get('Brand')?.setValue($event)"/>
+                        <app-dropdown label="Год выпуска" placeholder="гггг." [items]="YearsItems" (select)="onSelectYearsItems($event)" [value]="valueYearIssue"/>
+                        @if (currentType == TransportType.Cargo) {
+                          <div>
+                            <app-dropdown label="Вид перевозок" [items]="CargoTransportationKindItems" (select)="onSelectTransportationKind($event)" [value]="valueTransportationKind"/>
+                            <label class="mt-3">Кузов</label>
+                            <div class="grid grid-cols-2 gap-5 mb-5">
+                              <app-input type="number" label="Длина(м)" placeholder="м."
+                                [value]="cargoInfoForm.get('Body.Length')?.value ?? ''"
+                                (valueChange)="cargoInfoForm.get('Body.Length')?.setValue($event)"/>
+                                <app-input type="number" label="Ширина(м)" placeholder="м."
+                                  [value]="cargoInfoForm.get('Body.Width')?.value ?? ''"
+                                  (valueChange)="cargoInfoForm.get('Body.Width')?.setValue($event)"/>
+                                  <app-input type="number" label="Высота(м)" placeholder="м."
+                                    [value]="cargoInfoForm.get('Body.Height')?.value ?? ''"
+                                    (valueChange)="cargoInfoForm.get('Body.Height')?.setValue($event)"/>
+                                    <app-input type="number" label="Объем(м/куб)" placeholder="м/куб."
+                                      [value]="cargoInfoForm.get('Body.Volume')?.value ?? ''"
+                                      (valueChange)="cargoInfoForm.get('Body.Volume')?.setValue($event)"/>
+                                    </div>
+                                    <div class="grid grid-cols-1 gap-5">
+                                      <app-input type="number" label="Грузоподъемность(т)" placeholder="т."
+                                        [value]="cargoInfoForm.get('Body.LoadCapacity')?.value ?? ''"
+                                        (valueChange)="cargoInfoForm.get('Body.LoadCapacity')?.setValue($event)"/>
+                                        <app-dropdown label="Вид" [items]="CargoBodyKindItems" (select)="onSelectCargoBodyKind($event)" [value]="valueBodyKind"/>
+                                      </div>
+                                    </div>
+                                  }
+                                  @if (currentType == TransportType.Passenger) {
+                                    <div class="flex flex-col gap-5">
+                                      <app-dropdown label="Вид перевозок" [items]="PassengerTransportationKindItems" (select)="onSelectPassengerTransportationKind($event)" [value]="valuePassengerTransportationKind"/>
+                                      @if (transportService.isShowSize(passengerType)) {
+                                        <label class="mb-0">Размеры</label>
+                                      }
+                                      @if (transportService.isShowSize(passengerType)) {
+                                        <div  class="grid grid-cols-3 gap-5">
+                                          <app-input type="number" label="Длина(м)" placeholder="м."
+                                            [value]="passengerInfoForm.get('Size.Length')?.value ?? ''"
+                                            (valueChange)="passengerInfoForm.get('Size.Length')?.setValue($event)"/>
+                                            <app-input type="number" label="Ширина(м)" placeholder="м."
+                                              [value]="passengerInfoForm.get('Size.Width')?.value ?? ''"
+                                              (valueChange)="passengerInfoForm.get('Size.Width')?.setValue($event)"/>
+                                              <app-input type="number" label="Высота(м)" placeholder="м."
+                                                [value]="passengerInfoForm.get('Size.Height')?.value ?? ''"
+                                                (valueChange)="passengerInfoForm.get('Size.Height')?.setValue($event)"/>
+                                              </div>
+                                            }
+                                            @if (transportService.isShowFacilities(passengerType)) {
+                                              <app-dropdown  label="Класс" [items]="PassengerFacilitiesItems" (select)="onSelectPassengerFacilities($event)" [value]="valuePassengerFacilities"/>
+                                            }
+                                            @if (transportService.isShowOption(passengerType)) {
+                                              <app-dropdown  label="Опции" [items]="PassengerOptionItems" (select)="onSelectPassengerOption($event)" [value]="valuePassengerOption"/>
+                                            }
+                                            @if (transportService.isShowRentalDuration(passengerType)) {
+                                              <app-dropdown  label="Срок аренды" [items]="PassengerRentalDurationItems" (select)="onSelectPassengerRentalDuration($event)" [value]="valuePassengerRentalDuration"/>
+                                            }
+                                            @if (transportService.isShowCountSeats(passengerType)) {
+                                              <app-input  type="number" label="Кол-во мест" placeholder="ч."
+                                                [value]="passengerInfoForm.get('CountSeats')?.value ?? ''"
+                                                (valueChange)="passengerInfoForm.get('CountSeats')?.setValue($event)"/>
+                                            }
+                                            @if (transportService.isShowColor(passengerType)) {
+                                              <app-input label="Цвет" placeholder="красный..."
+                                                [value]="passengerInfoForm.get('Color')?.value ?? ''"
+                                                (valueChange)="passengerInfoForm.get('Color')?.setValue($event)"/>
+                                            }
+                                            <app-input label="Мин. время заказа(мин)" placeholder="мин." type="number"
+                                              [value]="passengerInfoForm.get('MinOrderTime')?.value ?? ''"
+                                              (valueChange)="passengerInfoForm.get('MinOrderTime')?.setValue($event)"/>
+                                            </div>
+                                          }
+                                        </div>
+                                      }
+                                    </div>
+                                    <div class="border-block flex gap-10 pb-5 pt-5">
+                                      <div class="flex flex-grow flex-col gap-5">
+                                        <app-input type="number" label="Цена за час" placeholder="Руб."
+                                          [value]="form.get('Price.PerHour')?.value ?? ''"
+                                          (valueChange)="form.get('Price.PerHour')?.setValue($event)"/>
+                                          <app-input type="number" label="Цена за смену" placeholder="Руб."
+                                            [value]="form.get('Price.PerShift')?.value ?? ''"
+                                            (valueChange)="form.get('Price.PerShift')?.setValue($event)"/>
+                                            <app-input type="number" label="Цена за км" placeholder="Руб."
+                                              [value]="form.get('Price.PerKm')?.value ?? ''"
+                                              (valueChange)="form.get('Price.PerKm')?.setValue($event)"/>
+                                            </div>
+                                            <div class="flex flex-grow flex-col gap-5">
+                                              <app-dropdown label="Опыт работы" [items]="ExperienceWorkItems" (select)="onSelectExperienceWork($event)" [value]="valueExperienceWork"
+                                                [error]="form.get('ExperienceWork')?.invalid && form.get('ExperienceWork')?.touched ? 'Поле обязательно к заполнению' : ''"/>
+                                                <app-dropdown label="Способ оплаты" [items]="PaymentMethodItems" (select)="onSelectPaymentMethod($event)" [value]="valuePaymentMethod"/>
+                                                <app-dropdown label="Порядок оплаты" [items]="PaymentOrderItems" (select)="onSelectPaymentOrder($event)" [value]="valuePaymentOrder"/>
+                                              </div>
+                                            </div>
+                                            <div class="flex pt-5">
+                                              <div class="flex-grow">
+                                                <app-input label="Описание"
+                                                  [value]="form.get('Description')?.value ?? ''"
+                                                  (valueChange)="form.get('Description')?.setValue($event)"
+                                                  [error]="form.get('Description')?.invalid && form.get('Description')?.touched ? 'Поле обязательно к заполнению' : ''"/>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          }
+                                        </app-preloader>
+
+                                        @if (modalService.isVisible$ | async) {
+                                          <app-modal-window title="Выбор типа">
+                                            <div class="flex flex-col scroll-wrapper">
+                                              @if (currentType == TransportType.Cargo && mode == 'Edit' || !currentType || mode == 'Add') {
+                                                <figure>
+                                                  <h3>Грузовой транспорт</h3>
+                                                  <section class="cargo">
+                                                    @for (item of cargo; track item) {
+                                                      <div
+                                                        class="box-transport"
+                                                        (click)="onSelectTransportType(item, TransportType.Cargo)"
+                                                        >
+                                                        <div class="image">
+                                                          <img [src]="'../../../assets/icons/transport/cargo/icon-cargo-' + item.Icon + '.svg'" alt="">
+                                                        </div>
+                                                        <p>{{item.Text}}</p>
+                                                      </div>
+                                                    }
+                                                  </section>
+                                                </figure>
+                                              }
+                                              @if (currentType == TransportType.Passenger && mode == 'Edit' || !currentType  || mode == 'Add') {
+                                                <figure>
+                                                  <h3>Пассажирский транспорт</h3>
+                                                  <section class="passenger">
+                                                    @for (item of passenger; track item) {
+                                                      <div
+                                                        class="box-transport"
+                                                        (click)="onSelectTransportType(item, TransportType.Passenger)"
+                                                        >
+                                                        <div class="image">
+                                                          <img [src]="'../../../assets/icons/transport/passenger/icon-passenger-' + item.Icon + '.svg'" alt="">
+                                                        </div>
+                                                        <p>{{item.Text}}</p>
+                                                      </div>
+                                                    }
+                                                  </section>
+                                                </figure>
+                                              }
+                                              @if (currentType == TransportType.Special && mode == 'Edit' || !currentType  || mode == 'Add') {
+                                                <figure>
+                                                  <h3>Спецтехника</h3>
+                                                  <section class="special">
+                                                    @for (item of special; track item) {
+                                                      <div
+                                                        class="box-transport"
+                                                        (click)="onSelectTransportType(item, TransportType.Special)"
+                                                        >
+                                                        <div class="image">
+                                                          <img [src]="'../../../assets/icons/transport/special/icon-' + item.Icon + '.png'" alt="">
+                                                        </div>
+                                                        <p>{{item.Text}}</p>
+                                                      </div>
+                                                    }
+                                                  </section>
+                                                </figure>
+                                              }
+                                            </div>
+                                          </app-modal-window>
+                                        }
