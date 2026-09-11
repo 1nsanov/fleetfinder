@@ -12,6 +12,26 @@ The web UI is in Russian (original product locale). README, API errors, and code
 
 On first launch with an empty database (`SEED_DEMO_DATA=true`, the Compose default) the API auto-generates the catalog: three demo users, 12 listings per type (cargo, passenger, special), fake names and copy via Bogus (`ru`), and photos uploaded to MinIO. Nothing to seed by hand. Later starts skip seed if users already exist (`make clean` resets volumes).
 
+**Landing** — hero and search entry.
+
+![Landing](docs/screenshots/landing.png)
+
+**Listings** — cargo / passenger / special tabs, filters, and a photo grid.
+
+![Listings](docs/screenshots/listings.png)
+
+**Listing card** — specs, prices, photos, and carrier contacts.
+
+![Listing card](docs/screenshots/listing.png)
+
+**Create listing** — authenticated form to publish an ad with photos.
+
+![Create listing](docs/screenshots/create.png)
+
+**Profile** — account, contacts, and password change.
+
+![Profile](docs/screenshots/profile.png)
+
 ## What it does
 
 Search, filter, and publish cargo, passenger, and special-machinery ads with photos and a demo-seeded catalog.
@@ -77,15 +97,13 @@ Stop: `make down` or `docker compose down`. Remove volumes: `make clean`.
 
 ## Demo accounts
 
-Seeded when the database is empty and `Seed:Enabled=true` (`SEED_DEMO_DATA` in `.env`):
+Created automatically on first empty-DB start (`Seed:Enabled=true` / `SEED_DEMO_DATA`):
 
 | Login | Password |
 |---|---|
 | `demo` | `Demo123!` |
 | `carrier1` | `Demo123!` |
 | `carrier2` | `Demo123!` |
-
-Three listings of each type (cargo, passenger, special), with photos.
 
 ## Makefile
 
@@ -95,14 +113,10 @@ Three listings of each type (cargo, passenger, special), with photos.
 | `make up` | Full stack (first run) |
 | `make down` / `make logs` / `make ps` | Stop / logs / status |
 | `make clean` | Stop and delete volumes |
-| Created automatically on first empty-DB start (`Seed:Enabled=true` / `SEED_DEMO_DATA`):
-
-| Login | Password |
-|---|---|
-| `demo` | `Demo123!` |
-| `carrier1` | `Demo123!` |
-| `carrier2` | `Demo123!` |
-:5437` / `:9010`) |
+| `make infra` | PostgreSQL + MinIO only |
+| `make api` | API container + dependencies, no Web |
+| `make web` | Web + API + dependencies |
+| `make run-api` | `dotnet run` against local infra (`localhost:5437` / `:9010`) |
 | `make run-web` | `ng serve` (API at `http://localhost:8100/api/`) |
 | `make test` | Backend handler tests |
 | `make build` | Build API + Angular |
