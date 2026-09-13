@@ -74,8 +74,16 @@ export class SignUpPageComponent implements OnInit{
   initFormBuilder(){
     this.form = this.formBuilder.group<SignUpModel>({
       Login: new FormControl<string| null>('', Validators.required),
-      Password: new FormControl<string| null>('', Validators.required),
-      RepeatPassword: new FormControl<string| null>('', Validators.required),
+      Password: new FormControl<string| null>('', [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(100),
+      ]),
+      RepeatPassword: new FormControl<string| null>('', [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(100),
+      ]),
       Email: new FormControl<string| null>('', Validators.required),
       Organization: new FormControl<string| null>(''),
       FullName: this.formBuilder.group<FullNameForm>({
@@ -90,6 +98,15 @@ export class SignUpPageComponent implements OnInit{
     Object.values(this.form.controls).forEach(control => {
       control.markAsTouched();
     });
+  }
+
+  passwordError(controlName: 'Password' | 'RepeatPassword'): string {
+    const control = this.form.get(controlName);
+    if (!control?.invalid || !control.touched) return '';
+    if (control.hasError('required')) return 'Поле обязательно к заполнению';
+    if (control.hasError('minlength')) return 'Пароль должен содержать не менее 8 символов';
+    if (control.hasError('maxlength')) return 'Пароль должен содержать не более 100 символов';
+    return '';
   }
 
   fullNameGroup: FormGroup;

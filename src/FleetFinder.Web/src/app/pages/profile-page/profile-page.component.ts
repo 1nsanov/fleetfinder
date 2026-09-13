@@ -120,7 +120,11 @@ export class ProfilePageComponent implements OnInit{
   initFormChangePasswordBuilder(){
     this.changePasswordForm = this.formBuilder.group<ChangePasswordForm>({
       CurrentPassword: new FormControl<string | null>(null, Validators.required),
-      NewPassword: new FormControl<string | null>(null, Validators.required),
+      NewPassword: new FormControl<string | null>(null, [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(100),
+      ]),
     });
   }
 
@@ -128,6 +132,15 @@ export class ProfilePageComponent implements OnInit{
     Object.values(this.changePasswordForm.controls).forEach(control => {
       control.markAsTouched();
     });
+  }
+
+  newPasswordError(): string {
+    const control = this.changePasswordForm.get('NewPassword');
+    if (!control?.invalid || !control.touched) return '';
+    if (control.hasError('required')) return 'Поле обязательно к заполнению';
+    if (control.hasError('minlength')) return 'Пароль должен содержать не менее 8 символов';
+    if (control.hasError('maxlength')) return 'Пароль должен содержать не более 100 символов';
+    return '';
   }
 
 
