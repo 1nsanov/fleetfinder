@@ -124,7 +124,7 @@
                                     type="password"
                                     [value]="changePasswordForm.get('NewPassword')?.value ?? ''"
                                     (valueChange)="changePasswordForm.get('NewPassword')?.setValue($event)"
-                                    [error]="changePasswordForm.get('NewPassword')?.invalid && changePasswordForm.get('NewPassword')?.touched ? 'Поле обязательно к заполнению' : ''"
+                                    [error]="newPasswordError()"
                                     [disabled]="isLoadChangePassword" />
                                   </div>
                                 </div>

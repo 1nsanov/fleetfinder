@@ -2,6 +2,7 @@
 using System.Text.Json.Serialization;
 using FleetFinder.Application.Common;
 using FleetFinder.Application.Common.Options;
+using FleetFinder.Application.Features.Images;
 using FleetFinder.Application.Common.Seed;
 using FleetFinder.Infrastructure.Common;
 using FleetFinder.Api.Middleware;
@@ -70,9 +71,7 @@ public static class HostingExtensions
             });
         });
         
-        const int maxUploadFiles = 5;
-        const long maxFileBytes = 10 * 1024 * 1024;
-        const long maxMultipartBytes = maxUploadFiles * maxFileBytes;
+        const long maxMultipartBytes = ImageUploadLimits.MaxFileCount * ImageUploadLimits.MaxFileBytes;
 
         builder.WebHost.ConfigureKestrel(options =>
         {

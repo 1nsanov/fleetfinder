@@ -18,8 +18,9 @@ public static partial class SignUp
                 RuleFor(dto => dto.Login).NotEmpty()
                     .MinimumLength(4).WithName("Login").WithMessage(ValidationMessages.MinLength)
                     .MaximumLength(16).WithName("Login").WithMessage(ValidationMessages.MaxLength);
-                RuleFor(dto => dto.Password).NotEmpty().MinimumLength(8).MaximumLength(100)
-                    .WithName("Password").WithMessage(ValidationMessages.MinLength);
+                RuleFor(dto => dto.Password).NotEmpty()
+                    .MinimumLength(8).WithName("Password").WithMessage(ValidationMessages.MinLength)
+                    .MaximumLength(100).WithName("Password").WithMessage(ValidationMessages.MaxLength);
                 RuleFor(dto => dto.Email).NotEmpty().EmailAddress()
                     .WithName("Email").WithMessage(ValidationMessages.InvalidEmail);
                 RuleFor(dto => dto.FullName).SetValidator(new NameValidator());
