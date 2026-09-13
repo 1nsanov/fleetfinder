@@ -20,20 +20,24 @@ export class UploadImageComponent {
   }
 
   onFileSelected(event: any) {
-    let file = event.target.files[0];
-    const maxSizeInBytes = 10 * 1024 * 1024; // 10 MB
+    let file = event.target.files[0] as File | undefined;
+    if (!file) return;
+
+    const maxSizeInBytes = 10 * 1024 * 1024;
+    const allowedExtensions = ['png', 'jpg', 'jpeg'];
+    const allowedMimeTypes = ['image/png', 'image/jpeg', 'image/jpg'];
     const fileExtension = this.getFileExtension(file.name);
+    const mimeOk = !file.type || allowedMimeTypes.includes(file.type.toLowerCase());
 
-    if (fileExtension !== 'png' && fileExtension !== 'jpg' && fileExtension !== 'jpeg'){
-      file = null;
+    if (!allowedExtensions.includes(fileExtension) || !mimeOk) {
+      file = undefined;
       this.notification.error('Неверный формат файла. Разрешены только файлы PNG, JPG и JPEG.');
-    }
-    else if (file && file.size > maxSizeInBytes) {
-      file = null;
-      this.notification.error('Максимальный размер файла - 10 Мб.')
+    } else if (file.size > maxSizeInBytes) {
+      file = undefined;
+      this.notification.error('Максимальный размер файла - 10 Мб.');
     }
 
-    this.onUpload.emit(file);
+    this.onUpload.emit(file ?? null);
     this.inputFile.nativeElement.value = "";
   }
 
